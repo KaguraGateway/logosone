@@ -10,14 +10,14 @@ type ProductCategory struct {
 	name string
 }
 
-func NewProductCategory(name string) (error, *ProductCategory) {
+func NewProductCategory(name string) (*ProductCategory, error) {
 	pc := &ProductCategory{
 		id: uuid.UUID{},
 	}
 	if err := pc.SetName(name); err != nil {
-		return err, nil
+		return nil, err
 	}
-	return nil, pc
+	return pc, nil
 }
 
 func ReconstructProductCategory(id uuid.UUID, name string) *ProductCategory {

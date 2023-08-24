@@ -13,16 +13,16 @@ type CoffeeHowToBrew struct {
 }
 type CoffeeHowToBrews []*CoffeeHowToBrew
 
-func NewCoffeeHowToBrew(name string, beanQuantityGrams uint32, price uint64) (error, *CoffeeHowToBrew) {
+func NewCoffeeHowToBrew(name string, beanQuantityGrams uint32, price uint64) (*CoffeeHowToBrew, error) {
 	brew := &CoffeeHowToBrew{
 		id:                uuid.UUID{},
 		BeanQuantityGrams: beanQuantityGrams,
 		Price:             price,
 	}
 	if err := brew.SetName(name); err != nil {
-		return err, nil
+		return nil, err
 	}
-	return nil, brew
+	return brew, nil
 }
 
 func ReconstructCoffeeHowToBrew(id uuid.UUID, name string, beanQuantityGrams uint32, price uint64) *CoffeeHowToBrew {

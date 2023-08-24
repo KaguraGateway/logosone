@@ -11,15 +11,15 @@ type Stock struct {
 	Quantity int32
 }
 
-func NewStock(name string, quantity int32) (error, *Stock) {
+func NewStock(name string, quantity int32) (*Stock, error) {
 	stock := &Stock{
 		id:       uuid.UUID{},
 		Quantity: quantity,
 	}
 	if err := stock.SetName(name); err != nil {
-		return err, nil
+		return nil, err
 	}
-	return nil, stock
+	return stock, nil
 }
 
 func ReconstructStock(id uuid.UUID, name string, quantity int32) *Stock {

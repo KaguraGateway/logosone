@@ -11,15 +11,15 @@ type CoffeeBean struct {
 	GramQuantity int
 }
 
-func NewCoffeeBean(name string, gramQuantity int) (error, *CoffeeBean) {
+func NewCoffeeBean(name string, gramQuantity int) (*CoffeeBean, error) {
 	bean := &CoffeeBean{
 		id:           uuid.UUID{},
 		GramQuantity: gramQuantity,
 	}
 	if err := bean.SetName(name); err != nil {
-		return err, nil
+		return nil, err
 	}
-	return nil, bean
+	return bean, nil
 }
 
 func ReconstructCoffeeBean(id uuid.UUID, name string, gramQuantity int) *CoffeeBean {

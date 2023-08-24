@@ -6,12 +6,12 @@ type ProductName struct {
 	value string
 }
 
-func NewProductName(value string) (error, *ProductName) {
+func NewProductName(value string) (*ProductName, error) {
 	productName := &ProductName{}
 	if err := productName.Set(value); err != nil {
-		return err, nil
+		return nil, err
 	}
-	return nil, productName
+	return productName, nil
 }
 
 func (productName *ProductName) Set(newValue string) error {

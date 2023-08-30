@@ -95,11 +95,10 @@ message Discount {
 
 message Payment {
     string id = 1;
-    string name = 2;
-    PaymentType type = 3;
-    uint64 receive_amount = 4;
-    uint64 payment_amount = 5;
-    uint64 change_amount = 6;
+    PaymentType type = 2;
+    uint64 receive_amount = 3;
+    uint64 payment_amount = 4;
+    uint64 change_amount = 5;
 
     enum PaymentType {
         CASH = 0;

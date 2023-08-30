@@ -320,6 +320,8 @@ struct Cafelogos_OrderItem {
 
   var quantity: String = String()
 
+  var amount: UInt64 = 0
+
   var coffeeBrewID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -970,7 +972,8 @@ extension Cafelogos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "product_id"),
     2: .same(proto: "quantity"),
-    3: .standard(proto: "coffee_brew_id"),
+    3: .same(proto: "amount"),
+    4: .standard(proto: "coffee_brew_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -981,7 +984,8 @@ extension Cafelogos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.productID) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.quantity) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.coffeeBrewID) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.amount) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.coffeeBrewID) }()
       default: break
       }
     }
@@ -994,8 +998,11 @@ extension Cafelogos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.quantity.isEmpty {
       try visitor.visitSingularStringField(value: self.quantity, fieldNumber: 2)
     }
+    if self.amount != 0 {
+      try visitor.visitSingularUInt64Field(value: self.amount, fieldNumber: 3)
+    }
     if !self.coffeeBrewID.isEmpty {
-      try visitor.visitSingularStringField(value: self.coffeeBrewID, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.coffeeBrewID, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1003,6 +1010,7 @@ extension Cafelogos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   static func ==(lhs: Cafelogos_OrderItem, rhs: Cafelogos_OrderItem) -> Bool {
     if lhs.productID != rhs.productID {return false}
     if lhs.quantity != rhs.quantity {return false}
+    if lhs.amount != rhs.amount {return false}
     if lhs.coffeeBrewID != rhs.coffeeBrewID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

@@ -8,6 +8,8 @@ service PosService {
     rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
     rpc PostOrder(PostOrderRequest) returns (PostOrderResponse) {}
     rpc GetProducts(GetProductsRequest) returns (GetProductsResponse) {}
+
+    rpc OrderNotification(stream OrderNotificationRequest) returns (stream OrderNotificationResponse) {}
 }
 
 /**
@@ -27,6 +29,11 @@ message GetProductsRequest {}
 message GetProductsResponse {
     repeated Product products = 1;
 }
+
+message OrderNotificationRequest {
+    Order order = 1;
+}
+message OrderNotificationResponse {}
 
 /**
  * Types
@@ -79,6 +86,7 @@ message Order {
     string payment_at = 5;
     string order_at = 6;
     string call_number = 7;
+    string client_id = 8;
 }
 
 

@@ -24,7 +24,9 @@ const _ = grpc.SupportPackageIsVersion7
 type PosServiceClient interface {
 	GetOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
 	PostOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
+	DeleteAllOrders(ctx context.Context, in *DeleteAllOrdersRequest, opts ...grpc.CallOption) (*DeleteAllOrdersResponse, error)
 	GetProducts(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error)
+	OrderNotification(ctx context.Context, opts ...grpc.CallOption) (PosService_OrderNotificationClient, error)
 }
 
 type posServiceClient struct {
@@ -53,6 +55,15 @@ func (c *posServiceClient) PostOrder(ctx context.Context, in *PostOrderRequest, 
 	return out, nil
 }
 
+func (c *posServiceClient) DeleteAllOrders(ctx context.Context, in *DeleteAllOrdersRequest, opts ...grpc.CallOption) (*DeleteAllOrdersResponse, error) {
+	out := new(DeleteAllOrdersResponse)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/DeleteAllOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *posServiceClient) GetProducts(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error) {
 	out := new(GetProductsResponse)
 	err := c.cc.Invoke(ctx, "/cafelogos.PosService/GetProducts", in, out, opts...)
@@ -62,13 +73,46 @@ func (c *posServiceClient) GetProducts(ctx context.Context, in *GetProductsReque
 	return out, nil
 }
 
+func (c *posServiceClient) OrderNotification(ctx context.Context, opts ...grpc.CallOption) (PosService_OrderNotificationClient, error) {
+	stream, err := c.cc.NewStream(ctx, &PosService_ServiceDesc.Streams[0], "/cafelogos.PosService/OrderNotification", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &posServiceOrderNotificationClient{stream}
+	return x, nil
+}
+
+type PosService_OrderNotificationClient interface {
+	Send(*OrderNotificationRequest) error
+	Recv() (*OrderNotificationResponse, error)
+	grpc.ClientStream
+}
+
+type posServiceOrderNotificationClient struct {
+	grpc.ClientStream
+}
+
+func (x *posServiceOrderNotificationClient) Send(m *OrderNotificationRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *posServiceOrderNotificationClient) Recv() (*OrderNotificationResponse, error) {
+	m := new(OrderNotificationResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // PosServiceServer is the server API for PosService service.
 // All implementations should embed UnimplementedPosServiceServer
 // for forward compatibility
 type PosServiceServer interface {
 	GetOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
 	PostOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error)
+	DeleteAllOrders(context.Context, *DeleteAllOrdersRequest) (*DeleteAllOrdersResponse, error)
 	GetProducts(context.Context, *GetProductsRequest) (*GetProductsResponse, error)
+	OrderNotification(PosService_OrderNotificationServer) error
 }
 
 // UnimplementedPosServiceServer should be embedded to have forward compatible implementations.
@@ -81,8 +125,14 @@ func (UnimplementedPosServiceServer) GetOrders(context.Context, *GetOrdersReques
 func (UnimplementedPosServiceServer) PostOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostOrder not implemented")
 }
+func (UnimplementedPosServiceServer) DeleteAllOrders(context.Context, *DeleteAllOrdersRequest) (*DeleteAllOrdersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAllOrders not implemented")
+}
 func (UnimplementedPosServiceServer) GetProducts(context.Context, *GetProductsRequest) (*GetProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProducts not implemented")
+}
+func (UnimplementedPosServiceServer) OrderNotification(PosService_OrderNotificationServer) error {
+	return status.Errorf(codes.Unimplemented, "method OrderNotification not implemented")
 }
 
 // UnsafePosServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -132,6 +182,24 @@ func _PosService_PostOrder_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PosService_DeleteAllOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAllOrdersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).DeleteAllOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/DeleteAllOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).DeleteAllOrders(ctx, req.(*DeleteAllOrdersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PosService_GetProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetProductsRequest)
 	if err := dec(in); err != nil {
@@ -150,6 +218,32 @@ func _PosService_GetProducts_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PosService_OrderNotification_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(PosServiceServer).OrderNotification(&posServiceOrderNotificationServer{stream})
+}
+
+type PosService_OrderNotificationServer interface {
+	Send(*OrderNotificationResponse) error
+	Recv() (*OrderNotificationRequest, error)
+	grpc.ServerStream
+}
+
+type posServiceOrderNotificationServer struct {
+	grpc.ServerStream
+}
+
+func (x *posServiceOrderNotificationServer) Send(m *OrderNotificationResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *posServiceOrderNotificationServer) Recv() (*OrderNotificationRequest, error) {
+	m := new(OrderNotificationRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // PosService_ServiceDesc is the grpc.ServiceDesc for PosService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -166,10 +260,21 @@ var PosService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PosService_PostOrder_Handler,
 		},
 		{
+			MethodName: "DeleteAllOrders",
+			Handler:    _PosService_DeleteAllOrders_Handler,
+		},
+		{
 			MethodName: "GetProducts",
 			Handler:    _PosService_GetProducts_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "OrderNotification",
+			Handler:       _PosService_OrderNotification_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "proto/pos_service.proto",
 }

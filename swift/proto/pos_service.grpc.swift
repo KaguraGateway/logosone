@@ -26,10 +26,20 @@ internal protocol Cafelogos_PosServiceClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> UnaryCall<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>
 
+  func deleteAllOrders(
+    _ request: Cafelogos_DeleteAllOrdersRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>
+
   func getProducts(
     _ request: Cafelogos_GetProductsRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>
+
+  func orderNotification(
+    callOptions: CallOptions?,
+    handler: @escaping (Cafelogos_OrderNotificationResponse) -> Void
+  ) -> BidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>
 }
 
 extension Cafelogos_PosServiceClientProtocol {
@@ -73,6 +83,24 @@ extension Cafelogos_PosServiceClientProtocol {
     )
   }
 
+  /// Unary call to DeleteAllOrders
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to DeleteAllOrders.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func deleteAllOrders(
+    _ request: Cafelogos_DeleteAllOrdersRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
+    )
+  }
+
   /// Unary call to GetProducts
   ///
   /// - Parameters:
@@ -88,6 +116,27 @@ extension Cafelogos_PosServiceClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeGetProductsInterceptors() ?? []
+    )
+  }
+
+  /// Bidirectional streaming call to OrderNotification
+  ///
+  /// Callers should use the `send` method on the returned object to send messages
+  /// to the server. The caller should send an `.end` after the final message has been sent.
+  ///
+  /// - Parameters:
+  ///   - callOptions: Call options.
+  ///   - handler: A closure called when each response is received from the server.
+  /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
+  internal func orderNotification(
+    callOptions: CallOptions? = nil,
+    handler: @escaping (Cafelogos_OrderNotificationResponse) -> Void
+  ) -> BidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse> {
+    return self.makeBidirectionalStreamingCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? [],
+      handler: handler
     )
   }
 }
@@ -164,10 +213,19 @@ internal protocol Cafelogos_PosServiceAsyncClientProtocol: GRPCClient {
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>
 
+  func makeDeleteAllOrdersCall(
+    _ request: Cafelogos_DeleteAllOrdersRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>
+
   func makeGetProductsCall(
     _ request: Cafelogos_GetProductsRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>
+
+  func makeOrderNotificationCall(
+    callOptions: CallOptions?
+  ) -> GRPCAsyncBidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -204,6 +262,18 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
     )
   }
 
+  internal func makeDeleteAllOrdersCall(
+    _ request: Cafelogos_DeleteAllOrdersRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
+    )
+  }
+
   internal func makeGetProductsCall(
     _ request: Cafelogos_GetProductsRequest,
     callOptions: CallOptions? = nil
@@ -213,6 +283,16 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeGetProductsInterceptors() ?? []
+    )
+  }
+
+  internal func makeOrderNotificationCall(
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncBidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse> {
+    return self.makeAsyncBidirectionalStreamingCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? []
     )
   }
 }
@@ -243,6 +323,18 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
     )
   }
 
+  internal func deleteAllOrders(
+    _ request: Cafelogos_DeleteAllOrdersRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_DeleteAllOrdersResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
+    )
+  }
+
   internal func getProducts(
     _ request: Cafelogos_GetProductsRequest,
     callOptions: CallOptions? = nil
@@ -252,6 +344,30 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeGetProductsInterceptors() ?? []
+    )
+  }
+
+  internal func orderNotification<RequestStream>(
+    _ requests: RequestStream,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncResponseStream<Cafelogos_OrderNotificationResponse> where RequestStream: Sequence, RequestStream.Element == Cafelogos_OrderNotificationRequest {
+    return self.performAsyncBidirectionalStreamingCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
+      requests: requests,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? []
+    )
+  }
+
+  internal func orderNotification<RequestStream>(
+    _ requests: RequestStream,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncResponseStream<Cafelogos_OrderNotificationResponse> where RequestStream: AsyncSequence & Sendable, RequestStream.Element == Cafelogos_OrderNotificationRequest {
+    return self.performAsyncBidirectionalStreamingCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
+      requests: requests,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? []
     )
   }
 }
@@ -281,8 +397,14 @@ internal protocol Cafelogos_PosServiceClientInterceptorFactoryProtocol: Sendable
   /// - Returns: Interceptors to use when invoking 'postOrder'.
   func makePostOrderInterceptors() -> [ClientInterceptor<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>]
 
+  /// - Returns: Interceptors to use when invoking 'deleteAllOrders'.
+  func makeDeleteAllOrdersInterceptors() -> [ClientInterceptor<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>]
+
   /// - Returns: Interceptors to use when invoking 'getProducts'.
   func makeGetProductsInterceptors() -> [ClientInterceptor<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'orderNotification'.
+  func makeOrderNotificationInterceptors() -> [ClientInterceptor<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>]
 }
 
 internal enum Cafelogos_PosServiceClientMetadata {
@@ -292,7 +414,9 @@ internal enum Cafelogos_PosServiceClientMetadata {
     methods: [
       Cafelogos_PosServiceClientMetadata.Methods.getOrders,
       Cafelogos_PosServiceClientMetadata.Methods.postOrder,
+      Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders,
       Cafelogos_PosServiceClientMetadata.Methods.getProducts,
+      Cafelogos_PosServiceClientMetadata.Methods.orderNotification,
     ]
   )
 
@@ -309,10 +433,22 @@ internal enum Cafelogos_PosServiceClientMetadata {
       type: GRPCCallType.unary
     )
 
+    internal static let deleteAllOrders = GRPCMethodDescriptor(
+      name: "DeleteAllOrders",
+      path: "/cafelogos.PosService/DeleteAllOrders",
+      type: GRPCCallType.unary
+    )
+
     internal static let getProducts = GRPCMethodDescriptor(
       name: "GetProducts",
       path: "/cafelogos.PosService/GetProducts",
       type: GRPCCallType.unary
+    )
+
+    internal static let orderNotification = GRPCMethodDescriptor(
+      name: "OrderNotification",
+      path: "/cafelogos.PosService/OrderNotification",
+      type: GRPCCallType.bidirectionalStreaming
     )
   }
 }
@@ -325,7 +461,11 @@ internal protocol Cafelogos_PosServiceProvider: CallHandlerProvider {
 
   func postOrder(request: Cafelogos_PostOrderRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_PostOrderResponse>
 
+  func deleteAllOrders(request: Cafelogos_DeleteAllOrdersRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_DeleteAllOrdersResponse>
+
   func getProducts(request: Cafelogos_GetProductsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_GetProductsResponse>
+
+  func orderNotification(context: StreamingResponseCallContext<Cafelogos_OrderNotificationResponse>) -> EventLoopFuture<(StreamEvent<Cafelogos_OrderNotificationRequest>) -> Void>
 }
 
 extension Cafelogos_PosServiceProvider {
@@ -358,6 +498,15 @@ extension Cafelogos_PosServiceProvider {
         userFunction: self.postOrder(request:context:)
       )
 
+    case "DeleteAllOrders":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_DeleteAllOrdersRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_DeleteAllOrdersResponse>(),
+        interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? [],
+        userFunction: self.deleteAllOrders(request:context:)
+      )
+
     case "GetProducts":
       return UnaryServerHandler(
         context: context,
@@ -365,6 +514,15 @@ extension Cafelogos_PosServiceProvider {
         responseSerializer: ProtobufSerializer<Cafelogos_GetProductsResponse>(),
         interceptors: self.interceptors?.makeGetProductsInterceptors() ?? [],
         userFunction: self.getProducts(request:context:)
+      )
+
+    case "OrderNotification":
+      return BidirectionalStreamingServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_OrderNotificationRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_OrderNotificationResponse>(),
+        interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? [],
+        observerFactory: self.orderNotification(context:)
       )
 
     default:
@@ -389,10 +547,21 @@ internal protocol Cafelogos_PosServiceAsyncProvider: CallHandlerProvider, Sendab
     context: GRPCAsyncServerCallContext
   ) async throws -> Cafelogos_PostOrderResponse
 
+  func deleteAllOrders(
+    request: Cafelogos_DeleteAllOrdersRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_DeleteAllOrdersResponse
+
   func getProducts(
     request: Cafelogos_GetProductsRequest,
     context: GRPCAsyncServerCallContext
   ) async throws -> Cafelogos_GetProductsResponse
+
+  func orderNotification(
+    requestStream: GRPCAsyncRequestStream<Cafelogos_OrderNotificationRequest>,
+    responseStream: GRPCAsyncResponseStreamWriter<Cafelogos_OrderNotificationResponse>,
+    context: GRPCAsyncServerCallContext
+  ) async throws
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -432,6 +601,15 @@ extension Cafelogos_PosServiceAsyncProvider {
         wrapping: { try await self.postOrder(request: $0, context: $1) }
       )
 
+    case "DeleteAllOrders":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_DeleteAllOrdersRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_DeleteAllOrdersResponse>(),
+        interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? [],
+        wrapping: { try await self.deleteAllOrders(request: $0, context: $1) }
+      )
+
     case "GetProducts":
       return GRPCAsyncServerHandler(
         context: context,
@@ -439,6 +617,15 @@ extension Cafelogos_PosServiceAsyncProvider {
         responseSerializer: ProtobufSerializer<Cafelogos_GetProductsResponse>(),
         interceptors: self.interceptors?.makeGetProductsInterceptors() ?? [],
         wrapping: { try await self.getProducts(request: $0, context: $1) }
+      )
+
+    case "OrderNotification":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_OrderNotificationRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_OrderNotificationResponse>(),
+        interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? [],
+        wrapping: { try await self.orderNotification(requestStream: $0, responseStream: $1, context: $2) }
       )
 
     default:
@@ -457,9 +644,17 @@ internal protocol Cafelogos_PosServiceServerInterceptorFactoryProtocol: Sendable
   ///   Defaults to calling `self.makeInterceptors()`.
   func makePostOrderInterceptors() -> [ServerInterceptor<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>]
 
+  /// - Returns: Interceptors to use when handling 'deleteAllOrders'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeDeleteAllOrdersInterceptors() -> [ServerInterceptor<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>]
+
   /// - Returns: Interceptors to use when handling 'getProducts'.
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeGetProductsInterceptors() -> [ServerInterceptor<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>]
+
+  /// - Returns: Interceptors to use when handling 'orderNotification'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeOrderNotificationInterceptors() -> [ServerInterceptor<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>]
 }
 
 internal enum Cafelogos_PosServiceServerMetadata {
@@ -469,7 +664,9 @@ internal enum Cafelogos_PosServiceServerMetadata {
     methods: [
       Cafelogos_PosServiceServerMetadata.Methods.getOrders,
       Cafelogos_PosServiceServerMetadata.Methods.postOrder,
+      Cafelogos_PosServiceServerMetadata.Methods.deleteAllOrders,
       Cafelogos_PosServiceServerMetadata.Methods.getProducts,
+      Cafelogos_PosServiceServerMetadata.Methods.orderNotification,
     ]
   )
 
@@ -486,10 +683,22 @@ internal enum Cafelogos_PosServiceServerMetadata {
       type: GRPCCallType.unary
     )
 
+    internal static let deleteAllOrders = GRPCMethodDescriptor(
+      name: "DeleteAllOrders",
+      path: "/cafelogos.PosService/DeleteAllOrders",
+      type: GRPCCallType.unary
+    )
+
     internal static let getProducts = GRPCMethodDescriptor(
       name: "GetProducts",
       path: "/cafelogos.PosService/GetProducts",
       type: GRPCCallType.unary
+    )
+
+    internal static let orderNotification = GRPCMethodDescriptor(
+      name: "OrderNotification",
+      path: "/cafelogos.PosService/OrderNotification",
+      type: GRPCCallType.bidirectionalStreaming
     )
   }
 }

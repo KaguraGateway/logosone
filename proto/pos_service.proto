@@ -7,6 +7,7 @@ package cafelogos;
 service PosService {
     rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
     rpc PostOrder(PostOrderRequest) returns (PostOrderResponse) {}
+    rpc DeleteAllOrders(DeleteAllOrdersRequest) returns (DeleteAllOrdersResponse) {}
     rpc GetProducts(GetProductsRequest) returns (GetProductsResponse) {}
 
     rpc OrderNotification(stream OrderNotificationRequest) returns (stream OrderNotificationResponse) {}
@@ -24,6 +25,9 @@ message PostOrderRequest {
     Order order = 1;
 }
 message PostOrderResponse {}
+
+message DeleteAllOrdersRequest {}
+message DeleteAllOrdersResponse {}
 
 message GetProductsRequest {}
 message GetProductsResponse {

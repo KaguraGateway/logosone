@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package cafelogos;
+
+service PosService {
+    rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
+    rpc PostOrder(PostOrderRequest) returns (PostOrderResponse) {}
+    rpc GetProducts(GetProductsRequest) returns (GetProductsResponse) {}
+}
+
+/**
+ * Request/Response
+ */
+message GetOrdersRequest {}
+message GetOrdersResponse {
+    repeated Order orders = 1;
+}
+
+message PostOrderRequest {
+    Order order = 1;
+}
+message PostOrderResponse {}
+
+message GetProductsRequest {}
+message GetProductsResponse {
+    repeated Product products = 1;
+}
+
+/**
+ * Types
+ */
+/** Product */
+message Product {
+    string product_id = 1;
+    string product_name = 2;
+    ProductCategory product_category = 3;
+    ProductType product_type = 4;
+    bool is_now_sales = 5;
+    // Only Coffee
+    CoffeeBean coffee_bean = 6;
+    CoffeeHowToBrew coffee_how_to_brew = 7;
+    // Only Other
+    uint64 amount = 8;
+    Stock stock = 9;
+}
+message ProductCategory {
+    string id = 1;
+    string name = 2;
+}
+enum ProductType {
+    COFFEE = 0;
+    OTHER = 1;
+}
+message CoffeeBean {
+    string id = 1;
+    string name = 2;
+    int32 gram_quantity = 3;
+}
+message CoffeeHowToBrew {
+    string id = 1;
+    string name = 2;
+    uint32 bean_quantity_grams = 3;
+    uint64 amount = 4;
+}
+message Stock {
+    string id = 1;
+    string name = 2;
+    uint32 quantity = 3;
+}
+
+/** Order */
+message Order {
+    string id = 1;
+    repeated OrderItem items = 2;
+    repeated Discount discounts = 3;
+    Payment payment = 4;
+    string payment_at = 5;
+    string order_at = 6;
+    string call_number = 7;
+}
+
+
+message OrderItem {
+    string product_id = 1;
+    string quantity = 2;
+    string coffee_brew_id = 3;
+}
+
+message Discount {
+    string id = 1;
+}
+
+message Payment {
+    string id = 1;
+    string name = 2;
+    PaymentType type = 3;
+    uint64 receive_amount = 4;
+    uint64 payment_amount = 5;
+    uint64 change_amount = 6;
+
+    enum PaymentType {
+        CASH = 0;
+    }
+}

@@ -1,0 +1,33 @@
+[package]
+name = "cafelogos-ticket-backend"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "cafelogos_ticket_backend"
+path = "src/lib.rs"
+
+[workspace]
+members = [".", "migration"]
+
+[dependencies]
+async-trait = "0.1.73"
+cafelogos-grpc = { git = "https://github.com/KaguraGateway/cafelogos-grpc.git", version = "0.1.1" }
+chrono = "0.4.28"
+dotenv = "0.15.0"
+sea-orm = { version = "^0", features = [ "sqlx-postgres", "runtime-tokio-rustls", "macros" ] }
+shaku = "0.6.1"
+thiserror = "1.0.48"
+tokio = "1.32.0"
+tonic = "0.10.0"
+ulid = "1.0.1"
+
+[dependencies.uuid]
+version = "1.4.1"
+features = [
+    "v4",                # Lets you generate random UUIDs
+    "fast-rng",          # Use a faster (but still sufficiently random) RNG
+    "macro-diagnostics", # Enable better diagnostics for compile-time UUIDs
+]

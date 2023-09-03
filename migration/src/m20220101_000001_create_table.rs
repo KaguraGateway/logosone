@@ -14,13 +14,17 @@ impl MigrationTrait for Migration {
                     .col(
                         ColumnDef::new(Ticket::Id)
                             .string()
-                            .char_len(26)
+                            .char_len(24)
                             .not_null()
                             .primary_key(),
                     )
                     .col(ColumnDef::new(Ticket::TicketNumber).unsigned().not_null())
                     .col(ColumnDef::new(Ticket::TicketPrefix).string().not_null())
-                    .col(ColumnDef::new(Ticket::CreatedAt).timestamp_with_time_zone().not_null())
+                    .col(
+                        ColumnDef::new(Ticket::CreatedAt)
+                            .timestamp_with_time_zone()
+                            .not_null(),
+                    )
                     .to_owned(),
             )
             .await

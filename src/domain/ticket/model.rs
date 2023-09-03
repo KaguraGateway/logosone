@@ -51,7 +51,7 @@ pub struct TicketId {
 
 impl TicketId {
     pub fn new() -> Self {
-        Self { value: ulid::Ulid::new().to_string() }
+        Self { value: cuid::cuid2() }
     }
 
     pub fn rebuild(value: String) -> Self {

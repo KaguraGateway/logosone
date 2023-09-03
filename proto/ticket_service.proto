@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option go_package = "pkg/proto/";
+
+package cafelogos;
+
+service TicketService {
+    rpc IssueTicket(RequestIssueTicket) returns (ResponseIssueTicket) {}
+    rpc RevokeTicket(RequestRevokeTicket) returns (ResponseRevokeTicket) {}
+}
+
+message RequestIssueTicket {
+    string prefix = 1;
+}
+
+message ResponseIssueTicket {
+    Ticket ticket = 1;
+}
+
+message RequestRevokeTicket {
+    string id = 1;
+}
+
+message ResponseRevokeTicket {}
+
+message Ticket {
+    string id = 1;
+    // PrefixとNumberを結合したもの
+    string ticket_addr = 2;
+    string created_at = 3;
+}

@@ -3,7 +3,7 @@ import { FaChartPie, FaJava, FaReact } from 'react-icons/fa';
 
 import { styled } from '@/panda/jsx';
 
-import { Navigation,NavItem } from './NavItem';
+import { Navigation, NavItem } from './NavItem';
 
 
 

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {
   Container, Grid, GridItem, Stack,
 } from '@/panda/jsx';
-import Sidebar from '@/ui/Sidebar';
+import Sidebar from '@/ui/nav/Sidebar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

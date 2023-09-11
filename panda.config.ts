@@ -1,5 +1,7 @@
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev';
 
+import { recipes } from '@/ui/theme/recipes';
+
 const globalCss = defineGlobalStyles({
   body: {
     backgroundColor: 'neutral.100',
@@ -20,6 +22,7 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      recipes,
       tokens: {
         fonts: {
           noto: {

@@ -32,6 +32,7 @@ import { Th } from '@/ui/table/Th';
 import { Tr } from '@/ui/table/Tr';
 
 import { StockFormDialog } from '../../_components/StockForm';
+import { CoffeeBeanFormDialog } from './CoffeeBeanForm';
 import { ProductCategoryFormDialog } from './ProductCategoryForm';
 
 const ProductTypeOptions = [
@@ -103,6 +104,7 @@ export function ProductEditForm(props: Props) {
   // Dialog
   const [isOpenCategoryForm, setIsOpenCategoryForm] = useState(false);
   const [isOpenStockForm, setIsOpenStockForm] = useState(false);
+  const [isOpenCoffeeBeanForm, setIsOpenCoffeeBeanForm] = useState(false);
   // Submit Loading
   const [isLoading, setIsLoading] = useState(false);
 
@@ -139,6 +141,9 @@ export function ProductEditForm(props: Props) {
   };
   const onAddStock = () => {
     setIsOpenStockForm(true);
+  };
+  const onAddCoffeeBean = () => {
+    setIsOpenCoffeeBeanForm(true);
   };
   const onClickAddBrew = () => {
     setBrews([...brews, { id: '', name: '', amount: 0, beanQuantityGrams: 0 }]);
@@ -222,7 +227,7 @@ export function ProductEditForm(props: Props) {
               <SelectWithAdd
                 label="豆の種類"
                 items={coffeeBeans}
-                onAdd={onAddCategory}
+                onAdd={onAddCoffeeBean}
                 selectedOption={coffeeBean}
                 onChange={(details) => setCoffeeBean(details)}
               />
@@ -341,6 +346,7 @@ export function ProductEditForm(props: Props) {
       </form>
       <ProductCategoryFormDialog isOpen={isOpenCategoryForm} onClose={onCloseCategoryForm} />
       <StockFormDialog isOpen={isOpenStockForm} onClose={() => setIsOpenStockForm(false)} />
+      <CoffeeBeanFormDialog isOpen={isOpenCoffeeBeanForm} onClose={() => setIsOpenCoffeeBeanForm(false)} />
     </>
   );
 }

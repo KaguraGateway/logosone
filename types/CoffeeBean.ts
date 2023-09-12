@@ -1,7 +1,7 @@
 export type CoffeeBean = {
   id: string;
   name: string;
-  quantity: number;
+  gramQuantity: number;
 };
 
 export type CoffeeBeanResponse = {

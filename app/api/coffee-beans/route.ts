@@ -9,22 +9,22 @@ export async function GET() {
       {
         id: randomUUID(),
         name: 'あ',
-        quantity: 100,
+        gramQuantity: 100,
       },
       {
         id: randomUUID(),
         name: 'い',
-        quantity: 100,
+        gramQuantity: 100,
       },
       {
         id: randomUUID(),
         name: 'う',
-        quantity: 100,
+        gramQuantity: 100,
       },
       {
         id: randomUUID(),
         name: 'え',
-        quantity: 100,
+        gramQuantity: 100,
       },
     ],
   };

@@ -1,7 +1,7 @@
+import { CoffeeBrew } from '@/types/CoffeeBrews';
 import { Table } from '@/ui/table/Table';
 import { Tbody } from '@/ui/table/Tbody';
 
-import { CoffeeBrew } from '../type';
 import { CoffeeBrewItem } from './CoffeeBrewItem';
 
 export function CoffeeBrewsTable({ coffeeBrews }: { coffeeBrews: Array<CoffeeBrew> }) {

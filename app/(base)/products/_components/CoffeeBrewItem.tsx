@@ -1,8 +1,7 @@
 import { css } from '@/panda/css';
+import { CoffeeBrew } from '@/types/CoffeeBrews';
 import { Td } from '@/ui/table/Td';
 import { Tr } from '@/ui/table/Tr';
-
-import { CoffeeBrew } from '../type';
 
 export function CoffeeBrewItem({ coffeeBrew }: { coffeeBrew: CoffeeBrew }) {
   return (
@@ -12,7 +11,7 @@ export function CoffeeBrewItem({ coffeeBrew }: { coffeeBrew: CoffeeBrew }) {
       <Td></Td>
       <Td></Td>
       <Td></Td>
-      <Td>{coffeeBrew.coffeeBeanQuantity}g</Td>
+      <Td>{coffeeBrew.beanQuantityGrams}g</Td>
       <Td></Td>
     </Tr>
   );

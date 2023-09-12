@@ -1,16 +1,25 @@
-import { Dialog, DialogBackdrop, DialogCloseTrigger, DialogContainer, DialogContent, DialogDescription, DialogTitle, Portal } from "@ark-ui/react";
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogCloseTrigger,
+  DialogContainer,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  Portal,
+} from '@ark-ui/react';
 
-import { Stack } from "@/panda/jsx";
-import { dialog } from "@/panda/recipes"
+import { Stack } from '@/panda/jsx';
+import { dialog } from '@/panda/recipes';
 
-import { Button } from "../Button";
+import { Button } from '../form/Button';
 
 type Props = {
-  targetName: string,
-  isOpen: boolean,
-  onClose: () => void,
-  onDelete: () => void,
-}
+  targetName: string;
+  isOpen: boolean;
+  onClose: () => void;
+  onDelete: () => void;
+};
 
 export function DeleteConfirmDialog(props: Props) {
   return (
@@ -26,14 +35,18 @@ export function DeleteConfirmDialog(props: Props) {
               </Stack>
               <Stack gap="3" direction="row" width="full">
                 <DialogCloseTrigger asChild>
-                  <Button variant="secondary" width="full">キャンセル</Button>
+                  <Button variant="secondary" width="full">
+                    キャンセル
+                  </Button>
                 </DialogCloseTrigger>
-                <Button variant="error" width="full" onClick={props.onDelete}>削除</Button>
+                <Button variant="error" width="full" onClick={props.onDelete}>
+                  削除
+                </Button>
               </Stack>
             </Stack>
           </DialogContent>
         </DialogContainer>
       </Portal>
     </Dialog>
-  )
+  );
 }

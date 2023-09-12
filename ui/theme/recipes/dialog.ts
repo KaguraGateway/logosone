@@ -1,7 +1,7 @@
-import { dialogAnatomy } from "@ark-ui/react";
-import { defineParts, defineRecipe } from "@pandacss/dev";
+import { dialogAnatomy } from '@ark-ui/react';
+import { defineParts, defineRecipe } from '@pandacss/dev';
 
-const parts = defineParts(dialogAnatomy.build())
+const parts = defineParts(dialogAnatomy.build());
 
 export const dialog = defineRecipe({
   className: 'dialog',
@@ -10,7 +10,7 @@ export const dialog = defineRecipe({
       background: 'gray.300',
       inset: 0,
       position: 'fixed',
-      opacity: 0.7
+      opacity: 0.7,
     },
     container: {
       position: 'fixed',
@@ -23,12 +23,28 @@ export const dialog = defineRecipe({
       background: 'white',
       borderRadius: 'md',
       boxShadow: 'lg',
-      minW: "lg",
       position: 'relative',
     },
     title: {
       fontWeight: 'semibold',
-      textStyle: "lg"
+      textStyle: 'lg',
     },
-  })
-})
+  }),
+  defaultVariants: {
+    size: 'lg',
+  },
+  variants: {
+    size: {
+      md: parts({
+        content: {
+          minW: 'md',
+        },
+      }),
+      lg: parts({
+        content: {
+          minW: 'lg',
+        },
+      }),
+    },
+  },
+});

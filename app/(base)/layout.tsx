@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {
-  Container, Grid, GridItem, Stack,
-} from '@/panda/jsx';
+import { Container, Grid, GridItem, Stack } from '@/panda/jsx';
 import Sidebar from '@/ui/nav/Sidebar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

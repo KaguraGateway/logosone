@@ -17,7 +17,15 @@ export function NavItem(link: Navigation) {
   const isVisited = pathname === link.href;
 
   return (
-    <li className={css({ px: "6", py: "2.5", borderRadius: "md", backgroundColor: isVisited ? "gray.200" : undefined, _hover: { backgroundColor: 'gray.200' } })}>
+    <li
+      className={css({
+        px: '6',
+        py: '2.5',
+        borderRadius: 'md',
+        backgroundColor: isVisited ? 'gray.200' : undefined,
+        _hover: { backgroundColor: 'gray.200' },
+      })}
+    >
       <Link href={link.href}>
         <HStack gap="3">
           <Box>{link.icon}</Box>
@@ -25,5 +33,5 @@ export function NavItem(link: Navigation) {
         </HStack>
       </Link>
     </li>
-  )
+  );
 }

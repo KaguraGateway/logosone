@@ -6,8 +6,8 @@ const globalCss = defineGlobalStyles({
   body: {
     backgroundColor: 'neutral.100',
     color: 'neutral.950',
-  }
-})
+  },
+});
 
 export default defineConfig({
   // Whether to use css reset
@@ -23,13 +23,38 @@ export default defineConfig({
   theme: {
     extend: {
       recipes,
+      keyframes: {
+        gaming: {
+          '100%': {
+            backgroundPositionX: '200%',
+          },
+        },
+      },
       tokens: {
+        animations: {
+          gaming: {
+            value: 'gaming 1s ease-in-out infinite',
+          },
+        },
         fonts: {
           noto: {
-            value: 'var(--font-noto-sans-jp)'
-          }
-        }
-      }
+            value: 'var(--font-noto-sans-jp)',
+          },
+        },
+      },
+    },
+  },
+
+  staticCss: {
+    recipes: {
+      button: [
+        {
+          size: ['md'],
+        },
+        {
+          variant: ['*'],
+        },
+      ],
     },
   },
 

@@ -23,10 +23,19 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PosServiceClient interface {
 	GetOrders(ctx context.Context, in *GetOrdersRequest, opts ...grpc.CallOption) (*GetOrdersResponse, error)
-	PostOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error)
-	DeleteAllOrders(ctx context.Context, in *DeleteAllOrdersRequest, opts ...grpc.CallOption) (*DeleteAllOrdersResponse, error)
-	GetProducts(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error)
-	OrderNotification(ctx context.Context, opts ...grpc.CallOption) (PosService_OrderNotificationClient, error)
+	PostOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*Empty, error)
+	GetProducts(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetProductsResponse, error)
+	// Only Admin
+	GetProductCategories(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetProductCategoriesResponse, error)
+	PostProductCategory(ctx context.Context, in *PostProductCategoryRequest, opts ...grpc.CallOption) (*Empty, error)
+	PostProduct(ctx context.Context, in *PostProductRequest, opts ...grpc.CallOption) (*Empty, error)
+	UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*Empty, error)
+	DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*Empty, error)
+	PostStock(ctx context.Context, in *PostStockRequest, opts ...grpc.CallOption) (*Empty, error)
+	GetStocks(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetStocksResponse, error)
+	PostCoffeeBean(ctx context.Context, in *PostCoffeeBeanRequest, opts ...grpc.CallOption) (*Empty, error)
+	GetCoffeeBeans(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetCoffeeBeansResponse, error)
+	DeleteAllOrders(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type posServiceClient struct {
@@ -46,8 +55,8 @@ func (c *posServiceClient) GetOrders(ctx context.Context, in *GetOrdersRequest, 
 	return out, nil
 }
 
-func (c *posServiceClient) PostOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*PostOrderResponse, error) {
-	out := new(PostOrderResponse)
+func (c *posServiceClient) PostOrder(ctx context.Context, in *PostOrderRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/cafelogos.PosService/PostOrder", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -55,16 +64,7 @@ func (c *posServiceClient) PostOrder(ctx context.Context, in *PostOrderRequest, 
 	return out, nil
 }
 
-func (c *posServiceClient) DeleteAllOrders(ctx context.Context, in *DeleteAllOrdersRequest, opts ...grpc.CallOption) (*DeleteAllOrdersResponse, error) {
-	out := new(DeleteAllOrdersResponse)
-	err := c.cc.Invoke(ctx, "/cafelogos.PosService/DeleteAllOrders", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *posServiceClient) GetProducts(ctx context.Context, in *GetProductsRequest, opts ...grpc.CallOption) (*GetProductsResponse, error) {
+func (c *posServiceClient) GetProducts(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetProductsResponse, error) {
 	out := new(GetProductsResponse)
 	err := c.cc.Invoke(ctx, "/cafelogos.PosService/GetProducts", in, out, opts...)
 	if err != nil {
@@ -73,35 +73,94 @@ func (c *posServiceClient) GetProducts(ctx context.Context, in *GetProductsReque
 	return out, nil
 }
 
-func (c *posServiceClient) OrderNotification(ctx context.Context, opts ...grpc.CallOption) (PosService_OrderNotificationClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PosService_ServiceDesc.Streams[0], "/cafelogos.PosService/OrderNotification", opts...)
+func (c *posServiceClient) GetProductCategories(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetProductCategoriesResponse, error) {
+	out := new(GetProductCategoriesResponse)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/GetProductCategories", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &posServiceOrderNotificationClient{stream}
-	return x, nil
+	return out, nil
 }
 
-type PosService_OrderNotificationClient interface {
-	Send(*OrderNotificationRequest) error
-	Recv() (*OrderNotificationResponse, error)
-	grpc.ClientStream
-}
-
-type posServiceOrderNotificationClient struct {
-	grpc.ClientStream
-}
-
-func (x *posServiceOrderNotificationClient) Send(m *OrderNotificationRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *posServiceOrderNotificationClient) Recv() (*OrderNotificationResponse, error) {
-	m := new(OrderNotificationResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
+func (c *posServiceClient) PostProductCategory(ctx context.Context, in *PostProductCategoryRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/PostProductCategory", in, out, opts...)
+	if err != nil {
 		return nil, err
 	}
-	return m, nil
+	return out, nil
+}
+
+func (c *posServiceClient) PostProduct(ctx context.Context, in *PostProductRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/PostProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *posServiceClient) UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/UpdateProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *posServiceClient) DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/DeleteProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *posServiceClient) PostStock(ctx context.Context, in *PostStockRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/PostStock", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *posServiceClient) GetStocks(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetStocksResponse, error) {
+	out := new(GetStocksResponse)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/GetStocks", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *posServiceClient) PostCoffeeBean(ctx context.Context, in *PostCoffeeBeanRequest, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/PostCoffeeBean", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *posServiceClient) GetCoffeeBeans(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*GetCoffeeBeansResponse, error) {
+	out := new(GetCoffeeBeansResponse)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/GetCoffeeBeans", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *posServiceClient) DeleteAllOrders(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/cafelogos.PosService/DeleteAllOrders", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 // PosServiceServer is the server API for PosService service.
@@ -109,10 +168,19 @@ func (x *posServiceOrderNotificationClient) Recv() (*OrderNotificationResponse, 
 // for forward compatibility
 type PosServiceServer interface {
 	GetOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error)
-	PostOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error)
-	DeleteAllOrders(context.Context, *DeleteAllOrdersRequest) (*DeleteAllOrdersResponse, error)
-	GetProducts(context.Context, *GetProductsRequest) (*GetProductsResponse, error)
-	OrderNotification(PosService_OrderNotificationServer) error
+	PostOrder(context.Context, *PostOrderRequest) (*Empty, error)
+	GetProducts(context.Context, *Empty) (*GetProductsResponse, error)
+	// Only Admin
+	GetProductCategories(context.Context, *Empty) (*GetProductCategoriesResponse, error)
+	PostProductCategory(context.Context, *PostProductCategoryRequest) (*Empty, error)
+	PostProduct(context.Context, *PostProductRequest) (*Empty, error)
+	UpdateProduct(context.Context, *UpdateProductRequest) (*Empty, error)
+	DeleteProduct(context.Context, *DeleteProductRequest) (*Empty, error)
+	PostStock(context.Context, *PostStockRequest) (*Empty, error)
+	GetStocks(context.Context, *Empty) (*GetStocksResponse, error)
+	PostCoffeeBean(context.Context, *PostCoffeeBeanRequest) (*Empty, error)
+	GetCoffeeBeans(context.Context, *Empty) (*GetCoffeeBeansResponse, error)
+	DeleteAllOrders(context.Context, *Empty) (*Empty, error)
 }
 
 // UnimplementedPosServiceServer should be embedded to have forward compatible implementations.
@@ -122,17 +190,41 @@ type UnimplementedPosServiceServer struct {
 func (UnimplementedPosServiceServer) GetOrders(context.Context, *GetOrdersRequest) (*GetOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOrders not implemented")
 }
-func (UnimplementedPosServiceServer) PostOrder(context.Context, *PostOrderRequest) (*PostOrderResponse, error) {
+func (UnimplementedPosServiceServer) PostOrder(context.Context, *PostOrderRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PostOrder not implemented")
 }
-func (UnimplementedPosServiceServer) DeleteAllOrders(context.Context, *DeleteAllOrdersRequest) (*DeleteAllOrdersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteAllOrders not implemented")
-}
-func (UnimplementedPosServiceServer) GetProducts(context.Context, *GetProductsRequest) (*GetProductsResponse, error) {
+func (UnimplementedPosServiceServer) GetProducts(context.Context, *Empty) (*GetProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProducts not implemented")
 }
-func (UnimplementedPosServiceServer) OrderNotification(PosService_OrderNotificationServer) error {
-	return status.Errorf(codes.Unimplemented, "method OrderNotification not implemented")
+func (UnimplementedPosServiceServer) GetProductCategories(context.Context, *Empty) (*GetProductCategoriesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductCategories not implemented")
+}
+func (UnimplementedPosServiceServer) PostProductCategory(context.Context, *PostProductCategoryRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostProductCategory not implemented")
+}
+func (UnimplementedPosServiceServer) PostProduct(context.Context, *PostProductRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostProduct not implemented")
+}
+func (UnimplementedPosServiceServer) UpdateProduct(context.Context, *UpdateProductRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProduct not implemented")
+}
+func (UnimplementedPosServiceServer) DeleteProduct(context.Context, *DeleteProductRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+}
+func (UnimplementedPosServiceServer) PostStock(context.Context, *PostStockRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostStock not implemented")
+}
+func (UnimplementedPosServiceServer) GetStocks(context.Context, *Empty) (*GetStocksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetStocks not implemented")
+}
+func (UnimplementedPosServiceServer) PostCoffeeBean(context.Context, *PostCoffeeBeanRequest) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PostCoffeeBean not implemented")
+}
+func (UnimplementedPosServiceServer) GetCoffeeBeans(context.Context, *Empty) (*GetCoffeeBeansResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCoffeeBeans not implemented")
+}
+func (UnimplementedPosServiceServer) DeleteAllOrders(context.Context, *Empty) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAllOrders not implemented")
 }
 
 // UnsafePosServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -182,26 +274,8 @@ func _PosService_PostOrder_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PosService_DeleteAllOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAllOrdersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PosServiceServer).DeleteAllOrders(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cafelogos.PosService/DeleteAllOrders",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PosServiceServer).DeleteAllOrders(ctx, req.(*DeleteAllOrdersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _PosService_GetProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductsRequest)
+	in := new(Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -213,35 +287,189 @@ func _PosService_GetProducts_Handler(srv interface{}, ctx context.Context, dec f
 		FullMethod: "/cafelogos.PosService/GetProducts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PosServiceServer).GetProducts(ctx, req.(*GetProductsRequest))
+		return srv.(PosServiceServer).GetProducts(ctx, req.(*Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PosService_OrderNotification_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PosServiceServer).OrderNotification(&posServiceOrderNotificationServer{stream})
-}
-
-type PosService_OrderNotificationServer interface {
-	Send(*OrderNotificationResponse) error
-	Recv() (*OrderNotificationRequest, error)
-	grpc.ServerStream
-}
-
-type posServiceOrderNotificationServer struct {
-	grpc.ServerStream
-}
-
-func (x *posServiceOrderNotificationServer) Send(m *OrderNotificationResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *posServiceOrderNotificationServer) Recv() (*OrderNotificationRequest, error) {
-	m := new(OrderNotificationRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
+func _PosService_GetProductCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return m, nil
+	if interceptor == nil {
+		return srv.(PosServiceServer).GetProductCategories(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/GetProductCategories",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).GetProductCategories(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_PostProductCategory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostProductCategoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).PostProductCategory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/PostProductCategory",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).PostProductCategory(ctx, req.(*PostProductCategoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_PostProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).PostProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/PostProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).PostProduct(ctx, req.(*PostProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).UpdateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/UpdateProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).UpdateProduct(ctx, req.(*UpdateProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProductRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).DeleteProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/DeleteProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).DeleteProduct(ctx, req.(*DeleteProductRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_PostStock_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostStockRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).PostStock(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/PostStock",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).PostStock(ctx, req.(*PostStockRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_GetStocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).GetStocks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/GetStocks",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).GetStocks(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_PostCoffeeBean_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PostCoffeeBeanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).PostCoffeeBean(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/PostCoffeeBean",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).PostCoffeeBean(ctx, req.(*PostCoffeeBeanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_GetCoffeeBeans_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).GetCoffeeBeans(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/GetCoffeeBeans",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).GetCoffeeBeans(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PosService_DeleteAllOrders_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PosServiceServer).DeleteAllOrders(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/cafelogos.PosService/DeleteAllOrders",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PosServiceServer).DeleteAllOrders(ctx, req.(*Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 // PosService_ServiceDesc is the grpc.ServiceDesc for PosService service.
@@ -260,21 +488,50 @@ var PosService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PosService_PostOrder_Handler,
 		},
 		{
-			MethodName: "DeleteAllOrders",
-			Handler:    _PosService_DeleteAllOrders_Handler,
-		},
-		{
 			MethodName: "GetProducts",
 			Handler:    _PosService_GetProducts_Handler,
 		},
-	},
-	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "OrderNotification",
-			Handler:       _PosService_OrderNotification_Handler,
-			ServerStreams: true,
-			ClientStreams: true,
+			MethodName: "GetProductCategories",
+			Handler:    _PosService_GetProductCategories_Handler,
+		},
+		{
+			MethodName: "PostProductCategory",
+			Handler:    _PosService_PostProductCategory_Handler,
+		},
+		{
+			MethodName: "PostProduct",
+			Handler:    _PosService_PostProduct_Handler,
+		},
+		{
+			MethodName: "UpdateProduct",
+			Handler:    _PosService_UpdateProduct_Handler,
+		},
+		{
+			MethodName: "DeleteProduct",
+			Handler:    _PosService_DeleteProduct_Handler,
+		},
+		{
+			MethodName: "PostStock",
+			Handler:    _PosService_PostStock_Handler,
+		},
+		{
+			MethodName: "GetStocks",
+			Handler:    _PosService_GetStocks_Handler,
+		},
+		{
+			MethodName: "PostCoffeeBean",
+			Handler:    _PosService_PostCoffeeBean_Handler,
+		},
+		{
+			MethodName: "GetCoffeeBeans",
+			Handler:    _PosService_GetCoffeeBeans_Handler,
+		},
+		{
+			MethodName: "DeleteAllOrders",
+			Handler:    _PosService_DeleteAllOrders_Handler,
 		},
 	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "proto/pos_service.proto",
 }

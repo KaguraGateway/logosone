@@ -1,16 +1,31 @@
 syntax = "proto3";
 
+package cafelogos;
+
+import "proto/common.proto";
+
 option go_package = "pkg/proto/";
 
-package cafelogos;
 
 service PosService {
     rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
-    rpc PostOrder(PostOrderRequest) returns (PostOrderResponse) {}
-    rpc DeleteAllOrders(DeleteAllOrdersRequest) returns (DeleteAllOrdersResponse) {}
-    rpc GetProducts(GetProductsRequest) returns (GetProductsResponse) {}
+    rpc PostOrder(PostOrderRequest) returns (Empty) {}
+    rpc GetProducts(Empty) returns (GetProductsResponse) {}
+    // Only Admin
+    rpc GetProductCategories(Empty) returns (GetProductCategoriesResponse) {}
+    rpc PostProductCategory(PostProductCategoryRequest) returns (Empty) {}
 
-    rpc OrderNotification(stream OrderNotificationRequest) returns (stream OrderNotificationResponse) {}
+    rpc PostProduct(PostProductRequest) returns (Empty) {}
+    rpc UpdateProduct(UpdateProductRequest) returns (Empty) {}
+    rpc DeleteProduct(DeleteProductRequest) returns (Empty) {}
+
+    rpc PostStock(PostStockRequest) returns (Empty) {}
+    rpc GetStocks(Empty) returns (GetStocksResponse) {}
+
+    rpc PostCoffeeBean(PostCoffeeBeanRequest) returns (Empty) {}
+    rpc GetCoffeeBeans(Empty) returns (GetCoffeeBeansResponse) {}
+
+    rpc DeleteAllOrders(Empty) returns (Empty) {}
 }
 
 /**
@@ -24,20 +39,39 @@ message GetOrdersResponse {
 message PostOrderRequest {
     Order order = 1;
 }
-message PostOrderResponse {}
 
-message DeleteAllOrdersRequest {}
-message DeleteAllOrdersResponse {}
-
-message GetProductsRequest {}
 message GetProductsResponse {
     repeated Product products = 1;
 }
 
-message OrderNotificationRequest {
-    Order order = 1;
+message GetProductCategoriesResponse {
+    repeated ProductCategory product_categories = 1;
 }
-message OrderNotificationResponse {}
+message PostProductCategoryRequest {
+    ProductCategory product_category = 1;
+}
+message PostProductRequest {
+    Product product = 1;
+}
+message UpdateProductRequest {
+    string product_id = 1;
+    Product product = 2;
+}
+message DeleteProductRequest {
+    string product_id = 1;
+}
+message PostStockRequest {
+    Stock stock = 1;
+}
+message GetStocksResponse {
+    repeated Stock stocks = 1;
+}
+message PostCoffeeBeanRequest {
+    CoffeeBean coffee_bean = 1;
+}
+message GetCoffeeBeansResponse {
+    repeated CoffeeBean coffee_beans = 1;
+}
 
 /**
  * Types
@@ -51,7 +85,7 @@ message Product {
     bool is_now_sales = 5;
     // Only Coffee
     CoffeeBean coffee_bean = 6;
-    CoffeeHowToBrew coffee_how_to_brew = 7;
+    repeated CoffeeBrew coffee_brews = 7;
     // Only Other
     uint64 amount = 8;
     Stock stock = 9;
@@ -69,7 +103,7 @@ message CoffeeBean {
     string name = 2;
     int32 gram_quantity = 3;
 }
-message CoffeeHowToBrew {
+message CoffeeBrew {
     string id = 1;
     string name = 2;
     uint32 bean_quantity_grams = 3;
@@ -103,6 +137,12 @@ message OrderItem {
 
 message Discount {
     string id = 1;
+    DiscountType type = 2;
+    uint64 discount_amount = 3;
+
+    enum DiscountType {
+        PRICE = 0;
+    }
 }
 
 message Payment {

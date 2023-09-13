@@ -1,0 +1,32 @@
+{
+    "name": "@kaguragateway/cafelogos-grpc",
+    "version": "1.0.0",
+    "description": "",
+    "main": "",
+    "files": [
+        "scripts"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/KaguraGateway/cafelogos-grpc.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/KaguraGateway/cafelogos-grpc/issues"
+    },
+    "homepage": "https://github.com/KaguraGateway/cafelogos-grpc#readme",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
+    "scripts": {
+        "build": "grpc_tools_node_protoc --plugin=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:./scripts --ts_out=grpc_js:./scripts --grpc_out=grpc_js:./scripts ./proto/*.proto"
+    },
+    "dependencies": {
+        "@grpc/grpc-js": "^1.9.2",
+        "grpc-tools": "^1.12.4"
+    },
+    "devDependencies": {
+        "grpc_tools_node_protoc_ts": "^5.3.3"
+    }
+}

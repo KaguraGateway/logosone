@@ -24,22 +24,62 @@ internal protocol Cafelogos_PosServiceClientProtocol: GRPCClient {
   func postOrder(
     _ request: Cafelogos_PostOrderRequest,
     callOptions: CallOptions?
-  ) -> UnaryCall<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>
-
-  func deleteAllOrders(
-    _ request: Cafelogos_DeleteAllOrdersRequest,
-    callOptions: CallOptions?
-  ) -> UnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>
+  ) -> UnaryCall<Cafelogos_PostOrderRequest, Cafelogos_Empty>
 
   func getProducts(
-    _ request: Cafelogos_GetProductsRequest,
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions?
-  ) -> UnaryCall<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetProductsResponse>
 
-  func orderNotification(
-    callOptions: CallOptions?,
-    handler: @escaping (Cafelogos_OrderNotificationResponse) -> Void
-  ) -> BidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>
+  func getProductCategories(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetProductCategoriesResponse>
+
+  func postProductCategory(
+    _ request: Cafelogos_PostProductCategoryRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_PostProductCategoryRequest, Cafelogos_Empty>
+
+  func postProduct(
+    _ request: Cafelogos_PostProductRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_PostProductRequest, Cafelogos_Empty>
+
+  func updateProduct(
+    _ request: Cafelogos_UpdateProductRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_UpdateProductRequest, Cafelogos_Empty>
+
+  func deleteProduct(
+    _ request: Cafelogos_DeleteProductRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_DeleteProductRequest, Cafelogos_Empty>
+
+  func postStock(
+    _ request: Cafelogos_PostStockRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_PostStockRequest, Cafelogos_Empty>
+
+  func getStocks(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetStocksResponse>
+
+  func postCoffeeBean(
+    _ request: Cafelogos_PostCoffeeBeanRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_PostCoffeeBeanRequest, Cafelogos_Empty>
+
+  func getCoffeeBeans(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetCoffeeBeansResponse>
+
+  func deleteAllOrders(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_Empty>
 }
 
 extension Cafelogos_PosServiceClientProtocol {
@@ -74,30 +114,12 @@ extension Cafelogos_PosServiceClientProtocol {
   internal func postOrder(
     _ request: Cafelogos_PostOrderRequest,
     callOptions: CallOptions? = nil
-  ) -> UnaryCall<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse> {
+  ) -> UnaryCall<Cafelogos_PostOrderRequest, Cafelogos_Empty> {
     return self.makeUnaryCall(
       path: Cafelogos_PosServiceClientMetadata.Methods.postOrder.path,
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makePostOrderInterceptors() ?? []
-    )
-  }
-
-  /// Unary call to DeleteAllOrders
-  ///
-  /// - Parameters:
-  ///   - request: Request to send to DeleteAllOrders.
-  ///   - callOptions: Call options.
-  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func deleteAllOrders(
-    _ request: Cafelogos_DeleteAllOrdersRequest,
-    callOptions: CallOptions? = nil
-  ) -> UnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse> {
-    return self.makeUnaryCall(
-      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
-      request: request,
-      callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
     )
   }
 
@@ -108,9 +130,9 @@ extension Cafelogos_PosServiceClientProtocol {
   ///   - callOptions: Call options.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
   internal func getProducts(
-    _ request: Cafelogos_GetProductsRequest,
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions? = nil
-  ) -> UnaryCall<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse> {
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetProductsResponse> {
     return self.makeUnaryCall(
       path: Cafelogos_PosServiceClientMetadata.Methods.getProducts.path,
       request: request,
@@ -119,24 +141,183 @@ extension Cafelogos_PosServiceClientProtocol {
     )
   }
 
-  /// Bidirectional streaming call to OrderNotification
-  ///
-  /// Callers should use the `send` method on the returned object to send messages
-  /// to the server. The caller should send an `.end` after the final message has been sent.
+  /// Only Admin
   ///
   /// - Parameters:
+  ///   - request: Request to send to GetProductCategories.
   ///   - callOptions: Call options.
-  ///   - handler: A closure called when each response is received from the server.
-  /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
-  internal func orderNotification(
-    callOptions: CallOptions? = nil,
-    handler: @escaping (Cafelogos_OrderNotificationResponse) -> Void
-  ) -> BidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse> {
-    return self.makeBidirectionalStreamingCall(
-      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func getProductCategories(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetProductCategoriesResponse> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getProductCategories.path,
+      request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? [],
-      handler: handler
+      interceptors: self.interceptors?.makeGetProductCategoriesInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to PostProductCategory
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to PostProductCategory.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func postProductCategory(
+    _ request: Cafelogos_PostProductCategoryRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_PostProductCategoryRequest, Cafelogos_Empty> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postProductCategory.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostProductCategoryInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to PostProduct
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to PostProduct.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func postProduct(
+    _ request: Cafelogos_PostProductRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_PostProductRequest, Cafelogos_Empty> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostProductInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to UpdateProduct
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to UpdateProduct.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func updateProduct(
+    _ request: Cafelogos_UpdateProductRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_UpdateProductRequest, Cafelogos_Empty> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.updateProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateProductInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to DeleteProduct
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to DeleteProduct.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func deleteProduct(
+    _ request: Cafelogos_DeleteProductRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_DeleteProductRequest, Cafelogos_Empty> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteProductInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to PostStock
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to PostStock.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func postStock(
+    _ request: Cafelogos_PostStockRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_PostStockRequest, Cafelogos_Empty> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postStock.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostStockInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to GetStocks
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to GetStocks.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func getStocks(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetStocksResponse> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getStocks.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetStocksInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to PostCoffeeBean
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to PostCoffeeBean.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func postCoffeeBean(
+    _ request: Cafelogos_PostCoffeeBeanRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_PostCoffeeBeanRequest, Cafelogos_Empty> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postCoffeeBean.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostCoffeeBeanInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to GetCoffeeBeans
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to GetCoffeeBeans.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func getCoffeeBeans(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_GetCoffeeBeansResponse> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getCoffeeBeans.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetCoffeeBeansInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to DeleteAllOrders
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to DeleteAllOrders.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  internal func deleteAllOrders(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Cafelogos_Empty, Cafelogos_Empty> {
+    return self.makeUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
     )
   }
 }
@@ -211,21 +392,62 @@ internal protocol Cafelogos_PosServiceAsyncClientProtocol: GRPCClient {
   func makePostOrderCall(
     _ request: Cafelogos_PostOrderRequest,
     callOptions: CallOptions?
-  ) -> GRPCAsyncUnaryCall<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>
-
-  func makeDeleteAllOrdersCall(
-    _ request: Cafelogos_DeleteAllOrdersRequest,
-    callOptions: CallOptions?
-  ) -> GRPCAsyncUnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostOrderRequest, Cafelogos_Empty>
 
   func makeGetProductsCall(
-    _ request: Cafelogos_GetProductsRequest,
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions?
-  ) -> GRPCAsyncUnaryCall<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetProductsResponse>
 
-  func makeOrderNotificationCall(
+  func makeGetProductCategoriesCall(
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions?
-  ) -> GRPCAsyncBidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetProductCategoriesResponse>
+
+  func makePostProductCategoryCall(
+    _ request: Cafelogos_PostProductCategoryRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostProductCategoryRequest, Cafelogos_Empty>
+
+  func makePostProductCall(
+    _ request: Cafelogos_PostProductRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostProductRequest, Cafelogos_Empty>
+
+  func makeUpdateProductCall(
+    _ request: Cafelogos_UpdateProductRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_UpdateProductRequest, Cafelogos_Empty>
+
+  func makeDeleteProductCall(
+    _ request: Cafelogos_DeleteProductRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_DeleteProductRequest, Cafelogos_Empty>
+
+  func makePostStockCall(
+    _ request: Cafelogos_PostStockRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostStockRequest, Cafelogos_Empty>
+
+  func makeGetStocksCall(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetStocksResponse>
+
+  func makePostCoffeeBeanCall(
+    _ request: Cafelogos_PostCoffeeBeanRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostCoffeeBeanRequest, Cafelogos_Empty>
+
+  func makeGetCoffeeBeansCall(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetCoffeeBeansResponse>
+
+  func makeDeleteAllOrdersCall(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_Empty>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -253,7 +475,7 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
   internal func makePostOrderCall(
     _ request: Cafelogos_PostOrderRequest,
     callOptions: CallOptions? = nil
-  ) -> GRPCAsyncUnaryCall<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse> {
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostOrderRequest, Cafelogos_Empty> {
     return self.makeAsyncUnaryCall(
       path: Cafelogos_PosServiceClientMetadata.Methods.postOrder.path,
       request: request,
@@ -262,22 +484,10 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
     )
   }
 
-  internal func makeDeleteAllOrdersCall(
-    _ request: Cafelogos_DeleteAllOrdersRequest,
-    callOptions: CallOptions? = nil
-  ) -> GRPCAsyncUnaryCall<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse> {
-    return self.makeAsyncUnaryCall(
-      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
-      request: request,
-      callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
-    )
-  }
-
   internal func makeGetProductsCall(
-    _ request: Cafelogos_GetProductsRequest,
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions? = nil
-  ) -> GRPCAsyncUnaryCall<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse> {
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetProductsResponse> {
     return self.makeAsyncUnaryCall(
       path: Cafelogos_PosServiceClientMetadata.Methods.getProducts.path,
       request: request,
@@ -286,13 +496,123 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
     )
   }
 
-  internal func makeOrderNotificationCall(
+  internal func makeGetProductCategoriesCall(
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions? = nil
-  ) -> GRPCAsyncBidirectionalStreamingCall<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse> {
-    return self.makeAsyncBidirectionalStreamingCall(
-      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetProductCategoriesResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getProductCategories.path,
+      request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? []
+      interceptors: self.interceptors?.makeGetProductCategoriesInterceptors() ?? []
+    )
+  }
+
+  internal func makePostProductCategoryCall(
+    _ request: Cafelogos_PostProductCategoryRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostProductCategoryRequest, Cafelogos_Empty> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postProductCategory.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostProductCategoryInterceptors() ?? []
+    )
+  }
+
+  internal func makePostProductCall(
+    _ request: Cafelogos_PostProductRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostProductRequest, Cafelogos_Empty> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostProductInterceptors() ?? []
+    )
+  }
+
+  internal func makeUpdateProductCall(
+    _ request: Cafelogos_UpdateProductRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_UpdateProductRequest, Cafelogos_Empty> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.updateProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateProductInterceptors() ?? []
+    )
+  }
+
+  internal func makeDeleteProductCall(
+    _ request: Cafelogos_DeleteProductRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_DeleteProductRequest, Cafelogos_Empty> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteProductInterceptors() ?? []
+    )
+  }
+
+  internal func makePostStockCall(
+    _ request: Cafelogos_PostStockRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostStockRequest, Cafelogos_Empty> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postStock.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostStockInterceptors() ?? []
+    )
+  }
+
+  internal func makeGetStocksCall(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetStocksResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getStocks.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetStocksInterceptors() ?? []
+    )
+  }
+
+  internal func makePostCoffeeBeanCall(
+    _ request: Cafelogos_PostCoffeeBeanRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_PostCoffeeBeanRequest, Cafelogos_Empty> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postCoffeeBean.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostCoffeeBeanInterceptors() ?? []
+    )
+  }
+
+  internal func makeGetCoffeeBeansCall(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_GetCoffeeBeansResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getCoffeeBeans.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetCoffeeBeansInterceptors() ?? []
+    )
+  }
+
+  internal func makeDeleteAllOrdersCall(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Cafelogos_Empty, Cafelogos_Empty> {
+    return self.makeAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
     )
   }
 }
@@ -314,7 +634,7 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
   internal func postOrder(
     _ request: Cafelogos_PostOrderRequest,
     callOptions: CallOptions? = nil
-  ) async throws -> Cafelogos_PostOrderResponse {
+  ) async throws -> Cafelogos_Empty {
     return try await self.performAsyncUnaryCall(
       path: Cafelogos_PosServiceClientMetadata.Methods.postOrder.path,
       request: request,
@@ -323,20 +643,8 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
     )
   }
 
-  internal func deleteAllOrders(
-    _ request: Cafelogos_DeleteAllOrdersRequest,
-    callOptions: CallOptions? = nil
-  ) async throws -> Cafelogos_DeleteAllOrdersResponse {
-    return try await self.performAsyncUnaryCall(
-      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
-      request: request,
-      callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
-    )
-  }
-
   internal func getProducts(
-    _ request: Cafelogos_GetProductsRequest,
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions? = nil
   ) async throws -> Cafelogos_GetProductsResponse {
     return try await self.performAsyncUnaryCall(
@@ -347,27 +655,123 @@ extension Cafelogos_PosServiceAsyncClientProtocol {
     )
   }
 
-  internal func orderNotification<RequestStream>(
-    _ requests: RequestStream,
+  internal func getProductCategories(
+    _ request: Cafelogos_Empty,
     callOptions: CallOptions? = nil
-  ) -> GRPCAsyncResponseStream<Cafelogos_OrderNotificationResponse> where RequestStream: Sequence, RequestStream.Element == Cafelogos_OrderNotificationRequest {
-    return self.performAsyncBidirectionalStreamingCall(
-      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
-      requests: requests,
+  ) async throws -> Cafelogos_GetProductCategoriesResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getProductCategories.path,
+      request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? []
+      interceptors: self.interceptors?.makeGetProductCategoriesInterceptors() ?? []
     )
   }
 
-  internal func orderNotification<RequestStream>(
-    _ requests: RequestStream,
+  internal func postProductCategory(
+    _ request: Cafelogos_PostProductCategoryRequest,
     callOptions: CallOptions? = nil
-  ) -> GRPCAsyncResponseStream<Cafelogos_OrderNotificationResponse> where RequestStream: AsyncSequence & Sendable, RequestStream.Element == Cafelogos_OrderNotificationRequest {
-    return self.performAsyncBidirectionalStreamingCall(
-      path: Cafelogos_PosServiceClientMetadata.Methods.orderNotification.path,
-      requests: requests,
+  ) async throws -> Cafelogos_Empty {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postProductCategory.path,
+      request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
-      interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? []
+      interceptors: self.interceptors?.makePostProductCategoryInterceptors() ?? []
+    )
+  }
+
+  internal func postProduct(
+    _ request: Cafelogos_PostProductRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_Empty {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostProductInterceptors() ?? []
+    )
+  }
+
+  internal func updateProduct(
+    _ request: Cafelogos_UpdateProductRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_Empty {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.updateProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeUpdateProductInterceptors() ?? []
+    )
+  }
+
+  internal func deleteProduct(
+    _ request: Cafelogos_DeleteProductRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_Empty {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteProduct.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteProductInterceptors() ?? []
+    )
+  }
+
+  internal func postStock(
+    _ request: Cafelogos_PostStockRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_Empty {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postStock.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostStockInterceptors() ?? []
+    )
+  }
+
+  internal func getStocks(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_GetStocksResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getStocks.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetStocksInterceptors() ?? []
+    )
+  }
+
+  internal func postCoffeeBean(
+    _ request: Cafelogos_PostCoffeeBeanRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_Empty {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.postCoffeeBean.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makePostCoffeeBeanInterceptors() ?? []
+    )
+  }
+
+  internal func getCoffeeBeans(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_GetCoffeeBeansResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.getCoffeeBeans.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetCoffeeBeansInterceptors() ?? []
+    )
+  }
+
+  internal func deleteAllOrders(
+    _ request: Cafelogos_Empty,
+    callOptions: CallOptions? = nil
+  ) async throws -> Cafelogos_Empty {
+    return try await self.performAsyncUnaryCall(
+      path: Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? []
     )
   }
 }
@@ -395,16 +799,40 @@ internal protocol Cafelogos_PosServiceClientInterceptorFactoryProtocol: Sendable
   func makeGetOrdersInterceptors() -> [ClientInterceptor<Cafelogos_GetOrdersRequest, Cafelogos_GetOrdersResponse>]
 
   /// - Returns: Interceptors to use when invoking 'postOrder'.
-  func makePostOrderInterceptors() -> [ClientInterceptor<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>]
-
-  /// - Returns: Interceptors to use when invoking 'deleteAllOrders'.
-  func makeDeleteAllOrdersInterceptors() -> [ClientInterceptor<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>]
+  func makePostOrderInterceptors() -> [ClientInterceptor<Cafelogos_PostOrderRequest, Cafelogos_Empty>]
 
   /// - Returns: Interceptors to use when invoking 'getProducts'.
-  func makeGetProductsInterceptors() -> [ClientInterceptor<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>]
+  func makeGetProductsInterceptors() -> [ClientInterceptor<Cafelogos_Empty, Cafelogos_GetProductsResponse>]
 
-  /// - Returns: Interceptors to use when invoking 'orderNotification'.
-  func makeOrderNotificationInterceptors() -> [ClientInterceptor<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>]
+  /// - Returns: Interceptors to use when invoking 'getProductCategories'.
+  func makeGetProductCategoriesInterceptors() -> [ClientInterceptor<Cafelogos_Empty, Cafelogos_GetProductCategoriesResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'postProductCategory'.
+  func makePostProductCategoryInterceptors() -> [ClientInterceptor<Cafelogos_PostProductCategoryRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when invoking 'postProduct'.
+  func makePostProductInterceptors() -> [ClientInterceptor<Cafelogos_PostProductRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when invoking 'updateProduct'.
+  func makeUpdateProductInterceptors() -> [ClientInterceptor<Cafelogos_UpdateProductRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when invoking 'deleteProduct'.
+  func makeDeleteProductInterceptors() -> [ClientInterceptor<Cafelogos_DeleteProductRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when invoking 'postStock'.
+  func makePostStockInterceptors() -> [ClientInterceptor<Cafelogos_PostStockRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when invoking 'getStocks'.
+  func makeGetStocksInterceptors() -> [ClientInterceptor<Cafelogos_Empty, Cafelogos_GetStocksResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'postCoffeeBean'.
+  func makePostCoffeeBeanInterceptors() -> [ClientInterceptor<Cafelogos_PostCoffeeBeanRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when invoking 'getCoffeeBeans'.
+  func makeGetCoffeeBeansInterceptors() -> [ClientInterceptor<Cafelogos_Empty, Cafelogos_GetCoffeeBeansResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'deleteAllOrders'.
+  func makeDeleteAllOrdersInterceptors() -> [ClientInterceptor<Cafelogos_Empty, Cafelogos_Empty>]
 }
 
 internal enum Cafelogos_PosServiceClientMetadata {
@@ -414,9 +842,17 @@ internal enum Cafelogos_PosServiceClientMetadata {
     methods: [
       Cafelogos_PosServiceClientMetadata.Methods.getOrders,
       Cafelogos_PosServiceClientMetadata.Methods.postOrder,
-      Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders,
       Cafelogos_PosServiceClientMetadata.Methods.getProducts,
-      Cafelogos_PosServiceClientMetadata.Methods.orderNotification,
+      Cafelogos_PosServiceClientMetadata.Methods.getProductCategories,
+      Cafelogos_PosServiceClientMetadata.Methods.postProductCategory,
+      Cafelogos_PosServiceClientMetadata.Methods.postProduct,
+      Cafelogos_PosServiceClientMetadata.Methods.updateProduct,
+      Cafelogos_PosServiceClientMetadata.Methods.deleteProduct,
+      Cafelogos_PosServiceClientMetadata.Methods.postStock,
+      Cafelogos_PosServiceClientMetadata.Methods.getStocks,
+      Cafelogos_PosServiceClientMetadata.Methods.postCoffeeBean,
+      Cafelogos_PosServiceClientMetadata.Methods.getCoffeeBeans,
+      Cafelogos_PosServiceClientMetadata.Methods.deleteAllOrders,
     ]
   )
 
@@ -433,22 +869,70 @@ internal enum Cafelogos_PosServiceClientMetadata {
       type: GRPCCallType.unary
     )
 
-    internal static let deleteAllOrders = GRPCMethodDescriptor(
-      name: "DeleteAllOrders",
-      path: "/cafelogos.PosService/DeleteAllOrders",
-      type: GRPCCallType.unary
-    )
-
     internal static let getProducts = GRPCMethodDescriptor(
       name: "GetProducts",
       path: "/cafelogos.PosService/GetProducts",
       type: GRPCCallType.unary
     )
 
-    internal static let orderNotification = GRPCMethodDescriptor(
-      name: "OrderNotification",
-      path: "/cafelogos.PosService/OrderNotification",
-      type: GRPCCallType.bidirectionalStreaming
+    internal static let getProductCategories = GRPCMethodDescriptor(
+      name: "GetProductCategories",
+      path: "/cafelogos.PosService/GetProductCategories",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postProductCategory = GRPCMethodDescriptor(
+      name: "PostProductCategory",
+      path: "/cafelogos.PosService/PostProductCategory",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postProduct = GRPCMethodDescriptor(
+      name: "PostProduct",
+      path: "/cafelogos.PosService/PostProduct",
+      type: GRPCCallType.unary
+    )
+
+    internal static let updateProduct = GRPCMethodDescriptor(
+      name: "UpdateProduct",
+      path: "/cafelogos.PosService/UpdateProduct",
+      type: GRPCCallType.unary
+    )
+
+    internal static let deleteProduct = GRPCMethodDescriptor(
+      name: "DeleteProduct",
+      path: "/cafelogos.PosService/DeleteProduct",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postStock = GRPCMethodDescriptor(
+      name: "PostStock",
+      path: "/cafelogos.PosService/PostStock",
+      type: GRPCCallType.unary
+    )
+
+    internal static let getStocks = GRPCMethodDescriptor(
+      name: "GetStocks",
+      path: "/cafelogos.PosService/GetStocks",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postCoffeeBean = GRPCMethodDescriptor(
+      name: "PostCoffeeBean",
+      path: "/cafelogos.PosService/PostCoffeeBean",
+      type: GRPCCallType.unary
+    )
+
+    internal static let getCoffeeBeans = GRPCMethodDescriptor(
+      name: "GetCoffeeBeans",
+      path: "/cafelogos.PosService/GetCoffeeBeans",
+      type: GRPCCallType.unary
+    )
+
+    internal static let deleteAllOrders = GRPCMethodDescriptor(
+      name: "DeleteAllOrders",
+      path: "/cafelogos.PosService/DeleteAllOrders",
+      type: GRPCCallType.unary
     )
   }
 }
@@ -459,13 +943,30 @@ internal protocol Cafelogos_PosServiceProvider: CallHandlerProvider {
 
   func getOrders(request: Cafelogos_GetOrdersRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_GetOrdersResponse>
 
-  func postOrder(request: Cafelogos_PostOrderRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_PostOrderResponse>
+  func postOrder(request: Cafelogos_PostOrderRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
 
-  func deleteAllOrders(request: Cafelogos_DeleteAllOrdersRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_DeleteAllOrdersResponse>
+  func getProducts(request: Cafelogos_Empty, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_GetProductsResponse>
 
-  func getProducts(request: Cafelogos_GetProductsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_GetProductsResponse>
+  /// Only Admin
+  func getProductCategories(request: Cafelogos_Empty, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_GetProductCategoriesResponse>
 
-  func orderNotification(context: StreamingResponseCallContext<Cafelogos_OrderNotificationResponse>) -> EventLoopFuture<(StreamEvent<Cafelogos_OrderNotificationRequest>) -> Void>
+  func postProductCategory(request: Cafelogos_PostProductCategoryRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
+
+  func postProduct(request: Cafelogos_PostProductRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
+
+  func updateProduct(request: Cafelogos_UpdateProductRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
+
+  func deleteProduct(request: Cafelogos_DeleteProductRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
+
+  func postStock(request: Cafelogos_PostStockRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
+
+  func getStocks(request: Cafelogos_Empty, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_GetStocksResponse>
+
+  func postCoffeeBean(request: Cafelogos_PostCoffeeBeanRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
+
+  func getCoffeeBeans(request: Cafelogos_Empty, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_GetCoffeeBeansResponse>
+
+  func deleteAllOrders(request: Cafelogos_Empty, context: StatusOnlyCallContext) -> EventLoopFuture<Cafelogos_Empty>
 }
 
 extension Cafelogos_PosServiceProvider {
@@ -493,36 +994,108 @@ extension Cafelogos_PosServiceProvider {
       return UnaryServerHandler(
         context: context,
         requestDeserializer: ProtobufDeserializer<Cafelogos_PostOrderRequest>(),
-        responseSerializer: ProtobufSerializer<Cafelogos_PostOrderResponse>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
         interceptors: self.interceptors?.makePostOrderInterceptors() ?? [],
         userFunction: self.postOrder(request:context:)
-      )
-
-    case "DeleteAllOrders":
-      return UnaryServerHandler(
-        context: context,
-        requestDeserializer: ProtobufDeserializer<Cafelogos_DeleteAllOrdersRequest>(),
-        responseSerializer: ProtobufSerializer<Cafelogos_DeleteAllOrdersResponse>(),
-        interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? [],
-        userFunction: self.deleteAllOrders(request:context:)
       )
 
     case "GetProducts":
       return UnaryServerHandler(
         context: context,
-        requestDeserializer: ProtobufDeserializer<Cafelogos_GetProductsRequest>(),
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
         responseSerializer: ProtobufSerializer<Cafelogos_GetProductsResponse>(),
         interceptors: self.interceptors?.makeGetProductsInterceptors() ?? [],
         userFunction: self.getProducts(request:context:)
       )
 
-    case "OrderNotification":
-      return BidirectionalStreamingServerHandler(
+    case "GetProductCategories":
+      return UnaryServerHandler(
         context: context,
-        requestDeserializer: ProtobufDeserializer<Cafelogos_OrderNotificationRequest>(),
-        responseSerializer: ProtobufSerializer<Cafelogos_OrderNotificationResponse>(),
-        interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? [],
-        observerFactory: self.orderNotification(context:)
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_GetProductCategoriesResponse>(),
+        interceptors: self.interceptors?.makeGetProductCategoriesInterceptors() ?? [],
+        userFunction: self.getProductCategories(request:context:)
+      )
+
+    case "PostProductCategory":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostProductCategoryRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostProductCategoryInterceptors() ?? [],
+        userFunction: self.postProductCategory(request:context:)
+      )
+
+    case "PostProduct":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostProductRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostProductInterceptors() ?? [],
+        userFunction: self.postProduct(request:context:)
+      )
+
+    case "UpdateProduct":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_UpdateProductRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makeUpdateProductInterceptors() ?? [],
+        userFunction: self.updateProduct(request:context:)
+      )
+
+    case "DeleteProduct":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_DeleteProductRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makeDeleteProductInterceptors() ?? [],
+        userFunction: self.deleteProduct(request:context:)
+      )
+
+    case "PostStock":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostStockRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostStockInterceptors() ?? [],
+        userFunction: self.postStock(request:context:)
+      )
+
+    case "GetStocks":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_GetStocksResponse>(),
+        interceptors: self.interceptors?.makeGetStocksInterceptors() ?? [],
+        userFunction: self.getStocks(request:context:)
+      )
+
+    case "PostCoffeeBean":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostCoffeeBeanRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostCoffeeBeanInterceptors() ?? [],
+        userFunction: self.postCoffeeBean(request:context:)
+      )
+
+    case "GetCoffeeBeans":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_GetCoffeeBeansResponse>(),
+        interceptors: self.interceptors?.makeGetCoffeeBeansInterceptors() ?? [],
+        userFunction: self.getCoffeeBeans(request:context:)
+      )
+
+    case "DeleteAllOrders":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? [],
+        userFunction: self.deleteAllOrders(request:context:)
       )
 
     default:
@@ -545,23 +1118,63 @@ internal protocol Cafelogos_PosServiceAsyncProvider: CallHandlerProvider, Sendab
   func postOrder(
     request: Cafelogos_PostOrderRequest,
     context: GRPCAsyncServerCallContext
-  ) async throws -> Cafelogos_PostOrderResponse
-
-  func deleteAllOrders(
-    request: Cafelogos_DeleteAllOrdersRequest,
-    context: GRPCAsyncServerCallContext
-  ) async throws -> Cafelogos_DeleteAllOrdersResponse
+  ) async throws -> Cafelogos_Empty
 
   func getProducts(
-    request: Cafelogos_GetProductsRequest,
+    request: Cafelogos_Empty,
     context: GRPCAsyncServerCallContext
   ) async throws -> Cafelogos_GetProductsResponse
 
-  func orderNotification(
-    requestStream: GRPCAsyncRequestStream<Cafelogos_OrderNotificationRequest>,
-    responseStream: GRPCAsyncResponseStreamWriter<Cafelogos_OrderNotificationResponse>,
+  /// Only Admin
+  func getProductCategories(
+    request: Cafelogos_Empty,
     context: GRPCAsyncServerCallContext
-  ) async throws
+  ) async throws -> Cafelogos_GetProductCategoriesResponse
+
+  func postProductCategory(
+    request: Cafelogos_PostProductCategoryRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_Empty
+
+  func postProduct(
+    request: Cafelogos_PostProductRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_Empty
+
+  func updateProduct(
+    request: Cafelogos_UpdateProductRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_Empty
+
+  func deleteProduct(
+    request: Cafelogos_DeleteProductRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_Empty
+
+  func postStock(
+    request: Cafelogos_PostStockRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_Empty
+
+  func getStocks(
+    request: Cafelogos_Empty,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_GetStocksResponse
+
+  func postCoffeeBean(
+    request: Cafelogos_PostCoffeeBeanRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_Empty
+
+  func getCoffeeBeans(
+    request: Cafelogos_Empty,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_GetCoffeeBeansResponse
+
+  func deleteAllOrders(
+    request: Cafelogos_Empty,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Cafelogos_Empty
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -596,36 +1209,108 @@ extension Cafelogos_PosServiceAsyncProvider {
       return GRPCAsyncServerHandler(
         context: context,
         requestDeserializer: ProtobufDeserializer<Cafelogos_PostOrderRequest>(),
-        responseSerializer: ProtobufSerializer<Cafelogos_PostOrderResponse>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
         interceptors: self.interceptors?.makePostOrderInterceptors() ?? [],
         wrapping: { try await self.postOrder(request: $0, context: $1) }
-      )
-
-    case "DeleteAllOrders":
-      return GRPCAsyncServerHandler(
-        context: context,
-        requestDeserializer: ProtobufDeserializer<Cafelogos_DeleteAllOrdersRequest>(),
-        responseSerializer: ProtobufSerializer<Cafelogos_DeleteAllOrdersResponse>(),
-        interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? [],
-        wrapping: { try await self.deleteAllOrders(request: $0, context: $1) }
       )
 
     case "GetProducts":
       return GRPCAsyncServerHandler(
         context: context,
-        requestDeserializer: ProtobufDeserializer<Cafelogos_GetProductsRequest>(),
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
         responseSerializer: ProtobufSerializer<Cafelogos_GetProductsResponse>(),
         interceptors: self.interceptors?.makeGetProductsInterceptors() ?? [],
         wrapping: { try await self.getProducts(request: $0, context: $1) }
       )
 
-    case "OrderNotification":
+    case "GetProductCategories":
       return GRPCAsyncServerHandler(
         context: context,
-        requestDeserializer: ProtobufDeserializer<Cafelogos_OrderNotificationRequest>(),
-        responseSerializer: ProtobufSerializer<Cafelogos_OrderNotificationResponse>(),
-        interceptors: self.interceptors?.makeOrderNotificationInterceptors() ?? [],
-        wrapping: { try await self.orderNotification(requestStream: $0, responseStream: $1, context: $2) }
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_GetProductCategoriesResponse>(),
+        interceptors: self.interceptors?.makeGetProductCategoriesInterceptors() ?? [],
+        wrapping: { try await self.getProductCategories(request: $0, context: $1) }
+      )
+
+    case "PostProductCategory":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostProductCategoryRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostProductCategoryInterceptors() ?? [],
+        wrapping: { try await self.postProductCategory(request: $0, context: $1) }
+      )
+
+    case "PostProduct":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostProductRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostProductInterceptors() ?? [],
+        wrapping: { try await self.postProduct(request: $0, context: $1) }
+      )
+
+    case "UpdateProduct":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_UpdateProductRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makeUpdateProductInterceptors() ?? [],
+        wrapping: { try await self.updateProduct(request: $0, context: $1) }
+      )
+
+    case "DeleteProduct":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_DeleteProductRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makeDeleteProductInterceptors() ?? [],
+        wrapping: { try await self.deleteProduct(request: $0, context: $1) }
+      )
+
+    case "PostStock":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostStockRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostStockInterceptors() ?? [],
+        wrapping: { try await self.postStock(request: $0, context: $1) }
+      )
+
+    case "GetStocks":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_GetStocksResponse>(),
+        interceptors: self.interceptors?.makeGetStocksInterceptors() ?? [],
+        wrapping: { try await self.getStocks(request: $0, context: $1) }
+      )
+
+    case "PostCoffeeBean":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_PostCoffeeBeanRequest>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makePostCoffeeBeanInterceptors() ?? [],
+        wrapping: { try await self.postCoffeeBean(request: $0, context: $1) }
+      )
+
+    case "GetCoffeeBeans":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_GetCoffeeBeansResponse>(),
+        interceptors: self.interceptors?.makeGetCoffeeBeansInterceptors() ?? [],
+        wrapping: { try await self.getCoffeeBeans(request: $0, context: $1) }
+      )
+
+    case "DeleteAllOrders":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Cafelogos_Empty>(),
+        responseSerializer: ProtobufSerializer<Cafelogos_Empty>(),
+        interceptors: self.interceptors?.makeDeleteAllOrdersInterceptors() ?? [],
+        wrapping: { try await self.deleteAllOrders(request: $0, context: $1) }
       )
 
     default:
@@ -642,19 +1327,51 @@ internal protocol Cafelogos_PosServiceServerInterceptorFactoryProtocol: Sendable
 
   /// - Returns: Interceptors to use when handling 'postOrder'.
   ///   Defaults to calling `self.makeInterceptors()`.
-  func makePostOrderInterceptors() -> [ServerInterceptor<Cafelogos_PostOrderRequest, Cafelogos_PostOrderResponse>]
-
-  /// - Returns: Interceptors to use when handling 'deleteAllOrders'.
-  ///   Defaults to calling `self.makeInterceptors()`.
-  func makeDeleteAllOrdersInterceptors() -> [ServerInterceptor<Cafelogos_DeleteAllOrdersRequest, Cafelogos_DeleteAllOrdersResponse>]
+  func makePostOrderInterceptors() -> [ServerInterceptor<Cafelogos_PostOrderRequest, Cafelogos_Empty>]
 
   /// - Returns: Interceptors to use when handling 'getProducts'.
   ///   Defaults to calling `self.makeInterceptors()`.
-  func makeGetProductsInterceptors() -> [ServerInterceptor<Cafelogos_GetProductsRequest, Cafelogos_GetProductsResponse>]
+  func makeGetProductsInterceptors() -> [ServerInterceptor<Cafelogos_Empty, Cafelogos_GetProductsResponse>]
 
-  /// - Returns: Interceptors to use when handling 'orderNotification'.
+  /// - Returns: Interceptors to use when handling 'getProductCategories'.
   ///   Defaults to calling `self.makeInterceptors()`.
-  func makeOrderNotificationInterceptors() -> [ServerInterceptor<Cafelogos_OrderNotificationRequest, Cafelogos_OrderNotificationResponse>]
+  func makeGetProductCategoriesInterceptors() -> [ServerInterceptor<Cafelogos_Empty, Cafelogos_GetProductCategoriesResponse>]
+
+  /// - Returns: Interceptors to use when handling 'postProductCategory'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makePostProductCategoryInterceptors() -> [ServerInterceptor<Cafelogos_PostProductCategoryRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when handling 'postProduct'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makePostProductInterceptors() -> [ServerInterceptor<Cafelogos_PostProductRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when handling 'updateProduct'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeUpdateProductInterceptors() -> [ServerInterceptor<Cafelogos_UpdateProductRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when handling 'deleteProduct'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeDeleteProductInterceptors() -> [ServerInterceptor<Cafelogos_DeleteProductRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when handling 'postStock'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makePostStockInterceptors() -> [ServerInterceptor<Cafelogos_PostStockRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when handling 'getStocks'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeGetStocksInterceptors() -> [ServerInterceptor<Cafelogos_Empty, Cafelogos_GetStocksResponse>]
+
+  /// - Returns: Interceptors to use when handling 'postCoffeeBean'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makePostCoffeeBeanInterceptors() -> [ServerInterceptor<Cafelogos_PostCoffeeBeanRequest, Cafelogos_Empty>]
+
+  /// - Returns: Interceptors to use when handling 'getCoffeeBeans'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeGetCoffeeBeansInterceptors() -> [ServerInterceptor<Cafelogos_Empty, Cafelogos_GetCoffeeBeansResponse>]
+
+  /// - Returns: Interceptors to use when handling 'deleteAllOrders'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeDeleteAllOrdersInterceptors() -> [ServerInterceptor<Cafelogos_Empty, Cafelogos_Empty>]
 }
 
 internal enum Cafelogos_PosServiceServerMetadata {
@@ -664,9 +1381,17 @@ internal enum Cafelogos_PosServiceServerMetadata {
     methods: [
       Cafelogos_PosServiceServerMetadata.Methods.getOrders,
       Cafelogos_PosServiceServerMetadata.Methods.postOrder,
-      Cafelogos_PosServiceServerMetadata.Methods.deleteAllOrders,
       Cafelogos_PosServiceServerMetadata.Methods.getProducts,
-      Cafelogos_PosServiceServerMetadata.Methods.orderNotification,
+      Cafelogos_PosServiceServerMetadata.Methods.getProductCategories,
+      Cafelogos_PosServiceServerMetadata.Methods.postProductCategory,
+      Cafelogos_PosServiceServerMetadata.Methods.postProduct,
+      Cafelogos_PosServiceServerMetadata.Methods.updateProduct,
+      Cafelogos_PosServiceServerMetadata.Methods.deleteProduct,
+      Cafelogos_PosServiceServerMetadata.Methods.postStock,
+      Cafelogos_PosServiceServerMetadata.Methods.getStocks,
+      Cafelogos_PosServiceServerMetadata.Methods.postCoffeeBean,
+      Cafelogos_PosServiceServerMetadata.Methods.getCoffeeBeans,
+      Cafelogos_PosServiceServerMetadata.Methods.deleteAllOrders,
     ]
   )
 
@@ -683,22 +1408,70 @@ internal enum Cafelogos_PosServiceServerMetadata {
       type: GRPCCallType.unary
     )
 
-    internal static let deleteAllOrders = GRPCMethodDescriptor(
-      name: "DeleteAllOrders",
-      path: "/cafelogos.PosService/DeleteAllOrders",
-      type: GRPCCallType.unary
-    )
-
     internal static let getProducts = GRPCMethodDescriptor(
       name: "GetProducts",
       path: "/cafelogos.PosService/GetProducts",
       type: GRPCCallType.unary
     )
 
-    internal static let orderNotification = GRPCMethodDescriptor(
-      name: "OrderNotification",
-      path: "/cafelogos.PosService/OrderNotification",
-      type: GRPCCallType.bidirectionalStreaming
+    internal static let getProductCategories = GRPCMethodDescriptor(
+      name: "GetProductCategories",
+      path: "/cafelogos.PosService/GetProductCategories",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postProductCategory = GRPCMethodDescriptor(
+      name: "PostProductCategory",
+      path: "/cafelogos.PosService/PostProductCategory",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postProduct = GRPCMethodDescriptor(
+      name: "PostProduct",
+      path: "/cafelogos.PosService/PostProduct",
+      type: GRPCCallType.unary
+    )
+
+    internal static let updateProduct = GRPCMethodDescriptor(
+      name: "UpdateProduct",
+      path: "/cafelogos.PosService/UpdateProduct",
+      type: GRPCCallType.unary
+    )
+
+    internal static let deleteProduct = GRPCMethodDescriptor(
+      name: "DeleteProduct",
+      path: "/cafelogos.PosService/DeleteProduct",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postStock = GRPCMethodDescriptor(
+      name: "PostStock",
+      path: "/cafelogos.PosService/PostStock",
+      type: GRPCCallType.unary
+    )
+
+    internal static let getStocks = GRPCMethodDescriptor(
+      name: "GetStocks",
+      path: "/cafelogos.PosService/GetStocks",
+      type: GRPCCallType.unary
+    )
+
+    internal static let postCoffeeBean = GRPCMethodDescriptor(
+      name: "PostCoffeeBean",
+      path: "/cafelogos.PosService/PostCoffeeBean",
+      type: GRPCCallType.unary
+    )
+
+    internal static let getCoffeeBeans = GRPCMethodDescriptor(
+      name: "GetCoffeeBeans",
+      path: "/cafelogos.PosService/GetCoffeeBeans",
+      type: GRPCCallType.unary
+    )
+
+    internal static let deleteAllOrders = GRPCMethodDescriptor(
+      name: "DeleteAllOrders",
+      path: "/cafelogos.PosService/DeleteAllOrders",
+      type: GRPCCallType.unary
     )
   }
 }

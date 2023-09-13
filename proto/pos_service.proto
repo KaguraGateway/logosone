@@ -48,26 +48,28 @@ message GetProductCategoriesResponse {
     repeated ProductCategory product_categories = 1;
 }
 message PostProductCategoryRequest {
-    ProductCategory product_category = 1;
+    string name = 1;
 }
 message PostProductRequest {
-    Product product = 1;
+    ProductParam product = 1;
 }
 message UpdateProductRequest {
     string product_id = 1;
-    Product product = 2;
+    ProductParam product = 2;
 }
 message DeleteProductRequest {
     string product_id = 1;
 }
 message PostStockRequest {
-    Stock stock = 1;
+    string name = 1;
+    uint32 quantity = 2;
 }
 message GetStocksResponse {
     repeated Stock stocks = 1;
 }
 message PostCoffeeBeanRequest {
-    CoffeeBean coffee_bean = 1;
+    string name = 1;
+    int32 gram_quantity = 2;
 }
 message GetCoffeeBeansResponse {
     repeated CoffeeBean coffee_beans = 1;
@@ -89,6 +91,18 @@ message Product {
     // Only Other
     uint64 amount = 8;
     Stock stock = 9;
+}
+message ProductParam {
+    string product_name = 1;
+    string product_category_id = 2;
+    ProductType product_type = 3;
+    bool is_now_sales = 4;
+    // Only Coffee
+    string coffee_bean_id = 5;
+    repeated CoffeeBrew coffee_brews = 6;
+    // Only Other
+    uint64 amount = 7;
+    string stock_id = 8;
 }
 message ProductCategory {
     string id = 1;

@@ -114,11 +114,8 @@ export namespace GetProductCategoriesResponse {
 }
 
 export class PostProductCategoryRequest extends jspb.Message { 
-
-    hasProductCategory(): boolean;
-    clearProductCategory(): void;
-    getProductCategory(): ProductCategory | undefined;
-    setProductCategory(value?: ProductCategory): PostProductCategoryRequest;
+    getName(): string;
+    setName(value: string): PostProductCategoryRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostProductCategoryRequest.AsObject;
@@ -132,7 +129,7 @@ export class PostProductCategoryRequest extends jspb.Message {
 
 export namespace PostProductCategoryRequest {
     export type AsObject = {
-        productCategory?: ProductCategory.AsObject,
+        name: string,
     }
 }
 
@@ -140,8 +137,8 @@ export class PostProductRequest extends jspb.Message {
 
     hasProduct(): boolean;
     clearProduct(): void;
-    getProduct(): Product | undefined;
-    setProduct(value?: Product): PostProductRequest;
+    getProduct(): ProductParam | undefined;
+    setProduct(value?: ProductParam): PostProductRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostProductRequest.AsObject;
@@ -155,7 +152,7 @@ export class PostProductRequest extends jspb.Message {
 
 export namespace PostProductRequest {
     export type AsObject = {
-        product?: Product.AsObject,
+        product?: ProductParam.AsObject,
     }
 }
 
@@ -165,8 +162,8 @@ export class UpdateProductRequest extends jspb.Message {
 
     hasProduct(): boolean;
     clearProduct(): void;
-    getProduct(): Product | undefined;
-    setProduct(value?: Product): UpdateProductRequest;
+    getProduct(): ProductParam | undefined;
+    setProduct(value?: ProductParam): UpdateProductRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): UpdateProductRequest.AsObject;
@@ -181,7 +178,7 @@ export class UpdateProductRequest extends jspb.Message {
 export namespace UpdateProductRequest {
     export type AsObject = {
         productId: string,
-        product?: Product.AsObject,
+        product?: ProductParam.AsObject,
     }
 }
 
@@ -206,11 +203,10 @@ export namespace DeleteProductRequest {
 }
 
 export class PostStockRequest extends jspb.Message { 
-
-    hasStock(): boolean;
-    clearStock(): void;
-    getStock(): Stock | undefined;
-    setStock(value?: Stock): PostStockRequest;
+    getName(): string;
+    setName(value: string): PostStockRequest;
+    getQuantity(): number;
+    setQuantity(value: number): PostStockRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostStockRequest.AsObject;
@@ -224,7 +220,8 @@ export class PostStockRequest extends jspb.Message {
 
 export namespace PostStockRequest {
     export type AsObject = {
-        stock?: Stock.AsObject,
+        name: string,
+        quantity: number,
     }
 }
 
@@ -251,11 +248,10 @@ export namespace GetStocksResponse {
 }
 
 export class PostCoffeeBeanRequest extends jspb.Message { 
-
-    hasCoffeeBean(): boolean;
-    clearCoffeeBean(): void;
-    getCoffeeBean(): CoffeeBean | undefined;
-    setCoffeeBean(value?: CoffeeBean): PostCoffeeBeanRequest;
+    getName(): string;
+    setName(value: string): PostCoffeeBeanRequest;
+    getGramQuantity(): number;
+    setGramQuantity(value: number): PostCoffeeBeanRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostCoffeeBeanRequest.AsObject;
@@ -269,7 +265,8 @@ export class PostCoffeeBeanRequest extends jspb.Message {
 
 export namespace PostCoffeeBeanRequest {
     export type AsObject = {
-        coffeeBean?: CoffeeBean.AsObject,
+        name: string,
+        gramQuantity: number,
     }
 }
 
@@ -347,6 +344,49 @@ export namespace Product {
         coffeeBrewsList: Array<CoffeeBrew.AsObject>,
         amount: number,
         stock?: Stock.AsObject,
+    }
+}
+
+export class ProductParam extends jspb.Message { 
+    getProductName(): string;
+    setProductName(value: string): ProductParam;
+    getProductCategoryId(): string;
+    setProductCategoryId(value: string): ProductParam;
+    getProductType(): ProductType;
+    setProductType(value: ProductType): ProductParam;
+    getIsNowSales(): boolean;
+    setIsNowSales(value: boolean): ProductParam;
+    getCoffeeBeanId(): string;
+    setCoffeeBeanId(value: string): ProductParam;
+    clearCoffeeBrewsList(): void;
+    getCoffeeBrewsList(): Array<CoffeeBrew>;
+    setCoffeeBrewsList(value: Array<CoffeeBrew>): ProductParam;
+    addCoffeeBrews(value?: CoffeeBrew, index?: number): CoffeeBrew;
+    getAmount(): number;
+    setAmount(value: number): ProductParam;
+    getStockId(): string;
+    setStockId(value: string): ProductParam;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ProductParam.AsObject;
+    static toObject(includeInstance: boolean, msg: ProductParam): ProductParam.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ProductParam, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ProductParam;
+    static deserializeBinaryFromReader(message: ProductParam, reader: jspb.BinaryReader): ProductParam;
+}
+
+export namespace ProductParam {
+    export type AsObject = {
+        productName: string,
+        productCategoryId: string,
+        productType: ProductType,
+        isNowSales: boolean,
+        coffeeBeanId: string,
+        coffeeBrewsList: Array<CoffeeBrew.AsObject>,
+        amount: number,
+        stockId: string,
     }
 }
 

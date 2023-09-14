@@ -1,4 +1,4 @@
-package payment
+package model
 
 type PaymentType int
 

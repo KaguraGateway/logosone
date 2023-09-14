@@ -1,4 +1,4 @@
-package order
+package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"

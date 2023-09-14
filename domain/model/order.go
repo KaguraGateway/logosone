@@ -1,10 +1,9 @@
-package order
+package model
 
 import (
 	"time"
 
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/payment"
 	"github.com/google/uuid"
 )
 
@@ -12,10 +11,8 @@ type Order struct {
 	id         uuid.UUID
 	orderItems []OrderItem
 	discounts  []Discount
-	payment    payment.Payment
-	paymentAt  time.Time
+	payment    Payment
 	orderAt    time.Time
-	callNumber CallNumber
 }
 
 func NewOrder(orderItems []OrderItem, discounts []Discount) *Order {
@@ -27,15 +24,13 @@ func NewOrder(orderItems []OrderItem, discounts []Discount) *Order {
 	}
 }
 
-func ReconstructOrder(id uuid.UUID, orderItems []OrderItem, discounts []Discount, payment payment.Payment, paymentAt time.Time, orderAt time.Time, callNumber CallNumber) *Order {
+func ReconstructOrder(id uuid.UUID, orderItems []OrderItem, discounts []Discount, payment Payment, paymentAt time.Time, orderAt time.Time) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
 		discounts:  discounts,
 		payment:    payment,
-		paymentAt:  paymentAt,
 		orderAt:    orderAt,
-		callNumber: callNumber,
 	}
 }
 
@@ -70,27 +65,18 @@ func (order *Order) GetDiscounts() []Discount {
 	return order.discounts
 }
 
-func (order *Order) GetPayment() payment.Payment {
+func (order *Order) GetPayment() Payment {
 	return order.payment
-}
-
-func (order *Order) GetPaymentAt() time.Time {
-	return order.paymentAt
 }
 
 func (order *Order) GetOrderAt() time.Time {
 	return order.orderAt
 }
 
-func (order *Order) GetCallNumber() CallNumber {
-	return order.callNumber
-}
-
-func (order *Order) pay(payment payment.Payment, paymentAt time.Time) error {
+func (order *Order) pay(payment Payment) error {
 	if !payment.IsEnoughAmount() {
 		return domain.ErrPaymentNotEnought
 	}
-	order.paymentAt = paymentAt
 	order.payment = payment
 
 	return nil

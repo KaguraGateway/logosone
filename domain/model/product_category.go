@@ -1,4 +1,4 @@
-package product
+package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"

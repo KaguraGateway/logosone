@@ -1,25 +1,24 @@
-package order
+package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/product"
 	"github.com/google/uuid"
 )
 
 type OrderItem struct {
-	product         product.Product
-	Quantity        uint64
-	coffeeHowToBrew product.CoffeeHowToBrew
+	product    Product
+	Quantity   uint64
+	coffeeBrew ProductCoffeeBrew
 }
 
-func NewOrderItem(product product.Product, quantity uint64) *OrderItem {
+func NewOrderItem(product Product, quantity uint64) *OrderItem {
 	return &OrderItem{
 		product:  product,
 		Quantity: quantity,
 	}
 }
 
-func NewOrderItemCoffee(product product.Product, quantity uint64, brew product.CoffeeHowToBrew) (*OrderItem, error) {
+func NewOrderItemCoffee(product Product, quantity uint64, brew ProductCoffeeBrew) (*OrderItem, error) {
 	item := NewOrderItem(product, quantity)
 	if err := item.SetCoffeeHowToBrew(brew); err != nil {
 		return nil, err
@@ -27,11 +26,11 @@ func NewOrderItemCoffee(product product.Product, quantity uint64, brew product.C
 	return item, nil
 }
 
-func ReconstructOrderItem(product product.Product, quantity uint64, brew product.CoffeeHowToBrew) *OrderItem {
+func ReconstructOrderItem(product Product, quantity uint64, brew ProductCoffeeBrew) *OrderItem {
 	return &OrderItem{
 		product:         product,
 		Quantity:        quantity,
-		coffeeHowToBrew: brew,
+		coffeeBrew: brew,
 	}
 }
 
@@ -45,7 +44,7 @@ func (OrderItem *OrderItem) GetProductName() string {
 
 func (OrderItem *OrderItem) GetProductAmount() uint64 {
 	if amount, err := OrderItem.product.GetAmount(); err != nil {
-		return OrderItem.coffeeHowToBrew.Price
+		return OrderItem.coffeeBrew.Amount
 	} else {
 		return amount
 	}
@@ -59,20 +58,20 @@ func (OrderItem *OrderItem) GetTotalAmount() uint64 {
 	return OrderItem.GetProductAmount() * OrderItem.Quantity
 }
 
-func (OrderItem *OrderItem) GetCoffeeHowToBrew() product.CoffeeHowToBrew {
-	return OrderItem.coffeeHowToBrew
+func (OrderItem *OrderItem) GetCoffeeHowToBrew() ProductCoffeeBrew {
+	return OrderItem.coffeeBrew
 }
 
-func (OrderItem *OrderItem) SetCoffeeHowToBrew(brew product.CoffeeHowToBrew) error {
-	if OrderItem.product.ProductType != product.ProductType(product.Coffee) || OrderItem.product.CoffeeHowToBrews == nil {
+func (OrderItem *OrderItem) SetCoffeeHowToBrew(brew ProductCoffeeBrew) error {
+	if OrderItem.product.ProductType != ProductType(Coffee) || OrderItem.product.CoffeeBrews == nil {
 		return domain.ErrProductNotCoffee
 	}
 
-	for _, v := range *OrderItem.product.CoffeeHowToBrews {
+	for _, v := range *OrderItem.product.CoffeeBrews {
 		if v.GetId() == brew.GetId() {
-			OrderItem.coffeeHowToBrew = brew
+			OrderItem.coffeeBrew = brew
 			return nil
 		}
 	}
-	return domain.ErrCoffeeHowToBrewNotFound
+	return domain.ErrProductCoffeeBrewNotFound
 }

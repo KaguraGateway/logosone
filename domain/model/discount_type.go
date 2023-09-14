@@ -1,4 +1,4 @@
-package order
+package model
 
 type DiscountType int
 

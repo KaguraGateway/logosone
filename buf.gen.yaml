@@ -10,6 +10,8 @@ plugins:
     out: scripts
   - name: connect-query
     out: scripts
+  - plugin: connect-es
+    out: scripts
   - plugin: buf.build/bufbuild/connect-swift
     opt:
       - GenerateAsyncMethods=true

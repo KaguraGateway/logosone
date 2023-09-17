@@ -2,6 +2,6 @@ syntax = "proto3";
 
 package cafelogos;
 
-option go_package = "pkg/proto/";
+option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/";
 
 message Empty {}

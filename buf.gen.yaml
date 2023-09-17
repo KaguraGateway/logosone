@@ -1,0 +1,24 @@
+version: v1
+plugins:
+  - plugin: go
+    out: pkg
+    opt: paths=source_relative
+  - plugin: connect-go
+    out: pkg
+    opt: paths=source_relative
+  - plugin: es
+    opt: target=ts
+    out: scripts
+  - plugin: connect-es
+    opt: target=ts
+    out: scripts
+  - plugin: buf.build/bufbuild/connect-swift
+    opt:
+      - GenerateAsyncMethods=true
+      - GenerateCallbackMethods=true
+      - Visibility=Public
+    out: Swift
+  - plugin: buf.build/apple/swift
+    opt:
+      - Visibility=Public
+    out: Swift

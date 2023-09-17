@@ -19,14 +19,13 @@
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/"
     },
-    "scripts": {
-        "build": "grpc_tools_node_protoc --plugin=./node_modules/.bin/protoc-gen-ts --js_out=import_style=commonjs,binary:./scripts --ts_out=grpc_js:./scripts --grpc_out=grpc_js:./scripts ./proto/*.proto"
-    },
     "dependencies": {
-        "@grpc/grpc-js": "^1.9.2",
-        "grpc-tools": "^1.12.4"
-    },
-    "devDependencies": {
-        "grpc_tools_node_protoc_ts": "^5.3.3"
+        "@bufbuild/buf": "^1.26.1",
+        "@bufbuild/protobuf": "^1.3.1",
+        "@bufbuild/protoc-gen-es": "^1.3.1",
+        "@connectrpc/connect": "^1.0.0-rc1",
+        "@connectrpc/protoc-gen-connect-es": "^1.0.0-rc1",
+        "tsx": "^3.12.10",
+        "typescript": "^5.2.2"
     }
 }

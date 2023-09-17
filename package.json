@@ -1,6 +1,6 @@
 {
     "name": "@kaguragateway/cafelogos-grpc",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "",
     "main": "",
     "files": [
@@ -10,7 +10,8 @@
         "type": "git",
         "url": "git+https://github.com/KaguraGateway/cafelogos-grpc.git"
     },
-    "author": "",
+    "scripts": {},
+    "author": "KaguraGateway",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/KaguraGateway/cafelogos-grpc/issues"
@@ -19,13 +20,13 @@
     "publishConfig": {
         "registry": "https://npm.pkg.github.com/"
     },
-    "dependencies": {
+    "devDependencies": {
         "@bufbuild/buf": "^1.26.1",
-        "@bufbuild/protobuf": "^1.3.1",
         "@bufbuild/protoc-gen-es": "^1.3.1",
-        "@connectrpc/connect": "^1.0.0-rc1",
-        "@connectrpc/protoc-gen-connect-es": "^1.0.0-rc1",
-        "tsx": "^3.12.10",
-        "typescript": "^5.2.2"
+        "@connectrpc/protoc-gen-connect-query": "^0.4.4"
+    },
+    "dependencies": {
+        "@bufbuild/protobuf": "^1.3.1",
+        "@connectrpc/connect-query": "^0.4.4"
     }
 }

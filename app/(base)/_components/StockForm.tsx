@@ -32,9 +32,17 @@ export function StockForm(props: Props) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    addStock.mutate({ name: name, quantity: quantity });
-    setIsLoading(false);
-    props.onCancel();
+    addStock.mutateAsync(
+      { name: name, quantity: quantity },
+      {
+        onSuccess: () => {
+          props.onCancel();
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        },
+      }
+    );
   };
 
   return (

@@ -1,5 +1,7 @@
 'use client';
 import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
+import { getCoffeeBeans } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 
 import { css } from '@/panda/css';
@@ -18,6 +20,7 @@ export function CoffeeBeanForm(props: Props) {
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const client = useQueryClient();
   const addCoffeeBean = useMutationAddCoffeeBean();
 
   const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,9 +35,18 @@ export function CoffeeBeanForm(props: Props) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    addCoffeeBean.mutate({ name: name, gramQuantity: quantity });
-    setIsLoading(false);
-    props.onCancel();
+    addCoffeeBean.mutateAsync(
+      { name: name, gramQuantity: quantity },
+      {
+        onSuccess: () => {
+          client.invalidateQueries(getCoffeeBeans.getQueryKey());
+          props.onCancel();
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        },
+      }
+    );
   };
 
   return (

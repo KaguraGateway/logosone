@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@ark-ui/react": "^0.14.0",
+    "@bufbuild/connect-query": "^0.4.1",
+    "@bufbuild/connect-web": "^0.13.0",
     "@kaguragateway/cafelogos-grpc": "github:KaguraGateway/cafelogos-grpc",
     "@tanstack/react-query": "^4.35.0",
     "@types/node": "20.6.0",

@@ -1,5 +1,11 @@
 'use client';
 import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
+import {
+  CoffeeBrew as ProtoCoffeeBrew,
+  ProductParam,
+  ProductType,
+} from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { FaRegTrashCan } from 'react-icons/fa6';
@@ -16,7 +22,7 @@ import { useMutationUpdateProduct } from '@/query/updateProduct';
 import { Category } from '@/types/Category';
 import { CoffeeBean } from '@/types/CoffeeBean';
 import { CoffeeBrew } from '@/types/CoffeeBrews';
-import { Product, ProductBody } from '@/types/Product';
+import { Product } from '@/types/Product';
 import { Stock } from '@/types/Stock';
 import { Button } from '@/ui/form/Button';
 import { Input } from '@/ui/form/Input';
@@ -87,18 +93,32 @@ export function ProductEditForm(props: Props) {
   const [isNowOnSale, setIsNowOnSale] = useState(props.product?.isNowSales ?? true);
   const [type, setType] = useState(props.product?.type ?? 'coffee');
   const [category, setCategory] = useState<Option | null>(
-    props.product != null ? toOptionFromCategory(props.product.category) : null
+    props.product != null
+      ? toOptionFromCategory({ id: props.product.categoryId, name: props.product.categoryName })
+      : null
   );
 
   // Coffee
   const [coffeeBean, setCoffeeBean] = useState<Option | null>(
-    props.product?.coffeeBean != null ? toOptionFromCoffeeBean(props.product.coffeeBean) : null
+    props.product?.coffeeBeanId != null
+      ? toOptionFromCoffeeBean({
+          id: props.product.coffeeBeanId,
+          name: props.product.coffeeBeanName ?? '',
+          gramQuantity: props.product.coffeeBeanGramQuantity ?? 0,
+        })
+      : null
   );
   const [brews, setBrews] = useState<Array<CoffeeBrew>>(props.product?.coffeeBrews ?? []);
   // Other
   const [amount, setAmount] = useState(props.product?.amount ?? 0);
   const [stock, setStock] = useState<Option | null>(
-    props.product?.stock != null ? toOptionFromStock(props.product.stock) : null
+    props.product?.stockId != null && props.product.stockName != null && props.product.stockQuantity
+      ? toOptionFromStock({
+          id: props.product.stockId,
+          name: props.product.stockName,
+          quantity: props.product.stockQuantity,
+        })
+      : null
   );
 
   // Dialog
@@ -110,7 +130,7 @@ export function ProductEditForm(props: Props) {
 
   // Query
   const categoryQuery = useQueryCategories();
-  const categories = categoryQuery.data?.categories.map((v) => toOptionFromCategory(v)) ?? [];
+  const categories = categoryQuery.data?.productCategories.map((v) => toOptionFromCategory(v)) ?? [];
 
   const stockQuery = useQueryStock();
   const stocks = stockQuery.data?.stocks.map((v) => toOptionFromStock(v)) ?? [];
@@ -120,6 +140,8 @@ export function ProductEditForm(props: Props) {
 
   const postMutation = useMutationAddProduct();
   const updateMutation = useMutationUpdateProduct();
+
+  const router = useRouter();
 
   const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -167,23 +189,35 @@ export function ProductEditForm(props: Props) {
       return;
     }
     setIsLoading(true);
-    const data: Omit<ProductBody, 'id'> = {
-      name,
-      isNowSales: isNowOnSale,
-      type,
-      categoryId: category.value,
-      coffeeBeanId: coffeeBean?.value,
-      coffeeBrews: brews,
-      amount: amount,
-      stockId: stock?.value,
+    const data = new ProductParam({
+      productName: name,
+      isNowSales: isNowOnSale || false,
+      productType: type === 'coffee' ? ProductType.COFFEE : ProductType.OTHER,
+      productCategoryId: category.value,
+      coffeeBeanId: coffeeBean?.value ?? '',
+      coffeeBrews: brews.map((v) => {
+        return new ProtoCoffeeBrew({
+          id: v.id,
+          name: v.name,
+          beanQuantityGrams: v.beanQuantityGrams,
+          amount: BigInt(v.amount),
+        });
+      }),
+      amount: BigInt(amount),
+      stockId: stock?.value ?? '',
+    });
+    const onSuccess = () => {
+      props.onCancel();
+      router.refresh();
+    };
+    const onSettled = () => {
+      setIsLoading(false);
     };
     if (props.product != null) {
-      updateMutation.mutate({ ...data, id: props.product.id });
+      updateMutation.mutateAsync({ product: data, productId: props.product.id }, { onSuccess, onSettled });
     } else {
-      postMutation.mutate(data);
+      postMutation.mutateAsync({ product: data }, { onSuccess, onSettled });
     }
-    setIsLoading(false);
-    props.onCancel();
   };
 
   return (

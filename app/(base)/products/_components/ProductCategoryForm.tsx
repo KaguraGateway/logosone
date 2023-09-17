@@ -1,5 +1,7 @@
 'use client';
 import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
+import { getProductCategories } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 
 import { css } from '@/panda/css';
@@ -15,6 +17,7 @@ type Props = {
 };
 
 export function ProductCategoryForm(props: Props) {
+  const client = useQueryClient();
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const addCategory = useMutationAddCategory();
@@ -25,9 +28,18 @@ export function ProductCategoryForm(props: Props) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    addCategory.mutate({ name: name });
-    setIsLoading(false);
-    props.onCancel();
+    addCategory.mutateAsync(
+      { name: name },
+      {
+        onSuccess: () => {
+          client.invalidateQueries(getProductCategories.getQueryKey());
+          props.onCancel();
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        },
+      }
+    );
   };
 
   return (

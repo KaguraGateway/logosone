@@ -1,25 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import { StockRequest } from '@/types/Stock';
-
-async function post(data: StockRequest) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stock`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  if (!res.ok) {
-    throw new Error('Network response was not ok');
-  }
-}
+import { postStock } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { useMutation } from '@tanstack/react-query';
 
 export function useMutationAddStock() {
-  const client = useQueryClient();
-  return useMutation(post, {
-    onSuccess: () => {
-      client.invalidateQueries(['stock']);
-    },
-  });
+  return useMutation(postStock.useMutation())
 }

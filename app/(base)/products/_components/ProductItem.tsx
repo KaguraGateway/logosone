@@ -1,4 +1,5 @@
 'use client';
+import { DeleteProductRequest } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import { useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { FaInternetExplorer, FaRegEyeSlash, FaRegTrashAlt } from 'react-icons/fa';
@@ -23,7 +24,7 @@ export function ProductItem({ product }: { product: Product }) {
   const onCloseDelete = () => setIsOpenDelete(false);
   const onDelete = () => {
     setIsOpenDelete(false);
-    deleteMutation.mutate(product.id);
+    deleteMutation.mutate(new DeleteProductRequest({ productId: product.id }));
   };
   const onCloseEdit = () => setIsOpenEdit(false);
 
@@ -37,7 +38,7 @@ export function ProductItem({ product }: { product: Product }) {
             : 'N/A'}
         </Td>
         <Td>{product.type === 'coffee' ? 'コーヒー' : 'その他'}</Td>
-        <Td>{product.category.name}</Td>
+        <Td>{product.categoryName}</Td>
         <Td className={css({ color: product.isNowSales ? 'green.600' : undefined })}>
           {product.isNowSales ? (
             <>

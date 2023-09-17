@@ -7,11 +7,9 @@ plugins:
     out: pkg
     opt: paths=source_relative
   - plugin: es
-    opt: target=ts
     out: scripts
   - name: connect-query
     out: scripts
-    opt: target=ts
   - plugin: buf.build/bufbuild/connect-swift
     opt:
       - GenerateAsyncMethods=true

@@ -1,9 +1,9 @@
 package model
 
-import "github.com/google/uuid"
+import "github.com/oklog/ulid/v2"
 
 type Payment struct {
-	id            uuid.UUID
+	id            string
 	paymentType   PaymentType
 	ReceiveAmount uint64
 	PaymentAmount uint64
@@ -11,14 +11,14 @@ type Payment struct {
 
 func NewPayment(paymentType PaymentType, receiveAmount uint64, paymentAmount uint64) *Payment {
 	return &Payment{
-		id:            uuid.UUID{},
+		id:            ulid.Make().String(),
 		paymentType:   paymentType,
 		ReceiveAmount: receiveAmount,
 		PaymentAmount: paymentAmount,
 	}
 }
 
-func ReconstructPayment(id uuid.UUID, paymentType PaymentType, receiveAmount uint64, paymentAmount uint64) *Payment {
+func ReconstructPayment(id string, paymentType PaymentType, receiveAmount uint64, paymentAmount uint64) *Payment {
 	return &Payment{
 		id:            id,
 		paymentType:   paymentType,
@@ -27,7 +27,7 @@ func ReconstructPayment(id uuid.UUID, paymentType PaymentType, receiveAmount uin
 	}
 }
 
-func (payment *Payment) GetId() uuid.UUID {
+func (payment *Payment) GetId() string {
 	return payment.id
 }
 

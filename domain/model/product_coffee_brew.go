@@ -2,21 +2,21 @@ package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 type ProductCoffeeBrew struct {
-	id                uuid.UUID
-	productId         uuid.UUID
+	id                string
+	productId         string
 	name              string
 	BeanQuantityGrams uint32
 	Amount            uint64
 }
 type ProductCoffeeBrews []*ProductCoffeeBrew
 
-func NewProductCoffeeBrew(productId uuid.UUID, name string, beanQuantityGrams uint32, amount uint64) (*ProductCoffeeBrew, error) {
+func NewProductCoffeeBrew(productId string, name string, beanQuantityGrams uint32, amount uint64) (*ProductCoffeeBrew, error) {
 	brew := &ProductCoffeeBrew{
-		id:                uuid.UUID{},
+		id:                ulid.Make().String(),
 		productId:         productId,
 		BeanQuantityGrams: beanQuantityGrams,
 		Amount:            amount,
@@ -27,7 +27,7 @@ func NewProductCoffeeBrew(productId uuid.UUID, name string, beanQuantityGrams ui
 	return brew, nil
 }
 
-func ReconstructProductCoffeeBrew(id uuid.UUID, productId uuid.UUID, name string, beanQuantityGrams uint32, amount uint64) *ProductCoffeeBrew {
+func ReconstructProductCoffeeBrew(id string, productId string, name string, beanQuantityGrams uint32, amount uint64) *ProductCoffeeBrew {
 	return &ProductCoffeeBrew{
 		id:                id,
 		productId:         productId,
@@ -37,8 +37,12 @@ func ReconstructProductCoffeeBrew(id uuid.UUID, productId uuid.UUID, name string
 	}
 }
 
-func (coffeeHowToBrew *ProductCoffeeBrew) GetId() uuid.UUID {
+func (coffeeHowToBrew *ProductCoffeeBrew) GetId() string {
 	return coffeeHowToBrew.id
+}
+
+func (coffeeHowToBrew *ProductCoffeeBrew) GetProductId() string {
+	return coffeeHowToBrew.productId
 }
 
 func (coffeeHowToBrew *ProductCoffeeBrew) GetName() string {

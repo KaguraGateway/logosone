@@ -8,23 +8,21 @@ import (
 )
 
 type GetProducts interface {
-	Execute() ([]*model.Product, error)
+	Execute(ctx context.Context) ([]*model.Product, error)
 }
 
 type getProductsUseCase struct {
-	ctx                 context.Context
 	productQueryService ProductQueryService
 }
 
-func NewGetProductsUseCase(i *do.Injector) *getProductsUseCase {
+func NewGetProductsUseCase(i *do.Injector) (GetProducts, error) {
 	return &getProductsUseCase{
-		ctx:                 do.MustInvoke[context.Context](i),
 		productQueryService: do.MustInvoke[ProductQueryService](i),
-	}
+	}, nil
 }
 
-func (uc *getProductsUseCase) Execute() ([]*model.Product, error) {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *getProductsUseCase) Execute(ctx context.Context) ([]*model.Product, error) {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
-	return uc.productQueryService.FindAll(ctx)
+	return uc.productQueryService.FindAll(cctx)
 }

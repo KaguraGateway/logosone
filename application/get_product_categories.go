@@ -9,23 +9,21 @@ import (
 )
 
 type GetProductCategories interface {
-	Execute() ([]*model.ProductCategory, error)
+	Execute(ctx context.Context) ([]*model.ProductCategory, error)
 }
 
 type getProductCategoriesUseCase struct {
-	ctx                 context.Context
 	productCategoryRepo repository.ProductCategoryRepository
 }
 
-func NewGetProductCategoriesUseCase(i *do.Injector) *getProductCategoriesUseCase {
+func NewGetProductCategoriesUseCase(i *do.Injector) (GetProductCategories, error) {
 	return &getProductCategoriesUseCase{
-		ctx:                 do.MustInvoke[context.Context](i),
 		productCategoryRepo: do.MustInvoke[repository.ProductCategoryRepository](i),
-	}
+	}, nil
 }
 
-func (uc *getProductCategoriesUseCase) Execute() ([]*model.ProductCategory, error) {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *getProductCategoriesUseCase) Execute(ctx context.Context) ([]*model.ProductCategory, error) {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
-	return uc.productCategoryRepo.FindAll(ctx)
+	return uc.productCategoryRepo.FindAll(cctx)
 }

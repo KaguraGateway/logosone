@@ -13,23 +13,21 @@ type PostProductCategoryParam struct {
 }
 
 type PostProductCategory interface {
-	Execute(param PostProductCategoryParam) error
+	Execute(ctx context.Context, param PostProductCategoryParam) error
 }
 
 type postProductCategoryUseCase struct {
-	ctx                 context.Context
 	productCategoryRepo repository.ProductCategoryRepository
 }
 
-func NewPostProductCategoryUseCase(i *do.Injector) *postProductCategoryUseCase {
+func NewPostProductCategoryUseCase(i *do.Injector) (PostProductCategory, error) {
 	return &postProductCategoryUseCase{
-		ctx:                 do.MustInvoke[context.Context](i),
 		productCategoryRepo: do.MustInvoke[repository.ProductCategoryRepository](i),
-	}
+	}, nil
 }
 
-func (uc *postProductCategoryUseCase) Execute(param PostProductCategoryParam) error {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *postProductCategoryUseCase) Execute(ctx context.Context, param PostProductCategoryParam) error {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
 	category, err := model.NewProductCategory(param.Name)
@@ -37,7 +35,7 @@ func (uc *postProductCategoryUseCase) Execute(param PostProductCategoryParam) er
 		return err
 	}
 
-	if err := uc.productCategoryRepo.Save(ctx, category); err != nil {
+	if err := uc.productCategoryRepo.Save(cctx, category); err != nil {
 		return err
 	}
 	return nil

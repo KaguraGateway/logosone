@@ -2,17 +2,17 @@ package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 type ProductCategory struct {
-	id   uuid.UUID
+	id   string
 	name string
 }
 
 func NewProductCategory(name string) (*ProductCategory, error) {
 	pc := &ProductCategory{
-		id: uuid.UUID{},
+		id: ulid.Make().String(),
 	}
 	if err := pc.SetName(name); err != nil {
 		return nil, err
@@ -20,14 +20,14 @@ func NewProductCategory(name string) (*ProductCategory, error) {
 	return pc, nil
 }
 
-func ReconstructProductCategory(id uuid.UUID, name string) *ProductCategory {
+func ReconstructProductCategory(id string, name string) *ProductCategory {
 	return &ProductCategory{
 		id:   id,
 		name: name,
 	}
 }
 
-func (productCategory *ProductCategory) GetId() uuid.UUID {
+func (productCategory *ProductCategory) GetId() string {
 	return productCategory.id
 }
 

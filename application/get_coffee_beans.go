@@ -9,23 +9,21 @@ import (
 )
 
 type GetCoffeeBeans interface {
-	Execute() ([]*model.CoffeeBean, error)
+	Execute(ctx context.Context) ([]*model.CoffeeBean, error)
 }
 
 type getCoffeeBeansUseCase struct {
-	ctx            context.Context
 	coffeeBeanRepo repository.CoffeeBeanRepository
 }
 
-func NewGetCoffeeBeansUseCase(i *do.Injector) *getCoffeeBeansUseCase {
+func NewGetCoffeeBeansUseCase(i *do.Injector) (GetCoffeeBeans, error) {
 	return &getCoffeeBeansUseCase{
-		ctx:            do.MustInvoke[context.Context](i),
 		coffeeBeanRepo: do.MustInvoke[repository.CoffeeBeanRepository](i),
-	}
+	}, nil
 }
 
-func (uc *getCoffeeBeansUseCase) Execute() ([]*model.CoffeeBean, error) {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *getCoffeeBeansUseCase) Execute(ctx context.Context) ([]*model.CoffeeBean, error) {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
-	return uc.coffeeBeanRepo.FindAll(ctx)
+	return uc.coffeeBeanRepo.FindAll(cctx)
 }

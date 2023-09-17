@@ -4,11 +4,11 @@ import (
 	"time"
 
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 type Order struct {
-	id         uuid.UUID
+	id         string
 	orderItems []OrderItem
 	discounts  []Discount
 	payment    Payment
@@ -17,14 +17,14 @@ type Order struct {
 
 func NewOrder(orderItems []OrderItem, discounts []Discount) *Order {
 	return &Order{
-		id:         uuid.UUID{},
+		id:         ulid.Make().String(),
 		orderItems: orderItems,
 		discounts:  discounts,
 		orderAt:    time.Now(),
 	}
 }
 
-func ReconstructOrder(id uuid.UUID, orderItems []OrderItem, discounts []Discount, payment Payment, paymentAt time.Time, orderAt time.Time) *Order {
+func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, payment Payment, paymentAt time.Time, orderAt time.Time) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,

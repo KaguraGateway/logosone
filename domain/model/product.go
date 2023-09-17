@@ -2,11 +2,11 @@ package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 type Product struct {
-	productId       uuid.UUID
+	productId       string
 	ProductName     ProductName
 	ProductCategory ProductCategory
 	ProductType     ProductType
@@ -21,7 +21,7 @@ type Product struct {
 
 func NewProductCoffee(productName ProductName, productCategory ProductCategory, isNowSales bool, coffeeBean CoffeeBean, brews ProductCoffeeBrews) *Product {
 	product := &Product{
-		productId:       uuid.UUID{},
+		productId:       ulid.Make().String(),
 		ProductName:     productName,
 		ProductCategory: productCategory,
 		ProductType:     ProductType(Coffee),
@@ -34,7 +34,7 @@ func NewProductCoffee(productName ProductName, productCategory ProductCategory, 
 
 func NewProductOther(productName ProductName, productCategory ProductCategory, isNowSales bool, amount uint64, stock Stock) *Product {
 	product := &Product{
-		productId:       uuid.UUID{},
+		productId:       ulid.Make().String(),
 		ProductName:     productName,
 		ProductCategory: productCategory,
 		ProductType:     ProductType(Other),
@@ -45,7 +45,7 @@ func NewProductOther(productName ProductName, productCategory ProductCategory, i
 	return product
 }
 
-func ReconstructProduct(productId uuid.UUID, productName ProductName, productCategory ProductCategory, productType ProductType, isNowSales bool, coffeeBean *CoffeeBean, brews *ProductCoffeeBrews, amount uint64, stock *Stock) *Product {
+func ReconstructProduct(productId string, productName ProductName, productCategory ProductCategory, productType ProductType, isNowSales bool, coffeeBean *CoffeeBean, brews *ProductCoffeeBrews, amount uint64, stock *Stock) *Product {
 	return &Product{
 		productId:       productId,
 		ProductName:     productName,
@@ -59,7 +59,7 @@ func ReconstructProduct(productId uuid.UUID, productName ProductName, productCat
 	}
 }
 
-func (product *Product) GetId() uuid.UUID {
+func (product *Product) GetId() string {
 	return product.productId
 }
 

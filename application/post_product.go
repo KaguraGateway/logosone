@@ -10,11 +10,10 @@ import (
 )
 
 type PostProduct interface {
-	Execute(param ProductParam) error
+	Execute(ctx context.Context, param *ProductParam) error
 }
 
 type postProductUseCase struct {
-	ctx                 context.Context
 	productRepo         repository.ProductRepository
 	productCategoryRepo repository.ProductCategoryRepository
 	coffeeBeanRepo      repository.CoffeeBeanRepository
@@ -22,26 +21,25 @@ type postProductUseCase struct {
 	stockRepo           repository.StockRepository
 }
 
-func NewPostProductUseCase(i *do.Injector) *postProductUseCase {
+func NewPostProductUseCase(i *do.Injector) (PostProduct, error) {
 	return &postProductUseCase{
-		ctx:                 do.MustInvoke[context.Context](i),
 		productRepo:         do.MustInvoke[repository.ProductRepository](i),
 		productCategoryRepo: do.MustInvoke[repository.ProductCategoryRepository](i),
 		coffeeBeanRepo:      do.MustInvoke[repository.CoffeeBeanRepository](i),
 		coffeeBrewRepo:      do.MustInvoke[repository.ProductCoffeeBrewRepository](i),
-		stockRepo: do.MustInvoke[repository.StockRepository](i),
-	}
+		stockRepo:           do.MustInvoke[repository.StockRepository](i),
+	}, nil
 }
 
-func (uc *postProductUseCase) Execute(param ProductParam) error {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *postProductUseCase) Execute(ctx context.Context, param *ProductParam) error {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
 	productName, err := model.NewProductName(param.ProductName)
 	if err != nil {
 		return errors.Join(err, ErrInvalidParam)
 	}
-	productCategory, err := uc.productCategoryRepo.FindById(ctx, param.ProductCategoryId)
+	productCategory, err := uc.productCategoryRepo.FindById(cctx, param.ProductCategoryId)
 	if err != nil {
 		return errors.Join(err, ErrInvalidParam)
 	}
@@ -49,7 +47,7 @@ func (uc *postProductUseCase) Execute(param ProductParam) error {
 
 	var product model.Product
 	if productType == model.ProductType(model.Coffee) {
-		coffeeBean, err := uc.coffeeBeanRepo.FindById(ctx, param.CoffeeBeanId)
+		coffeeBean, err := uc.coffeeBeanRepo.FindById(cctx, param.CoffeeBeanId)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
@@ -62,21 +60,21 @@ func (uc *postProductUseCase) Execute(param ProductParam) error {
 			coffeeBrews = append(coffeeBrews, brew)
 		}
 		for _, brew := range coffeeBrews {
-			if err := uc.coffeeBrewRepo.Save(ctx, brew); err != nil {
+			if err := uc.coffeeBrewRepo.Save(cctx, brew); err != nil {
 				return err
 			}
 		}
 
 		product = *model.NewProductCoffee(*productName, *productCategory, param.IsNowSales, *coffeeBean, coffeeBrews)
 	} else {
-		stock, err := uc.stockRepo.FindById(ctx, param.StockId)
+		stock, err := uc.stockRepo.FindById(cctx, param.StockId)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
 		product = *model.NewProductOther(*productName, *productCategory, param.IsNowSales, param.Amount, *stock)
 	}
 
-	if err := uc.productRepo.Save(ctx, &product); err != nil {
+	if err := uc.productRepo.Save(cctx, &product); err != nil {
 		return err
 	}
 

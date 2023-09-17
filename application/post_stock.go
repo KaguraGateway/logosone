@@ -9,28 +9,26 @@ import (
 )
 
 type PostStockParam struct {
-	Name string
+	Name     string
 	Quantity int32
 }
 
 type PostStock interface {
-	Execute(param *PostStockParam) error
+	Execute(ctx context.Context, param *PostStockParam) error
 }
 
 type postStockUseCase struct {
-	ctx       context.Context
 	stockRepo repository.StockRepository
 }
 
-func NewPostStockUseCase(i *do.Injector) *postStockUseCase {
+func NewPostStockUseCase(i *do.Injector) (PostStock, error) {
 	return &postStockUseCase{
-		ctx:       do.MustInvoke[context.Context](i),
 		stockRepo: do.MustInvoke[repository.StockRepository](i),
-	}
+	}, nil
 }
 
-func (uc *postStockUseCase) Execute(param *PostStockParam) error {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *postStockUseCase) Execute(ctx context.Context, param *PostStockParam) error {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
 	stock, err := model.NewStock(param.Name, param.Quantity)
@@ -38,7 +36,7 @@ func (uc *postStockUseCase) Execute(param *PostStockParam) error {
 		return err
 	}
 
-	if err := uc.stockRepo.Save(ctx, stock); err != nil {
+	if err := uc.stockRepo.Save(cctx, stock); err != nil {
 		return err
 	}
 	return nil

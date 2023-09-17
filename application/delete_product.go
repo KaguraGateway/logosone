@@ -8,26 +8,24 @@ import (
 )
 
 type DeleteProduct interface {
-	Execute(id string) error
+	Execute(ctx context.Context, id string) error
 }
 
 type deleteProductUseCase struct {
-	ctx         context.Context
 	productRepo repository.ProductRepository
 }
 
-func NewDeleteProductUseCase(i *do.Injector) *deleteProductUseCase {
+func NewDeleteProductUseCase(i *do.Injector) (DeleteProduct, error) {
 	return &deleteProductUseCase{
-		ctx:         do.MustInvoke[context.Context](i),
 		productRepo: do.MustInvoke[repository.ProductRepository](i),
-	}
+	}, nil
 }
 
-func (uc *deleteProductUseCase) Execute(id string) error {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *deleteProductUseCase) Execute(ctx context.Context, id string) error {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
-	if err := uc.productRepo.Delete(ctx, id); err != nil {
+	if err := uc.productRepo.Delete(cctx, id); err != nil {
 		return err
 	}
 	return nil

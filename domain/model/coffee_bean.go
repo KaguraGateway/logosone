@@ -2,18 +2,18 @@ package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 type CoffeeBean struct {
-	id           uuid.UUID
+	id           string
 	name         string
 	GramQuantity int
 }
 
 func NewCoffeeBean(name string, gramQuantity int) (*CoffeeBean, error) {
 	bean := &CoffeeBean{
-		id:           uuid.UUID{},
+		id:           ulid.Make().String(),
 		GramQuantity: gramQuantity,
 	}
 	if err := bean.SetName(name); err != nil {
@@ -22,7 +22,7 @@ func NewCoffeeBean(name string, gramQuantity int) (*CoffeeBean, error) {
 	return bean, nil
 }
 
-func ReconstructCoffeeBean(id uuid.UUID, name string, gramQuantity int) *CoffeeBean {
+func ReconstructCoffeeBean(id string, name string, gramQuantity int) *CoffeeBean {
 	return &CoffeeBean{
 		id:           id,
 		name:         name,
@@ -30,7 +30,7 @@ func ReconstructCoffeeBean(id uuid.UUID, name string, gramQuantity int) *CoffeeB
 	}
 }
 
-func (coffeeBean *CoffeeBean) GetId() uuid.UUID {
+func (coffeeBean *CoffeeBean) GetId() string {
 	return coffeeBean.id
 }
 

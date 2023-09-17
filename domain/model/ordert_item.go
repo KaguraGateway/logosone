@@ -2,7 +2,6 @@ package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
 )
 
 type OrderItem struct {
@@ -28,13 +27,13 @@ func NewOrderItemCoffee(product Product, quantity uint64, brew ProductCoffeeBrew
 
 func ReconstructOrderItem(product Product, quantity uint64, brew ProductCoffeeBrew) *OrderItem {
 	return &OrderItem{
-		product:         product,
-		Quantity:        quantity,
+		product:    product,
+		Quantity:   quantity,
 		coffeeBrew: brew,
 	}
 }
 
-func (OrderItem *OrderItem) GetProductId() uuid.UUID {
+func (OrderItem *OrderItem) GetProductId() string {
 	return OrderItem.product.GetId()
 }
 

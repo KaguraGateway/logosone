@@ -9,23 +9,21 @@ import (
 )
 
 type GetStocks interface {
-	Execute() ([]*model.Stock, error)
+	Execute(ctx context.Context) ([]*model.Stock, error)
 }
 
 type getStocksUseCase struct {
-	ctx       context.Context
 	stockRepo repository.StockRepository
 }
 
-func NewGetStocksUseCase(i *do.Injector) *getStocksUseCase {
+func NewGetStocksUseCase(i *do.Injector) (GetStocks, error) {
 	return &getStocksUseCase{
-		ctx:       do.MustInvoke[context.Context](i),
 		stockRepo: do.MustInvoke[repository.StockRepository](i),
-	}
+	}, nil
 }
 
-func (uc *getStocksUseCase) Execute() ([]*model.Stock, error) {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *getStocksUseCase) Execute(ctx context.Context) ([]*model.Stock, error) {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
-	return uc.stockRepo.FindAll(ctx)
+	return uc.stockRepo.FindAll(cctx)
 }

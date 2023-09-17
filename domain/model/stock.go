@@ -2,18 +2,18 @@ package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 type Stock struct {
-	id       uuid.UUID
+	id       string
 	name     string
 	Quantity int32
 }
 
 func NewStock(name string, quantity int32) (*Stock, error) {
 	stock := &Stock{
-		id:       uuid.UUID{},
+		id:       ulid.Make().String(),
 		Quantity: quantity,
 	}
 	if err := stock.SetName(name); err != nil {
@@ -22,7 +22,7 @@ func NewStock(name string, quantity int32) (*Stock, error) {
 	return stock, nil
 }
 
-func ReconstructStock(id uuid.UUID, name string, quantity int32) *Stock {
+func ReconstructStock(id string, name string, quantity int32) *Stock {
 	return &Stock{
 		id:       id,
 		name:     name,
@@ -30,7 +30,7 @@ func ReconstructStock(id uuid.UUID, name string, quantity int32) *Stock {
 	}
 }
 
-func (stock *Stock) GetId() uuid.UUID {
+func (stock *Stock) GetId() string {
 	return stock.id
 }
 

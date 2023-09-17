@@ -14,23 +14,21 @@ type PostCoffeeBeanParam struct {
 }
 
 type PostCoffeeBean interface {
-	Execute(param *PostCoffeeBeanParam) error
+	Execute(ctx context.Context, param *PostCoffeeBeanParam) error
 }
 
 type postCoffeeBeanUseCase struct {
-	ctx            context.Context
 	coffeeBeanRepo repository.CoffeeBeanRepository
 }
 
-func NewPostCoffeeBeanUseCase(i *do.Injector) *postCoffeeBeanUseCase {
+func NewPostCoffeeBeanUseCase(i *do.Injector) (PostCoffeeBean, error) {
 	return &postCoffeeBeanUseCase{
-		ctx:            do.MustInvoke[context.Context](i),
 		coffeeBeanRepo: do.MustInvoke[repository.CoffeeBeanRepository](i),
-	}
+	}, nil
 }
 
-func (uc *postCoffeeBeanUseCase) Execute(param *PostCoffeeBeanParam) error {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *postCoffeeBeanUseCase) Execute(ctx context.Context, param *PostCoffeeBeanParam) error {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
 	coffeeBean, err := model.NewCoffeeBean(param.Name, param.GramQuantity)
@@ -38,7 +36,7 @@ func (uc *postCoffeeBeanUseCase) Execute(param *PostCoffeeBeanParam) error {
 		return err
 	}
 
-	if err := uc.coffeeBeanRepo.Save(ctx, coffeeBean); err != nil {
+	if err := uc.coffeeBeanRepo.Save(cctx, coffeeBean); err != nil {
 		return err
 	}
 	return nil

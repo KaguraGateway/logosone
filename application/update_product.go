@@ -11,11 +11,10 @@ import (
 )
 
 type UpdateProduct interface {
-	Execute(id string, param *ProductParam) error
+	Execute(ctx context.Context, id string, param *ProductParam) error
 }
 
 type updateProductUseCase struct {
-	ctx                 context.Context
 	productRepo         repository.ProductRepository
 	productQueryService ProductQueryService
 	productCategoryRepo repository.ProductCategoryRepository
@@ -24,23 +23,22 @@ type updateProductUseCase struct {
 	stockRepo           repository.StockRepository
 }
 
-func NewUpdateProductUseCase(i *do.Injector) *updateProductUseCase {
+func NewUpdateProductUseCase(i *do.Injector) (UpdateProduct, error) {
 	return &updateProductUseCase{
-		ctx:                 do.MustInvoke[context.Context](i),
 		productRepo:         do.MustInvoke[repository.ProductRepository](i),
 		productQueryService: do.MustInvoke[ProductQueryService](i),
 		productCategoryRepo: do.MustInvoke[repository.ProductCategoryRepository](i),
 		coffeeBeanRepo:      do.MustInvoke[repository.CoffeeBeanRepository](i),
 		coffeeBrewRepo:      do.MustInvoke[repository.ProductCoffeeBrewRepository](i),
 		stockRepo:           do.MustInvoke[repository.StockRepository](i),
-	}
+	}, nil
 }
 
-func (uc *updateProductUseCase) Execute(id string, param *ProductParam) error {
-	ctx, cancel := context.WithTimeout(uc.ctx, CtxTimeoutDur)
+func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *ProductParam) error {
+	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
-	product, err := uc.productQueryService.FindById(ctx, id)
+	product, err := uc.productQueryService.FindById(cctx, id)
 	if err != nil {
 		return err
 	}
@@ -50,8 +48,8 @@ func (uc *updateProductUseCase) Execute(id string, param *ProductParam) error {
 			return errors.Join(err, ErrInvalidParam)
 		}
 	}
-	if param.ProductCategoryId != product.ProductCategory.GetId().String() {
-		productCategory, err := uc.productCategoryRepo.FindById(ctx, param.ProductCategoryId)
+	if param.ProductCategoryId != product.ProductCategory.GetId() {
+		productCategory, err := uc.productCategoryRepo.FindById(cctx, param.ProductCategoryId)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
@@ -62,8 +60,8 @@ func (uc *updateProductUseCase) Execute(id string, param *ProductParam) error {
 	}
 
 	// Only Coffee
-	if param.CoffeeBeanId != product.CoffeeBean.GetId().String() {
-		coffeeBean, err := uc.coffeeBeanRepo.FindById(ctx, param.CoffeeBeanId)
+	if param.CoffeeBeanId != product.CoffeeBean.GetId() {
+		coffeeBean, err := uc.coffeeBeanRepo.FindById(cctx, param.CoffeeBeanId)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
@@ -82,21 +80,21 @@ func (uc *updateProductUseCase) Execute(id string, param *ProductParam) error {
 			if err != nil {
 				return errors.Join(err, ErrInvalidParam)
 			}
-			if err := uc.coffeeBrewRepo.Save(ctx, brew); err != nil {
+			if err := uc.coffeeBrewRepo.Save(cctx, brew); err != nil {
 				return err
 			}
 		}
 		// Diff
 		diffBrews := lo.Filter(param.CoffeeBrews, func(pBrew CoffeeBrewParam, _ int) bool {
 			for _, brew := range *product.CoffeeBrews {
-				if pBrew.Id == brew.GetId().String() && (pBrew.Name != brew.GetName() || pBrew.BeanQuantityGrams != brew.BeanQuantityGrams || pBrew.Amount != brew.Amount) {
+				if pBrew.Id == brew.GetId() && (pBrew.Name != brew.GetName() || pBrew.BeanQuantityGrams != brew.BeanQuantityGrams || pBrew.Amount != brew.Amount) {
 					return true
 				}
 			}
 			return false
 		})
 		for _, pBrew := range diffBrews {
-			brew, err := uc.coffeeBrewRepo.FindById(ctx, pBrew.Id)
+			brew, err := uc.coffeeBrewRepo.FindById(cctx, pBrew.Id)
 			if err != nil {
 				return errors.Join(err, ErrInvalidParam)
 			}
@@ -105,21 +103,21 @@ func (uc *updateProductUseCase) Execute(id string, param *ProductParam) error {
 			}
 			brew.BeanQuantityGrams = pBrew.BeanQuantityGrams
 			brew.Amount = pBrew.Amount
-			if err := uc.coffeeBrewRepo.Save(ctx, brew); err != nil {
+			if err := uc.coffeeBrewRepo.Save(cctx, brew); err != nil {
 				return err
 			}
 		}
 		// Remove
 		removedBrews := lo.Filter(*product.CoffeeBrews, func(brew *model.ProductCoffeeBrew, _ int) bool {
 			for _, pBrew := range param.CoffeeBrews {
-				if brew.GetId().String() == pBrew.Id {
+				if brew.GetId() == pBrew.Id {
 					return false
 				}
 			}
 			return true
 		})
 		for _, brew := range removedBrews {
-			if err := uc.coffeeBrewRepo.Delete(ctx, brew.GetId().String()); err != nil {
+			if err := uc.coffeeBrewRepo.Delete(cctx, brew.GetId()); err != nil {
 				return err
 			}
 		}
@@ -129,15 +127,15 @@ func (uc *updateProductUseCase) Execute(id string, param *ProductParam) error {
 	if param.Amount != 0 {
 		product.SetAmount(param.Amount)
 	}
-	if model.ProductType(param.ProductType) == model.ProductType(model.Other) && param.StockId != product.Stock.GetId().String() {
-		stock, err := uc.stockRepo.FindById(ctx, param.StockId)
+	if model.ProductType(param.ProductType) == model.ProductType(model.Other) && param.StockId != product.Stock.GetId() {
+		stock, err := uc.stockRepo.FindById(cctx, param.StockId)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
 		product.Stock = stock
 	}
 
-	if err := uc.productRepo.Save(ctx, product); err != nil {
+	if err := uc.productRepo.Save(cctx, product); err != nil {
 		return err
 	}
 

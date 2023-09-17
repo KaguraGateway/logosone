@@ -2,11 +2,11 @@ package model
 
 import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
-	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 type Discount struct {
-	id            uuid.UUID
+	id            string
 	name          string
 	discountType  DiscountType
 	discountPrice uint64
@@ -14,7 +14,7 @@ type Discount struct {
 
 func NewDiscount(name string, discountType DiscountType, discountPrice uint64) (*Discount, error) {
 	discount := &Discount{
-		id:            uuid.UUID{},
+		id:            ulid.Make().String(),
 		discountType:  discountType,
 		discountPrice: discountPrice,
 	}
@@ -24,7 +24,7 @@ func NewDiscount(name string, discountType DiscountType, discountPrice uint64) (
 	return discount, nil
 }
 
-func ReconstructDiscount(id uuid.UUID, name string, discountType DiscountType, discountPrice uint64) *Discount {
+func ReconstructDiscount(id string, name string, discountType DiscountType, discountPrice uint64) *Discount {
 	return &Discount{
 		id:            id,
 		name:          name,
@@ -33,7 +33,7 @@ func ReconstructDiscount(id uuid.UUID, name string, discountType DiscountType, d
 	}
 }
 
-func (discount *Discount) GetId() uuid.UUID {
+func (discount *Discount) GetId() string {
 	return discount.id
 }
 
@@ -66,6 +66,6 @@ func (discount *Discount) SetDiscountPrice(discountPrice uint64) {
 }
 
 type DiscountRepository interface {
-	FindById(id uuid.UUID) (*Discount, error)
+	FindById(id string) (*Discount, error)
 	FindAll() ([]*Discount, error)
 }

@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"log"
 
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
@@ -40,6 +41,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 
 	product, err := uc.productQueryService.FindById(cctx, id)
 	if err != nil {
+		log.Printf("%v", err)
 		return err
 	}
 
@@ -58,9 +60,11 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 	if model.ProductType(param.ProductType) != product.ProductType {
 		product.ProductType = model.ProductType(param.ProductType)
 	}
+	log.Printf("param.IsNowSales: %+v", param.IsNowSales)
+	product.IsNowSales = param.IsNowSales
 
 	// Only Coffee
-	if param.CoffeeBeanId != product.CoffeeBean.GetId() {
+	if product.CoffeeBean != nil && param.CoffeeBeanId != product.CoffeeBean.GetId() {
 		coffeeBean, err := uc.coffeeBeanRepo.FindById(cctx, param.CoffeeBeanId)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
@@ -86,7 +90,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 		}
 		// Diff
 		diffBrews := lo.Filter(param.CoffeeBrews, func(pBrew CoffeeBrewParam, _ int) bool {
-			for _, brew := range *product.CoffeeBrews {
+			for _, brew := range product.CoffeeBrews {
 				if pBrew.Id == brew.GetId() && (pBrew.Name != brew.GetName() || pBrew.BeanQuantityGrams != brew.BeanQuantityGrams || pBrew.Amount != brew.Amount) {
 					return true
 				}
@@ -108,7 +112,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 			}
 		}
 		// Remove
-		removedBrews := lo.Filter(*product.CoffeeBrews, func(brew *model.ProductCoffeeBrew, _ int) bool {
+		removedBrews := lo.Filter(product.CoffeeBrews, func(brew *model.ProductCoffeeBrew, _ int) bool {
 			for _, pBrew := range param.CoffeeBrews {
 				if brew.GetId() == pBrew.Id {
 					return false

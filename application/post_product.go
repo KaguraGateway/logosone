@@ -41,7 +41,7 @@ func (uc *postProductUseCase) Execute(ctx context.Context, param *ProductParam) 
 	}
 	productCategory, err := uc.productCategoryRepo.FindById(cctx, param.ProductCategoryId)
 	if err != nil {
-		return errors.Join(err, ErrInvalidParam)
+		return errors.Join(err, ErrFailedFetchProductCategory)
 	}
 	productType := model.ProductType(param.ProductType)
 
@@ -49,9 +49,13 @@ func (uc *postProductUseCase) Execute(ctx context.Context, param *ProductParam) 
 	if productType == model.ProductType(model.Coffee) {
 		coffeeBean, err := uc.coffeeBeanRepo.FindById(cctx, param.CoffeeBeanId)
 		if err != nil {
-			return errors.Join(err, ErrInvalidParam)
+			return errors.Join(err, ErrFailedFetchCoffeeBean)
 		}
 		var coffeeBrews []*model.ProductCoffeeBrew
+
+		// 先にproductを作成しておかないと、brewのproduct_idが空になってしまう
+		product = *model.NewProductCoffee(*productName, *productCategory, param.IsNowSales, *coffeeBean, coffeeBrews)
+
 		for _, pBrew := range param.CoffeeBrews {
 			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount)
 			if err != nil {
@@ -64,12 +68,10 @@ func (uc *postProductUseCase) Execute(ctx context.Context, param *ProductParam) 
 				return err
 			}
 		}
-
-		product = *model.NewProductCoffee(*productName, *productCategory, param.IsNowSales, *coffeeBean, coffeeBrews)
 	} else {
 		stock, err := uc.stockRepo.FindById(cctx, param.StockId)
 		if err != nil {
-			return errors.Join(err, ErrInvalidParam)
+			return errors.Join(err, ErrFailedFetchStock)
 		}
 		product = *model.NewProductOther(*productName, *productCategory, param.IsNowSales, param.Amount, *stock)
 	}

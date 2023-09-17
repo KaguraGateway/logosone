@@ -1,4 +1,4 @@
-module github.com/KaguraGateway/cafelogos-pos-grpc
+module github.com/KaguraGateway/cafelogos-grpc
 
 go 1.21
 

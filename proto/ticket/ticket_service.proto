@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/";
+option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/ticket;ticket";
 
-package cafelogos;
+package cafelogos.ticket;
 
 service TicketService {
     rpc IssueTicket(RequestIssueTicket) returns (ResponseIssueTicket) {}

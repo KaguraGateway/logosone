@@ -1,31 +1,31 @@
 syntax = "proto3";
 
-package cafelogos;
+package cafelogos.pos;
 
-import "common.proto";
+import "common/common.proto";
 
-option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/";
+option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/pos;pos";
 
 
 service PosService {
     rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
-    rpc PostOrder(PostOrderRequest) returns (Empty) {}
-    rpc GetProducts(Empty) returns (GetProductsResponse) {}
+    rpc PostOrder(PostOrderRequest) returns (common.Empty) {}
+    rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
     // Only Admin
-    rpc GetProductCategories(Empty) returns (GetProductCategoriesResponse) {}
-    rpc PostProductCategory(PostProductCategoryRequest) returns (Empty) {}
+    rpc GetProductCategories(common.Empty) returns (GetProductCategoriesResponse) {}
+    rpc PostProductCategory(PostProductCategoryRequest) returns (common.Empty) {}
 
-    rpc PostProduct(PostProductRequest) returns (Empty) {}
-    rpc UpdateProduct(UpdateProductRequest) returns (Empty) {}
-    rpc DeleteProduct(DeleteProductRequest) returns (Empty) {}
+    rpc PostProduct(PostProductRequest) returns (common.Empty) {}
+    rpc UpdateProduct(UpdateProductRequest) returns (common.Empty) {}
+    rpc DeleteProduct(DeleteProductRequest) returns (common.Empty) {}
 
-    rpc PostStock(PostStockRequest) returns (Empty) {}
-    rpc GetStocks(Empty) returns (GetStocksResponse) {}
+    rpc PostStock(PostStockRequest) returns (common.Empty) {}
+    rpc GetStocks(common.Empty) returns (GetStocksResponse) {}
 
-    rpc PostCoffeeBean(PostCoffeeBeanRequest) returns (Empty) {}
-    rpc GetCoffeeBeans(Empty) returns (GetCoffeeBeansResponse) {}
+    rpc PostCoffeeBean(PostCoffeeBeanRequest) returns (common.Empty) {}
+    rpc GetCoffeeBeans(common.Empty) returns (GetCoffeeBeansResponse) {}
 
-    rpc DeleteAllOrders(Empty) returns (Empty) {}
+    rpc DeleteAllOrders(common.Empty) returns (common.Empty) {}
 }
 
 /**

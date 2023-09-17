@@ -2,19 +2,21 @@ package grpc_server
 
 import (
 	"context"
+	"log"
 
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/proto"
+	"connectrpc.com/connect"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 	"github.com/KaguraGateway/cafelogos-pos-backend/application"
 	"github.com/samber/do"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
-func (s *GrpcServer) PostProduct(ctx context.Context, req *proto.PostProductRequest) (*proto.Empty, error) {
+func (s *GrpcServer) PostProduct(ctx context.Context, req *connect.Request[pos.PostProductRequest]) (*connect.Response[common.Empty], error) {
 	usecase := do.MustInvoke[application.PostProduct](s.i)
-	param := ToProductParam(req.Product)
+	param := ToProductParam(req.Msg.Product)
 	if err := usecase.Execute(ctx, param); err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
+		log.Printf("%v", err)
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
-	return &proto.Empty{}, nil
+	return connect.NewResponse(&common.Empty{}), nil
 }

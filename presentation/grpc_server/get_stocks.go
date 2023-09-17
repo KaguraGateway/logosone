@@ -2,25 +2,27 @@ package grpc_server
 
 import (
 	"context"
+	"log"
 
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/proto"
+	"connectrpc.com/connect"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 	"github.com/KaguraGateway/cafelogos-pos-backend/application"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
 	"github.com/samber/do"
 	"github.com/samber/lo"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
-func (s *GrpcServer) GetStocks(ctx context.Context, _ *proto.Empty) (*proto.GetStocksResponse, error) {
+func (s *GrpcServer) GetStocks(ctx context.Context, _ *connect.Request[common.Empty]) (*connect.Response[pos.GetStocksResponse], error) {
 	usecase := do.MustInvoke[application.GetStocks](s.i)
 	stocks, err := usecase.Execute(ctx)
 	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
+		log.Printf("%v", err)
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
-	return &proto.GetStocksResponse{
-		Stocks: lo.Map(stocks, func(stock *model.Stock, _ int) *proto.Stock {
+	return connect.NewResponse(&pos.GetStocksResponse{
+		Stocks: lo.Map(stocks, func(stock *model.Stock, _ int) *pos.Stock {
 			return ToProtoStock(stock)
 		}),
-	}, nil
+	}), nil
 }

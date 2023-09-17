@@ -13,13 +13,13 @@ type Product struct {
 	IsNowSales      bool
 	// Only Coffee
 	CoffeeBean  *CoffeeBean
-	CoffeeBrews *ProductCoffeeBrews
+	CoffeeBrews []*ProductCoffeeBrew
 	// Only Other
 	amount uint64
 	Stock  *Stock
 }
 
-func NewProductCoffee(productName ProductName, productCategory ProductCategory, isNowSales bool, coffeeBean CoffeeBean, brews ProductCoffeeBrews) *Product {
+func NewProductCoffee(productName ProductName, productCategory ProductCategory, isNowSales bool, coffeeBean CoffeeBean, brews []*ProductCoffeeBrew) *Product {
 	product := &Product{
 		productId:       ulid.Make().String(),
 		ProductName:     productName,
@@ -27,7 +27,7 @@ func NewProductCoffee(productName ProductName, productCategory ProductCategory, 
 		ProductType:     ProductType(Coffee),
 		IsNowSales:      isNowSales,
 		CoffeeBean:      &coffeeBean,
-		CoffeeBrews:     &brews,
+		CoffeeBrews:     brews,
 	}
 	return product
 }
@@ -45,7 +45,7 @@ func NewProductOther(productName ProductName, productCategory ProductCategory, i
 	return product
 }
 
-func ReconstructProduct(productId string, productName ProductName, productCategory ProductCategory, productType ProductType, isNowSales bool, coffeeBean *CoffeeBean, brews *ProductCoffeeBrews, amount uint64, stock *Stock) *Product {
+func ReconstructProduct(productId string, productName ProductName, productCategory ProductCategory, productType ProductType, isNowSales bool, coffeeBean *CoffeeBean, brews []*ProductCoffeeBrew, amount uint64, stock *Stock) *Product {
 	return &Product{
 		productId:       productId,
 		ProductName:     productName,

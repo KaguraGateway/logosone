@@ -36,7 +36,7 @@ func (i *stockDb) FindAll(ctx context.Context) ([]*model.Stock, error) {
 
 func (i *stockDb) FindById(ctx context.Context, id string) (*model.Stock, error) {
 	daoStock := new(dao.Stock)
-	if err := i.db.NewSelect().Model(&daoStock).Where("id = ?", id).Scan(ctx); err != nil {
+	if err := i.db.NewSelect().Model(daoStock).Where("id = ?", id).Scan(ctx); err != nil {
 		return nil, err
 	}
 	return toStock(*daoStock), nil

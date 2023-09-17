@@ -66,7 +66,7 @@ func (OrderItem *OrderItem) SetCoffeeHowToBrew(brew ProductCoffeeBrew) error {
 		return domain.ErrProductNotCoffee
 	}
 
-	for _, v := range *OrderItem.product.CoffeeBrews {
+	for _, v := range OrderItem.product.CoffeeBrews {
 		if v.GetId() == brew.GetId() {
 			OrderItem.coffeeBrew = brew
 			return nil

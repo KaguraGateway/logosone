@@ -36,7 +36,7 @@ func (i *productCategoryDb) FindAll(ctx context.Context) ([]*model.ProductCatego
 
 func (i *productCategoryDb) FindById(ctx context.Context, id string) (*model.ProductCategory, error) {
 	daoProductCategory := new(dao.ProductCategory)
-	if err := i.db.NewSelect().Model(&daoProductCategory).Where("id = ?", id).Scan(ctx); err != nil {
+	if err := i.db.NewSelect().Model(daoProductCategory).Where("id = ?", id).Scan(ctx); err != nil {
 		return nil, err
 	}
 	return toProductCategory(*daoProductCategory), nil

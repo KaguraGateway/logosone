@@ -36,7 +36,7 @@ func (i *coffeeBeanDb) FindAll(ctx context.Context) ([]*model.CoffeeBean, error)
 
 func (i *coffeeBeanDb) FindById(ctx context.Context, id string) (*model.CoffeeBean, error) {
 	daoCoffeeBean := new(dao.CoffeeBean)
-	if err := i.db.NewSelect().Model(&daoCoffeeBean).Where("id = ?", id).Scan(ctx); err != nil {
+	if err := i.db.NewSelect().Model(daoCoffeeBean).Where("id = ?", id).Scan(ctx); err != nil {
 		return nil, err
 	}
 	return toCoffeeBean(*daoCoffeeBean), nil

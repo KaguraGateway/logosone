@@ -25,7 +25,7 @@ func toProductCoffeeBrew(daoProductCoffeeBrew dao.ProductCoffeeBrew) *model.Prod
 
 func (i *productCoffeeBrewDb) FindById(ctx context.Context, id string) (*model.ProductCoffeeBrew, error) {
 	daoCoffeeBrew := new(dao.ProductCoffeeBrew)
-	if err := i.db.NewSelect().Model(&daoCoffeeBrew).Where("id = ?", id).Scan(ctx); err != nil {
+	if err := i.db.NewSelect().Model(daoCoffeeBrew).Where("id = ?", id).Scan(ctx); err != nil {
 		return nil, err
 	}
 	return toProductCoffeeBrew(*daoCoffeeBrew), nil

@@ -12,7 +12,6 @@ type ProductCoffeeBrew struct {
 	BeanQuantityGrams uint32
 	Amount            uint64
 }
-type ProductCoffeeBrews []*ProductCoffeeBrew
 
 func NewProductCoffeeBrew(productId string, name string, beanQuantityGrams uint32, amount uint64) (*ProductCoffeeBrew, error) {
 	brew := &ProductCoffeeBrew{

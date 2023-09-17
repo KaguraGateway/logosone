@@ -14,6 +14,12 @@ func NewProductName(value string) (*ProductName, error) {
 	return productName, nil
 }
 
+func ReconstructProductName(value string) *ProductName {
+	return &ProductName{
+		value: value,
+	}
+}
+
 func (productName *ProductName) Set(newValue string) error {
 	if len(newValue) == 0 {
 		return domain.ErrProductNameInvalid

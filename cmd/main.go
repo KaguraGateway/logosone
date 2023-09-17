@@ -5,19 +5,22 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"net"
+	"net/http"
 	"os"
 
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/proto"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos/posconnect"
 	"github.com/KaguraGateway/cafelogos-pos-backend/application"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/bundb"
 	"github.com/KaguraGateway/cafelogos-pos-backend/presentation/grpc_server"
 	"github.com/joho/godotenv"
+	"github.com/rs/cors"
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
-	"google.golang.org/grpc"
+	"github.com/uptrace/bun/extra/bundebug"
+	"golang.org/x/net/http2"
+	"golang.org/x/net/http2/h2c"
 )
 
 var (
@@ -33,19 +36,17 @@ func main() {
 	// Start DB
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(os.Getenv("DATABASE_URL"))))
 	db := bun.NewDB(sqldb, pgdialect.New())
+	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
 	defer db.Close()
 
 	// Start DI
 	i := buildInjector(db)
 
 	// Start gRPC server
-	listener, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%d", *port))
-	if err != nil {
-		log.Fatalf("failed to listen: %v\n", err)
-	}
-	grpcServer := grpc.NewServer()
-	proto.RegisterPosServiceServer(grpcServer, grpc_server.NewGrpcServer(db, i))
-	grpcServer.Serve(listener)
+	mux := http.NewServeMux()
+	path, handler := posconnect.NewPosServiceHandler(grpc_server.NewGrpcServer(db, i))
+	mux.Handle(path, handler)
+	http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), cors.AllowAll().Handler(h2c.NewHandler(mux, &http2.Server{})))
 }
 
 func buildInjector(db *bun.DB) *do.Injector {
@@ -61,6 +62,8 @@ func buildInjector(db *bun.DB) *do.Injector {
 	do.Provide(i, bundb.NewProductCategoryDb)
 	do.Provide(i, bundb.NewProductCoffeeBrewDb)
 	do.Provide(i, bundb.NewProductDb)
+	// Register QueryService
+	do.Provide(i, bundb.NewProductQueryServiceDb)
 	// Register usecases
 	do.Provide(i, application.NewDeleteProductUseCase)
 	do.Provide(i, application.NewGetCoffeeBeansUseCase)

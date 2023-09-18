@@ -8,6 +8,11 @@ export const metadata: Metadata = {
     default: 'OrderLink',
   },
   description: 'OrderLink powered by LOGOS Systems',
+  applicationName: 'OrderLink',
+  appleWebApp: {
+    title: 'OrderLink',
+    statusBarStyle: 'black-translucent',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,0 +1,8 @@
+node_modules
+public
+bun.lockb
+package.json
+.eslintignore
+.prettierignore
+.gitignore
+README.md

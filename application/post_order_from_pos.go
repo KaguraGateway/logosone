@@ -6,32 +6,34 @@ import (
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
+	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order"
+	orderitem "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order_item"
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
 	"github.com/cockroachdb/errors"
 	"github.com/samber/do"
 )
 
-type PostOrderItemParam struct {
+type PostOrderItemInput struct {
 	ProductId    string
 	CoffeeBrewId *string
 	Quantity     uint
 }
 
-type PostOrderParam struct {
+type PostOrderInput struct {
 	OrderId    string
 	OrderAt    synchro.Time[tz.UTC]
-	OrderItems []PostOrderItemParam
-	OrderType  model.OrderType
+	OrderItems []PostOrderItemInput
+	OrderType  order.OrderType
 	TicketId   string
 	TicketAddr string
 	SeatName   string
 }
 
 type PostOrderFromPos interface {
-	Execute(ctx context.Context, param *PostOrderParam) error
+	Execute(ctx context.Context, input *PostOrderInput) error
 }
 
-type PostOrderFromPosUseCase struct {
+type postOrderFromPosUseCase struct {
 	orderRepo       repository.OrderRepository
 	orderItemRepo   repository.OrderItemRepository
 	orderTicketRepo repository.OrderTicketRepository
@@ -40,7 +42,7 @@ type PostOrderFromPosUseCase struct {
 }
 
 func NewPostOrderFromPosUseCase(i *do.Injector) (PostOrderFromPos, error) {
-	return &PostOrderFromPosUseCase{
+	return &postOrderFromPosUseCase{
 		orderRepo:       do.MustInvoke[repository.OrderRepository](i),
 		orderItemRepo:   do.MustInvoke[repository.OrderItemRepository](i),
 		orderTicketRepo: do.MustInvoke[repository.OrderTicketRepository](i),
@@ -49,23 +51,23 @@ func NewPostOrderFromPosUseCase(i *do.Injector) (PostOrderFromPos, error) {
 	}, nil
 }
 
-func (u *PostOrderFromPosUseCase) Execute(ctx context.Context, param *PostOrderParam) error {
+func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderInput) error {
 	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
 	// 既知の注文かどうかを確認する
-	if order, _ := u.orderRepo.FindById(cctx, param.OrderId); order != nil {
+	if order, _ := u.orderRepo.FindById(cctx, input.OrderId); order != nil {
 		return nil
 	}
 
 	// トランザクションを開始する
 	err := u.txRepo.Transaction(cctx, func(ctx context.Context, tx model.Tx) error {
 		// 注文アイテムを保存する
-		var orderItems []model.OrderItem
-		for _, item := range param.OrderItems {
+		var orderItems []orderitem.OrderItem
+		for _, item := range input.OrderItems {
 			// 注文アイテムを保存
 			for i := 0; i < int(item.Quantity); i++ {
-				orderItem, err := model.NewOrderItem(param.OrderId, item.ProductId, item.CoffeeBrewId)
+				orderItem, err := orderitem.NewOrderItem(input.OrderId, item.ProductId, item.CoffeeBrewId)
 				if err != nil {
 					return errors.Join(err, ErrInvalidParam)
 				}
@@ -77,7 +79,7 @@ func (u *PostOrderFromPosUseCase) Execute(ctx context.Context, param *PostOrderP
 		}
 
 		// 注文を保存する
-		order, err := model.NewOrder(param.OrderId, orderItems, param.OrderAt, param.OrderType, param.SeatName)
+		order, err := order.NewOrder(input.OrderId, orderItems, input.OrderAt, input.OrderType, input.SeatName)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
@@ -86,7 +88,7 @@ func (u *PostOrderFromPosUseCase) Execute(ctx context.Context, param *PostOrderP
 		}
 
 		// Ticketを保存する
-		ticket, err := model.NewOrderTicket(param.OrderId, param.TicketId, param.TicketAddr)
+		ticket, err := model.NewOrderTicket(input.OrderId, input.TicketId, input.TicketAddr)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
@@ -100,8 +102,8 @@ func (u *PostOrderFromPosUseCase) Execute(ctx context.Context, param *PostOrderP
 		return err
 	}
 
-	// Publish
-	event, err := model.NewEvent("NewOrder", param.OrderId)
+	// 各サーバーに通知
+	event, err := model.NewEvent("NewOrder", input.OrderId)
 	if err != nil {
 		return err
 	}

@@ -1,4 +1,4 @@
-package model
+package orderitem
 
 type OrderItemStatus uint
 

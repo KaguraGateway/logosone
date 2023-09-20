@@ -1,4 +1,4 @@
-package model
+package orderitem
 
 import (
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain"
@@ -52,10 +52,14 @@ func (o *OrderItem) ProductId() string {
 	return o.productId
 }
 
-func (o *OrderItem) CoffeeBrew() *string {
+func (o *OrderItem) CoffeeBrewId() *string {
 	return o.coffeeBrewId
 }
 
 func (o *OrderItem) Status() OrderItemStatus {
 	return o.status
+}
+
+func (o *OrderItem) UpdateStatus(status OrderItemStatus) {
+	o.status = status
 }

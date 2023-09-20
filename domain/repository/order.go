@@ -1,8 +1,12 @@
 package repository
 
-import "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
+import (
+	"context"
+
+	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
+)
 
 type OrderRepository interface {
-	FindById(id string) (*model.Order, error)
-	Save(order *model.Order) error
+	FindById(ctx context.Context, id string) (*model.Order, error)
+	SaveTx(ctx context.Context, tx model.Tx, order *model.Order) error
 }

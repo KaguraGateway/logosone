@@ -8,5 +8,5 @@ import (
 
 type ProductRepository interface {
 	FindById(ctx context.Context, id string) (*model.Product, error)
-	Save(ctx context.Context, product *model.Product) error
+	SaveTx(ctx context.Context, tx model.Tx, product *model.Product) error
 }

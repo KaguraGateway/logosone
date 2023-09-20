@@ -3,6 +3,7 @@ package model
 import (
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
+	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain"
 )
 
 type Order struct {
@@ -14,7 +15,11 @@ type Order struct {
 	seatName   string
 }
 
-func NewOrder(id string, orderItems []OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, seatName string) *Order {
+func NewOrder(id string, orderItems []OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, seatName string) (*Order, error) {
+	if len(id) == 0 {
+		return nil, domain.ErrInvalidOrderId
+	}
+
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
@@ -22,7 +27,7 @@ func NewOrder(id string, orderItems []OrderItem, orderAt synchro.Time[tz.UTC], o
 		orderType:  orderType,
 		Status:     OrderStatus(Prepare),
 		seatName:   seatName,
-	}
+	}, nil
 }
 
 func RebuildOrder(id string, orderItems []OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, status OrderStatus, seatName string) *Order {

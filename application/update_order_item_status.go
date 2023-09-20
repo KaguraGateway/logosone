@@ -88,7 +88,7 @@ func (u *updateOrderItemStatusUseCase) Execute(ctx context.Context, input Update
 		order.UpdateStatus(orderPkg.Cooking)
 	}
 
-	err = u.txRepo.Transaction(ctx, func(ctx context.Context, tx model.Tx) error {
+	err = u.txRepo.Transaction(ctx, func(ctx context.Context, tx interface{}) error {
 		// アイテムを保存
 		if err := u.orderItemRepo.SaveTx(ctx, tx, orderItem); err != nil {
 			return err

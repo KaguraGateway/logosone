@@ -61,7 +61,7 @@ func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderI
 	}
 
 	// トランザクションを開始する
-	err := u.txRepo.Transaction(cctx, func(ctx context.Context, tx model.Tx) error {
+	err := u.txRepo.Transaction(cctx, func(ctx context.Context, tx interface{}) error {
 		// 注文アイテムを保存する
 		var orderItems []orderitem.OrderItem
 		for _, item := range input.OrderItems {

@@ -12,15 +12,9 @@ import (
 )
 
 type PostOrderItemParam struct {
-	ProductId           string
-	ProductName         string
-	ProductType         model.ProductType
-	ProductColor        string
-	ProductCategoryId   string
-	ProductCategoryName string
-	CoffeeBrewId        *string
-	CoffeeBrewName      *string
-	Quantity            uint
+	ProductId    string
+	CoffeeBrewId *string
+	Quantity     uint
 }
 
 type PostOrderParam struct {
@@ -38,26 +32,20 @@ type PostOrderFromPos interface {
 }
 
 type PostOrderFromPosUseCase struct {
-	orderRepo             repository.OrderRepository
-	orderItemRepo         repository.OrderItemRepository
-	orderTicketRepo       repository.OrderTicketRepository
-	productRepo           repository.ProductRepository
-	productCategoryRepo   repository.ProductCategoryRepository
-	productCoffeeBrewRepo repository.ProductCoffeeBrewRepository
-	txRepo                repository.TxRepository
-	pubsubService         repository.SrvToSrvPubSubService
+	orderRepo       repository.OrderRepository
+	orderItemRepo   repository.OrderItemRepository
+	orderTicketRepo repository.OrderTicketRepository
+	txRepo          repository.TxRepository
+	pubsubService   repository.SrvToSrvPubSubService
 }
 
 func NewPostOrderFromPosUseCase(i *do.Injector) (PostOrderFromPos, error) {
 	return &PostOrderFromPosUseCase{
-		orderRepo:             do.MustInvoke[repository.OrderRepository](i),
-		orderItemRepo:         do.MustInvoke[repository.OrderItemRepository](i),
-		orderTicketRepo:       do.MustInvoke[repository.OrderTicketRepository](i),
-		productRepo:           do.MustInvoke[repository.ProductRepository](i),
-		productCategoryRepo:   do.MustInvoke[repository.ProductCategoryRepository](i),
-		productCoffeeBrewRepo: do.MustInvoke[repository.ProductCoffeeBrewRepository](i),
-		txRepo:                do.MustInvoke[repository.TxRepository](i),
-		pubsubService:         do.MustInvoke[repository.SrvToSrvPubSubService](i),
+		orderRepo:       do.MustInvoke[repository.OrderRepository](i),
+		orderItemRepo:   do.MustInvoke[repository.OrderItemRepository](i),
+		orderTicketRepo: do.MustInvoke[repository.OrderTicketRepository](i),
+		txRepo:          do.MustInvoke[repository.TxRepository](i),
+		pubsubService:   do.MustInvoke[repository.SrvToSrvPubSubService](i),
 	}, nil
 }
 
@@ -75,37 +63,9 @@ func (u *PostOrderFromPosUseCase) Execute(ctx context.Context, param *PostOrderP
 		// 注文アイテムを保存する
 		var orderItems []model.OrderItem
 		for _, item := range param.OrderItems {
-			// 商品を保存
-			category, err := model.NewProductCategory(item.ProductCategoryId, item.ProductCategoryName)
-			if err != nil {
-				return errors.Join(err, ErrInvalidParam)
-			}
-			product, err := model.NewProduct(item.ProductId, item.ProductName, *category, item.ProductType, item.ProductColor)
-			if err != nil {
-				return errors.Join(err, ErrInvalidParam)
-			}
-
-			if err := u.productCategoryRepo.SaveTx(cctx, tx, category); err != nil {
-				return err
-			}
-			if err := u.productRepo.SaveTx(cctx, tx, product); err != nil {
-				return err
-			}
-
-			// コーヒー抽出方法を保存
-			var coffeeBrew *model.ProductCoffeeBrew
-			if item.CoffeeBrewId != nil && item.CoffeeBrewName != nil {
-				if coffeeBrew, err = model.NewProductCoffeeBrew(*item.CoffeeBrewId, *item.CoffeeBrewName); err != nil {
-					return errors.Join(err, ErrInvalidParam)
-				}
-				if err := u.productCoffeeBrewRepo.SaveTx(cctx, tx, coffeeBrew); err != nil {
-					return err
-				}
-			}
-
 			// 注文アイテムを保存
 			for i := 0; i < int(item.Quantity); i++ {
-				orderItem, err := model.NewOrderItem(param.OrderId, *product, coffeeBrew)
+				orderItem, err := model.NewOrderItem(param.OrderId, item.ProductId, item.CoffeeBrewId)
 				if err != nil {
 					return errors.Join(err, ErrInvalidParam)
 				}

@@ -85,7 +85,7 @@ type NewOrderOutput struct {
 	OrderAt    synchro.Time[tz.UTC]
 	OrderType  uint
 	TicketAddr string
-	SeatName   string
+	SeatName   *string
 	OrderItems []NewOrderItemOutput
 }
 

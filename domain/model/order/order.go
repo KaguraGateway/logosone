@@ -13,10 +13,10 @@ type Order struct {
 	orderAt    synchro.Time[tz.UTC]
 	orderType  OrderType
 	status     OrderStatus
-	seatName   string
+	seatName   *string
 }
 
-func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, seatName string) (*Order, error) {
+func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, seatName *string) (*Order, error) {
 	if len(id) == 0 {
 		return nil, domain.ErrInvalidOrderId
 	}
@@ -31,7 +31,7 @@ func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[
 	}, nil
 }
 
-func RebuildOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, status OrderStatus, seatName string) *Order {
+func RebuildOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, status OrderStatus, seatName *string) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
@@ -58,7 +58,7 @@ func (o *Order) OrderType() OrderType {
 	return o.orderType
 }
 
-func (o *Order) SeatName() string {
+func (o *Order) SeatName() *string {
 	return o.seatName
 }
 

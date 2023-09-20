@@ -26,7 +26,7 @@ type PostOrderInput struct {
 	OrderType  order.OrderType
 	TicketId   string
 	TicketAddr string
-	SeatName   string
+	SeatName   *string
 }
 
 type PostOrderFromPos interface {

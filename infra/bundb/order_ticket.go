@@ -45,7 +45,7 @@ func orderTicketSaveQuery(q *bun.InsertQuery) *bun.InsertQuery {
 }
 
 func (r *orderTicketRepositoryDb) SaveTx(ctx context.Context, tx interface{}, orderTicket *model.OrderTicket) error {
-	bunTx := tx.(*bun.Tx)
+	bunTx := tx.(bun.Tx)
 	daoOrderTicket := toDaoOrderTicket(orderTicket)
 	if _, err := orderTicketSaveQuery(bunTx.NewInsert().Model(daoOrderTicket)).Exec(ctx); err != nil {
 		return err

@@ -1,6 +1,8 @@
 package order
 
 import (
+	"fmt"
+
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain"
@@ -67,7 +69,12 @@ func (o *Order) Status() OrderStatus {
 }
 
 func (o *Order) UpdateStatus(status OrderStatus) error {
-	if status != Provided && (uint(o.status)+1 != uint(status) || uint(o.status)-1 != uint(status)) {
+	fmt.Printf("o.status: %v\n", o.status)
+	fmt.Printf("status: %v\n", status)
+	fmt.Printf("1: %v\n", status != Provided)
+	fmt.Printf("2: %v\n", uint(o.status)+1 != uint(status))
+	fmt.Printf("3: %v\n", uint(o.status)-1 != uint(status))
+	if status != Provided && uint(o.status)+1 != uint(status) && uint(o.status)-1 != uint(status) {
 		return domain.ErrCantOperationOrderStatus
 	}
 	o.status = status

@@ -20,6 +20,6 @@ type OrderDto struct {
 	OrderType  order.OrderType
 	TicketAddr string
 	Status     order.OrderStatus
-	SeatName   string
+	SeatName   *string
 	OrderItems []orderitem.OrderItem
 }

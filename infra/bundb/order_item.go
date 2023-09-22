@@ -21,15 +21,16 @@ func NewOrderItemRepositoryDb(i *do.Injector) (repository.OrderItemRepository, e
 }
 
 func toDomainOrderItem(daoOrderItem *dao.OrderItem) *orderitem.OrderItem {
-	return orderitem.RebuildOrderItem(daoOrderItem.Id, daoOrderItem.OrderId, daoOrderItem.ProductId, &daoOrderItem.ProductId, orderitem.OrderItemStatus(daoOrderItem.Order.Status))
+	return orderitem.RebuildOrderItem(daoOrderItem.Id, daoOrderItem.OrderId, daoOrderItem.ProductId, daoOrderItem.CoffeeBrewId, orderitem.OrderItemStatus(daoOrderItem.Status))
 }
 
 func toDaoOrderItem(orderItem *orderitem.OrderItem) *dao.OrderItem {
 	return &dao.OrderItem{
-		Id:        orderItem.Id(),
-		OrderId:   orderItem.OrderId(),
-		ProductId: orderItem.ProductId(),
-		Status:    uint(orderItem.Status()),
+		Id:           orderItem.Id(),
+		OrderId:      orderItem.OrderId(),
+		ProductId:    orderItem.ProductId(),
+		CoffeeBrewId: orderItem.CoffeeBrewId(),
+		Status:       uint(orderItem.Status()),
 	}
 }
 
@@ -54,7 +55,7 @@ func (r *orderItemRepositoryDb) Save(ctx context.Context, orderItem *orderitem.O
 }
 
 func (r *orderItemRepositoryDb) SaveTx(ctx context.Context, tx interface{}, orderItem *orderitem.OrderItem) error {
-	bunTx := tx.(*bun.Tx)
+	bunTx := tx.(bun.Tx)
 	daoOrderItem := toDaoOrderItem(orderItem)
 	if _, err := orderItemSaveQuery(bunTx.NewInsert().Model(daoOrderItem)).Exec(ctx); err != nil {
 		return err

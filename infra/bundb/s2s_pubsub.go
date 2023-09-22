@@ -24,14 +24,16 @@ func (r *serverToServerPubSubBun) Publish(ctx context.Context, event model.Event
 	return pgdriver.Notify(ctx, r.db, event.GetTopic(), event.GetMessage().(string))
 }
 
-func (r *serverToServerPubSubBun) Subscribe(ctx context.Context, channel string, callback func(model.Event)) error {
+func (r *serverToServerPubSubBun) Subscribe(ctx context.Context, channel string, callback func(context.Context, model.Event)) error {
+	var err error
 	ln := pgdriver.NewListener(r.db)
-	if err := ln.Listen(ctx, channel); err != nil {
-		return nil
+	if err = ln.Listen(ctx, channel); err != nil {
+		return err
 	}
+	var event *model.Event
 	for notif := range ln.Channel() {
-		event := model.RebuildEvent(notif.Channel, notif.Payload)
-		callback(*event)
+		event = model.RebuildEvent(notif.Channel, notif.Payload)
+		callback(ctx, *event)
 	}
 	return nil
 }

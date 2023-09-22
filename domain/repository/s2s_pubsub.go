@@ -11,5 +11,5 @@ import (
  */
 type SrvToSrvPubSubService interface {
 	Publish(ctx context.Context, event model.Event) error
-	Subscribe(ctx context.Context, topic string, f func(event model.Event)) error
+	Subscribe(ctx context.Context, topic string, f func(ctx context.Context, event model.Event)) error
 }

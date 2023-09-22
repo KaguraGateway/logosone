@@ -2,7 +2,6 @@ package httpserver
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/application"
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
@@ -24,7 +23,7 @@ func NewGetOrders(i *do.Injector) *GetOrders {
 func (r *GetOrders) GetOrders(ctx context.Context, conn *websocket.Conn, event model.Event) error {
 	input, ok := event.GetMessage().(application.GetOrdersInput)
 	if !ok {
-		return errors.WithMessage(ErrTypeAssertion, fmt.Sprintf("event.GetMessage(): %v", event.GetMessage()))
+		input = application.GetOrdersInput{}
 	}
 
 	output, err := r.getOrdersUseCase.Execute(ctx, input)
@@ -37,7 +36,7 @@ func (r *GetOrders) GetOrders(ctx context.Context, conn *websocket.Conn, event m
 		return errors.Join(err, ErrNewEvent)
 	}
 
-	if err := conn.WriteJSON(responseEvent); err != nil {
+	if err := conn.WriteJSON(FromEvent(responseEvent)); err != nil {
 		return errors.Join(err, ErrWriteJSON)
 	}
 	return nil

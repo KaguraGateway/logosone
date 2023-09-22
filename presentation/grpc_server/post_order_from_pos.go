@@ -20,7 +20,7 @@ func (r *GrpcServer) PostOrder(ctx context.Context, req *connect.Request[orderli
 
 	orderAt, err := synchro.ParseISO[tz.UTC](msg.OrderAt)
 	if err != nil {
-		return nil, err
+		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	input := &application.PostOrderInput{
@@ -39,7 +39,7 @@ func (r *GrpcServer) PostOrder(ctx context.Context, req *connect.Request[orderli
 		SeatName:   &msg.SeatName,
 	}
 	if err := usecase.Execute(ctx, input); err != nil {
-		return nil, err
+		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 	return connect.NewResponse(&common.Empty{}), nil
 }

@@ -56,8 +56,10 @@ func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderI
 	defer cancel()
 
 	// 既知の注文かどうかを確認する
-	if order, _ := u.orderRepo.FindById(cctx, input.OrderId); order != nil {
+	if exists, err := u.orderRepo.Exists(cctx, input.OrderId); exists {
 		return nil
+	} else if err != nil {
+		return err
 	}
 
 	// トランザクションを開始する

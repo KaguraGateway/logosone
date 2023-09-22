@@ -80,7 +80,7 @@ type GetOrdersOutputOrder struct {
 	OrderType  uint
 	TicketAddr string
 	Status     uint
-	SeatName   string
+	SeatName   *string
 	OrderItems []GetOrdersOutputOrderItem
 }
 

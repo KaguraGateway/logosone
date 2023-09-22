@@ -7,9 +7,8 @@ import (
 )
 
 /**
- * Client <-> Server PubSub
+ * Client <-> Server Pub
  */
-type SrvToClientPubSubService interface {
+type SrvToClientPubService interface {
 	Publish(ctx context.Context, event model.Event) error
-	Subscribe(ctx context.Context, topic string, f func(event model.Event)) error
 }

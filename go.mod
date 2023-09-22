@@ -5,6 +5,7 @@ go 1.21
 require (
 	github.com/Code-Hex/synchro v0.0.9
 	github.com/cockroachdb/errors v1.11.1
+	github.com/gorilla/websocket v1.5.0
 	github.com/joho/godotenv v1.5.1
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/samber/do v1.6.0

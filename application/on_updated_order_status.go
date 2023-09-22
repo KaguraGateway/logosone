@@ -16,13 +16,13 @@ type OnUpdatedOrderStatus interface {
 
 type onUpdatedOrderStatusUseCase struct {
 	orderRepo    repository.OrderRepository
-	clientPubsub repository.SrvToClientPubSubService
+	clientPubsub repository.SrvToClientPubService
 }
 
 func NewOnUpdatedOrderStatusUseCase(i *do.Injector) (OnUpdatedOrderStatus, error) {
 	return &onUpdatedOrderStatusUseCase{
 		orderRepo:    do.MustInvoke[repository.OrderRepository](i),
-		clientPubsub: do.MustInvoke[repository.SrvToClientPubSubService](i),
+		clientPubsub: do.MustInvoke[repository.SrvToClientPubService](i),
 	}, nil
 }
 

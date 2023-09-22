@@ -22,14 +22,14 @@ type OnReceiveOrder interface {
 type onReceiveOrderUseCase struct {
 	orderRepo  repository.OrderRepository
 	ticketRepo repository.OrderTicketRepository
-	pubsub     repository.SrvToClientPubSubService
+	pubsub     repository.SrvToClientPubService
 }
 
 func NewOnReceiveOrderUseCase(i *do.Injector) (OnReceiveOrder, error) {
 	return &onReceiveOrderUseCase{
 		orderRepo:  do.MustInvoke[repository.OrderRepository](i),
 		ticketRepo: do.MustInvoke[repository.OrderTicketRepository](i),
-		pubsub:     do.MustInvoke[repository.SrvToClientPubSubService](i),
+		pubsub:     do.MustInvoke[repository.SrvToClientPubService](i),
 	}, nil
 }
 

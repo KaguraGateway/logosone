@@ -77,6 +77,15 @@ type ItemCardProps = {
 };
 
 export function ItemCard(props: ItemCardProps) {
+  const [isCalled, setIsCalled] = useState(false);
+
+  const onCallCancel = () => {
+    setIsCalled(false);
+  };
+  const onCall = () => {
+    setIsCalled(true);
+  };
+
   const products = useMemo(() => {
     const map = new Map();
     props.items.forEach((item) => {
@@ -100,11 +109,11 @@ export function ItemCard(props: ItemCardProps) {
   );
   const isAllChecked = checkedItems.every(Boolean);
 
-  let bgColor = "white";
-  if(props.type === 'eat-in' && isAllChecked) {
-    bgColor = "yellow.100";
-  } else if(props.type === 'takeout' && isAllChecked) {
-    bgColor = "green.100";
+  let bgColor = 'white';
+  if (props.type === 'eat-in' && isAllChecked) {
+    bgColor = 'green.100';
+  } else if (props.type === 'takeout' && isAllChecked) {
+    bgColor = isCalled ? 'green.100' : 'yellow.100';
   }
 
   return (
@@ -146,8 +155,8 @@ export function ItemCard(props: ItemCardProps) {
         </Text>
       </Flex>
       <Box mt="4" style={{ display: isAllChecked ? '' : 'none' }}>
-        <Flex style={{ display: props.type === 'eat-in' ? '' : 'none' }}>
-          <Button colorScheme="red" bg="red.500" mr="2" leftIcon={<MdOutlineClear />}>
+        <Flex style={{ display: props.type === 'takeout' && isCalled ? '' : 'none' }}>
+          <Button colorScheme="red" bg="red.500" mr="2" leftIcon={<MdOutlineClear />} onClick={onCallCancel}>
             取り消し
           </Button>
           <Button colorScheme="blue" bg="blue.500" flex={1} leftIcon={<MdOutlineDone />}>
@@ -159,9 +168,19 @@ export function ItemCard(props: ItemCardProps) {
           colorScheme="orange"
           bg="orange.500"
           leftIcon={<AiFillBell />}
-          style={{ display: props.type === 'eat-in' ? 'none' : '' }}
+          style={{ display: props.type === 'takeout' && !isCalled ? '' : 'none' }}
+          onClick={onCall}
         >
           呼び出し
+        </Button>
+        <Button
+          colorScheme="blue"
+          bg="blue.500"
+          w="full"
+          leftIcon={<MdOutlineDone />}
+          style={{ display: props.type === 'eat-in' ? '' : 'none' }}
+        >
+          提供完了
         </Button>
       </Box>
     </Box>

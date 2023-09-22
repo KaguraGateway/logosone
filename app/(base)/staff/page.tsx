@@ -58,7 +58,7 @@ export default function StaffPage() {
             未調理: 6
           </Text>
         </Flex>
-        <Flex>
+        <Flex alignItems="flex-start">
           <ItemCard
             callNumber="L-101"
             seatNumber=""

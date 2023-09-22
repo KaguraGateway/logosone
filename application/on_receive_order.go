@@ -2,8 +2,6 @@ package application
 
 import (
 	"context"
-	"encoding/json"
-	"unsafe"
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
@@ -67,13 +65,9 @@ func (u *onReceiveOrderUseCase) Execute(ctx context.Context, orderId string) err
 		SeatName:   order.SeatName(),
 		OrderItems: orderItemDtos,
 	}
-	message, err := json.Marshal(orderDto)
-	if err != nil {
-		return err
-	}
 
 	// Clientに通知
-	event, err := model.NewEvent("NewOrder", *(*string)(unsafe.Pointer(&message)))
+	event, err := model.NewEvent("NewOrder", orderDto)
 	if err != nil {
 		return err
 	}

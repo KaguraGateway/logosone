@@ -2,8 +2,6 @@ package application
 
 import (
 	"context"
-	"encoding/json"
-	"unsafe"
 
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
@@ -40,13 +38,9 @@ func (u *onUpdatedOrderStatusUseCase) Execute(ctx context.Context, orderId strin
 		Id:     order.Id(),
 		Status: uint(order.Status()),
 	}
-	message, err := json.Marshal(output)
-	if err != nil {
-		return err
-	}
 
 	// Clientに通知
-	event, err := model.NewEvent("UpdatedOrderStatus", *(*string)(unsafe.Pointer(&message)))
+	event, err := model.NewEvent("UpdatedOrderStatus", output)
 	if err != nil {
 		return err
 	}

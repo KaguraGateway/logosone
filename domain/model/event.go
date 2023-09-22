@@ -4,10 +4,10 @@ import "github.com/KaguraGateway/cafelogos-orderlink-backend/domain"
 
 type Event struct {
 	topic   string
-	message string
+	message interface{}
 }
 
-func NewEvent(topic string, message string) (*Event, error) {
+func NewEvent(topic string, message interface{}) (*Event, error) {
 	if len(topic) == 0 {
 		return nil, domain.ErrInvalidEventTopic
 	}
@@ -18,7 +18,7 @@ func NewEvent(topic string, message string) (*Event, error) {
 	}, nil
 }
 
-func RebuildEvent(topic string, message string) *Event {
+func RebuildEvent(topic string, message interface{}) *Event {
 	return &Event{
 		topic:   topic,
 		message: message,
@@ -29,6 +29,6 @@ func (p *Event) GetTopic() string {
 	return p.topic
 }
 
-func (p *Event) GetMessage() string {
+func (p *Event) GetMessage() interface{} {
 	return p.message
 }

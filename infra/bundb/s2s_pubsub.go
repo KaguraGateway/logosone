@@ -21,7 +21,7 @@ func NewServerToServerPubSubBun(i *do.Injector) (repository.SrvToSrvPubSubServic
 }
 
 func (r *serverToServerPubSubBun) Publish(ctx context.Context, event model.Event) error {
-	return pgdriver.Notify(ctx, r.db, event.GetTopic(), event.GetMessage())
+	return pgdriver.Notify(ctx, r.db, event.GetTopic(), event.GetMessage().(string))
 }
 
 func (r *serverToServerPubSubBun) Subscribe(ctx context.Context, channel string, callback func(model.Event)) error {

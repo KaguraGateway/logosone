@@ -22,6 +22,7 @@ export function HeaderBase(props: Props) {
       boxShadow="lg"
       justifyContent="space-between"
       alignItems="center"
+      zIndex={100}
     >
       <Flex alignItems="center">
         <Button as={Link} href="/" variant="link" color="gray.800" mr="12px">

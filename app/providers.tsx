@@ -21,6 +21,14 @@ const theme = extendTheme({
         },
       },
     },
+    Spinner: {
+      sizes: {
+        '2xl': {
+          w: '6rem',
+          h: '6rem',
+        },
+      },
+    },
   },
 });
 

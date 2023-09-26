@@ -36,6 +36,7 @@ func (u *onUpdatedOrderItemStatusUseCase) Execute(ctx context.Context, itemId st
 
 	output := UpdatedOrderItemStatusOutput{
 		Id:     orderItem.Id(),
+		OrderId: orderItem.OrderId(),
 		Status: uint(orderItem.Status()),
 	}
 
@@ -48,6 +49,7 @@ func (u *onUpdatedOrderItemStatusUseCase) Execute(ctx context.Context, itemId st
 }
 
 type UpdatedOrderItemStatusOutput struct {
-	Id     string
-	Status uint
+	Id      string
+	OrderId string
+	Status  uint
 }

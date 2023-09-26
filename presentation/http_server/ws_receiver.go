@@ -2,6 +2,7 @@ package httpserver
 
 import (
 	"log"
+	"net/http"
 	"slices"
 
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
@@ -26,7 +27,11 @@ func NewWSReceiver(i *do.Injector) *WSReceiver {
 	}
 }
 
-var upgrader = websocket.Upgrader{}
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
 
 type EventInput struct {
 	Topic   string

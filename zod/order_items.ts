@@ -21,3 +21,12 @@ export const OrderItemsSchema = z.array(
   })
 );
 export type OrderItems = z.infer<typeof OrderItemsSchema>;
+
+export const OrderItemsWithoutStatusSchema = z.array(
+  z.object({
+    Id: OrderItemIdSchema,
+    ProductId: ProductIdSchema,
+    CoffeeBrewId: CoffeeBrewIdSchema,
+  })
+);
+export type OrderItemsWithoutStatus = z.infer<typeof OrderItemsWithoutStatusSchema>;

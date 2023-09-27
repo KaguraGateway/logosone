@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { OrderItemIdSchema, OrderItemsSchema, OrderItemStatusSchema } from './order_items';
+import { OrderItemIdSchema, OrderItemStatusSchema, OrderItemsWithoutStatusSchema } from './order_items';
 import {
   OrderAtSchema,
   OrderIdSchema,
@@ -16,7 +16,7 @@ export const NewOrderSchema = z.object({
   OrderType: OrderTypeSchema,
   TicketAddr: TicketAddrSchema,
   SeatName: SeatNameSchema,
-  OrderItems: OrderItemsSchema,
+  OrderItems: OrderItemsWithoutStatusSchema,
 });
 export type NewOrder = z.infer<typeof NewOrderSchema>;
 

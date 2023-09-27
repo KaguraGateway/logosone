@@ -6,17 +6,21 @@ import { CancelButton } from '@/ui/CancelButton';
 
 import { CookingDoneBox, CookingStartBox, CookingTakingBox } from './CookingStatusButton';
 
-type Props = {
+export type ItemInfoCardProps = {
+  itemId: string;
   callNumber: string;
   productName: string;
   subTtitle?: string;
   productColor: string;
   prefix: string;
-  waitingTime: string;
+  waitingTime: React.ReactNode;
   cookingStatus: 'notyet' | 'cooking' | 'done';
+  onCancelState?: (itemId: string) => void;
+  onNextState?: (itemId: string) => void;
 };
 
 export function ItemInfoCard({
+  itemId,
   callNumber,
   productName,
   subTtitle,
@@ -24,7 +28,9 @@ export function ItemInfoCard({
   waitingTime,
   cookingStatus,
   productColor,
-}: Props) {
+  onCancelState,
+  onNextState
+}: ItemInfoCardProps) {
   return (
     <Flex
       alignItems="center"
@@ -37,7 +43,7 @@ export function ItemInfoCard({
       borderRadius="lg"
       mb="4"
     >
-      <CancelButton mr="8" />
+      <CancelButton mr="8" visibility={cookingStatus === "notyet" ? "hidden" : "visible"} onCancel={() => onCancelState?.(itemId)} />
       <Button
         variant="unstyled"
         display="flex"
@@ -47,6 +53,7 @@ export function ItemInfoCard({
         flex="1"
         border="none"
         outline="0"
+        onClick={() => onNextState?.(itemId)}
       >
         <Text fontSize="3xl" fontWeight="semibold" color="gray.700">
           {callNumber}

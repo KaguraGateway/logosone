@@ -5,35 +5,41 @@ import { AiFillBell } from 'react-icons/ai';
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
 import { MdOutlineClear, MdOutlineDone } from 'react-icons/md';
 
+import { rebuildMap } from '@/utils/rebuildMap';
+
+import { useItemCardLogic } from './ItemCardLogic';
 import { OrderBadge } from './OrderBadge';
 
-type ProductItemProps = {
+type ProductItem = {
+  productId: string;
   productName: string;
   productColor: string;
   items: Array<{
     itemId: string;
     status: 'notyet' | 'done';
   }>;
-  checkedItems: Array<boolean>;
-  setCheckedItems: Dispatch<SetStateAction<boolean[]>>;
+};
+type ProductItemProps = Omit<ProductItem, 'productId'> & {
+  checkedItems: Map<string, boolean>;
+  setCheckedItems: Dispatch<SetStateAction<Map<string, boolean>>>;
 };
 
 function ProductItem(props: ProductItemProps) {
   return (
     <Box w="full" borderBottom="1px" borderBottomColor="gray.300" pb="2">
       <Flex borderLeft="4px" borderLeftColor={props.productColor} pl="2">
-        <Box flex="1">
-          {props.items.map((item, index) => (
+        <Flex flexDirection="column" flex="1">
+          {props.items.map((item) => (
             <Checkbox
               size="lg"
-              key="item"
+              key={item.itemId}
               isDisabled={item.status === 'notyet' ? true : false}
-              isChecked={props.checkedItems[index]}
+              isChecked={props.checkedItems.get(item.itemId)}
               onChange={() => {
                 props.setCheckedItems((prev) => {
-                  const newCheckedItems = [...prev];
-                  newCheckedItems[index] = !newCheckedItems[index];
-                  return newCheckedItems;
+                  const newMap = rebuildMap(prev);
+                  newMap.set(item.itemId, !prev.get(item.itemId));
+                  return rebuildMap(newMap);
                 });
               }}
             >
@@ -53,7 +59,7 @@ function ProductItem(props: ProductItemProps) {
               </Flex>
             </Checkbox>
           ))}
-        </Box>
+        </Flex>
         <Text alignSelf="flex-end" fontSize="xl" fontWeight="semibold" color="gray.600">
           x{props.items.length}
         </Text>
@@ -65,7 +71,7 @@ function ProductItem(props: ProductItemProps) {
 type ItemCardProps = {
   callNumber: string;
   seatNumber?: string;
-  waitingTime: string;
+  waitingTime: React.ReactNode;
   type: 'takeout' | 'eat-in';
   items: Array<{
     productId: string;
@@ -77,16 +83,9 @@ type ItemCardProps = {
 };
 
 export function ItemCard(props: ItemCardProps) {
-  const [isCalled, setIsCalled] = useState(false);
+  const { isCalled, onCall, onCallCancel } = useItemCardLogic();
 
-  const onCallCancel = () => {
-    setIsCalled(false);
-  };
-  const onCall = () => {
-    setIsCalled(true);
-  };
-
-  const products = useMemo(() => {
+  const products: Array<ProductItem> = useMemo(() => {
     const map = new Map();
     props.items.forEach((item) => {
       if (!map.has(item.productId)) {
@@ -104,10 +103,10 @@ export function ItemCard(props: ItemCardProps) {
     });
     return Array.from(map.values());
   }, [props.items]);
-  const [checkedItems, setCheckedItems] = useState<Array<boolean>>(
-    products.flatMap((product) => product.items.map(() => false))
+  const [checkedItems, setCheckedItems] = useState<Map<string, boolean>>(
+    new Map<string, boolean>(products.flatMap((product) => product.items.map((item) => [item.itemId, false])))
   );
-  const isAllChecked = checkedItems.every(Boolean);
+  const isAllChecked = Array.from(checkedItems.values()).every((value) => value);
 
   let bgColor = 'white';
   if (props.type === 'eat-in' && isAllChecked) {
@@ -137,7 +136,7 @@ export function ItemCard(props: ItemCardProps) {
       <VStack mt="4">
         {products.map((product) => (
           <ProductItem
-            key={product.productName}
+            key={product.productId}
             productName={product.productName}
             productColor={product.productColor}
             items={product.items}

@@ -42,7 +42,7 @@ class WebSocketClient extends EventTarget {
       const data = JSON.parse(event.data);
       const e = EventSchema.parse(data);
 
-      this.dispatchEvent(new CustomEvent(e.Topic, { detail: e }));
+      this.dispatchEvent(new CustomEvent('event', { detail: e }));
     } catch (e) {
       console.error(e);
     }

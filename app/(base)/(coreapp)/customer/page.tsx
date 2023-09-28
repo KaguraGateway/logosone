@@ -25,7 +25,6 @@ export default function CustomerPage() {
         <Link href="/">
           <Flex h="full" alignItems="center" justifyContent="flex-end">
             <Logo />
-            <PoweredBy />
           </Flex>
         </Link>
       </Flex>
@@ -54,6 +53,11 @@ export default function CustomerPage() {
           ))}
         </Flex>
       </Flex>
+      <Box w="100vw" h="100vh">
+        <Box position="absolute" bottom={0} right={0} p={8} opacity={0.6} zIndex={-1}>
+          <PoweredBy />
+        </Box>
+      </Box>
     </Box>
   );
 }

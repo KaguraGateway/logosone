@@ -18,7 +18,7 @@ export function useStaff() {
     isTakeout: true,
     isEatIn: true,
   });
-  const { orders } = useOrderLink();
+  const { orders, UpdateOrderStatus } = useOrderLink();
   const [isOpenFilterModal, setIsFilterModal] = useState(false);
 
   const onOpenFilterModal = () => {
@@ -40,14 +40,23 @@ export function useStaff() {
       isTakeout: true,
       isEatIn: false,
     });
-  }
+  };
   const onAllEatInOnly = () => {
     setStaffFilter({
       items: getDefaultFilterItems(),
       isTakeout: false,
       isEatIn: true,
     });
-  }
+  };
+  const onCall = (orderId: string) => {
+    UpdateOrderStatus(orderId, OrderStatusEnum.Calling);
+  };
+  const onCancelCall = (orderId: string) => {
+    UpdateOrderStatus(orderId, OrderStatusEnum.Cooked);
+  };
+  const onProvided = (orderId: string) => {
+    UpdateOrderStatus(orderId, OrderStatusEnum.Provided);
+  };
 
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
@@ -105,5 +114,8 @@ export function useStaff() {
     onAllTakeoutOnly,
     filteredOrders,
     staffFilter,
+    onCall,
+    onCancelCall,
+    onProvided,
   };
 }

@@ -7,7 +7,6 @@ import { MdOutlineClear, MdOutlineDone } from 'react-icons/md';
 
 import { rebuildMap } from '@/utils/rebuildMap';
 
-import { useItemCardLogic } from './ItemCardLogic';
 import { OrderBadge } from './OrderBadge';
 
 type ProductItem = {
@@ -73,6 +72,10 @@ type ItemCardProps = {
   seatNumber?: string;
   waitingTime: React.ReactNode;
   type: 'takeout' | 'eat-in';
+  status: 'cooking' | 'calling' | 'provided';
+  onCall: () => void;
+  onCancelCall: () => void;
+  onProvided: () => void;
   items: Array<{
     productId: string;
     productName: string;
@@ -83,8 +86,6 @@ type ItemCardProps = {
 };
 
 export function ItemCard(props: ItemCardProps) {
-  const { isCalled, onCall, onCallCancel } = useItemCardLogic();
-
   const products: Array<ProductItem> = useMemo(() => {
     const map = new Map();
     props.items.forEach((item) => {
@@ -107,6 +108,7 @@ export function ItemCard(props: ItemCardProps) {
     new Map<string, boolean>(products.flatMap((product) => product.items.map((item) => [item.itemId, false])))
   );
   const isAllChecked = Array.from(checkedItems.values()).every((value) => value);
+  const isCalled = props.status === 'calling';
 
   let bgColor = 'white';
   if (props.type === 'eat-in' && isAllChecked) {
@@ -155,10 +157,10 @@ export function ItemCard(props: ItemCardProps) {
       </Flex>
       <Box mt="4" style={{ display: isAllChecked ? '' : 'none' }}>
         <Flex style={{ display: props.type === 'takeout' && isCalled ? '' : 'none' }}>
-          <Button colorScheme="red" bg="red.500" mr="2" leftIcon={<MdOutlineClear />} onClick={onCallCancel}>
+          <Button colorScheme="red" bg="red.500" mr="2" leftIcon={<MdOutlineClear />} onClick={props.onCancelCall}>
             取り消し
           </Button>
-          <Button colorScheme="blue" bg="blue.500" flex={1} leftIcon={<MdOutlineDone />}>
+          <Button colorScheme="blue" bg="blue.500" flex={1} leftIcon={<MdOutlineDone />} onClick={props.onProvided}>
             提供完了
           </Button>
         </Flex>
@@ -168,7 +170,7 @@ export function ItemCard(props: ItemCardProps) {
           bg="orange.500"
           leftIcon={<AiFillBell />}
           style={{ display: props.type === 'takeout' && !isCalled ? '' : 'none' }}
-          onClick={onCall}
+          onClick={props.onCall}
         >
           呼び出し
         </Button>
@@ -178,6 +180,7 @@ export function ItemCard(props: ItemCardProps) {
           w="full"
           leftIcon={<MdOutlineDone />}
           style={{ display: props.type === 'eat-in' ? '' : 'none' }}
+          onClick={props.onProvided}
         >
           提供完了
         </Button>

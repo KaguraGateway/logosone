@@ -11,7 +11,7 @@ import { ElapsedMinTime } from '@/ui/ElapsedMinTime';
 import { HeaderBase } from '@/ui/HeaderBase';
 import { MainBox } from '@/ui/MainBox';
 import { OrderItemStatus, OrderItemStatusEnum } from '@/zod/order_items';
-import { OrderType, OrderTypeEnum } from '@/zod/orders';
+import { OrderStatus, OrderStatusEnum, OrderType, OrderTypeEnum } from '@/zod/orders';
 
 import { FilterModal } from './_components/FilterModal';
 import { ItemCard } from './_components/ItemCard';
@@ -22,6 +22,18 @@ function fromOrderType(orderType: OrderType): 'takeout' | 'eat-in' {
       return 'eat-in';
     case OrderTypeEnum.TakeOut:
       return 'takeout';
+  }
+}
+function fromOrderStatus(itemStatus: OrderStatus): 'cooking' | 'calling' | 'provided' {
+  switch (itemStatus) {
+    case OrderStatusEnum.NotYet:
+    case OrderStatusEnum.Cooking:
+    case OrderStatusEnum.Cooked:
+      return 'cooking';
+    case OrderStatusEnum.Calling:
+      return 'calling';
+    case OrderStatusEnum.Provided:
+      return 'provided';
   }
 }
 function fromItemStatus(itemStatus: OrderItemStatus): 'notyet' | 'done' {
@@ -47,6 +59,9 @@ export default function StaffPage() {
     onAllTakeoutOnly,
     filteredOrders,
     staffFilter,
+    onCall,
+    onCancelCall,
+    onProvided,
   } = useStaff();
   const { getProductByProductId, getCoffeeBrew } = useProduct();
 
@@ -129,6 +144,10 @@ export default function StaffPage() {
               seatNumber={order.SeatName}
               waitingTime={<ElapsedMinTime dateISO={order.OrderAt} />}
               type={fromOrderType(order.OrderType)}
+              status={fromOrderStatus(order.Status)}
+              onCall={() => onCall(order.OrderId)}
+              onCancelCall={() => onCancelCall(order.OrderId)}
+              onProvided={() => onProvided(order.OrderId)}
               items={order.OrderItems.map((item) => {
                 const product = getProductByProductId(item.ProductId);
                 return {

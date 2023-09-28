@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex, Heading, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import { IconContext } from 'react-icons';
 import { BiDish } from 'react-icons/bi';
@@ -9,7 +9,13 @@ import Logo from '@/svg/logo_unit.svg';
 import LogosLogo from '@/svg/logos_logo.svg';
 import PoweredBy from '@/svg/powered_by.svg';
 
+import { CallingOrderCard } from './_components/CallingOrderCard';
+import { CookingOrderCard } from './_components/CookingOrderCard';
+import { useCustomer } from './usecase';
+
 export default function CustomerPage() {
+  const { cookingOrders, callingOrders } = useCustomer();
+
   return (
     <Box maxW="100vw" maxH="100vh" overflow="hidden">
       <Flex h="80px" px="12px" bg="white" alignItems="center" justifyContent="flex-end">
@@ -38,36 +44,14 @@ export default function CustomerPage() {
       </Flex>
       <Flex mt="6">
         <VStack w="25%" alignItems="center">
-          <Flex
-            bg="gray.50"
-            w="177px"
-            h="62px"
-            borderRadius="md"
-            boxShadow="lg"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Text fontSize="5xl" fontWeight="bold" color="gray.600">
-              L-103
-            </Text>
-          </Flex>
+          {cookingOrders.map((order) => (
+            <CookingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />
+          ))}
         </VStack>
-        <Flex flex="1">
-          <Flex
-            w="277px"
-            h="124px"
-            bg="gray.50"
-            border="4px"
-            borderColor="teal.600"
-            borderRadius="md"
-            boxShadow="lg"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Text fontSize="6xl" fontWeight="bold" color="teal.600">
-              L-102
-            </Text>
-          </Flex>
+        <Flex flex="1" flexWrap="wrap">
+          {callingOrders.map((order) => (
+            <CallingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />
+          ))}
         </Flex>
       </Flex>
     </Box>

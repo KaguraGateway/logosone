@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteProductRequest, GetCoffeeBeansResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetStocksResponse, PostCoffeeBeanRequest, PostOrderRequest, PostProductCategoryRequest, PostProductRequest, PostStockRequest, UpdateProductRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, PostCoffeeBeanRequest, PostOrderPaymentRequest, PostOrderRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -23,11 +23,38 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc cafelogos.pos.PosService.GetOrderBySeatId
+     */
+    getOrderBySeatId: {
+      name: "GetOrderBySeatId",
+      I: GetOrderBySeatIdRequest,
+      O: GetOrderResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc cafelogos.pos.PosService.PostOrder
      */
     postOrder: {
       name: "PostOrder",
       I: PostOrderRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.DeleteOrder
+     */
+    deleteOrder: {
+      name: "DeleteOrder",
+      I: DeleteOrderRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostOrderPayment
+     */
+    postOrderPayment: {
+      name: "PostOrderPayment",
+      I: PostOrderPaymentRequest,
       O: Empty,
       kind: MethodKind.Unary,
     },
@@ -130,6 +157,33 @@ export const PosService = {
       name: "DeleteAllOrders",
       I: Empty,
       O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostSeat
+     */
+    postSeat: {
+      name: "PostSeat",
+      I: PostSeatRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateSeat
+     */
+    updateSeat: {
+      name: "UpdateSeat",
+      I: UpdateSeatRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.GetSeats
+     */
+    getSeats: {
+      name: "GetSeats",
+      I: Empty,
+      O: GetSeatsResponse,
       kind: MethodKind.Unary,
     },
   }

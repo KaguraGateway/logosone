@@ -68,6 +68,54 @@ export declare class GetOrdersResponse extends Message<GetOrdersResponse> {
 }
 
 /**
+ * @generated from message cafelogos.pos.GetOrderResponse
+ */
+export declare class GetOrderResponse extends Message<GetOrderResponse> {
+  /**
+   * @generated from field: cafelogos.pos.Order order = 1;
+   */
+  order?: Order;
+
+  constructor(data?: PartialMessage<GetOrderResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetOrderResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetOrderResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetOrderResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetOrderResponse;
+
+  static equals(a: GetOrderResponse | PlainMessage<GetOrderResponse> | undefined, b: GetOrderResponse | PlainMessage<GetOrderResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetOrderBySeatIdRequest
+ */
+export declare class GetOrderBySeatIdRequest extends Message<GetOrderBySeatIdRequest> {
+  /**
+   * @generated from field: string seat_id = 1;
+   */
+  seatId: string;
+
+  constructor(data?: PartialMessage<GetOrderBySeatIdRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetOrderBySeatIdRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetOrderBySeatIdRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetOrderBySeatIdRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetOrderBySeatIdRequest;
+
+  static equals(a: GetOrderBySeatIdRequest | PlainMessage<GetOrderBySeatIdRequest> | undefined, b: GetOrderBySeatIdRequest | PlainMessage<GetOrderBySeatIdRequest> | undefined): boolean;
+}
+
+/**
  * @generated from message cafelogos.pos.PostOrderRequest
  */
 export declare class PostOrderRequest extends Message<PostOrderRequest> {
@@ -89,6 +137,88 @@ export declare class PostOrderRequest extends Message<PostOrderRequest> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostOrderRequest;
 
   static equals(a: PostOrderRequest | PlainMessage<PostOrderRequest> | undefined, b: PostOrderRequest | PlainMessage<PostOrderRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PostOrderPaymentRequest
+ */
+export declare class PostOrderPaymentRequest extends Message<PostOrderPaymentRequest> {
+  /**
+   * @generated from field: string order_id = 1;
+   */
+  orderId: string;
+
+  /**
+   * @generated from field: cafelogos.pos.OrderPayment payment = 2;
+   */
+  payment?: OrderPayment;
+
+  constructor(data?: PartialMessage<PostOrderPaymentRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostOrderPaymentRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderPaymentRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostOrderPaymentRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostOrderPaymentRequest;
+
+  static equals(a: PostOrderPaymentRequest | PlainMessage<PostOrderPaymentRequest> | undefined, b: PostOrderPaymentRequest | PlainMessage<PostOrderPaymentRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.UpdateOrderPaymentRequest
+ */
+export declare class UpdateOrderPaymentRequest extends Message<UpdateOrderPaymentRequest> {
+  /**
+   * @generated from field: string order_id = 1;
+   */
+  orderId: string;
+
+  /**
+   * @generated from field: cafelogos.pos.OrderPayment payment = 2;
+   */
+  payment?: OrderPayment;
+
+  constructor(data?: PartialMessage<UpdateOrderPaymentRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.UpdateOrderPaymentRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateOrderPaymentRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateOrderPaymentRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateOrderPaymentRequest;
+
+  static equals(a: UpdateOrderPaymentRequest | PlainMessage<UpdateOrderPaymentRequest> | undefined, b: UpdateOrderPaymentRequest | PlainMessage<UpdateOrderPaymentRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.DeleteOrderRequest
+ */
+export declare class DeleteOrderRequest extends Message<DeleteOrderRequest> {
+  /**
+   * @generated from field: string order_id = 1;
+   */
+  orderId: string;
+
+  constructor(data?: PartialMessage<DeleteOrderRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.DeleteOrderRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteOrderRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteOrderRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteOrderRequest;
+
+  static equals(a: DeleteOrderRequest | PlainMessage<DeleteOrderRequest> | undefined, b: DeleteOrderRequest | PlainMessage<DeleteOrderRequest> | undefined): boolean;
 }
 
 /**
@@ -347,6 +477,78 @@ export declare class GetCoffeeBeansResponse extends Message<GetCoffeeBeansRespon
 }
 
 /**
+ * @generated from message cafelogos.pos.PostSeatRequest
+ */
+export declare class PostSeatRequest extends Message<PostSeatRequest> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  constructor(data?: PartialMessage<PostSeatRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostSeatRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostSeatRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostSeatRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostSeatRequest;
+
+  static equals(a: PostSeatRequest | PlainMessage<PostSeatRequest> | undefined, b: PostSeatRequest | PlainMessage<PostSeatRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.UpdateSeatRequest
+ */
+export declare class UpdateSeatRequest extends Message<UpdateSeatRequest> {
+  /**
+   * @generated from field: cafelogos.pos.Seat seat = 1;
+   */
+  seat?: Seat;
+
+  constructor(data?: PartialMessage<UpdateSeatRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.UpdateSeatRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateSeatRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateSeatRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateSeatRequest;
+
+  static equals(a: UpdateSeatRequest | PlainMessage<UpdateSeatRequest> | undefined, b: UpdateSeatRequest | PlainMessage<UpdateSeatRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetSeatsResponse
+ */
+export declare class GetSeatsResponse extends Message<GetSeatsResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.Seat seats = 1;
+   */
+  seats: Seat[];
+
+  constructor(data?: PartialMessage<GetSeatsResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetSeatsResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSeatsResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSeatsResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSeatsResponse;
+
+  static equals(a: GetSeatsResponse | PlainMessage<GetSeatsResponse> | undefined, b: GetSeatsResponse | PlainMessage<GetSeatsResponse> | undefined): boolean;
+}
+
+/**
  * * Product 
  *
  * @generated from message cafelogos.pos.Product
@@ -373,31 +575,46 @@ export declare class Product extends Message<Product> {
   productType: ProductType;
 
   /**
-   * @generated from field: bool is_now_sales = 5;
+   * @generated from field: string product_color = 5;
+   */
+  productColor: string;
+
+  /**
+   * @generated from field: bool is_now_sales = 6;
    */
   isNowSales: boolean;
 
   /**
+   * @generated from field: string created_at = 7;
+   */
+  createdAt: string;
+
+  /**
+   * @generated from field: string updated_at = 8;
+   */
+  updatedAt: string;
+
+  /**
    * Only Coffee
    *
-   * @generated from field: cafelogos.pos.CoffeeBean coffee_bean = 6;
+   * @generated from field: cafelogos.pos.CoffeeBean coffee_bean = 9;
    */
   coffeeBean?: CoffeeBean;
 
   /**
-   * @generated from field: repeated cafelogos.pos.CoffeeBrew coffee_brews = 7;
+   * @generated from field: repeated cafelogos.pos.CoffeeBrew coffee_brews = 10;
    */
   coffeeBrews: CoffeeBrew[];
 
   /**
    * Only Other
    *
-   * @generated from field: uint64 amount = 8;
+   * @generated from field: uint64 amount = 11;
    */
   amount: bigint;
 
   /**
-   * @generated from field: cafelogos.pos.Stock stock = 9;
+   * @generated from field: cafelogos.pos.Stock stock = 12;
    */
   stock?: Stock;
 
@@ -441,26 +658,31 @@ export declare class ProductParam extends Message<ProductParam> {
   isNowSales: boolean;
 
   /**
+   * @generated from field: string product_color = 5;
+   */
+  productColor: string;
+
+  /**
    * Only Coffee
    *
-   * @generated from field: string coffee_bean_id = 5;
+   * @generated from field: string coffee_bean_id = 6;
    */
   coffeeBeanId: string;
 
   /**
-   * @generated from field: repeated cafelogos.pos.CoffeeBrew coffee_brews = 6;
+   * @generated from field: repeated cafelogos.pos.CoffeeBrew coffee_brews = 7;
    */
   coffeeBrews: CoffeeBrew[];
 
   /**
    * Only Other
    *
-   * @generated from field: uint64 amount = 7;
+   * @generated from field: uint64 amount = 8;
    */
   amount: bigint;
 
   /**
-   * @generated from field: string stock_id = 8;
+   * @generated from field: string stock_id = 9;
    */
   stockId: string;
 
@@ -492,6 +714,16 @@ export declare class ProductCategory extends Message<ProductCategory> {
    * @generated from field: string name = 2;
    */
   name: string;
+
+  /**
+   * @generated from field: string created_at = 3;
+   */
+  createdAt: string;
+
+  /**
+   * @generated from field: string updated_at = 4;
+   */
+  updatedAt: string;
 
   constructor(data?: PartialMessage<ProductCategory>);
 
@@ -526,6 +758,16 @@ export declare class CoffeeBean extends Message<CoffeeBean> {
    * @generated from field: int32 gram_quantity = 3;
    */
   gramQuantity: number;
+
+  /**
+   * @generated from field: string created_at = 4;
+   */
+  createdAt: string;
+
+  /**
+   * @generated from field: string updated_at = 5;
+   */
+  updatedAt: string;
 
   constructor(data?: PartialMessage<CoffeeBean>);
 
@@ -566,6 +808,16 @@ export declare class CoffeeBrew extends Message<CoffeeBrew> {
    */
   amount: bigint;
 
+  /**
+   * @generated from field: string created_at = 5;
+   */
+  createdAt: string;
+
+  /**
+   * @generated from field: string updated_at = 6;
+   */
+  updatedAt: string;
+
   constructor(data?: PartialMessage<CoffeeBrew>);
 
   static readonly runtime: typeof proto3;
@@ -600,6 +852,16 @@ export declare class Stock extends Message<Stock> {
    */
   quantity: number;
 
+  /**
+   * @generated from field: string created_at = 4;
+   */
+  createdAt: string;
+
+  /**
+   * @generated from field: string updated_at = 5;
+   */
+  updatedAt: string;
+
   constructor(data?: PartialMessage<Stock>);
 
   static readonly runtime: typeof proto3;
@@ -632,19 +894,19 @@ export declare class Order extends Message<Order> {
   items: OrderItem[];
 
   /**
-   * @generated from field: repeated cafelogos.pos.Discount discounts = 3;
+   * @generated from field: repeated cafelogos.pos.OrderDiscount discounts = 3;
    */
-  discounts: Discount[];
+  discounts: OrderDiscount[];
 
   /**
-   * @generated from field: cafelogos.pos.Payment payment = 4;
+   * @generated from field: cafelogos.pos.Order.OrderType order_type = 4;
    */
-  payment?: Payment;
+  orderType: Order_OrderType;
 
   /**
-   * @generated from field: string payment_at = 5;
+   * @generated from field: cafelogos.pos.OrderPayment payment = 5;
    */
-  paymentAt: string;
+  payment?: OrderPayment;
 
   /**
    * @generated from field: string order_at = 6;
@@ -661,6 +923,11 @@ export declare class Order extends Message<Order> {
    */
   clientId: string;
 
+  /**
+   * @generated from field: string seat_name = 9;
+   */
+  seatName: string;
+
   constructor(data?: PartialMessage<Order>);
 
   static readonly runtime: typeof proto3;
@@ -674,6 +941,21 @@ export declare class Order extends Message<Order> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Order;
 
   static equals(a: Order | PlainMessage<Order> | undefined, b: Order | PlainMessage<Order> | undefined): boolean;
+}
+
+/**
+ * @generated from enum cafelogos.pos.Order.OrderType
+ */
+export declare enum Order_OrderType {
+  /**
+   * @generated from enum value: EatIn = 0;
+   */
+  EatIn = 0,
+
+  /**
+   * @generated from enum value: TakeOut = 1;
+   */
+  TakeOut = 1,
 }
 
 /**
@@ -716,43 +998,43 @@ export declare class OrderItem extends Message<OrderItem> {
 }
 
 /**
- * @generated from message cafelogos.pos.Discount
+ * @generated from message cafelogos.pos.OrderDiscount
  */
-export declare class Discount extends Message<Discount> {
+export declare class OrderDiscount extends Message<OrderDiscount> {
   /**
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
-   * @generated from field: cafelogos.pos.Discount.DiscountType type = 2;
+   * @generated from field: cafelogos.pos.OrderDiscount.DiscountType type = 2;
    */
-  type: Discount_DiscountType;
+  type: OrderDiscount_DiscountType;
 
   /**
-   * @generated from field: uint64 discount_amount = 3;
+   * @generated from field: uint64 discount_price = 3;
    */
-  discountAmount: bigint;
+  discountPrice: bigint;
 
-  constructor(data?: PartialMessage<Discount>);
+  constructor(data?: PartialMessage<OrderDiscount>);
 
   static readonly runtime: typeof proto3;
-  static readonly typeName = "cafelogos.pos.Discount";
+  static readonly typeName = "cafelogos.pos.OrderDiscount";
   static readonly fields: FieldList;
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Discount;
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): OrderDiscount;
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Discount;
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): OrderDiscount;
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Discount;
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): OrderDiscount;
 
-  static equals(a: Discount | PlainMessage<Discount> | undefined, b: Discount | PlainMessage<Discount> | undefined): boolean;
+  static equals(a: OrderDiscount | PlainMessage<OrderDiscount> | undefined, b: OrderDiscount | PlainMessage<OrderDiscount> | undefined): boolean;
 }
 
 /**
- * @generated from enum cafelogos.pos.Discount.DiscountType
+ * @generated from enum cafelogos.pos.OrderDiscount.DiscountType
  */
-export declare enum Discount_DiscountType {
+export declare enum OrderDiscount_DiscountType {
   /**
    * @generated from enum value: PRICE = 0;
    */
@@ -760,18 +1042,18 @@ export declare enum Discount_DiscountType {
 }
 
 /**
- * @generated from message cafelogos.pos.Payment
+ * @generated from message cafelogos.pos.OrderPayment
  */
-export declare class Payment extends Message<Payment> {
+export declare class OrderPayment extends Message<OrderPayment> {
   /**
    * @generated from field: string id = 1;
    */
   id: string;
 
   /**
-   * @generated from field: cafelogos.pos.Payment.PaymentType type = 2;
+   * @generated from field: cafelogos.pos.OrderPayment.PaymentType type = 2;
    */
-  type: Payment_PaymentType;
+  type: OrderPayment_PaymentType;
 
   /**
    * @generated from field: uint64 receive_amount = 3;
@@ -788,28 +1070,67 @@ export declare class Payment extends Message<Payment> {
    */
   changeAmount: bigint;
 
-  constructor(data?: PartialMessage<Payment>);
+  /**
+   * @generated from field: string payment_at = 6;
+   */
+  paymentAt: string;
+
+  /**
+   * @generated from field: string updated_at = 7;
+   */
+  updatedAt: string;
+
+  constructor(data?: PartialMessage<OrderPayment>);
 
   static readonly runtime: typeof proto3;
-  static readonly typeName = "cafelogos.pos.Payment";
+  static readonly typeName = "cafelogos.pos.OrderPayment";
   static readonly fields: FieldList;
 
-  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Payment;
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): OrderPayment;
 
-  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Payment;
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): OrderPayment;
 
-  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Payment;
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): OrderPayment;
 
-  static equals(a: Payment | PlainMessage<Payment> | undefined, b: Payment | PlainMessage<Payment> | undefined): boolean;
+  static equals(a: OrderPayment | PlainMessage<OrderPayment> | undefined, b: OrderPayment | PlainMessage<OrderPayment> | undefined): boolean;
 }
 
 /**
- * @generated from enum cafelogos.pos.Payment.PaymentType
+ * @generated from enum cafelogos.pos.OrderPayment.PaymentType
  */
-export declare enum Payment_PaymentType {
+export declare enum OrderPayment_PaymentType {
   /**
    * @generated from enum value: CASH = 0;
    */
   CASH = 0,
+}
+
+/**
+ * @generated from message cafelogos.pos.Seat
+ */
+export declare class Seat extends Message<Seat> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  constructor(data?: PartialMessage<Seat>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.Seat";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Seat;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Seat;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Seat;
+
+  static equals(a: Seat | PlainMessage<Seat> | undefined, b: Seat | PlainMessage<Seat> | undefined): boolean;
 }
 

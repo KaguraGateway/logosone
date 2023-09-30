@@ -38,12 +38,64 @@ export const GetOrdersResponse = proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.GetOrderResponse
+ */
+export const GetOrderResponse = proto3.makeMessageType(
+  "cafelogos.pos.GetOrderResponse",
+  () => [
+    { no: 1, name: "order", kind: "message", T: Order },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.GetOrderBySeatIdRequest
+ */
+export const GetOrderBySeatIdRequest = proto3.makeMessageType(
+  "cafelogos.pos.GetOrderBySeatIdRequest",
+  () => [
+    { no: 1, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
  * @generated from message cafelogos.pos.PostOrderRequest
  */
 export const PostOrderRequest = proto3.makeMessageType(
   "cafelogos.pos.PostOrderRequest",
   () => [
     { no: 1, name: "order", kind: "message", T: Order },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.PostOrderPaymentRequest
+ */
+export const PostOrderPaymentRequest = proto3.makeMessageType(
+  "cafelogos.pos.PostOrderPaymentRequest",
+  () => [
+    { no: 1, name: "order_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "payment", kind: "message", T: OrderPayment },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.UpdateOrderPaymentRequest
+ */
+export const UpdateOrderPaymentRequest = proto3.makeMessageType(
+  "cafelogos.pos.UpdateOrderPaymentRequest",
+  () => [
+    { no: 1, name: "order_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "payment", kind: "message", T: OrderPayment },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.DeleteOrderRequest
+ */
+export const DeleteOrderRequest = proto3.makeMessageType(
+  "cafelogos.pos.DeleteOrderRequest",
+  () => [
+    { no: 1, name: "order_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -151,6 +203,36 @@ export const GetCoffeeBeansResponse = proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.PostSeatRequest
+ */
+export const PostSeatRequest = proto3.makeMessageType(
+  "cafelogos.pos.PostSeatRequest",
+  () => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.UpdateSeatRequest
+ */
+export const UpdateSeatRequest = proto3.makeMessageType(
+  "cafelogos.pos.UpdateSeatRequest",
+  () => [
+    { no: 1, name: "seat", kind: "message", T: Seat },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.GetSeatsResponse
+ */
+export const GetSeatsResponse = proto3.makeMessageType(
+  "cafelogos.pos.GetSeatsResponse",
+  () => [
+    { no: 1, name: "seats", kind: "message", T: Seat, repeated: true },
+  ],
+);
+
+/**
  * * Product 
  *
  * @generated from message cafelogos.pos.Product
@@ -162,11 +244,14 @@ export const Product = proto3.makeMessageType(
     { no: 2, name: "product_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "product_category", kind: "message", T: ProductCategory },
     { no: 4, name: "product_type", kind: "enum", T: proto3.getEnumType(ProductType) },
-    { no: 5, name: "is_now_sales", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 6, name: "coffee_bean", kind: "message", T: CoffeeBean },
-    { no: 7, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
-    { no: 8, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-    { no: 9, name: "stock", kind: "message", T: Stock },
+    { no: 5, name: "product_color", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "is_now_sales", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 7, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "coffee_bean", kind: "message", T: CoffeeBean },
+    { no: 10, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
+    { no: 11, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 12, name: "stock", kind: "message", T: Stock },
   ],
 );
 
@@ -180,10 +265,11 @@ export const ProductParam = proto3.makeMessageType(
     { no: 2, name: "product_category_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "product_type", kind: "enum", T: proto3.getEnumType(ProductType) },
     { no: 4, name: "is_now_sales", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 5, name: "coffee_bean_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
-    { no: 7, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-    { no: 8, name: "stock_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "product_color", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "coffee_bean_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
+    { no: 8, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 9, name: "stock_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -195,6 +281,8 @@ export const ProductCategory = proto3.makeMessageType(
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -207,6 +295,8 @@ export const CoffeeBean = proto3.makeMessageType(
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "gram_quantity", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 4, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -220,6 +310,8 @@ export const CoffeeBrew = proto3.makeMessageType(
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "bean_quantity_grams", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 4, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 5, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -232,6 +324,8 @@ export const Stock = proto3.makeMessageType(
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "quantity", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 4, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -245,12 +339,24 @@ export const Order = proto3.makeMessageType(
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "items", kind: "message", T: OrderItem, repeated: true },
-    { no: 3, name: "discounts", kind: "message", T: Discount, repeated: true },
-    { no: 4, name: "payment", kind: "message", T: Payment },
-    { no: 5, name: "payment_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "discounts", kind: "message", T: OrderDiscount, repeated: true },
+    { no: 4, name: "order_type", kind: "enum", T: proto3.getEnumType(Order_OrderType) },
+    { no: 5, name: "payment", kind: "message", T: OrderPayment },
     { no: 6, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "call_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 8, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 9, name: "seat_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from enum cafelogos.pos.Order.OrderType
+ */
+export const Order_OrderType = proto3.makeEnum(
+  "cafelogos.pos.Order.OrderType",
+  [
+    {no: 0, name: "EatIn"},
+    {no: 1, name: "TakeOut"},
   ],
 );
 
@@ -268,48 +374,61 @@ export const OrderItem = proto3.makeMessageType(
 );
 
 /**
- * @generated from message cafelogos.pos.Discount
+ * @generated from message cafelogos.pos.OrderDiscount
  */
-export const Discount = proto3.makeMessageType(
-  "cafelogos.pos.Discount",
+export const OrderDiscount = proto3.makeMessageType(
+  "cafelogos.pos.OrderDiscount",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(Discount_DiscountType) },
-    { no: 3, name: "discount_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(OrderDiscount_DiscountType) },
+    { no: 3, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 
 /**
- * @generated from enum cafelogos.pos.Discount.DiscountType
+ * @generated from enum cafelogos.pos.OrderDiscount.DiscountType
  */
-export const Discount_DiscountType = proto3.makeEnum(
-  "cafelogos.pos.Discount.DiscountType",
+export const OrderDiscount_DiscountType = proto3.makeEnum(
+  "cafelogos.pos.OrderDiscount.DiscountType",
   [
     {no: 0, name: "PRICE"},
   ],
 );
 
 /**
- * @generated from message cafelogos.pos.Payment
+ * @generated from message cafelogos.pos.OrderPayment
  */
-export const Payment = proto3.makeMessageType(
-  "cafelogos.pos.Payment",
+export const OrderPayment = proto3.makeMessageType(
+  "cafelogos.pos.OrderPayment",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(Payment_PaymentType) },
+    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(OrderPayment_PaymentType) },
     { no: 3, name: "receive_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "payment_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 5, name: "change_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 6, name: "payment_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
 /**
- * @generated from enum cafelogos.pos.Payment.PaymentType
+ * @generated from enum cafelogos.pos.OrderPayment.PaymentType
  */
-export const Payment_PaymentType = proto3.makeEnum(
-  "cafelogos.pos.Payment.PaymentType",
+export const OrderPayment_PaymentType = proto3.makeEnum(
+  "cafelogos.pos.OrderPayment.PaymentType",
   [
     {no: 0, name: "CASH"},
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.Seat
+ */
+export const Seat = proto3.makeMessageType(
+  "cafelogos.pos.Seat",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 

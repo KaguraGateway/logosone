@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteProductRequest, GetCoffeeBeansResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetStocksResponse, PostCoffeeBeanRequest, PostOrderRequest, PostProductCategoryRequest, PostProductRequest, PostStockRequest, UpdateProductRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, PostCoffeeBeanRequest, PostOrderPaymentRequest, PostOrderRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 import { createQueryService } from "@connectrpc/connect-query";
@@ -26,11 +26,38 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc cafelogos.pos.PosService.GetOrderBySeatId
+     */
+    getOrderBySeatId: {
+      name: "GetOrderBySeatId",
+      I: GetOrderBySeatIdRequest,
+      O: GetOrderResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc cafelogos.pos.PosService.PostOrder
      */
     postOrder: {
       name: "PostOrder",
       I: PostOrderRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.DeleteOrder
+     */
+    deleteOrder: {
+      name: "DeleteOrder",
+      I: DeleteOrderRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostOrderPayment
+     */
+    postOrderPayment: {
+      name: "PostOrderPayment",
+      I: PostOrderPaymentRequest,
       O: Empty,
       kind: MethodKind.Unary,
     },
@@ -135,6 +162,33 @@ export const PosService = {
       O: Empty,
       kind: MethodKind.Unary,
     },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostSeat
+     */
+    postSeat: {
+      name: "PostSeat",
+      I: PostSeatRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateSeat
+     */
+    updateSeat: {
+      name: "UpdateSeat",
+      I: UpdateSeatRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.GetSeats
+     */
+    getSeats: {
+      name: "GetSeats",
+      I: Empty,
+      O: GetSeatsResponse,
+      kind: MethodKind.Unary,
+    },
   }
 }
 
@@ -146,11 +200,32 @@ export const getOrders = createQueryService({
 }).getOrders;
 
 /**
+ * @generated from rpc cafelogos.pos.PosService.GetOrderBySeatId
+ */
+export const getOrderBySeatId = createQueryService({
+  service: PosService,
+}).getOrderBySeatId;
+
+/**
  * @generated from rpc cafelogos.pos.PosService.PostOrder
  */
 export const postOrder = createQueryService({
   service: PosService,
 }).postOrder;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.DeleteOrder
+ */
+export const deleteOrder = createQueryService({
+  service: PosService,
+}).deleteOrder;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.PostOrderPayment
+ */
+export const postOrderPayment = createQueryService({
+  service: PosService,
+}).postOrderPayment;
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetProducts
@@ -230,3 +305,24 @@ export const getCoffeeBeans = createQueryService({
 export const deleteAllOrders = createQueryService({
   service: PosService,
 }).deleteAllOrders;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.PostSeat
+ */
+export const postSeat = createQueryService({
+  service: PosService,
+}).postSeat;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.UpdateSeat
+ */
+export const updateSeat = createQueryService({
+  service: PosService,
+}).updateSeat;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetSeats
+ */
+export const getSeats = createQueryService({
+  service: PosService,
+}).getSeats;

@@ -1,8 +1,8 @@
 package model
 
 import (
-	"time"
-
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
 	"github.com/oklog/ulid/v2"
 )
@@ -11,26 +11,32 @@ type Order struct {
 	id         string
 	orderItems []OrderItem
 	discounts  []Discount
-	payment    Payment
-	orderAt    time.Time
+	payment    *OrderPayment
+	orderAt    synchro.Time[tz.UTC]
+	clientId   string
+	seatId     string
 }
 
-func NewOrder(orderItems []OrderItem, discounts []Discount) *Order {
+func NewOrder(orderItems []OrderItem, discounts []Discount, clientId string, seatId string) *Order {
 	return &Order{
 		id:         ulid.Make().String(),
 		orderItems: orderItems,
 		discounts:  discounts,
-		orderAt:    time.Now(),
+		orderAt:    synchro.Now[tz.UTC](),
+		clientId:   clientId,
+		seatId:     seatId,
 	}
 }
 
-func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, payment Payment, paymentAt time.Time, orderAt time.Time) *Order {
+func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, payment *OrderPayment, orderAt synchro.Time[tz.UTC], clientId string, seatId string) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
 		discounts:  discounts,
 		payment:    payment,
 		orderAt:    orderAt,
+		clientId:   clientId,
+		seatId:     seatId,
 	}
 }
 
@@ -65,19 +71,27 @@ func (order *Order) GetDiscounts() []Discount {
 	return order.discounts
 }
 
-func (order *Order) GetPayment() Payment {
+func (order *Order) GetPayment() *OrderPayment {
 	return order.payment
 }
 
-func (order *Order) GetOrderAt() time.Time {
+func (order *Order) GetOrderAt() synchro.Time[tz.UTC] {
 	return order.orderAt
 }
 
-func (order *Order) pay(payment Payment) error {
+func (order *Order) GetClientId() string {
+	return order.clientId
+}
+
+func (order *Order) GetSeatId() string {
+	return order.seatId
+}
+
+func (order *Order) pay(payment OrderPayment) error {
 	if !payment.IsEnoughAmount() {
 		return domain.ErrPaymentNotEnought
 	}
-	order.payment = payment
+	order.payment = &payment
 
 	return nil
 }

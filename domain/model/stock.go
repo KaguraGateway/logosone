@@ -1,20 +1,26 @@
 package model
 
 import (
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
 	"github.com/oklog/ulid/v2"
 )
 
 type Stock struct {
-	id       string
-	name     string
-	Quantity int32
+	id        string
+	name      string
+	Quantity  int32
+	createdAt synchro.Time[tz.UTC]
+	updatedAt synchro.Time[tz.UTC]
 }
 
 func NewStock(name string, quantity int32) (*Stock, error) {
 	stock := &Stock{
-		id:       ulid.Make().String(),
-		Quantity: quantity,
+		id:        ulid.Make().String(),
+		Quantity:  quantity,
+		createdAt: synchro.Now[tz.UTC](),
+		updatedAt: synchro.Now[tz.UTC](),
 	}
 	if err := stock.SetName(name); err != nil {
 		return nil, err
@@ -22,11 +28,13 @@ func NewStock(name string, quantity int32) (*Stock, error) {
 	return stock, nil
 }
 
-func ReconstructStock(id string, name string, quantity int32) *Stock {
+func ReconstructStock(id string, name string, quantity int32, createdAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC]) *Stock {
 	return &Stock{
-		id:       id,
-		name:     name,
-		Quantity: quantity,
+		id:        id,
+		name:      name,
+		Quantity:  quantity,
+		createdAt: createdAt,
+		updatedAt: updatedAt,
 	}
 }
 
@@ -44,4 +52,12 @@ func (stock *Stock) SetName(name string) error {
 	}
 	stock.name = name
 	return nil
+}
+
+func (stock *Stock) GetCreatedAt() synchro.Time[tz.UTC] {
+	return stock.createdAt
+}
+
+func (stock *Stock) GetUpdatedAt() synchro.Time[tz.UTC] {
+	return stock.updatedAt
 }

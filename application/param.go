@@ -11,6 +11,7 @@ type ProductParam struct {
 	ProductName       string
 	ProductCategoryId string
 	ProductType       uint
+	Color             string
 	IsNowSales        bool
 	CoffeeBeanId      string
 	CoffeeBrews       []CoffeeBrewParam

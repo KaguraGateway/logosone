@@ -60,7 +60,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 	if model.ProductType(param.ProductType) != product.ProductType {
 		product.ProductType = model.ProductType(param.ProductType)
 	}
-	log.Printf("param.IsNowSales: %+v", param.IsNowSales)
+	product.Color = param.Color
 	product.IsNowSales = param.IsNowSales
 
 	// Only Coffee

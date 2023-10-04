@@ -54,7 +54,7 @@ func (order *Order) GetOrderItems() []OrderItem {
 func (order *Order) GetTotalQuantity() uint64 {
 	var total uint64
 	for _, item := range order.orderItems {
-		total += item.GetTotalQunatity()
+		total += item.GetTotalQuantity()
 	}
 	return total
 }

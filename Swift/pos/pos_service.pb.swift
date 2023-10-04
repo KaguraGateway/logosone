@@ -823,6 +823,8 @@ public struct Cafelogos_Pos_OrderDiscount {
 
   public var id: String = String()
 
+  public var discountID: String = String()
+
   public var type: Cafelogos_Pos_OrderDiscount.DiscountType = .price
 
   public var discountPrice: UInt64 = 0
@@ -2533,8 +2535,9 @@ extension Cafelogos_Pos_OrderDiscount: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static let protoMessageName: String = _protobuf_package + ".OrderDiscount"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
-    2: .same(proto: "type"),
-    3: .standard(proto: "discount_price"),
+    2: .standard(proto: "discount_id"),
+    3: .same(proto: "type"),
+    4: .standard(proto: "discount_price"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2544,8 +2547,9 @@ extension Cafelogos_Pos_OrderDiscount: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
-      case 2: try { try decoder.decodeSingularEnumField(value: &self.type) }()
-      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.discountPrice) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.discountID) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 4: try { try decoder.decodeSingularUInt64Field(value: &self.discountPrice) }()
       default: break
       }
     }
@@ -2555,17 +2559,21 @@ extension Cafelogos_Pos_OrderDiscount: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.id.isEmpty {
       try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
     }
+    if !self.discountID.isEmpty {
+      try visitor.visitSingularStringField(value: self.discountID, fieldNumber: 2)
+    }
     if self.type != .price {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 3)
     }
     if self.discountPrice != 0 {
-      try visitor.visitSingularUInt64Field(value: self.discountPrice, fieldNumber: 3)
+      try visitor.visitSingularUInt64Field(value: self.discountPrice, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Cafelogos_Pos_OrderDiscount, rhs: Cafelogos_Pos_OrderDiscount) -> Bool {
     if lhs.id != rhs.id {return false}
+    if lhs.discountID != rhs.discountID {return false}
     if lhs.type != rhs.type {return false}
     if lhs.discountPrice != rhs.discountPrice {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

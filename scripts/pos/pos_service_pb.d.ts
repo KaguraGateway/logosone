@@ -1182,12 +1182,17 @@ export declare class OrderDiscount extends Message<OrderDiscount> {
   id: string;
 
   /**
-   * @generated from field: cafelogos.pos.OrderDiscount.DiscountType type = 2;
+   * @generated from field: string discount_id = 2;
+   */
+  discountId: string;
+
+  /**
+   * @generated from field: cafelogos.pos.OrderDiscount.DiscountType type = 3;
    */
   type: OrderDiscount_DiscountType;
 
   /**
-   * @generated from field: uint64 discount_price = 3;
+   * @generated from field: uint64 discount_price = 4;
    */
   discountPrice: bigint;
 

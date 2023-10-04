@@ -449,8 +449,9 @@ export const OrderDiscount = proto3.makeMessageType(
   "cafelogos.pos.OrderDiscount",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(OrderDiscount_DiscountType) },
-    { no: 3, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 2, name: "discount_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "type", kind: "enum", T: proto3.getEnumType(OrderDiscount_DiscountType) },
+    { no: 4, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 

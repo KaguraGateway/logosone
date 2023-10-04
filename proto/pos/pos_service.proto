@@ -238,8 +238,9 @@ message OrderItem {
 
 message OrderDiscount {
     string id = 1;
-    DiscountType type = 2;
-    uint64 discount_price = 3;
+    string discount_id = 2;
+    DiscountType type = 3;
+    uint64 discount_price = 4;
 
     enum DiscountType {
         PRICE = 0;

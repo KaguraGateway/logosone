@@ -64,7 +64,7 @@ func buildInjector(db *bun.DB) *do.Injector {
 	do.Provide(i, bundb.NewProductDb)
 	// Register QueryService
 	do.Provide(i, bundb.NewProductQueryServiceDb)
-	// Register usecases
+	// Register usecase
 	do.Provide(i, application.NewDeleteProductUseCase)
 	do.Provide(i, application.NewGetCoffeeBeansUseCase)
 	do.Provide(i, application.NewGetProductCategoriesUseCase)
@@ -75,6 +75,9 @@ func buildInjector(db *bun.DB) *do.Injector {
 	do.Provide(i, application.NewPostProductUseCase)
 	do.Provide(i, application.NewPostStockUseCase)
 	do.Provide(i, application.NewUpdateProductUseCase)
+	do.Provide(i, application.NewGetSeatsUseCase)
+	do.Provide(i, application.NewPostSeatUseCase)
+	do.Provide(i, application.NewUpdateSeatUseCase)
 
 	return i
 }

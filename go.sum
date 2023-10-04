@@ -6,6 +6,8 @@ github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230917093800-ba641df0e263 h1:vp
 github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230917093800-ba641df0e263/go.mod h1:neOoJc0uiJh4pF24/+PZcaf0hkIWVck3FK0uanCtLhY=
 github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230930024455-d1189a42c0ca h1:1fI3DBmqFA/QMmxDkKAsUxVxbTEm1WkVpl/R7ZuzooE=
 github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230930024455-d1189a42c0ca/go.mod h1:xUJb9Ec0+VfaL3TIzR0UOPoUuIGzTyEN/7BBfdDvJ7E=
+github.com/KaguraGateway/cafelogos-grpc v0.0.0-20231004024541-87ddf2bab29e h1:phucg3uVPA3mpE4xG8ZOUxWBmGaMuzc+Sx6MMeHSkn0=
+github.com/KaguraGateway/cafelogos-grpc v0.0.0-20231004024541-87ddf2bab29e/go.mod h1:xUJb9Ec0+VfaL3TIzR0UOPoUuIGzTyEN/7BBfdDvJ7E=
 github.com/cockroachdb/errors v1.11.1 h1:xSEW75zKaKCWzR3OfxXUxgrk/NtT4G1MiOv5lWZazG8=
 github.com/cockroachdb/errors v1.11.1/go.mod h1:8MUxA3Gi6b25tYlFEBGLf+D8aISL+M4MIpiWMSNRfxw=
 github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b h1:r6VH0faHjZeQy818SGhaone5OnYfxFR/+AzdY3sf5aE=

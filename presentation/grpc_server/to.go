@@ -51,6 +51,71 @@ func ToProtoStock(stock *model.Stock) *pos.Stock {
 	}
 }
 
+func ToProtoOrderItem(item *model.OrderItem) *pos.OrderItem {
+	if item == nil {
+		return nil
+	}
+	coffeeBrewId := ""
+	coffeeBrew := item.GetCoffeeHowToBrew()
+	if &coffeeBrew != nil {
+		coffeeBrewId = coffeeBrew.GetId()
+	}
+
+	return &pos.OrderItem{
+		ProductId:    item.GetProductId(),
+		Amount:       item.GetProductAmount(),
+		Quantity:     uint32(item.Quantity),
+		CoffeeBrewId: coffeeBrewId,
+	}
+}
+
+func ToProtoOrderDiscount(discount *model.Discount) *pos.OrderDiscount {
+	if discount == nil {
+		return nil
+	}
+	return &pos.OrderDiscount{
+		DiscountId:    discount.GetId(),
+		Type:          pos.DiscountType(discount.GetDiscountType()),
+		DiscountPrice: discount.GetDiscountPrice(),
+	}
+}
+
+func ToProtoOrderPayment(payment *model.OrderPayment) *pos.OrderPayment {
+	if payment == nil {
+		return nil
+	}
+	return &pos.OrderPayment{
+		Id:            payment.GetId(),
+		Type:          pos.OrderPayment_PaymentType(payment.GetPaymentType()),
+		ReceiveAmount: payment.ReceiveAmount,
+		PaymentAmount: payment.PaymentAmount,
+		ChangeAmount:  payment.GetChangeAmount(),
+		PaymentAt:     payment.GetPaymentAt().String(),
+		UpdatedAt:     payment.GetUpdatedAt().String(),
+	}
+}
+
+func ToProtoOrder(order *model.Order) *pos.Order {
+	if order == nil {
+		return nil
+	}
+	return &pos.Order{
+		Id: order.GetId(),
+		Items: lo.Map(order.GetOrderItems(), func(item model.OrderItem, _ int) *pos.OrderItem {
+			return ToProtoOrderItem(&item)
+		}),
+		Discounts: lo.Map(order.GetDiscounts(), func(discount model.Discount, _ int) *pos.OrderDiscount {
+			return ToProtoOrderDiscount(&discount)
+		}),
+		OrderType:  pos.OrderType(order.GetOrderType()),
+		Payment:    ToProtoOrderPayment(order.GetPayment()),
+		OrderAt:    order.GetOrderAt().String(),
+		CallNumber: "", // TODO: implement
+		SeatName:   "", // TODO: implement
+		ClientId:   order.GetClientId(),
+	}
+}
+
 func ToProductParam(product *pos.ProductParam) *application.ProductParam {
 	if product == nil {
 		return nil

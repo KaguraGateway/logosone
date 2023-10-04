@@ -35,7 +35,7 @@ type PostOrderParam struct {
 }
 
 type PostOrder interface {
-	Execute(ctx context.Context, param PostOrderParam) (*model.Order, error)
+	Execute(ctx context.Context, param PostOrderParam) (*model.Order, *model.OrderTicket, error)
 }
 
 type postOrderUseCase struct {
@@ -64,7 +64,7 @@ func NewPostOrderUseCase(i *do.Injector) (PostOrder, error) {
 	}, nil
 }
 
-func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (*model.Order, error) {
+func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (*model.Order, *model.OrderTicket, error) {
 	ctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
@@ -72,7 +72,7 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 	for _, item := range param.OrderItems {
 		product, err := uc.productQS.FindById(ctx, item.ProductId)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		var orderItem *model.OrderItem
 		// コーヒの場合とその他で処理が違うので分岐
@@ -81,16 +81,16 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		} else {
 			coffeeBrew, err := uc.coffeeBrewRepo.FindById(ctx, item.CoffeeBrewId)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 			orderItem, err = model.NewOrderItemCoffee(*product, item.Quantity, *coffeeBrew)
 			if err != nil {
-				return nil, err
+				return nil, nil, err
 			}
 		}
 		// 価格チェック
 		if orderItem.GetProductAmount() != item.Amount {
-			return nil, ErrProductAmountDiff
+			return nil, nil, ErrProductAmountDiff
 		}
 		orderItems = append(orderItems, *orderItem)
 	}
@@ -100,11 +100,11 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 	for _, item := range param.OrderDiscounts {
 		discount, err := uc.discountRepo.FindById(ctx, item.DiscountId)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 		// 価格チェック
 		if discount.GetDiscountPrice() != item.DiscountPrice {
-			return nil, ErrDiscountPriceDiff
+			return nil, nil, ErrDiscountPriceDiff
 		}
 		discounts = append(discounts, *discount)
 		orderDiscounts = append(orderDiscounts, model.ReconstructOrderDiscount(item.Id, param.Id, item.DiscountId))
@@ -173,8 +173,8 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
-	return order, nil
+	return order, nil, nil
 }

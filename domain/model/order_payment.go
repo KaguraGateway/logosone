@@ -44,6 +44,10 @@ func (payment *OrderPayment) GetId() string {
 	return payment.id
 }
 
+func (payment *OrderPayment) GetOrderId() string {
+	return payment.orderId
+}
+
 func (payment *OrderPayment) GetPaymentType() PaymentType {
 	return payment.paymentType
 }
@@ -58,4 +62,12 @@ func (payment *OrderPayment) GetShortfallAmount() uint64 {
 
 func (payment *OrderPayment) IsEnoughAmount() bool {
 	return payment.ReceiveAmount >= payment.PaymentAmount
+}
+
+func (payment *OrderPayment) GetPaymentAt() synchro.Time[tz.UTC] {
+	return payment.paymentAt
+}
+
+func (payment *OrderPayment) GetUpdatedAt() synchro.Time[tz.UTC] {
+	return payment.updatedAt
 }

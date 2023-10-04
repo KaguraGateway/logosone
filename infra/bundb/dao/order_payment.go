@@ -8,10 +8,10 @@ type OrderPayment struct {
 	ID            string    `bun:",pk"`
 	OrderID       string    `bun:",notnull"`
 	Order         *Order    `bun:"rel:belongs-to,join:order_id=id"`
-	PaymentType   int       `bun:",notnull"`
-	ReceiveAmount int       `bun:",notnull"`
-	PaymentAmount int       `bun:",notnull"`
-	ChangeAmount  int       `bun:",notnull"`
+	PaymentType   uint      `bun:",notnull"`
+	ReceiveAmount uint64    `bun:",notnull"`
+	PaymentAmount uint64    `bun:",notnull"`
+	ChangeAmount  uint64    `bun:",notnull"`
 	PaymentAt     time.Time `bun:",notnull"`
-	UpdatedAt    time.Time `bun:",nullzero,notnull,default:current_timestamp"`
+	UpdatedAt     time.Time `bun:",nullzero,notnull,default:current_timestamp"`
 }

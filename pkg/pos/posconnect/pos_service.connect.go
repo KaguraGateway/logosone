@@ -89,6 +89,10 @@ const (
 	PosServiceUpdateSeatProcedure = "/cafelogos.pos.PosService/UpdateSeat"
 	// PosServiceGetSeatsProcedure is the fully-qualified name of the PosService's GetSeats RPC.
 	PosServiceGetSeatsProcedure = "/cafelogos.pos.PosService/GetSeats"
+	// PosServiceGetDiscountsProcedure is the fully-qualified name of the PosService's GetDiscounts RPC.
+	PosServiceGetDiscountsProcedure = "/cafelogos.pos.PosService/GetDiscounts"
+	// PosServicePostDiscountProcedure is the fully-qualified name of the PosService's PostDiscount RPC.
+	PosServicePostDiscountProcedure = "/cafelogos.pos.PosService/PostDiscount"
 )
 
 // PosServiceClient is a client for the cafelogos.pos.PosService service.
@@ -116,6 +120,8 @@ type PosServiceClient interface {
 	PostSeat(context.Context, *connect.Request[pos.PostSeatRequest]) (*connect.Response[common.Empty], error)
 	UpdateSeat(context.Context, *connect.Request[pos.UpdateSeatRequest]) (*connect.Response[common.Empty], error)
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
+	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
+	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
 }
 
 // NewPosServiceClient constructs a client for the cafelogos.pos.PosService service. By default, it
@@ -238,6 +244,16 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			baseURL+PosServiceGetSeatsProcedure,
 			opts...,
 		),
+		getDiscounts: connect.NewClient[common.Empty, pos.GetDiscountsResponse](
+			httpClient,
+			baseURL+PosServiceGetDiscountsProcedure,
+			opts...,
+		),
+		postDiscount: connect.NewClient[pos.PostDiscountRequest, common.Empty](
+			httpClient,
+			baseURL+PosServicePostDiscountProcedure,
+			opts...,
+		),
 	}
 }
 
@@ -265,6 +281,8 @@ type posServiceClient struct {
 	postSeat             *connect.Client[pos.PostSeatRequest, common.Empty]
 	updateSeat           *connect.Client[pos.UpdateSeatRequest, common.Empty]
 	getSeats             *connect.Client[common.Empty, pos.GetSeatsResponse]
+	getDiscounts         *connect.Client[common.Empty, pos.GetDiscountsResponse]
+	postDiscount         *connect.Client[pos.PostDiscountRequest, common.Empty]
 }
 
 // GetOrders calls cafelogos.pos.PosService.GetOrders.
@@ -377,6 +395,16 @@ func (c *posServiceClient) GetSeats(ctx context.Context, req *connect.Request[co
 	return c.getSeats.CallUnary(ctx, req)
 }
 
+// GetDiscounts calls cafelogos.pos.PosService.GetDiscounts.
+func (c *posServiceClient) GetDiscounts(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error) {
+	return c.getDiscounts.CallUnary(ctx, req)
+}
+
+// PostDiscount calls cafelogos.pos.PosService.PostDiscount.
+func (c *posServiceClient) PostDiscount(ctx context.Context, req *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error) {
+	return c.postDiscount.CallUnary(ctx, req)
+}
+
 // PosServiceHandler is an implementation of the cafelogos.pos.PosService service.
 type PosServiceHandler interface {
 	GetOrders(context.Context, *connect.Request[pos.GetOrdersRequest]) (*connect.Response[pos.GetOrdersResponse], error)
@@ -402,6 +430,8 @@ type PosServiceHandler interface {
 	PostSeat(context.Context, *connect.Request[pos.PostSeatRequest]) (*connect.Response[common.Empty], error)
 	UpdateSeat(context.Context, *connect.Request[pos.UpdateSeatRequest]) (*connect.Response[common.Empty], error)
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
+	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
+	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
 }
 
 // NewPosServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -520,6 +550,16 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		svc.GetSeats,
 		opts...,
 	)
+	posServiceGetDiscountsHandler := connect.NewUnaryHandler(
+		PosServiceGetDiscountsProcedure,
+		svc.GetDiscounts,
+		opts...,
+	)
+	posServicePostDiscountHandler := connect.NewUnaryHandler(
+		PosServicePostDiscountProcedure,
+		svc.PostDiscount,
+		opts...,
+	)
 	return "/cafelogos.pos.PosService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case PosServiceGetOrdersProcedure:
@@ -566,6 +606,10 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServiceUpdateSeatHandler.ServeHTTP(w, r)
 		case PosServiceGetSeatsProcedure:
 			posServiceGetSeatsHandler.ServeHTTP(w, r)
+		case PosServiceGetDiscountsProcedure:
+			posServiceGetDiscountsHandler.ServeHTTP(w, r)
+		case PosServicePostDiscountProcedure:
+			posServicePostDiscountHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -661,4 +705,12 @@ func (UnimplementedPosServiceHandler) UpdateSeat(context.Context, *connect.Reque
 
 func (UnimplementedPosServiceHandler) GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetSeats is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetDiscounts is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.PostDiscount is not implemented"))
 }

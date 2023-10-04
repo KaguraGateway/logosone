@@ -17,6 +17,29 @@ export const ProductType = proto3.makeEnum(
 );
 
 /**
+ * * Order 
+ *
+ * @generated from enum cafelogos.pos.OrderType
+ */
+export const OrderType = proto3.makeEnum(
+  "cafelogos.pos.OrderType",
+  [
+    {no: 0, name: "EatIn"},
+    {no: 1, name: "TakeOut"},
+  ],
+);
+
+/**
+ * @generated from enum cafelogos.pos.DiscountType
+ */
+export const DiscountType = proto3.makeEnum(
+  "cafelogos.pos.DiscountType",
+  [
+    {no: 0, name: "PRICE"},
+  ],
+);
+
+/**
  * *
  * Request/Response
  *
@@ -63,7 +86,7 @@ export const GetOrderBySeatIdRequest = proto3.makeMessageType(
 export const PostOrderRequest = proto3.makeMessageType(
   "cafelogos.pos.PostOrderRequest",
   () => [
-    { no: 1, name: "order", kind: "message", T: Order },
+    { no: 1, name: "order", kind: "message", T: OrderParam },
   ],
 );
 
@@ -302,6 +325,27 @@ export const UpdateClientRequest = proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.GetDiscountsResponse
+ */
+export const GetDiscountsResponse = proto3.makeMessageType(
+  "cafelogos.pos.GetDiscountsResponse",
+  () => [
+    { no: 1, name: "discounts", kind: "message", T: Discount, repeated: true },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.PostDiscountRequest
+ */
+export const PostDiscountRequest = proto3.makeMessageType(
+  "cafelogos.pos.PostDiscountRequest",
+  () => [
+    { no: 1, name: "type", kind: "enum", T: proto3.getEnumType(DiscountType) },
+    { no: 2, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ],
+);
+
+/**
  * * Product 
  *
  * @generated from message cafelogos.pos.Product
@@ -399,8 +443,6 @@ export const Stock = proto3.makeMessageType(
 );
 
 /**
- * * Order 
- *
  * @generated from message cafelogos.pos.Order
  */
 export const Order = proto3.makeMessageType(
@@ -409,7 +451,7 @@ export const Order = proto3.makeMessageType(
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "items", kind: "message", T: OrderItem, repeated: true },
     { no: 3, name: "discounts", kind: "message", T: OrderDiscount, repeated: true },
-    { no: 4, name: "order_type", kind: "enum", T: proto3.getEnumType(Order_OrderType) },
+    { no: 4, name: "order_type", kind: "enum", T: proto3.getEnumType(OrderType) },
     { no: 5, name: "payment", kind: "message", T: OrderPayment },
     { no: 6, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "call_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
@@ -419,13 +461,18 @@ export const Order = proto3.makeMessageType(
 );
 
 /**
- * @generated from enum cafelogos.pos.Order.OrderType
+ * @generated from message cafelogos.pos.OrderParam
  */
-export const Order_OrderType = proto3.makeEnum(
-  "cafelogos.pos.Order.OrderType",
-  [
-    {no: 0, name: "EatIn"},
-    {no: 1, name: "TakeOut"},
+export const OrderParam = proto3.makeMessageType(
+  "cafelogos.pos.OrderParam",
+  () => [
+    { no: 1, name: "items", kind: "message", T: OrderItem, repeated: true },
+    { no: 2, name: "discounts", kind: "message", T: OrderDiscount, repeated: true },
+    { no: 3, name: "order_type", kind: "enum", T: proto3.getEnumType(OrderType) },
+    { no: 4, name: "payment", kind: "message", T: OrderPayment },
+    { no: 5, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -450,18 +497,20 @@ export const OrderDiscount = proto3.makeMessageType(
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "discount_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 3, name: "type", kind: "enum", T: proto3.getEnumType(OrderDiscount_DiscountType) },
+    { no: 3, name: "type", kind: "enum", T: proto3.getEnumType(DiscountType) },
     { no: 4, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 
 /**
- * @generated from enum cafelogos.pos.OrderDiscount.DiscountType
+ * @generated from message cafelogos.pos.Discount
  */
-export const OrderDiscount_DiscountType = proto3.makeEnum(
-  "cafelogos.pos.OrderDiscount.DiscountType",
-  [
-    {no: 0, name: "PRICE"},
+export const Discount = proto3.makeMessageType(
+  "cafelogos.pos.Discount",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(DiscountType) },
+    { no: 3, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 

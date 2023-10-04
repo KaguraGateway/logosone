@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 import { createQueryService } from "@connectrpc/connect-query";
@@ -216,6 +216,24 @@ export const PosService = {
       O: GetSeatsResponse,
       kind: MethodKind.Unary,
     },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.GetDiscounts
+     */
+    getDiscounts: {
+      name: "GetDiscounts",
+      I: Empty,
+      O: GetDiscountsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostDiscount
+     */
+    postDiscount: {
+      name: "PostDiscount",
+      I: PostDiscountRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
   }
 }
 
@@ -374,3 +392,17 @@ export const updateSeat = createQueryService({
 export const getSeats = createQueryService({
   service: PosService,
 }).getSeats;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetDiscounts
+ */
+export const getDiscounts = createQueryService({
+  service: PosService,
+}).getDiscounts;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.PostDiscount
+ */
+export const postDiscount = createQueryService({
+  service: PosService,
+}).postDiscount;

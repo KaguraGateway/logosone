@@ -60,6 +60,83 @@ extension Cafelogos_Pos_ProductType: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+///* Order 
+public enum Cafelogos_Pos_OrderType: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
+  case eatIn // = 0
+  case takeOut // = 1
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .eatIn
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .eatIn
+    case 1: self = .takeOut
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .eatIn: return 0
+    case .takeOut: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Cafelogos_Pos_OrderType: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Cafelogos_Pos_OrderType] = [
+    .eatIn,
+    .takeOut,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+public enum Cafelogos_Pos_DiscountType: SwiftProtobuf.Enum {
+  public typealias RawValue = Int
+  case price // = 0
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .price
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .price
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .price: return 0
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Cafelogos_Pos_DiscountType: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Cafelogos_Pos_DiscountType] = [
+    .price,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 ///*
 /// Request/Response
 public struct Cafelogos_Pos_GetOrdersRequest {
@@ -122,8 +199,8 @@ public struct Cafelogos_Pos_PostOrderRequest {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var order: Cafelogos_Pos_Order {
-    get {return _order ?? Cafelogos_Pos_Order()}
+  public var order: Cafelogos_Pos_OrderParam {
+    get {return _order ?? Cafelogos_Pos_OrderParam()}
     set {_order = newValue}
   }
   /// Returns true if `order` has been explicitly set.
@@ -135,7 +212,7 @@ public struct Cafelogos_Pos_PostOrderRequest {
 
   public init() {}
 
-  fileprivate var _order: Cafelogos_Pos_Order? = nil
+  fileprivate var _order: Cafelogos_Pos_OrderParam? = nil
 }
 
 public struct Cafelogos_Pos_PostOrderResponse {
@@ -523,6 +600,32 @@ public struct Cafelogos_Pos_UpdateClientRequest {
   public init() {}
 }
 
+public struct Cafelogos_Pos_GetDiscountsResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var discounts: [Cafelogos_Pos_Discount] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Pos_PostDiscountRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var type: Cafelogos_Pos_DiscountType = .price
+
+  public var discountPrice: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 ///* Product 
 public struct Cafelogos_Pos_Product {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -720,7 +823,6 @@ public struct Cafelogos_Pos_Stock {
   public init() {}
 }
 
-///* Order 
 public struct Cafelogos_Pos_Order {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -732,7 +834,7 @@ public struct Cafelogos_Pos_Order {
 
   public var discounts: [Cafelogos_Pos_OrderDiscount] = []
 
-  public var orderType: Cafelogos_Pos_Order.OrderType = .eatIn
+  public var orderType: Cafelogos_Pos_OrderType = .eatIn
 
   public var payment: Cafelogos_Pos_OrderPayment {
     get {return _payment ?? Cafelogos_Pos_OrderPayment()}
@@ -753,50 +855,43 @@ public struct Cafelogos_Pos_Order {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OrderType: SwiftProtobuf.Enum {
-    public typealias RawValue = Int
-    case eatIn // = 0
-    case takeOut // = 1
-    case UNRECOGNIZED(Int)
-
-    public init() {
-      self = .eatIn
-    }
-
-    public init?(rawValue: Int) {
-      switch rawValue {
-      case 0: self = .eatIn
-      case 1: self = .takeOut
-      default: self = .UNRECOGNIZED(rawValue)
-      }
-    }
-
-    public var rawValue: Int {
-      switch self {
-      case .eatIn: return 0
-      case .takeOut: return 1
-      case .UNRECOGNIZED(let i): return i
-      }
-    }
-
-  }
-
   public init() {}
 
   fileprivate var _payment: Cafelogos_Pos_OrderPayment? = nil
 }
 
-#if swift(>=4.2)
+public struct Cafelogos_Pos_OrderParam {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
 
-extension Cafelogos_Pos_Order.OrderType: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  public static let allCases: [Cafelogos_Pos_Order.OrderType] = [
-    .eatIn,
-    .takeOut,
-  ]
+  public var items: [Cafelogos_Pos_OrderItem] = []
+
+  public var discounts: [Cafelogos_Pos_OrderDiscount] = []
+
+  public var orderType: Cafelogos_Pos_OrderType = .eatIn
+
+  public var payment: Cafelogos_Pos_OrderPayment {
+    get {return _payment ?? Cafelogos_Pos_OrderPayment()}
+    set {_payment = newValue}
+  }
+  /// Returns true if `payment` has been explicitly set.
+  public var hasPayment: Bool {return self._payment != nil}
+  /// Clears the value of `payment`. Subsequent reads from it will return its default value.
+  public mutating func clearPayment() {self._payment = nil}
+
+  public var orderAt: String = String()
+
+  public var clientID: String = String()
+
+  public var seatID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _payment: Cafelogos_Pos_OrderPayment? = nil
 }
-
-#endif  // swift(>=4.2)
 
 public struct Cafelogos_Pos_OrderItem {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -825,50 +920,30 @@ public struct Cafelogos_Pos_OrderDiscount {
 
   public var discountID: String = String()
 
-  public var type: Cafelogos_Pos_OrderDiscount.DiscountType = .price
+  public var type: Cafelogos_Pos_DiscountType = .price
 
   public var discountPrice: UInt64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum DiscountType: SwiftProtobuf.Enum {
-    public typealias RawValue = Int
-    case price // = 0
-    case UNRECOGNIZED(Int)
-
-    public init() {
-      self = .price
-    }
-
-    public init?(rawValue: Int) {
-      switch rawValue {
-      case 0: self = .price
-      default: self = .UNRECOGNIZED(rawValue)
-      }
-    }
-
-    public var rawValue: Int {
-      switch self {
-      case .price: return 0
-      case .UNRECOGNIZED(let i): return i
-      }
-    }
-
-  }
-
   public init() {}
 }
 
-#if swift(>=4.2)
+public struct Cafelogos_Pos_Discount {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
 
-extension Cafelogos_Pos_OrderDiscount.DiscountType: CaseIterable {
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  public static let allCases: [Cafelogos_Pos_OrderDiscount.DiscountType] = [
-    .price,
-  ]
+  public var id: String = String()
+
+  public var type: Cafelogos_Pos_DiscountType = .price
+
+  public var discountPrice: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
-
-#endif  // swift(>=4.2)
 
 public struct Cafelogos_Pos_OrderPayment {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -946,6 +1021,8 @@ public struct Cafelogos_Pos_Seat {
 
 #if swift(>=5.5) && canImport(_Concurrency)
 extension Cafelogos_Pos_ProductType: @unchecked Sendable {}
+extension Cafelogos_Pos_OrderType: @unchecked Sendable {}
+extension Cafelogos_Pos_DiscountType: @unchecked Sendable {}
 extension Cafelogos_Pos_GetOrdersRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_GetOrdersResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_GetOrderResponse: @unchecked Sendable {}
@@ -973,6 +1050,8 @@ extension Cafelogos_Pos_GetSeatsResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_PostNewClientRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_PostNewClientResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_UpdateClientRequest: @unchecked Sendable {}
+extension Cafelogos_Pos_GetDiscountsResponse: @unchecked Sendable {}
+extension Cafelogos_Pos_PostDiscountRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_Product: @unchecked Sendable {}
 extension Cafelogos_Pos_ProductParam: @unchecked Sendable {}
 extension Cafelogos_Pos_ProductCategory: @unchecked Sendable {}
@@ -980,10 +1059,10 @@ extension Cafelogos_Pos_CoffeeBean: @unchecked Sendable {}
 extension Cafelogos_Pos_CoffeeBrew: @unchecked Sendable {}
 extension Cafelogos_Pos_Stock: @unchecked Sendable {}
 extension Cafelogos_Pos_Order: @unchecked Sendable {}
-extension Cafelogos_Pos_Order.OrderType: @unchecked Sendable {}
+extension Cafelogos_Pos_OrderParam: @unchecked Sendable {}
 extension Cafelogos_Pos_OrderItem: @unchecked Sendable {}
 extension Cafelogos_Pos_OrderDiscount: @unchecked Sendable {}
-extension Cafelogos_Pos_OrderDiscount.DiscountType: @unchecked Sendable {}
+extension Cafelogos_Pos_Discount: @unchecked Sendable {}
 extension Cafelogos_Pos_OrderPayment: @unchecked Sendable {}
 extension Cafelogos_Pos_OrderPayment.PaymentType: @unchecked Sendable {}
 extension Cafelogos_Pos_Seat: @unchecked Sendable {}
@@ -997,6 +1076,19 @@ extension Cafelogos_Pos_ProductType: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "COFFEE"),
     1: .same(proto: "OTHER"),
+  ]
+}
+
+extension Cafelogos_Pos_OrderType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "EatIn"),
+    1: .same(proto: "TakeOut"),
+  ]
+}
+
+extension Cafelogos_Pos_DiscountType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "PRICE"),
   ]
 }
 
@@ -1930,6 +2022,76 @@ extension Cafelogos_Pos_UpdateClientRequest: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
+extension Cafelogos_Pos_GetDiscountsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetDiscountsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "discounts"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.discounts) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.discounts.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.discounts, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_GetDiscountsResponse, rhs: Cafelogos_Pos_GetDiscountsResponse) -> Bool {
+    if lhs.discounts != rhs.discounts {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_PostDiscountRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PostDiscountRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .standard(proto: "discount_price"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.discountPrice) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.type != .price {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
+    }
+    if self.discountPrice != 0 {
+      try visitor.visitSingularUInt64Field(value: self.discountPrice, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_PostDiscountRequest, rhs: Cafelogos_Pos_PostDiscountRequest) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.discountPrice != rhs.discountPrice {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Product"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -2474,11 +2636,76 @@ extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Cafelogos_Pos_Order.OrderType: SwiftProtobuf._ProtoNameProviding {
+extension Cafelogos_Pos_OrderParam: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".OrderParam"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "EatIn"),
-    1: .same(proto: "TakeOut"),
+    1: .same(proto: "items"),
+    2: .same(proto: "discounts"),
+    3: .standard(proto: "order_type"),
+    4: .same(proto: "payment"),
+    5: .standard(proto: "order_at"),
+    6: .standard(proto: "client_id"),
+    7: .standard(proto: "seat_id"),
   ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.discounts) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.orderType) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._payment) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.orderAt) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.clientID) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.seatID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.items.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 1)
+    }
+    if !self.discounts.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.discounts, fieldNumber: 2)
+    }
+    if self.orderType != .eatIn {
+      try visitor.visitSingularEnumField(value: self.orderType, fieldNumber: 3)
+    }
+    try { if let v = self._payment {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    if !self.orderAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.orderAt, fieldNumber: 5)
+    }
+    if !self.clientID.isEmpty {
+      try visitor.visitSingularStringField(value: self.clientID, fieldNumber: 6)
+    }
+    if !self.seatID.isEmpty {
+      try visitor.visitSingularStringField(value: self.seatID, fieldNumber: 7)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_OrderParam, rhs: Cafelogos_Pos_OrderParam) -> Bool {
+    if lhs.items != rhs.items {return false}
+    if lhs.discounts != rhs.discounts {return false}
+    if lhs.orderType != rhs.orderType {return false}
+    if lhs._payment != rhs._payment {return false}
+    if lhs.orderAt != rhs.orderAt {return false}
+    if lhs.clientID != rhs.clientID {return false}
+    if lhs.seatID != rhs.seatID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
 }
 
 extension Cafelogos_Pos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -2581,10 +2808,48 @@ extension Cafelogos_Pos_OrderDiscount: SwiftProtobuf.Message, SwiftProtobuf._Mes
   }
 }
 
-extension Cafelogos_Pos_OrderDiscount.DiscountType: SwiftProtobuf._ProtoNameProviding {
+extension Cafelogos_Pos_Discount: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Discount"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PRICE"),
+    1: .same(proto: "id"),
+    2: .same(proto: "type"),
+    3: .standard(proto: "discount_price"),
   ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.discountPrice) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    if self.type != .price {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
+    }
+    if self.discountPrice != 0 {
+      try visitor.visitSingularUInt64Field(value: self.discountPrice, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_Discount, rhs: Cafelogos_Pos_Discount) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs.discountPrice != rhs.discountPrice {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
 }
 
 extension Cafelogos_Pos_OrderPayment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {

@@ -22,6 +22,33 @@ export declare enum ProductType {
 }
 
 /**
+ * * Order 
+ *
+ * @generated from enum cafelogos.pos.OrderType
+ */
+export declare enum OrderType {
+  /**
+   * @generated from enum value: EatIn = 0;
+   */
+  EatIn = 0,
+
+  /**
+   * @generated from enum value: TakeOut = 1;
+   */
+  TakeOut = 1,
+}
+
+/**
+ * @generated from enum cafelogos.pos.DiscountType
+ */
+export declare enum DiscountType {
+  /**
+   * @generated from enum value: PRICE = 0;
+   */
+  PRICE = 0,
+}
+
+/**
  * *
  * Request/Response
  *
@@ -120,9 +147,9 @@ export declare class GetOrderBySeatIdRequest extends Message<GetOrderBySeatIdReq
  */
 export declare class PostOrderRequest extends Message<PostOrderRequest> {
   /**
-   * @generated from field: cafelogos.pos.Order order = 1;
+   * @generated from field: cafelogos.pos.OrderParam order = 1;
    */
-  order?: Order;
+  order?: OrderParam;
 
   constructor(data?: PartialMessage<PostOrderRequest>);
 
@@ -724,6 +751,59 @@ export declare class UpdateClientRequest extends Message<UpdateClientRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.GetDiscountsResponse
+ */
+export declare class GetDiscountsResponse extends Message<GetDiscountsResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.Discount discounts = 1;
+   */
+  discounts: Discount[];
+
+  constructor(data?: PartialMessage<GetDiscountsResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetDiscountsResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDiscountsResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDiscountsResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDiscountsResponse;
+
+  static equals(a: GetDiscountsResponse | PlainMessage<GetDiscountsResponse> | undefined, b: GetDiscountsResponse | PlainMessage<GetDiscountsResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PostDiscountRequest
+ */
+export declare class PostDiscountRequest extends Message<PostDiscountRequest> {
+  /**
+   * @generated from field: cafelogos.pos.DiscountType type = 1;
+   */
+  type: DiscountType;
+
+  /**
+   * @generated from field: uint64 discount_price = 2;
+   */
+  discountPrice: bigint;
+
+  constructor(data?: PartialMessage<PostDiscountRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostDiscountRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostDiscountRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostDiscountRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostDiscountRequest;
+
+  static equals(a: PostDiscountRequest | PlainMessage<PostDiscountRequest> | undefined, b: PostDiscountRequest | PlainMessage<PostDiscountRequest> | undefined): boolean;
+}
+
+/**
  * * Product 
  *
  * @generated from message cafelogos.pos.Product
@@ -1053,8 +1133,6 @@ export declare class Stock extends Message<Stock> {
 }
 
 /**
- * * Order 
- *
  * @generated from message cafelogos.pos.Order
  */
 export declare class Order extends Message<Order> {
@@ -1074,9 +1152,9 @@ export declare class Order extends Message<Order> {
   discounts: OrderDiscount[];
 
   /**
-   * @generated from field: cafelogos.pos.Order.OrderType order_type = 4;
+   * @generated from field: cafelogos.pos.OrderType order_type = 4;
    */
-  orderType: Order_OrderType;
+  orderType: OrderType;
 
   /**
    * @generated from field: cafelogos.pos.OrderPayment payment = 5;
@@ -1119,18 +1197,57 @@ export declare class Order extends Message<Order> {
 }
 
 /**
- * @generated from enum cafelogos.pos.Order.OrderType
+ * @generated from message cafelogos.pos.OrderParam
  */
-export declare enum Order_OrderType {
+export declare class OrderParam extends Message<OrderParam> {
   /**
-   * @generated from enum value: EatIn = 0;
+   * @generated from field: repeated cafelogos.pos.OrderItem items = 1;
    */
-  EatIn = 0,
+  items: OrderItem[];
 
   /**
-   * @generated from enum value: TakeOut = 1;
+   * @generated from field: repeated cafelogos.pos.OrderDiscount discounts = 2;
    */
-  TakeOut = 1,
+  discounts: OrderDiscount[];
+
+  /**
+   * @generated from field: cafelogos.pos.OrderType order_type = 3;
+   */
+  orderType: OrderType;
+
+  /**
+   * @generated from field: cafelogos.pos.OrderPayment payment = 4;
+   */
+  payment?: OrderPayment;
+
+  /**
+   * @generated from field: string order_at = 5;
+   */
+  orderAt: string;
+
+  /**
+   * @generated from field: string client_id = 6;
+   */
+  clientId: string;
+
+  /**
+   * @generated from field: string seat_id = 7;
+   */
+  seatId: string;
+
+  constructor(data?: PartialMessage<OrderParam>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.OrderParam";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): OrderParam;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): OrderParam;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): OrderParam;
+
+  static equals(a: OrderParam | PlainMessage<OrderParam> | undefined, b: OrderParam | PlainMessage<OrderParam> | undefined): boolean;
 }
 
 /**
@@ -1187,9 +1304,9 @@ export declare class OrderDiscount extends Message<OrderDiscount> {
   discountId: string;
 
   /**
-   * @generated from field: cafelogos.pos.OrderDiscount.DiscountType type = 3;
+   * @generated from field: cafelogos.pos.DiscountType type = 3;
    */
-  type: OrderDiscount_DiscountType;
+  type: DiscountType;
 
   /**
    * @generated from field: uint64 discount_price = 4;
@@ -1212,13 +1329,37 @@ export declare class OrderDiscount extends Message<OrderDiscount> {
 }
 
 /**
- * @generated from enum cafelogos.pos.OrderDiscount.DiscountType
+ * @generated from message cafelogos.pos.Discount
  */
-export declare enum OrderDiscount_DiscountType {
+export declare class Discount extends Message<Discount> {
   /**
-   * @generated from enum value: PRICE = 0;
+   * @generated from field: string id = 1;
    */
-  PRICE = 0,
+  id: string;
+
+  /**
+   * @generated from field: cafelogos.pos.DiscountType type = 2;
+   */
+  type: DiscountType;
+
+  /**
+   * @generated from field: uint64 discount_price = 3;
+   */
+  discountPrice: bigint;
+
+  constructor(data?: PartialMessage<Discount>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.Discount";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Discount;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): Discount;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Discount;
+
+  static equals(a: Discount | PlainMessage<Discount> | undefined, b: Discount | PlainMessage<Discount> | undefined): boolean;
 }
 
 /**

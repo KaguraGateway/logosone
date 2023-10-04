@@ -38,6 +38,9 @@ service PosService {
     rpc PostSeat(PostSeatRequest) returns (common.Empty) {}
     rpc UpdateSeat(UpdateSeatRequest) returns (common.Empty) {}
     rpc GetSeats(common.Empty) returns (GetSeatsResponse) {}
+
+    rpc GetDiscounts(common.Empty) returns (GetDiscountsResponse) {}
+    rpc PostDiscount(PostDiscountRequest) returns (common.Empty) {}
 }
 
 /**
@@ -55,7 +58,7 @@ message GetOrderBySeatIdRequest {
 }
 
 message PostOrderRequest {
-    Order order = 1;
+    OrderParam order = 1;
 }
 message PostOrderResponse {
     Code code = 1;
@@ -144,6 +147,15 @@ message UpdateClientRequest {
     string name = 2;
 }
 
+message GetDiscountsResponse {
+    repeated Discount discounts = 1;
+}
+
+message PostDiscountRequest {
+    DiscountType type = 1;
+    uint64 discount_price = 2;
+}
+
 /**
  * Types
  */
@@ -211,6 +223,10 @@ message Stock {
 }
 
 /** Order */
+enum OrderType {
+    EatIn = 0;
+    TakeOut = 1;
+}
 message Order {
     string id = 1;
     repeated OrderItem items = 2;
@@ -221,11 +237,15 @@ message Order {
     string call_number = 7;
     string client_id = 8;
     string seat_name = 9;
-
-    enum OrderType {
-        EatIn = 0;
-        TakeOut = 1;
-    }
+}
+message OrderParam {
+    repeated OrderItem items = 1;
+    repeated OrderDiscount discounts = 2;
+    OrderType order_type = 3;
+    OrderPayment payment = 4;
+    string order_at = 5;
+    string client_id = 6;
+    string seat_id = 7;
 }
 
 
@@ -236,15 +256,21 @@ message OrderItem {
     string coffee_brew_id = 4;
 }
 
+enum DiscountType {
+    PRICE = 0;
+}
+
 message OrderDiscount {
     string id = 1;
     string discount_id = 2;
     DiscountType type = 3;
     uint64 discount_price = 4;
+}
 
-    enum DiscountType {
-        PRICE = 0;
-    }
+message Discount {
+    string id = 1;
+    DiscountType type = 2;
+    uint64 discount_price = 3;
 }
 
 message OrderPayment {

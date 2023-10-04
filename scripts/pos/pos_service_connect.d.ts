@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -211,6 +211,24 @@ export declare const PosService: {
       readonly name: "GetSeats",
       readonly I: typeof Empty,
       readonly O: typeof GetSeatsResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.GetDiscounts
+     */
+    readonly getDiscounts: {
+      readonly name: "GetDiscounts",
+      readonly I: typeof Empty,
+      readonly O: typeof GetDiscountsResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostDiscount
+     */
+    readonly postDiscount: {
+      readonly name: "PostDiscount",
+      readonly I: typeof PostDiscountRequest,
+      readonly O: typeof Empty,
       readonly kind: MethodKind.Unary,
     },
   }

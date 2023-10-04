@@ -1,5 +1,11 @@
 package application
 
+import (
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
+	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
+)
+
 type CoffeeBrewParam struct {
 	Id                string
 	Name              string
@@ -17,4 +23,14 @@ type ProductParam struct {
 	CoffeeBrews       []CoffeeBrewParam
 	Amount            uint64
 	StockId           string
+}
+
+type OrderPaymentParam struct {
+	Id            string
+	PaymentType   model.PaymentType
+	ReceiveAmount uint64
+	PaymentAmount uint64
+	ChangeAmount  uint64
+	PaymentAt     synchro.Time[tz.UTC]
+	UpdatedAt     synchro.Time[tz.UTC]
 }

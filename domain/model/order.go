@@ -11,33 +11,40 @@ type Order struct {
 	id         string
 	orderItems []OrderItem
 	discounts  []Discount
+	orderType  OrderType
 	payment    *OrderPayment
 	orderAt    synchro.Time[tz.UTC]
 	clientId   string
 	seatId     string
 }
 
-func NewOrder(orderItems []OrderItem, discounts []Discount, clientId string, seatId string) *Order {
+func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType, clientId string, seatId string) *Order {
 	return &Order{
 		id:         ulid.Make().String(),
 		orderItems: orderItems,
 		discounts:  discounts,
+		orderType:  orderType,
 		orderAt:    synchro.Now[tz.UTC](),
 		clientId:   clientId,
 		seatId:     seatId,
 	}
 }
 
-func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, payment *OrderPayment, orderAt synchro.Time[tz.UTC], clientId string, seatId string) *Order {
+func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, orderType OrderType, payment *OrderPayment, orderAt synchro.Time[tz.UTC], clientId string, seatId string) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
 		discounts:  discounts,
+		orderType:  orderType,
 		payment:    payment,
 		orderAt:    orderAt,
 		clientId:   clientId,
 		seatId:     seatId,
 	}
+}
+
+func (order *Order) GetId() string {
+	return order.id
 }
 
 func (order *Order) GetOrderItems() []OrderItem {
@@ -87,9 +94,15 @@ func (order *Order) GetSeatId() string {
 	return order.seatId
 }
 
-func (order *Order) pay(payment OrderPayment) error {
-	if !payment.IsEnoughAmount() {
-		return domain.ErrPaymentNotEnought
+func (order *Order) GetOrderType() OrderType {
+	return order.orderType
+}
+
+func (order *Order) Pay(payment OrderPayment) error {
+	if payment.PaymentAmount != order.GetTotalAmount() {
+		return domain.ErrPaymentAmountInvalid
+	} else if !payment.IsEnoughAmount() {
+		return domain.ErrPaymentNotEnough
 	}
 	order.payment = &payment
 

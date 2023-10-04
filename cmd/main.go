@@ -86,6 +86,14 @@ func buildInjector(db *bun.DB) *do.Injector {
 	do.Provide(i, application.NewGetSeatsUseCase)
 	do.Provide(i, application.NewPostSeatUseCase)
 	do.Provide(i, application.NewUpdateSeatUseCase)
+	do.Provide(i, application.NewGetOrdersUseCase)
+	do.Provide(i, application.NewGetOrderBySeatIdUseCase)
+	do.Provide(i, application.NewPostOrderUseCase)
+	do.Provide(i, application.NewDeleteOrderUseCase)
+	do.Provide(i, application.NewSaveOrderPaymentUseCase)
+	do.Provide(i, application.NewGetDiscountsUseCase)
+	do.Provide(i, application.NewPostDiscountUseCase)
+	do.Provide(i, application.NewPostClientUseCase)
 
 	return i
 }

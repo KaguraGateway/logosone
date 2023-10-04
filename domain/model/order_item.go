@@ -49,7 +49,7 @@ func (OrderItem *OrderItem) GetProductAmount() uint64 {
 	}
 }
 
-func (OrderItem *OrderItem) GetTotalQunatity() uint64 {
+func (OrderItem *OrderItem) GetTotalQuantity() uint64 {
 	return OrderItem.GetProductAmount() * OrderItem.Quantity
 }
 

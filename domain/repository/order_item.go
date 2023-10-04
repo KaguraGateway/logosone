@@ -6,5 +6,5 @@ import (
 )
 
 type OrderItemRepository interface {
-	SaveTx(ctx context.Context, tx interface{}, orderItem *model.OrderItem) error
+	SaveTx(ctx context.Context, tx interface{}, orderId string, orderItem *model.OrderItem) error
 }

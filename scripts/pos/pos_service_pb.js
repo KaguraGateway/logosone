@@ -68,6 +68,32 @@ export const PostOrderRequest = proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.PostOrderResponse
+ */
+export const PostOrderResponse = proto3.makeMessageType(
+  "cafelogos.pos.PostOrderResponse",
+  () => [
+    { no: 1, name: "code", kind: "enum", T: proto3.getEnumType(PostOrderResponse_Code) },
+    { no: 2, name: "error_message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "call_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "payment_response", kind: "message", T: OrderPaymentResponse },
+  ],
+);
+
+/**
+ * @generated from enum cafelogos.pos.PostOrderResponse.Code
+ */
+export const PostOrderResponse_Code = proto3.makeEnum(
+  "cafelogos.pos.PostOrderResponse.Code",
+  [
+    {no: 0, name: "OK"},
+    {no: 1, name: "SOLD_OUT_PRODUCT"},
+    {no: 2, name: "NOT_SOLD_PRODUCT"},
+    {no: 3, name: "OTHER"},
+  ],
+);
+
+/**
  * @generated from message cafelogos.pos.PostOrderPaymentRequest
  */
 export const PostOrderPaymentRequest = proto3.makeMessageType(
@@ -85,6 +111,17 @@ export const UpdateOrderPaymentRequest = proto3.makeMessageType(
   "cafelogos.pos.UpdateOrderPaymentRequest",
   () => [
     { no: 1, name: "order_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "payment", kind: "message", T: OrderPayment },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.OrderPaymentResponse
+ */
+export const OrderPaymentResponse = proto3.makeMessageType(
+  "cafelogos.pos.OrderPaymentResponse",
+  () => [
+    { no: 1, name: "is_ok", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 2, name: "payment", kind: "message", T: OrderPayment },
   ],
 );
@@ -229,6 +266,38 @@ export const GetSeatsResponse = proto3.makeMessageType(
   "cafelogos.pos.GetSeatsResponse",
   () => [
     { no: 1, name: "seats", kind: "message", T: Seat, repeated: true },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.PostNewClientRequest
+ */
+export const PostNewClientRequest = proto3.makeMessageType(
+  "cafelogos.pos.PostNewClientRequest",
+  () => [
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.PostNewClientResponse
+ */
+export const PostNewClientResponse = proto3.makeMessageType(
+  "cafelogos.pos.PostNewClientResponse",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.UpdateClientRequest
+ */
+export const UpdateClientRequest = proto3.makeMessageType(
+  "cafelogos.pos.UpdateClientRequest",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 

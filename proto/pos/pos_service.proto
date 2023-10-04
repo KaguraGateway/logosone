@@ -10,10 +10,15 @@ option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/pos;pos";
 service PosService {
     rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
     rpc GetOrderBySeatId(GetOrderBySeatIdRequest) returns (GetOrderResponse) {}
-    rpc PostOrder(PostOrderRequest) returns (common.Empty) {}
+    rpc PostOrder(PostOrderRequest) returns (PostOrderResponse) {}
     rpc DeleteOrder(DeleteOrderRequest) returns (common.Empty) {}
-    rpc PostOrderPayment(PostOrderPaymentRequest) returns (common.Empty) {}
+    rpc PostOrderPayment(PostOrderPaymentRequest) returns (OrderPaymentResponse) {}
+    rpc UpdateOrderPayment(UpdateOrderPaymentRequest) returns (OrderPaymentResponse) {}
     rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
+
+    rpc PostNewClient(PostNewClientRequest) returns (PostNewClientResponse) {}
+    rpc UpdateClient(UpdateClientRequest) returns (common.Empty) {}
+
     // Only Admin
     rpc GetProductCategories(common.Empty) returns (GetProductCategoriesResponse) {}
     rpc PostProductCategory(PostProductCategoryRequest) returns (common.Empty) {}
@@ -52,12 +57,29 @@ message GetOrderBySeatIdRequest {
 message PostOrderRequest {
     Order order = 1;
 }
+message PostOrderResponse {
+    Code code = 1;
+    string error_message = 2;
+    string call_number = 3;
+    OrderPaymentResponse payment_response = 4;
+
+    enum Code {
+        OK = 0;
+        SOLD_OUT_PRODUCT = 1;
+        NOT_SOLD_PRODUCT = 2;
+        OTHER = 3;
+    }
+}
 message PostOrderPaymentRequest {
     string order_id = 1;
     OrderPayment payment = 2;
 }
 message UpdateOrderPaymentRequest {
     string order_id = 1;
+    OrderPayment payment = 2;
+}
+message OrderPaymentResponse {
+    bool is_ok = 1;
     OrderPayment payment = 2;
 }
 message DeleteOrderRequest {
@@ -108,6 +130,18 @@ message UpdateSeatRequest {
 }
 message GetSeatsResponse {
     repeated Seat seats = 1;
+}
+
+message PostNewClientRequest {
+    string name = 1;
+}
+message PostNewClientResponse {
+    string id = 1;
+    string name = 2;
+}
+message UpdateClientRequest {
+    string id = 1;
+    string name = 2;
 }
 
 /**

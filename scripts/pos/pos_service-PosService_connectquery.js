@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, PostCoffeeBeanRequest, PostOrderPaymentRequest, PostOrderRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 import { createQueryService } from "@connectrpc/connect-query";
@@ -40,7 +40,7 @@ export const PosService = {
     postOrder: {
       name: "PostOrder",
       I: PostOrderRequest,
-      O: Empty,
+      O: PostOrderResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -58,7 +58,16 @@ export const PosService = {
     postOrderPayment: {
       name: "PostOrderPayment",
       I: PostOrderPaymentRequest,
-      O: Empty,
+      O: OrderPaymentResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+     */
+    updateOrderPayment: {
+      name: "UpdateOrderPayment",
+      I: UpdateOrderPaymentRequest,
+      O: OrderPaymentResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -68,6 +77,24 @@ export const PosService = {
       name: "GetProducts",
       I: Empty,
       O: GetProductsResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostNewClient
+     */
+    postNewClient: {
+      name: "PostNewClient",
+      I: PostNewClientRequest,
+      O: PostNewClientResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateClient
+     */
+    updateClient: {
+      name: "UpdateClient",
+      I: UpdateClientRequest,
+      O: Empty,
       kind: MethodKind.Unary,
     },
     /**
@@ -228,11 +255,32 @@ export const postOrderPayment = createQueryService({
 }).postOrderPayment;
 
 /**
+ * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+ */
+export const updateOrderPayment = createQueryService({
+  service: PosService,
+}).updateOrderPayment;
+
+/**
  * @generated from rpc cafelogos.pos.PosService.GetProducts
  */
 export const getProducts = createQueryService({
   service: PosService,
 }).getProducts;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.PostNewClient
+ */
+export const postNewClient = createQueryService({
+  service: PosService,
+}).postNewClient;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.UpdateClient
+ */
+export const updateClient = createQueryService({
+  service: PosService,
+}).updateClient;
 
 /**
  * Only Admin

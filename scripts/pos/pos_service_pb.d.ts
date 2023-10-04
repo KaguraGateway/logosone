@@ -140,6 +140,70 @@ export declare class PostOrderRequest extends Message<PostOrderRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.PostOrderResponse
+ */
+export declare class PostOrderResponse extends Message<PostOrderResponse> {
+  /**
+   * @generated from field: cafelogos.pos.PostOrderResponse.Code code = 1;
+   */
+  code: PostOrderResponse_Code;
+
+  /**
+   * @generated from field: string error_message = 2;
+   */
+  errorMessage: string;
+
+  /**
+   * @generated from field: string call_number = 3;
+   */
+  callNumber: string;
+
+  /**
+   * @generated from field: cafelogos.pos.OrderPaymentResponse payment_response = 4;
+   */
+  paymentResponse?: OrderPaymentResponse;
+
+  constructor(data?: PartialMessage<PostOrderResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostOrderResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostOrderResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostOrderResponse;
+
+  static equals(a: PostOrderResponse | PlainMessage<PostOrderResponse> | undefined, b: PostOrderResponse | PlainMessage<PostOrderResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from enum cafelogos.pos.PostOrderResponse.Code
+ */
+export declare enum PostOrderResponse_Code {
+  /**
+   * @generated from enum value: OK = 0;
+   */
+  OK = 0,
+
+  /**
+   * @generated from enum value: SOLD_OUT_PRODUCT = 1;
+   */
+  SOLD_OUT_PRODUCT = 1,
+
+  /**
+   * @generated from enum value: NOT_SOLD_PRODUCT = 2;
+   */
+  NOT_SOLD_PRODUCT = 2,
+
+  /**
+   * @generated from enum value: OTHER = 3;
+   */
+  OTHER = 3,
+}
+
+/**
  * @generated from message cafelogos.pos.PostOrderPaymentRequest
  */
 export declare class PostOrderPaymentRequest extends Message<PostOrderPaymentRequest> {
@@ -195,6 +259,35 @@ export declare class UpdateOrderPaymentRequest extends Message<UpdateOrderPaymen
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateOrderPaymentRequest;
 
   static equals(a: UpdateOrderPaymentRequest | PlainMessage<UpdateOrderPaymentRequest> | undefined, b: UpdateOrderPaymentRequest | PlainMessage<UpdateOrderPaymentRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.OrderPaymentResponse
+ */
+export declare class OrderPaymentResponse extends Message<OrderPaymentResponse> {
+  /**
+   * @generated from field: bool is_ok = 1;
+   */
+  isOk: boolean;
+
+  /**
+   * @generated from field: cafelogos.pos.OrderPayment payment = 2;
+   */
+  payment?: OrderPayment;
+
+  constructor(data?: PartialMessage<OrderPaymentResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.OrderPaymentResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): OrderPaymentResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): OrderPaymentResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): OrderPaymentResponse;
+
+  static equals(a: OrderPaymentResponse | PlainMessage<OrderPaymentResponse> | undefined, b: OrderPaymentResponse | PlainMessage<OrderPaymentResponse> | undefined): boolean;
 }
 
 /**
@@ -546,6 +639,88 @@ export declare class GetSeatsResponse extends Message<GetSeatsResponse> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSeatsResponse;
 
   static equals(a: GetSeatsResponse | PlainMessage<GetSeatsResponse> | undefined, b: GetSeatsResponse | PlainMessage<GetSeatsResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PostNewClientRequest
+ */
+export declare class PostNewClientRequest extends Message<PostNewClientRequest> {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  constructor(data?: PartialMessage<PostNewClientRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostNewClientRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostNewClientRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostNewClientRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostNewClientRequest;
+
+  static equals(a: PostNewClientRequest | PlainMessage<PostNewClientRequest> | undefined, b: PostNewClientRequest | PlainMessage<PostNewClientRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PostNewClientResponse
+ */
+export declare class PostNewClientResponse extends Message<PostNewClientResponse> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  constructor(data?: PartialMessage<PostNewClientResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostNewClientResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostNewClientResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostNewClientResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostNewClientResponse;
+
+  static equals(a: PostNewClientResponse | PlainMessage<PostNewClientResponse> | undefined, b: PostNewClientResponse | PlainMessage<PostNewClientResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.UpdateClientRequest
+ */
+export declare class UpdateClientRequest extends Message<UpdateClientRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  constructor(data?: PartialMessage<UpdateClientRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.UpdateClientRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateClientRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateClientRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateClientRequest;
+
+  static equals(a: UpdateClientRequest | PlainMessage<UpdateClientRequest> | undefined, b: UpdateClientRequest | PlainMessage<UpdateClientRequest> | undefined): boolean;
 }
 
 /**

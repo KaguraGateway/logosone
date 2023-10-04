@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, PostCoffeeBeanRequest, PostOrderPaymentRequest, PostOrderRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -37,7 +37,7 @@ export declare const PosService: {
     readonly postOrder: {
       readonly name: "PostOrder",
       readonly I: typeof PostOrderRequest,
-      readonly O: typeof Empty,
+      readonly O: typeof PostOrderResponse,
       readonly kind: MethodKind.Unary,
     },
     /**
@@ -55,7 +55,16 @@ export declare const PosService: {
     readonly postOrderPayment: {
       readonly name: "PostOrderPayment",
       readonly I: typeof PostOrderPaymentRequest,
-      readonly O: typeof Empty,
+      readonly O: typeof OrderPaymentResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+     */
+    readonly updateOrderPayment: {
+      readonly name: "UpdateOrderPayment",
+      readonly I: typeof UpdateOrderPaymentRequest,
+      readonly O: typeof OrderPaymentResponse,
       readonly kind: MethodKind.Unary,
     },
     /**
@@ -65,6 +74,24 @@ export declare const PosService: {
       readonly name: "GetProducts",
       readonly I: typeof Empty,
       readonly O: typeof GetProductsResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostNewClient
+     */
+    readonly postNewClient: {
+      readonly name: "PostNewClient",
+      readonly I: typeof PostNewClientRequest,
+      readonly O: typeof PostNewClientResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateClient
+     */
+    readonly updateClient: {
+      readonly name: "UpdateClient",
+      readonly I: typeof UpdateClientRequest,
+      readonly O: typeof Empty,
       readonly kind: MethodKind.Unary,
     },
     /**

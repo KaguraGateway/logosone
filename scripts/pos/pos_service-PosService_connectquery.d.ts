@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, PostCoffeeBeanRequest, PostOrderPaymentRequest, PostOrderRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 import { UnaryHooks } from "@connectrpc/connect-query";
@@ -38,7 +38,7 @@ export declare const PosService: {
     readonly postOrder: {
       readonly name: "PostOrder",
       readonly I: typeof PostOrderRequest,
-      readonly O: typeof Empty,
+      readonly O: typeof PostOrderResponse,
       readonly kind: MethodKind.Unary,
     },
     /**
@@ -56,7 +56,16 @@ export declare const PosService: {
     readonly postOrderPayment: {
       readonly name: "PostOrderPayment",
       readonly I: typeof PostOrderPaymentRequest,
-      readonly O: typeof Empty,
+      readonly O: typeof OrderPaymentResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+     */
+    readonly updateOrderPayment: {
+      readonly name: "UpdateOrderPayment",
+      readonly I: typeof UpdateOrderPaymentRequest,
+      readonly O: typeof OrderPaymentResponse,
       readonly kind: MethodKind.Unary,
     },
     /**
@@ -66,6 +75,24 @@ export declare const PosService: {
       readonly name: "GetProducts",
       readonly I: typeof Empty,
       readonly O: typeof GetProductsResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.PostNewClient
+     */
+    readonly postNewClient: {
+      readonly name: "PostNewClient",
+      readonly I: typeof PostNewClientRequest,
+      readonly O: typeof PostNewClientResponse,
+      readonly kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.UpdateClient
+     */
+    readonly updateClient: {
+      readonly name: "UpdateClient",
+      readonly I: typeof UpdateClientRequest,
+      readonly O: typeof Empty,
       readonly kind: MethodKind.Unary,
     },
     /**
@@ -192,10 +219,13 @@ export declare const PosService: {
 
 export const getOrders: UnaryHooks<GetOrdersRequest, GetOrdersResponse>;
 export const getOrderBySeatId: UnaryHooks<GetOrderBySeatIdRequest, GetOrderResponse>;
-export const postOrder: UnaryHooks<PostOrderRequest, Empty>;
+export const postOrder: UnaryHooks<PostOrderRequest, PostOrderResponse>;
 export const deleteOrder: UnaryHooks<DeleteOrderRequest, Empty>;
-export const postOrderPayment: UnaryHooks<PostOrderPaymentRequest, Empty>;
+export const postOrderPayment: UnaryHooks<PostOrderPaymentRequest, OrderPaymentResponse>;
+export const updateOrderPayment: UnaryHooks<UpdateOrderPaymentRequest, OrderPaymentResponse>;
 export const getProducts: UnaryHooks<Empty, GetProductsResponse>;
+export const postNewClient: UnaryHooks<PostNewClientRequest, PostNewClientResponse>;
+export const updateClient: UnaryHooks<UpdateClientRequest, Empty>;
 export const getProductCategories: UnaryHooks<Empty, GetProductCategoriesResponse>;
 export const postProductCategory: UnaryHooks<PostProductCategoryRequest, Empty>;
 export const postProduct: UnaryHooks<PostProductRequest, Empty>;

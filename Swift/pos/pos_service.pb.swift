@@ -138,6 +138,81 @@ public struct Cafelogos_Pos_PostOrderRequest {
   fileprivate var _order: Cafelogos_Pos_Order? = nil
 }
 
+public struct Cafelogos_Pos_PostOrderResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var code: Cafelogos_Pos_PostOrderResponse.Code = .ok
+
+  public var errorMessage: String = String()
+
+  public var callNumber: String = String()
+
+  public var paymentResponse: Cafelogos_Pos_OrderPaymentResponse {
+    get {return _paymentResponse ?? Cafelogos_Pos_OrderPaymentResponse()}
+    set {_paymentResponse = newValue}
+  }
+  /// Returns true if `paymentResponse` has been explicitly set.
+  public var hasPaymentResponse: Bool {return self._paymentResponse != nil}
+  /// Clears the value of `paymentResponse`. Subsequent reads from it will return its default value.
+  public mutating func clearPaymentResponse() {self._paymentResponse = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum Code: SwiftProtobuf.Enum {
+    public typealias RawValue = Int
+    case ok // = 0
+    case soldOutProduct // = 1
+    case notSoldProduct // = 2
+    case other // = 3
+    case UNRECOGNIZED(Int)
+
+    public init() {
+      self = .ok
+    }
+
+    public init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .ok
+      case 1: self = .soldOutProduct
+      case 2: self = .notSoldProduct
+      case 3: self = .other
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    public var rawValue: Int {
+      switch self {
+      case .ok: return 0
+      case .soldOutProduct: return 1
+      case .notSoldProduct: return 2
+      case .other: return 3
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+  }
+
+  public init() {}
+
+  fileprivate var _paymentResponse: Cafelogos_Pos_OrderPaymentResponse? = nil
+}
+
+#if swift(>=4.2)
+
+extension Cafelogos_Pos_PostOrderResponse.Code: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Cafelogos_Pos_PostOrderResponse.Code] = [
+    .ok,
+    .soldOutProduct,
+    .notSoldProduct,
+    .other,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 public struct Cafelogos_Pos_PostOrderPaymentRequest {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -167,6 +242,29 @@ public struct Cafelogos_Pos_UpdateOrderPaymentRequest {
   // methods supported on all messages.
 
   public var orderID: String = String()
+
+  public var payment: Cafelogos_Pos_OrderPayment {
+    get {return _payment ?? Cafelogos_Pos_OrderPayment()}
+    set {_payment = newValue}
+  }
+  /// Returns true if `payment` has been explicitly set.
+  public var hasPayment: Bool {return self._payment != nil}
+  /// Clears the value of `payment`. Subsequent reads from it will return its default value.
+  public mutating func clearPayment() {self._payment = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _payment: Cafelogos_Pos_OrderPayment? = nil
+}
+
+public struct Cafelogos_Pos_OrderPaymentResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var isOk: Bool = false
 
   public var payment: Cafelogos_Pos_OrderPayment {
     get {return _payment ?? Cafelogos_Pos_OrderPayment()}
@@ -379,6 +477,46 @@ public struct Cafelogos_Pos_GetSeatsResponse {
   // methods supported on all messages.
 
   public var seats: [Cafelogos_Pos_Seat] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Pos_PostNewClientRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Pos_PostNewClientResponse {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String = String()
+
+  public var name: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Pos_UpdateClientRequest {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var id: String = String()
+
+  public var name: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -811,8 +949,11 @@ extension Cafelogos_Pos_GetOrdersResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_GetOrderResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_GetOrderBySeatIdRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_PostOrderRequest: @unchecked Sendable {}
+extension Cafelogos_Pos_PostOrderResponse: @unchecked Sendable {}
+extension Cafelogos_Pos_PostOrderResponse.Code: @unchecked Sendable {}
 extension Cafelogos_Pos_PostOrderPaymentRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_UpdateOrderPaymentRequest: @unchecked Sendable {}
+extension Cafelogos_Pos_OrderPaymentResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_DeleteOrderRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_GetProductsResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_GetProductCategoriesResponse: @unchecked Sendable {}
@@ -827,6 +968,9 @@ extension Cafelogos_Pos_GetCoffeeBeansResponse: @unchecked Sendable {}
 extension Cafelogos_Pos_PostSeatRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_UpdateSeatRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_GetSeatsResponse: @unchecked Sendable {}
+extension Cafelogos_Pos_PostNewClientRequest: @unchecked Sendable {}
+extension Cafelogos_Pos_PostNewClientResponse: @unchecked Sendable {}
+extension Cafelogos_Pos_UpdateClientRequest: @unchecked Sendable {}
 extension Cafelogos_Pos_Product: @unchecked Sendable {}
 extension Cafelogos_Pos_ProductParam: @unchecked Sendable {}
 extension Cafelogos_Pos_ProductCategory: @unchecked Sendable {}
@@ -1009,6 +1153,69 @@ extension Cafelogos_Pos_PostOrderRequest: SwiftProtobuf.Message, SwiftProtobuf._
   }
 }
 
+extension Cafelogos_Pos_PostOrderResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PostOrderResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "code"),
+    2: .standard(proto: "error_message"),
+    3: .standard(proto: "call_number"),
+    4: .standard(proto: "payment_response"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.code) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.errorMessage) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.callNumber) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._paymentResponse) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.code != .ok {
+      try visitor.visitSingularEnumField(value: self.code, fieldNumber: 1)
+    }
+    if !self.errorMessage.isEmpty {
+      try visitor.visitSingularStringField(value: self.errorMessage, fieldNumber: 2)
+    }
+    if !self.callNumber.isEmpty {
+      try visitor.visitSingularStringField(value: self.callNumber, fieldNumber: 3)
+    }
+    try { if let v = self._paymentResponse {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_PostOrderResponse, rhs: Cafelogos_Pos_PostOrderResponse) -> Bool {
+    if lhs.code != rhs.code {return false}
+    if lhs.errorMessage != rhs.errorMessage {return false}
+    if lhs.callNumber != rhs.callNumber {return false}
+    if lhs._paymentResponse != rhs._paymentResponse {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_PostOrderResponse.Code: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "OK"),
+    1: .same(proto: "SOLD_OUT_PRODUCT"),
+    2: .same(proto: "NOT_SOLD_PRODUCT"),
+    3: .same(proto: "OTHER"),
+  ]
+}
+
 extension Cafelogos_Pos_PostOrderPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderPaymentRequest"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1087,6 +1294,48 @@ extension Cafelogos_Pos_UpdateOrderPaymentRequest: SwiftProtobuf.Message, SwiftP
 
   public static func ==(lhs: Cafelogos_Pos_UpdateOrderPaymentRequest, rhs: Cafelogos_Pos_UpdateOrderPaymentRequest) -> Bool {
     if lhs.orderID != rhs.orderID {return false}
+    if lhs._payment != rhs._payment {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_OrderPaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".OrderPaymentResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "is_ok"),
+    2: .same(proto: "payment"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.isOk) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._payment) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.isOk != false {
+      try visitor.visitSingularBoolField(value: self.isOk, fieldNumber: 1)
+    }
+    try { if let v = self._payment {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_OrderPaymentResponse, rhs: Cafelogos_Pos_OrderPaymentResponse) -> Bool {
+    if lhs.isOk != rhs.isOk {return false}
     if lhs._payment != rhs._payment {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -1566,6 +1815,114 @@ extension Cafelogos_Pos_GetSeatsResponse: SwiftProtobuf.Message, SwiftProtobuf._
 
   public static func ==(lhs: Cafelogos_Pos_GetSeatsResponse, rhs: Cafelogos_Pos_GetSeatsResponse) -> Bool {
     if lhs.seats != rhs.seats {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_PostNewClientRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PostNewClientRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_PostNewClientRequest, rhs: Cafelogos_Pos_PostNewClientRequest) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_PostNewClientResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".PostNewClientResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_PostNewClientResponse, rhs: Cafelogos_Pos_PostNewClientResponse) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.name != rhs.name {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_UpdateClientRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UpdateClientRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "id"),
+    2: .same(proto: "name"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_UpdateClientRequest, rhs: Cafelogos_Pos_UpdateClientRequest) -> Bool {
+    if lhs.id != rhs.id {return false}
+    if lhs.name != rhs.name {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

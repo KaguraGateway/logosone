@@ -46,8 +46,16 @@ const (
 	// PosServicePostOrderPaymentProcedure is the fully-qualified name of the PosService's
 	// PostOrderPayment RPC.
 	PosServicePostOrderPaymentProcedure = "/cafelogos.pos.PosService/PostOrderPayment"
+	// PosServiceUpdateOrderPaymentProcedure is the fully-qualified name of the PosService's
+	// UpdateOrderPayment RPC.
+	PosServiceUpdateOrderPaymentProcedure = "/cafelogos.pos.PosService/UpdateOrderPayment"
 	// PosServiceGetProductsProcedure is the fully-qualified name of the PosService's GetProducts RPC.
 	PosServiceGetProductsProcedure = "/cafelogos.pos.PosService/GetProducts"
+	// PosServicePostNewClientProcedure is the fully-qualified name of the PosService's PostNewClient
+	// RPC.
+	PosServicePostNewClientProcedure = "/cafelogos.pos.PosService/PostNewClient"
+	// PosServiceUpdateClientProcedure is the fully-qualified name of the PosService's UpdateClient RPC.
+	PosServiceUpdateClientProcedure = "/cafelogos.pos.PosService/UpdateClient"
 	// PosServiceGetProductCategoriesProcedure is the fully-qualified name of the PosService's
 	// GetProductCategories RPC.
 	PosServiceGetProductCategoriesProcedure = "/cafelogos.pos.PosService/GetProductCategories"
@@ -87,10 +95,13 @@ const (
 type PosServiceClient interface {
 	GetOrders(context.Context, *connect.Request[pos.GetOrdersRequest]) (*connect.Response[pos.GetOrdersResponse], error)
 	GetOrderBySeatId(context.Context, *connect.Request[pos.GetOrderBySeatIdRequest]) (*connect.Response[pos.GetOrderResponse], error)
-	PostOrder(context.Context, *connect.Request[pos.PostOrderRequest]) (*connect.Response[common.Empty], error)
+	PostOrder(context.Context, *connect.Request[pos.PostOrderRequest]) (*connect.Response[pos.PostOrderResponse], error)
 	DeleteOrder(context.Context, *connect.Request[pos.DeleteOrderRequest]) (*connect.Response[common.Empty], error)
-	PostOrderPayment(context.Context, *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[common.Empty], error)
+	PostOrderPayment(context.Context, *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error)
+	UpdateOrderPayment(context.Context, *connect.Request[pos.UpdateOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error)
 	GetProducts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductsResponse], error)
+	PostNewClient(context.Context, *connect.Request[pos.PostNewClientRequest]) (*connect.Response[pos.PostNewClientResponse], error)
+	UpdateClient(context.Context, *connect.Request[pos.UpdateClientRequest]) (*connect.Response[common.Empty], error)
 	// Only Admin
 	GetProductCategories(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductCategoriesResponse], error)
 	PostProductCategory(context.Context, *connect.Request[pos.PostProductCategoryRequest]) (*connect.Response[common.Empty], error)
@@ -127,7 +138,7 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			baseURL+PosServiceGetOrderBySeatIdProcedure,
 			opts...,
 		),
-		postOrder: connect.NewClient[pos.PostOrderRequest, common.Empty](
+		postOrder: connect.NewClient[pos.PostOrderRequest, pos.PostOrderResponse](
 			httpClient,
 			baseURL+PosServicePostOrderProcedure,
 			opts...,
@@ -137,14 +148,29 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			baseURL+PosServiceDeleteOrderProcedure,
 			opts...,
 		),
-		postOrderPayment: connect.NewClient[pos.PostOrderPaymentRequest, common.Empty](
+		postOrderPayment: connect.NewClient[pos.PostOrderPaymentRequest, pos.OrderPaymentResponse](
 			httpClient,
 			baseURL+PosServicePostOrderPaymentProcedure,
+			opts...,
+		),
+		updateOrderPayment: connect.NewClient[pos.UpdateOrderPaymentRequest, pos.OrderPaymentResponse](
+			httpClient,
+			baseURL+PosServiceUpdateOrderPaymentProcedure,
 			opts...,
 		),
 		getProducts: connect.NewClient[common.Empty, pos.GetProductsResponse](
 			httpClient,
 			baseURL+PosServiceGetProductsProcedure,
+			opts...,
+		),
+		postNewClient: connect.NewClient[pos.PostNewClientRequest, pos.PostNewClientResponse](
+			httpClient,
+			baseURL+PosServicePostNewClientProcedure,
+			opts...,
+		),
+		updateClient: connect.NewClient[pos.UpdateClientRequest, common.Empty](
+			httpClient,
+			baseURL+PosServiceUpdateClientProcedure,
 			opts...,
 		),
 		getProductCategories: connect.NewClient[common.Empty, pos.GetProductCategoriesResponse](
@@ -219,10 +245,13 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 type posServiceClient struct {
 	getOrders            *connect.Client[pos.GetOrdersRequest, pos.GetOrdersResponse]
 	getOrderBySeatId     *connect.Client[pos.GetOrderBySeatIdRequest, pos.GetOrderResponse]
-	postOrder            *connect.Client[pos.PostOrderRequest, common.Empty]
+	postOrder            *connect.Client[pos.PostOrderRequest, pos.PostOrderResponse]
 	deleteOrder          *connect.Client[pos.DeleteOrderRequest, common.Empty]
-	postOrderPayment     *connect.Client[pos.PostOrderPaymentRequest, common.Empty]
+	postOrderPayment     *connect.Client[pos.PostOrderPaymentRequest, pos.OrderPaymentResponse]
+	updateOrderPayment   *connect.Client[pos.UpdateOrderPaymentRequest, pos.OrderPaymentResponse]
 	getProducts          *connect.Client[common.Empty, pos.GetProductsResponse]
+	postNewClient        *connect.Client[pos.PostNewClientRequest, pos.PostNewClientResponse]
+	updateClient         *connect.Client[pos.UpdateClientRequest, common.Empty]
 	getProductCategories *connect.Client[common.Empty, pos.GetProductCategoriesResponse]
 	postProductCategory  *connect.Client[pos.PostProductCategoryRequest, common.Empty]
 	postProduct          *connect.Client[pos.PostProductRequest, common.Empty]
@@ -249,7 +278,7 @@ func (c *posServiceClient) GetOrderBySeatId(ctx context.Context, req *connect.Re
 }
 
 // PostOrder calls cafelogos.pos.PosService.PostOrder.
-func (c *posServiceClient) PostOrder(ctx context.Context, req *connect.Request[pos.PostOrderRequest]) (*connect.Response[common.Empty], error) {
+func (c *posServiceClient) PostOrder(ctx context.Context, req *connect.Request[pos.PostOrderRequest]) (*connect.Response[pos.PostOrderResponse], error) {
 	return c.postOrder.CallUnary(ctx, req)
 }
 
@@ -259,13 +288,28 @@ func (c *posServiceClient) DeleteOrder(ctx context.Context, req *connect.Request
 }
 
 // PostOrderPayment calls cafelogos.pos.PosService.PostOrderPayment.
-func (c *posServiceClient) PostOrderPayment(ctx context.Context, req *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[common.Empty], error) {
+func (c *posServiceClient) PostOrderPayment(ctx context.Context, req *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error) {
 	return c.postOrderPayment.CallUnary(ctx, req)
+}
+
+// UpdateOrderPayment calls cafelogos.pos.PosService.UpdateOrderPayment.
+func (c *posServiceClient) UpdateOrderPayment(ctx context.Context, req *connect.Request[pos.UpdateOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error) {
+	return c.updateOrderPayment.CallUnary(ctx, req)
 }
 
 // GetProducts calls cafelogos.pos.PosService.GetProducts.
 func (c *posServiceClient) GetProducts(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetProductsResponse], error) {
 	return c.getProducts.CallUnary(ctx, req)
+}
+
+// PostNewClient calls cafelogos.pos.PosService.PostNewClient.
+func (c *posServiceClient) PostNewClient(ctx context.Context, req *connect.Request[pos.PostNewClientRequest]) (*connect.Response[pos.PostNewClientResponse], error) {
+	return c.postNewClient.CallUnary(ctx, req)
+}
+
+// UpdateClient calls cafelogos.pos.PosService.UpdateClient.
+func (c *posServiceClient) UpdateClient(ctx context.Context, req *connect.Request[pos.UpdateClientRequest]) (*connect.Response[common.Empty], error) {
+	return c.updateClient.CallUnary(ctx, req)
 }
 
 // GetProductCategories calls cafelogos.pos.PosService.GetProductCategories.
@@ -337,10 +381,13 @@ func (c *posServiceClient) GetSeats(ctx context.Context, req *connect.Request[co
 type PosServiceHandler interface {
 	GetOrders(context.Context, *connect.Request[pos.GetOrdersRequest]) (*connect.Response[pos.GetOrdersResponse], error)
 	GetOrderBySeatId(context.Context, *connect.Request[pos.GetOrderBySeatIdRequest]) (*connect.Response[pos.GetOrderResponse], error)
-	PostOrder(context.Context, *connect.Request[pos.PostOrderRequest]) (*connect.Response[common.Empty], error)
+	PostOrder(context.Context, *connect.Request[pos.PostOrderRequest]) (*connect.Response[pos.PostOrderResponse], error)
 	DeleteOrder(context.Context, *connect.Request[pos.DeleteOrderRequest]) (*connect.Response[common.Empty], error)
-	PostOrderPayment(context.Context, *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[common.Empty], error)
+	PostOrderPayment(context.Context, *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error)
+	UpdateOrderPayment(context.Context, *connect.Request[pos.UpdateOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error)
 	GetProducts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductsResponse], error)
+	PostNewClient(context.Context, *connect.Request[pos.PostNewClientRequest]) (*connect.Response[pos.PostNewClientResponse], error)
+	UpdateClient(context.Context, *connect.Request[pos.UpdateClientRequest]) (*connect.Response[common.Empty], error)
 	// Only Admin
 	GetProductCategories(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductCategoriesResponse], error)
 	PostProductCategory(context.Context, *connect.Request[pos.PostProductCategoryRequest]) (*connect.Response[common.Empty], error)
@@ -388,9 +435,24 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		svc.PostOrderPayment,
 		opts...,
 	)
+	posServiceUpdateOrderPaymentHandler := connect.NewUnaryHandler(
+		PosServiceUpdateOrderPaymentProcedure,
+		svc.UpdateOrderPayment,
+		opts...,
+	)
 	posServiceGetProductsHandler := connect.NewUnaryHandler(
 		PosServiceGetProductsProcedure,
 		svc.GetProducts,
+		opts...,
+	)
+	posServicePostNewClientHandler := connect.NewUnaryHandler(
+		PosServicePostNewClientProcedure,
+		svc.PostNewClient,
+		opts...,
+	)
+	posServiceUpdateClientHandler := connect.NewUnaryHandler(
+		PosServiceUpdateClientProcedure,
+		svc.UpdateClient,
 		opts...,
 	)
 	posServiceGetProductCategoriesHandler := connect.NewUnaryHandler(
@@ -470,8 +532,14 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServiceDeleteOrderHandler.ServeHTTP(w, r)
 		case PosServicePostOrderPaymentProcedure:
 			posServicePostOrderPaymentHandler.ServeHTTP(w, r)
+		case PosServiceUpdateOrderPaymentProcedure:
+			posServiceUpdateOrderPaymentHandler.ServeHTTP(w, r)
 		case PosServiceGetProductsProcedure:
 			posServiceGetProductsHandler.ServeHTTP(w, r)
+		case PosServicePostNewClientProcedure:
+			posServicePostNewClientHandler.ServeHTTP(w, r)
+		case PosServiceUpdateClientProcedure:
+			posServiceUpdateClientHandler.ServeHTTP(w, r)
 		case PosServiceGetProductCategoriesProcedure:
 			posServiceGetProductCategoriesHandler.ServeHTTP(w, r)
 		case PosServicePostProductCategoryProcedure:
@@ -515,7 +583,7 @@ func (UnimplementedPosServiceHandler) GetOrderBySeatId(context.Context, *connect
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetOrderBySeatId is not implemented"))
 }
 
-func (UnimplementedPosServiceHandler) PostOrder(context.Context, *connect.Request[pos.PostOrderRequest]) (*connect.Response[common.Empty], error) {
+func (UnimplementedPosServiceHandler) PostOrder(context.Context, *connect.Request[pos.PostOrderRequest]) (*connect.Response[pos.PostOrderResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.PostOrder is not implemented"))
 }
 
@@ -523,12 +591,24 @@ func (UnimplementedPosServiceHandler) DeleteOrder(context.Context, *connect.Requ
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.DeleteOrder is not implemented"))
 }
 
-func (UnimplementedPosServiceHandler) PostOrderPayment(context.Context, *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[common.Empty], error) {
+func (UnimplementedPosServiceHandler) PostOrderPayment(context.Context, *connect.Request[pos.PostOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.PostOrderPayment is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) UpdateOrderPayment(context.Context, *connect.Request[pos.UpdateOrderPaymentRequest]) (*connect.Response[pos.OrderPaymentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.UpdateOrderPayment is not implemented"))
 }
 
 func (UnimplementedPosServiceHandler) GetProducts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetProducts is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) PostNewClient(context.Context, *connect.Request[pos.PostNewClientRequest]) (*connect.Response[pos.PostNewClientResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.PostNewClient is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) UpdateClient(context.Context, *connect.Request[pos.UpdateClientRequest]) (*connect.Response[common.Empty], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.UpdateClient is not implemented"))
 }
 
 func (UnimplementedPosServiceHandler) GetProductCategories(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductCategoriesResponse], error) {

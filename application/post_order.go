@@ -74,30 +74,25 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		if err != nil {
 			return nil, err
 		}
+		var orderItem *model.OrderItem
 		// コーヒの場合とその他で処理が違うので分岐
 		if len(item.CoffeeBrewId) == 0 {
-			// 価格チェック
-			if amount, err := product.GetAmount(); err != nil {
-				return nil, err
-			} else if amount != item.Amount {
-				return nil, ErrProductAmountDiff
-			}
-			orderItems = append(orderItems, *model.NewOrderItem(*product, item.Quantity))
+			orderItem = model.NewOrderItem(*product, item.Quantity)
 		} else {
 			coffeeBrew, err := uc.coffeeBrewRepo.FindById(ctx, item.CoffeeBrewId)
 			if err != nil {
 				return nil, err
 			}
-			// 価格チェック
-			if item.Amount != coffeeBrew.Amount {
-				return nil, ErrProductAmountDiff
-			}
-			if orderItem, err := model.NewOrderItemCoffee(*product, item.Quantity, *coffeeBrew); err != nil {
+			orderItem, err = model.NewOrderItemCoffee(*product, item.Quantity, *coffeeBrew)
+			if err != nil {
 				return nil, err
-			} else {
-				orderItems = append(orderItems, *orderItem)
 			}
 		}
+		// 価格チェック
+		if orderItem.GetProductAmount() != item.Amount {
+			return nil, ErrProductAmountDiff
+		}
+		orderItems = append(orderItems, *orderItem)
 	}
 
 	var discounts []model.Discount

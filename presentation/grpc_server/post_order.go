@@ -19,22 +19,10 @@ func (s *GrpcServer) PostOrder(ctx context.Context, req *connect.Request[pos.Pos
 
 	var payment *application.OrderPaymentParam
 	if reqOrder.Payment != nil {
-		paymentAt, err := synchro.ParseISO[tz.UTC](reqOrder.Payment.PaymentAt)
+		var err error
+		payment, err = ToOrderPaymentParam(reqOrder.Payment)
 		if err != nil {
 			return nil, connect.NewError(connect.CodeInternal, err)
-		}
-		updatedAt, err := synchro.ParseISO[tz.UTC](reqOrder.Payment.UpdatedAt)
-		if err != nil {
-			return nil, connect.NewError(connect.CodeInternal, err)
-		}
-		payment = &application.OrderPaymentParam{
-			Id:            reqOrder.Payment.Id,
-			PaymentType:   model.PaymentType(reqOrder.Payment.Type),
-			ReceiveAmount: reqOrder.Payment.ReceiveAmount,
-			PaymentAmount: reqOrder.Payment.PaymentAmount,
-			ChangeAmount:  reqOrder.Payment.ChangeAmount,
-			PaymentAt:     paymentAt,
-			UpdatedAt:     updatedAt,
 		}
 	}
 	orderAt, err := synchro.ParseISO[tz.UTC](reqOrder.OrderAt)

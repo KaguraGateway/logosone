@@ -1,6 +1,8 @@
 package grpc_server
 
 import (
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 	"github.com/KaguraGateway/cafelogos-pos-backend/application"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
@@ -137,4 +139,27 @@ func ToProductParam(product *pos.ProductParam) *application.ProductParam {
 		Amount:  product.Amount,
 		StockId: product.StockId,
 	}
+}
+
+func ToOrderPaymentParam(payment *pos.OrderPayment) (*application.OrderPaymentParam, error) {
+	if payment == nil {
+		return nil, nil
+	}
+	paymentAt, err := synchro.ParseISO[tz.UTC](payment.PaymentAt)
+	if err != nil {
+		return nil, err
+	}
+	updatedAt, err := synchro.ParseISO[tz.UTC](payment.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+	return &application.OrderPaymentParam{
+		Id:            payment.Id,
+		PaymentType:   model.PaymentType(payment.Type),
+		ReceiveAmount: payment.ReceiveAmount,
+		PaymentAmount: payment.PaymentAmount,
+		ChangeAmount:  payment.ChangeAmount,
+		PaymentAt:     paymentAt,
+		UpdatedAt:     updatedAt,
+	}, nil
 }

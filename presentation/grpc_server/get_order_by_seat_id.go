@@ -1,12 +1,11 @@
 package grpc_server
 
 import (
-	"context"
-
 	"connectrpc.com/connect"
+	"context"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 )
 
-func (s *GrpcServer) PostOrder(ctx context.Context, req *connect.Request[pos.PostOrderRequest]) (*connect.Response[pos.PostOrderResponse], error) {
+func (s *GrpcServer) GetOrderBySeatId(ctx context.Context, req *connect.Request[pos.GetOrderBySeatIdRequest]) (*connect.Response[pos.GetOrderResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, nil)
 }

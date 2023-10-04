@@ -466,13 +466,14 @@ export const Order = proto3.makeMessageType(
 export const OrderParam = proto3.makeMessageType(
   "cafelogos.pos.OrderParam",
   () => [
-    { no: 1, name: "items", kind: "message", T: OrderItem, repeated: true },
-    { no: 2, name: "discounts", kind: "message", T: OrderDiscount, repeated: true },
-    { no: 3, name: "order_type", kind: "enum", T: proto3.getEnumType(OrderType) },
-    { no: 4, name: "payment", kind: "message", T: OrderPayment },
-    { no: 5, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 6, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "items", kind: "message", T: OrderItem, repeated: true },
+    { no: 3, name: "discounts", kind: "message", T: OrderDiscount, repeated: true },
+    { no: 4, name: "order_type", kind: "enum", T: proto3.getEnumType(OrderType) },
+    { no: 5, name: "payment", kind: "message", T: OrderPayment },
+    { no: 6, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 

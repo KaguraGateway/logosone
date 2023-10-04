@@ -239,13 +239,14 @@ message Order {
     string seat_name = 9;
 }
 message OrderParam {
-    repeated OrderItem items = 1;
-    repeated OrderDiscount discounts = 2;
-    OrderType order_type = 3;
-    OrderPayment payment = 4;
-    string order_at = 5;
-    string client_id = 6;
-    string seat_id = 7;
+    string id = 1; /** 代入した場合は代入したIDが使用され、しなかったら生成される */
+    repeated OrderItem items = 2;
+    repeated OrderDiscount discounts = 3;
+    OrderType order_type = 4;
+    OrderPayment payment = 5;
+    string order_at = 6;
+    string client_id = 7;
+    string seat_id = 8;
 }
 
 

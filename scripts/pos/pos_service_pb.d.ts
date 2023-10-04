@@ -1201,37 +1201,44 @@ export declare class Order extends Message<Order> {
  */
 export declare class OrderParam extends Message<OrderParam> {
   /**
-   * @generated from field: repeated cafelogos.pos.OrderItem items = 1;
+   * * 代入した場合は代入したIDが使用され、しなかったら生成される 
+   *
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: repeated cafelogos.pos.OrderItem items = 2;
    */
   items: OrderItem[];
 
   /**
-   * @generated from field: repeated cafelogos.pos.OrderDiscount discounts = 2;
+   * @generated from field: repeated cafelogos.pos.OrderDiscount discounts = 3;
    */
   discounts: OrderDiscount[];
 
   /**
-   * @generated from field: cafelogos.pos.OrderType order_type = 3;
+   * @generated from field: cafelogos.pos.OrderType order_type = 4;
    */
   orderType: OrderType;
 
   /**
-   * @generated from field: cafelogos.pos.OrderPayment payment = 4;
+   * @generated from field: cafelogos.pos.OrderPayment payment = 5;
    */
   payment?: OrderPayment;
 
   /**
-   * @generated from field: string order_at = 5;
+   * @generated from field: string order_at = 6;
    */
   orderAt: string;
 
   /**
-   * @generated from field: string client_id = 6;
+   * @generated from field: string client_id = 7;
    */
   clientId: string;
 
   /**
-   * @generated from field: string seat_id = 7;
+   * @generated from field: string seat_id = 8;
    */
   seatId: string;
 

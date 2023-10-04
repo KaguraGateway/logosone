@@ -865,6 +865,9 @@ public struct Cafelogos_Pos_OrderParam {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  ///* 代入した場合は代入したIDが使用され、しなかったら生成される 
+  public var id: String = String()
+
   public var items: [Cafelogos_Pos_OrderItem] = []
 
   public var discounts: [Cafelogos_Pos_OrderDiscount] = []
@@ -2639,13 +2642,14 @@ extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 extension Cafelogos_Pos_OrderParam: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OrderParam"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "items"),
-    2: .same(proto: "discounts"),
-    3: .standard(proto: "order_type"),
-    4: .same(proto: "payment"),
-    5: .standard(proto: "order_at"),
-    6: .standard(proto: "client_id"),
-    7: .standard(proto: "seat_id"),
+    1: .same(proto: "id"),
+    2: .same(proto: "items"),
+    3: .same(proto: "discounts"),
+    4: .standard(proto: "order_type"),
+    5: .same(proto: "payment"),
+    6: .standard(proto: "order_at"),
+    7: .standard(proto: "client_id"),
+    8: .standard(proto: "seat_id"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2654,13 +2658,14 @@ extension Cafelogos_Pos_OrderParam: SwiftProtobuf.Message, SwiftProtobuf._Messag
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.discounts) }()
-      case 3: try { try decoder.decodeSingularEnumField(value: &self.orderType) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._payment) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.orderAt) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.clientID) }()
-      case 7: try { try decoder.decodeSingularStringField(value: &self.seatID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.discounts) }()
+      case 4: try { try decoder.decodeSingularEnumField(value: &self.orderType) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._payment) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.orderAt) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.clientID) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.seatID) }()
       default: break
       }
     }
@@ -2671,31 +2676,35 @@ extension Cafelogos_Pos_OrderParam: SwiftProtobuf.Message, SwiftProtobuf._Messag
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.id.isEmpty {
+      try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
+    }
     if !self.items.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 2)
     }
     if !self.discounts.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.discounts, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.discounts, fieldNumber: 3)
     }
     if self.orderType != .eatIn {
-      try visitor.visitSingularEnumField(value: self.orderType, fieldNumber: 3)
+      try visitor.visitSingularEnumField(value: self.orderType, fieldNumber: 4)
     }
     try { if let v = self._payment {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
     if !self.orderAt.isEmpty {
-      try visitor.visitSingularStringField(value: self.orderAt, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.orderAt, fieldNumber: 6)
     }
     if !self.clientID.isEmpty {
-      try visitor.visitSingularStringField(value: self.clientID, fieldNumber: 6)
+      try visitor.visitSingularStringField(value: self.clientID, fieldNumber: 7)
     }
     if !self.seatID.isEmpty {
-      try visitor.visitSingularStringField(value: self.seatID, fieldNumber: 7)
+      try visitor.visitSingularStringField(value: self.seatID, fieldNumber: 8)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Cafelogos_Pos_OrderParam, rhs: Cafelogos_Pos_OrderParam) -> Bool {
+    if lhs.id != rhs.id {return false}
     if lhs.items != rhs.items {return false}
     if lhs.discounts != rhs.discounts {return false}
     if lhs.orderType != rhs.orderType {return false}

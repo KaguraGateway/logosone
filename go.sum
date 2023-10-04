@@ -4,6 +4,8 @@ github.com/Code-Hex/synchro v0.0.9 h1:HM/c+4jRpTQHh2/VPMksz7+vTyHgbgpovDLXkd80sR
 github.com/Code-Hex/synchro v0.0.9/go.mod h1:I6aehxX30vVLyvUSZFGpfvK3WSOg6AiXeFDlz5SO8Vc=
 github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230917093800-ba641df0e263 h1:vpFu0kP+ryK9cUrDMwvNvgG4pgVeX2HX/Supqz9ajmY=
 github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230917093800-ba641df0e263/go.mod h1:neOoJc0uiJh4pF24/+PZcaf0hkIWVck3FK0uanCtLhY=
+github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230930024455-d1189a42c0ca h1:1fI3DBmqFA/QMmxDkKAsUxVxbTEm1WkVpl/R7ZuzooE=
+github.com/KaguraGateway/cafelogos-grpc v0.0.0-20230930024455-d1189a42c0ca/go.mod h1:xUJb9Ec0+VfaL3TIzR0UOPoUuIGzTyEN/7BBfdDvJ7E=
 github.com/cockroachdb/errors v1.11.1 h1:xSEW75zKaKCWzR3OfxXUxgrk/NtT4G1MiOv5lWZazG8=
 github.com/cockroachdb/errors v1.11.1/go.mod h1:8MUxA3Gi6b25tYlFEBGLf+D8aISL+M4MIpiWMSNRfxw=
 github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b h1:r6VH0faHjZeQy818SGhaone5OnYfxFR/+AzdY3sf5aE=

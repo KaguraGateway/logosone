@@ -1143,9 +1143,9 @@ export declare class OrderItem extends Message<OrderItem> {
   productId: string;
 
   /**
-   * @generated from field: string quantity = 2;
+   * @generated from field: uint32 quantity = 2;
    */
-  quantity: string;
+  quantity: number;
 
   /**
    * @generated from field: uint64 amount = 3;

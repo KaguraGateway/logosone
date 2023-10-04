@@ -436,7 +436,7 @@ export const OrderItem = proto3.makeMessageType(
   "cafelogos.pos.OrderItem",
   () => [
     { no: 1, name: "product_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "quantity", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "quantity", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
     { no: 3, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "coffee_brew_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],

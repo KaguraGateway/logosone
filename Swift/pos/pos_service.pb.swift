@@ -805,7 +805,7 @@ public struct Cafelogos_Pos_OrderItem {
 
   public var productID: String = String()
 
-  public var quantity: String = String()
+  public var quantity: UInt32 = 0
 
   public var amount: UInt64 = 0
 
@@ -2495,7 +2495,7 @@ extension Cafelogos_Pos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.productID) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.quantity) }()
+      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.quantity) }()
       case 3: try { try decoder.decodeSingularUInt64Field(value: &self.amount) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.coffeeBrewID) }()
       default: break
@@ -2507,8 +2507,8 @@ extension Cafelogos_Pos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.productID.isEmpty {
       try visitor.visitSingularStringField(value: self.productID, fieldNumber: 1)
     }
-    if !self.quantity.isEmpty {
-      try visitor.visitSingularStringField(value: self.quantity, fieldNumber: 2)
+    if self.quantity != 0 {
+      try visitor.visitSingularUInt32Field(value: self.quantity, fieldNumber: 2)
     }
     if self.amount != 0 {
       try visitor.visitSingularUInt64Field(value: self.amount, fieldNumber: 3)

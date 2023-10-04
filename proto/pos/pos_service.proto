@@ -231,7 +231,7 @@ message Order {
 
 message OrderItem {
     string product_id = 1;
-    string quantity = 2;
+    uint32 quantity = 2;
     uint64 amount = 3;
     string coffee_brew_id = 4;
 }

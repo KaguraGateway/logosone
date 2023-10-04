@@ -340,8 +340,9 @@ export const GetDiscountsResponse = proto3.makeMessageType(
 export const PostDiscountRequest = proto3.makeMessageType(
   "cafelogos.pos.PostDiscountRequest",
   () => [
-    { no: 1, name: "type", kind: "enum", T: proto3.getEnumType(DiscountType) },
-    { no: 2, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 1, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(DiscountType) },
+    { no: 3, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 
@@ -510,8 +511,9 @@ export const Discount = proto3.makeMessageType(
   "cafelogos.pos.Discount",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(DiscountType) },
-    { no: 3, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "type", kind: "enum", T: proto3.getEnumType(DiscountType) },
+    { no: 4, name: "discount_price", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 

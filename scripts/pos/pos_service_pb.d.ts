@@ -779,12 +779,17 @@ export declare class GetDiscountsResponse extends Message<GetDiscountsResponse> 
  */
 export declare class PostDiscountRequest extends Message<PostDiscountRequest> {
   /**
-   * @generated from field: cafelogos.pos.DiscountType type = 1;
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * @generated from field: cafelogos.pos.DiscountType type = 2;
    */
   type: DiscountType;
 
   /**
-   * @generated from field: uint64 discount_price = 2;
+   * @generated from field: uint64 discount_price = 3;
    */
   discountPrice: bigint;
 
@@ -1345,12 +1350,17 @@ export declare class Discount extends Message<Discount> {
   id: string;
 
   /**
-   * @generated from field: cafelogos.pos.DiscountType type = 2;
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: cafelogos.pos.DiscountType type = 3;
    */
   type: DiscountType;
 
   /**
-   * @generated from field: uint64 discount_price = 3;
+   * @generated from field: uint64 discount_price = 4;
    */
   discountPrice: bigint;
 

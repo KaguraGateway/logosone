@@ -152,8 +152,9 @@ message GetDiscountsResponse {
 }
 
 message PostDiscountRequest {
-    DiscountType type = 1;
-    uint64 discount_price = 2;
+    string name = 1;
+    DiscountType type = 2;
+    uint64 discount_price = 3;
 }
 
 /**
@@ -270,8 +271,9 @@ message OrderDiscount {
 
 message Discount {
     string id = 1;
-    DiscountType type = 2;
-    uint64 discount_price = 3;
+    string name = 2;
+    DiscountType type = 3;
+    uint64 discount_price = 4;
 }
 
 message OrderPayment {

@@ -1,16 +1,15 @@
 package dao
 
 import (
-	"github.com/Code-Hex/synchro"
-	"github.com/Code-Hex/synchro/tz"
+	"time"
 )
 
 type Order struct {
-	ID        string               `bun:",pk"`
-	OrderType uint                 `bun:",notnull"`
-	OrderAt   synchro.Time[tz.UTC] `bun:",notnull"`
-	ClientID  string               `bun:",notnull"`
-	Client    *Client              `bun:"rel:belongs-to"`
+	ID        string    `bun:",pk"`
+	OrderType uint      `bun:",notnull"`
+	OrderAt   time.Time `bun:",notnull"`
+	ClientID  string    `bun:",notnull"`
+	Client    *Client   `bun:"rel:belongs-to"`
 
 	SeatID string
 	Seat   *Seat `bun:"rel:belongs-to,join:seat_id=id"`

@@ -50,3 +50,11 @@ func (seat *Seat) SetName(name string) error {
 	seat.name = name
 	return nil
 }
+
+func (seat *Seat) GetCreatedAt() synchro.Time[tz.UTC] {
+	return seat.createdAt
+}
+
+func (seat *Seat) GetUpdatedAt() synchro.Time[tz.UTC] {
+	return seat.updatedAt
+}

@@ -2,8 +2,9 @@ package dao
 
 type Discount struct {
 	ID            string `bun:",pk"`
+	Name          string `bun:",notnull"`
 	DiscountType  int    `bun:",notnull"`
-	DiscountPrice int
+	DiscountPrice uint64
 
-	OrderDiscounts []*OrderDiscount `bun:"rel:has-many"`
+	OrderDiscounts []*OrderDiscount `bun:"rel:has-many,join:id=discount_id"`
 }

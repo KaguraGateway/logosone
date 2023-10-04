@@ -20,6 +20,8 @@ func init() {
 		(*dao.ProductCategory)(nil),
 		(*dao.ProductCoffeeBrew)(nil),
 		(*dao.Stock)(nil),
+		(*dao.Seat)(nil),
+		(*dao.Denomination)(nil),
 	}
 
 	Migrations.MustRegister(func(ctx context.Context, db *bun.DB) error {

@@ -8,4 +8,5 @@ import (
 
 type OrderRepository interface {
 	Save(ctx context.Context, order *model.Order) error
+	Delete(ctx context.Context, id string) error
 }

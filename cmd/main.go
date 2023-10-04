@@ -37,7 +37,12 @@ func main() {
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(os.Getenv("DATABASE_URL"))))
 	db := bun.NewDB(sqldb, pgdialect.New())
 	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
-	defer db.Close()
+	defer func(db *bun.DB) {
+		err := db.Close()
+		if err != nil {
+			panic(err)
+		}
+	}(db)
 
 	// Start DI
 	i := buildInjector(db)
@@ -46,7 +51,9 @@ func main() {
 	mux := http.NewServeMux()
 	path, handler := posconnect.NewPosServiceHandler(grpc_server.NewGrpcServer(db, i))
 	mux.Handle(path, handler)
-	http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), cors.AllowAll().Handler(h2c.NewHandler(mux, &http2.Server{})))
+	if err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), cors.AllowAll().Handler(h2c.NewHandler(mux, &http2.Server{}))); err != nil {
+		panic(err)
+	}
 }
 
 func buildInjector(db *bun.DB) *do.Injector {
@@ -62,6 +69,7 @@ func buildInjector(db *bun.DB) *do.Injector {
 	do.Provide(i, bundb.NewProductCategoryDb)
 	do.Provide(i, bundb.NewProductCoffeeBrewDb)
 	do.Provide(i, bundb.NewProductDb)
+	do.Provide(i, bundb.NewSeatDb)
 	// Register QueryService
 	do.Provide(i, bundb.NewProductQueryServiceDb)
 	// Register usecase

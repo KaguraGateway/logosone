@@ -138,7 +138,7 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 			return err
 		}
 		for _, item := range order.GetOrderItems() {
-			if err := uc.orderItemRepo.SaveTx(ctx, tx, &item); err != nil {
+			if err := uc.orderItemRepo.SaveTx(ctx, tx, order.GetId(), &item); err != nil {
 				return err
 			}
 		}

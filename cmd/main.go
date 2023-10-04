@@ -70,8 +70,16 @@ func buildInjector(db *bun.DB) *do.Injector {
 	do.Provide(i, bundb.NewProductCoffeeBrewDb)
 	do.Provide(i, bundb.NewProductDb)
 	do.Provide(i, bundb.NewSeatDb)
+	do.Provide(i, bundb.NewClientDb)
+	do.Provide(i, bundb.NewDiscountDb)
+	do.Provide(i, bundb.NewOrderDb)
+	do.Provide(i, bundb.NewOrderDiscountDb)
+	do.Provide(i, bundb.NewOrderItemDb)
+	do.Provide(i, bundb.NewOrderPaymentDb)
+	do.Provide(i, bundb.NewTxRepositoryDb)
 	// Register QueryService
 	do.Provide(i, bundb.NewProductQueryServiceDb)
+	do.Provide(i, bundb.NewOrderQueryServiceDb)
 	// Register usecase
 	do.Provide(i, application.NewDeleteProductUseCase)
 	do.Provide(i, application.NewGetCoffeeBeansUseCase)

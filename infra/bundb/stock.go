@@ -3,6 +3,8 @@ package bundb
 import (
 	"context"
 
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/bundb/dao"
@@ -20,7 +22,7 @@ func NewStockDb(i *do.Injector) (repository.StockRepository, error) {
 }
 
 func toStock(daoStock dao.Stock) *model.Stock {
-	return model.ReconstructStock(daoStock.ID, daoStock.Name, int32(daoStock.Quantity))
+	return model.ReconstructStock(daoStock.ID, daoStock.Name, int32(daoStock.Quantity), synchro.In[tz.UTC](daoStock.CreatedAt), synchro.In[tz.UTC](daoStock.UpdatedAt))
 }
 
 func (i *stockDb) FindAll(ctx context.Context) ([]*model.Stock, error) {

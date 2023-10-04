@@ -3,6 +3,8 @@ package bundb
 import (
 	"context"
 
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/bundb/dao"
@@ -20,7 +22,7 @@ func NewProductCategoryDb(i *do.Injector) (repository.ProductCategoryRepository,
 }
 
 func toProductCategory(daoProductCategory dao.ProductCategory) *model.ProductCategory {
-	return model.ReconstructProductCategory(daoProductCategory.ID, daoProductCategory.Name)
+	return model.ReconstructProductCategory(daoProductCategory.ID, daoProductCategory.Name, synchro.In[tz.UTC](daoProductCategory.CreatedAt), synchro.In[tz.UTC](daoProductCategory.UpdatedAt))
 }
 
 func (i *productCategoryDb) FindAll(ctx context.Context) ([]*model.ProductCategory, error) {
@@ -44,8 +46,10 @@ func (i *productCategoryDb) FindById(ctx context.Context, id string) (*model.Pro
 
 func (i *productCategoryDb) Save(ctx context.Context, productCategory *model.ProductCategory) error {
 	daoProductCategory := &dao.ProductCategory{
-		ID:   productCategory.GetId(),
-		Name: productCategory.GetName(),
+		ID:        productCategory.GetId(),
+		Name:      productCategory.GetName(),
+		CreatedAt: productCategory.GetCreatedAt().StdTime(),
+		UpdatedAt: productCategory.GetUpdatedAt().StdTime(),
 	}
 	if _, err := i.db.NewInsert().Model(daoProductCategory).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Exec(ctx); err != nil {
 		return err

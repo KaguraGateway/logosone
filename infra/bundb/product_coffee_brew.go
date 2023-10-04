@@ -3,6 +3,8 @@ package bundb
 import (
 	"context"
 
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/bundb/dao"
@@ -20,7 +22,15 @@ func NewProductCoffeeBrewDb(i *do.Injector) (repository.ProductCoffeeBrewReposit
 }
 
 func toProductCoffeeBrew(daoProductCoffeeBrew dao.ProductCoffeeBrew) *model.ProductCoffeeBrew {
-	return model.ReconstructProductCoffeeBrew(daoProductCoffeeBrew.ID, daoProductCoffeeBrew.ProductID, daoProductCoffeeBrew.Name, uint32(daoProductCoffeeBrew.BeanQuantityGrams), uint64(daoProductCoffeeBrew.Amount))
+	return model.ReconstructProductCoffeeBrew(
+		daoProductCoffeeBrew.ID,
+		daoProductCoffeeBrew.ProductID,
+		daoProductCoffeeBrew.Name,
+		uint32(daoProductCoffeeBrew.BeanQuantityGrams),
+		uint64(daoProductCoffeeBrew.Amount),
+		synchro.In[tz.UTC](daoProductCoffeeBrew.CreatedAt),
+		synchro.In[tz.UTC](daoProductCoffeeBrew.UpdatedAt),
+	)
 }
 
 func (i *productCoffeeBrewDb) FindById(ctx context.Context, id string) (*model.ProductCoffeeBrew, error) {
@@ -49,6 +59,8 @@ func (i *productCoffeeBrewDb) Save(ctx context.Context, productCoffeeBrew *model
 		Name:              productCoffeeBrew.GetName(),
 		BeanQuantityGrams: int(productCoffeeBrew.BeanQuantityGrams),
 		Amount:            uint(productCoffeeBrew.Amount),
+		CreatedAt:         productCoffeeBrew.GetCreatedAt().StdTime(),
+		UpdatedAt:         productCoffeeBrew.GetUpdatedAt().StdTime(),
 	}
 	if _, err := i.db.NewInsert().Model(daoCoffeeBrew).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("bean_quantity_grams = EXCLUDED.bean_quantity_grams").Set("amount = EXCLUDED.amount").Exec(ctx); err != nil {
 		return err

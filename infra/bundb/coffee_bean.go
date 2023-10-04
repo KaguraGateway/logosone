@@ -3,6 +3,8 @@ package bundb
 import (
 	"context"
 
+	"github.com/Code-Hex/synchro"
+	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/bundb/dao"
@@ -20,7 +22,7 @@ func NewCoffeeBeanDb(i *do.Injector) (repository.CoffeeBeanRepository, error) {
 }
 
 func toCoffeeBean(daoCoffeeBean dao.CoffeeBean) *model.CoffeeBean {
-	return model.ReconstructCoffeeBean(daoCoffeeBean.ID, daoCoffeeBean.Name, daoCoffeeBean.GramQuantity)
+	return model.ReconstructCoffeeBean(daoCoffeeBean.ID, daoCoffeeBean.Name, daoCoffeeBean.GramQuantity, synchro.In[tz.UTC](daoCoffeeBean.CreatedAt), synchro.In[tz.UTC](daoCoffeeBean.UpdatedAt))
 }
 
 func (i *coffeeBeanDb) FindAll(ctx context.Context) ([]*model.CoffeeBean, error) {
@@ -47,6 +49,8 @@ func (i *coffeeBeanDb) Save(ctx context.Context, coffeeBean *model.CoffeeBean) e
 		ID:           coffeeBean.GetId(),
 		Name:         coffeeBean.GetName(),
 		GramQuantity: coffeeBean.GramQuantity,
+		CreatedAt:    coffeeBean.GetCreatedAt().StdTime(),
+		UpdatedAt:    coffeeBean.GetUpdatedAt().StdTime(),
 	}
 	if _, err := i.db.NewInsert().Model(daoCoffeeBean).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("gram_quantity = EXCLUDED.gram_quantity").Exec(ctx); err != nil {
 		return err

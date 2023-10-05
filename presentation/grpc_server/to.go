@@ -71,6 +71,18 @@ func ToProtoOrderItem(item *model.OrderItem) *pos.OrderItem {
 	}
 }
 
+func ToProtoDiscount(discount *model.Discount) *pos.Discount {
+	if discount == nil {
+		return nil
+	}
+	return &pos.Discount{
+		Id:            discount.GetId(),
+		Name:          discount.GetName(),
+		Type:          pos.DiscountType(discount.GetDiscountType()),
+		DiscountPrice: discount.GetDiscountPrice(),
+	}
+}
+
 func ToProtoOrderDiscount(discount *model.Discount) *pos.OrderDiscount {
 	if discount == nil {
 		return nil

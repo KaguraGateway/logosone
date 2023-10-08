@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import ChooseOptionModal from './_components/ChooseOptionModal';
+import { HiCheckCircle } from 'react-icons/hi';
 
 export default function orderEntry() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -95,6 +96,11 @@ export default function orderEntry() {
             onOpen={onOpen}
           />
         </Flex>
+      </Flex>
+      <Flex flexDir="column"  position="fixed" width="100vw" alignItems="center" bottom="0" left="0" right="0" minHeight="70px" bg="white" paddingTop={2} paddingBottom={5} borderTop="2px" borderColor="gray.300" boxShadow="base">
+        <Button size="lg" colorScheme="green" leftIcon={<HiCheckCircle />} width="90%">
+          注文確認
+        </Button>
       </Flex>
     </>
   );

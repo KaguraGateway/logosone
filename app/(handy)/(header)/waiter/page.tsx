@@ -1,12 +1,13 @@
 import { Button, Flex, Grid, Text } from "@chakra-ui/react";
 import { IoClipboard } from 'react-icons/io5';
 import { BiLogOut } from "react-icons/bi";
+import Link from 'next/link';
 
 
 export default function Waiter() {
     return (
         <Flex flexDir="column" gap="26px">
-            <Button size="lg" colorScheme="teal" h="100px" leftIcon={<IoClipboard />}>
+            <Button as={Link} href="../orderEntry" size="lg" colorScheme="teal" h="100px" leftIcon={<IoClipboard />}>
                 注文入力
             </Button>
             <Button size="lg" colorScheme="gray" h="100px" leftIcon={<IoClipboard />} bg="gray.500" color="gray.50">

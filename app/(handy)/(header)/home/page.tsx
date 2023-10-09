@@ -12,12 +12,12 @@ export default function Home() {
       </Button>
     </Flex>
     <Flex flexDir="row" gap="26px">
-        <Button flex={1} as={Link} href="/kitchen" size="lg" colorScheme="blue" h="100px" bg="gray.500">
+        <Button flex={1} as={Link} href="/kitchen" size="lg" colorScheme="gray" h="100px" bg="gray.500" color={"white"}>
           OrderLink
           <br />
           (注文確認)
         </Button>
-        <Button flex={1} as={Link} href="/kitchen" size="lg" colorScheme="blue" h="100px" bg="gray.500">
+        <Button flex={1} as={Link} href="/kitchen" size="lg" colorScheme="gray" h="100px" bg="gray.500" color={"white"}>
           OrderLink
           <br />
           WebCall

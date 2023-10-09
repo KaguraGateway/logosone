@@ -22,7 +22,7 @@ export default function orderCheck() {
         </Flex>
         <Flex flexDir="row"  position="fixed" width="100vw" alignItems="center" bottom="0" left="0" right="0" minHeight="70px" bg="white" paddingTop={3} paddingBottom={5} borderTop="2px" borderColor="gray.300" boxShadow="base" paddingX={4}>
             <Button flex={1} size="lg" colorScheme="gray" leftIcon={<IoArrowBackOutline />}  marginRight={4} bg={"gray.300"}
-            as={Link} href="/orderEntry">
+            as={Link} href="/waiter">
                 戻る
             </Button>
             <Button flex={3} size="lg" colorScheme="blue" leftIcon={<IoClipboard />} 

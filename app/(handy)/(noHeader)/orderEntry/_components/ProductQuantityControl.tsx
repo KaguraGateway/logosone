@@ -13,7 +13,7 @@ export default function ProductQuantityControl(props: Props) {
         <>
         <Flex flexDir="column" gap={3}>
             {/* quantity周りの処理はGPTに聞いた適当なコードなので、適当に修正してください。不要なら消してOK。 */}
-            <ProductInfoButton name={props.name} quantity={props.quantity} />
+            <ProductInfoButton name={props.name} quantity={props.quantity} onClick={() => {}}/>
             { props.quantity <= 0 ? (
                 <></>
             ) : (

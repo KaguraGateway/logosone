@@ -14,6 +14,8 @@ import Link from 'next/link';
 import ChooseOptionModal from './_components/ChooseOptionModal';
 import { HiCheckCircle } from 'react-icons/hi';
 import CategorySelectButton from './_components/CategorySelectButton';
+import ProductInfoButton from './_components/ProductInfoButton';
+import ProductQuantityControl from './_components/ProductQuantityControl';
 
 export default function orderEntry() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -25,21 +27,10 @@ export default function orderEntry() {
         {/* 左 */}
         <Flex flexDir="column" width={3 / 10} alignItems="start" overflow="scroll">
           <CategorySelectButton name="すべて" isSelected ={true} />
-          <Button size="lg" colorScheme="teal" whiteSpace="unset" width="100%" minHeight="80px" height="max-content" padding={1} borderRadius="0" borderY="1px" borderColor="gray.300">
-            <Text overflowWrap="anywhere">すべて</Text>
-          </Button>
-          <Button size="lg" colorScheme="whiteAlpha" whiteSpace="unset" width="100%" minHeight="80px" height="max-content" color="gray.600" padding={1} borderRadius="0" borderY="1px" borderColor="gray.300">
-            <Text overflowWrap="anywhere">コーヒー</Text>
-          </Button>
-          <Button size="lg" colorScheme="whiteAlpha" whiteSpace="unset" width="100%" minHeight="80px" height="max-content" color="gray.600" padding={1} borderRadius="0" borderY="1px" borderColor="gray.300">
-            <Text overflowWrap="anywhere">ソフトドリンク</Text>
-          </Button>
-          <Button size="lg" colorScheme="whiteAlpha" whiteSpace="unset" width="100%" minHeight="80px" height="max-content" color="gray.600" padding={1} borderRadius="0" borderY="1px" borderColor="gray.300">
-            <Text overflowWrap="anywhere">その他</Text>
-          </Button>
-          <Button size="lg" colorScheme="whiteAlpha" whiteSpace="unset" width="100%" minHeight="80px" height="max-content" color="gray.600" padding={1} borderRadius="0" borderY="1px" borderColor="gray.300">
-            <Text overflowWrap="anywhere">物販</Text>
-          </Button>
+          <CategorySelectButton name="コーヒー" isSelected ={false} />
+          <CategorySelectButton name="ソフトドリンク" isSelected ={false} />
+          <CategorySelectButton name="その他" isSelected ={false} />
+          <CategorySelectButton name="物販" isSelected ={false} />
         </Flex>
         {/* 右 */}
         <Flex flexDir="column" width={7 / 10} alignItems="start" overflow="scroll" borderLeft="2px" borderColor="gray.300" >
@@ -50,48 +41,30 @@ export default function orderEntry() {
               コーヒー
             </Text>
             {/* CategoryItem */}
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300" onClick={onOpen} >
-              <Text overflowWrap="anywhere">ロゴスブレンド〜豊穣〜</Text>
-            </Button>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">茜ブレンド</Text>
-            </Button>
+            <ProductInfoButton name="ロゴスブレンド〜豊穣〜" quantity={0} onClick={onOpen} />
+            <ProductInfoButton name="茜ブレンド" quantity={0} onClick={onOpen} />
           </Flex>
           <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
               ソフトドリンク
             </Text>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">レモネード</Text>
-            </Button>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">レモネードスカッシュ</Text>
-            </Button>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">ヨーグルッペ</Text>
-            </Button>
+            <ProductQuantityControl name="レモネード" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="レモネードスカッシュ" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="ヨーグルッペ" quantity={0} onQuantityChange={() => {}} />
           </Flex>
           <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
               その他
             </Text>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">薄皮饅頭</Text>
-            </Button>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">チョコレート</Text>
-            </Button>
+            <ProductQuantityControl name="薄皮饅頭" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="チョコレート" quantity={0} onQuantityChange={() => {}} />
           </Flex>
           <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
               物販
             </Text>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">（豆）ロゴスブレンド〜豊穣〜</Text>
-            </Button>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300">
-              <Text overflowWrap="anywhere">（豆）茜ブレンド</Text>
-            </Button>
+            <ProductQuantityControl name="（豆）ロゴスブレンド〜豊穣〜" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="（豆）茜ブレンド" quantity={0} onQuantityChange={() => {}} />
           </Flex>
           <ChooseOptionModal
             isOpen={isOpen}

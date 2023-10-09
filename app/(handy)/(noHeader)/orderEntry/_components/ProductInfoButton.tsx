@@ -3,6 +3,7 @@ import { Button, Flex, Text, Spacer, Badge, VisuallyHidden, Hide } from "@chakra
 type Props = {
     name: string;
     quantity: number;
+    onClick: () => void;
 }
 
 
@@ -20,7 +21,7 @@ export default function ProductInfoButton(props: Props) {
                 border="1px" 
                 borderColor="gray.300"
                 justifyContent="flex-start" 
-                onClick={() => {}}
+                onClick={props.onClick}
                 // onClickの動作は頼んだ
             >
                         <Flex flexDir="row" width="100%">

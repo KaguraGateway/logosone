@@ -13,14 +13,14 @@ export default function Waiter() {
     return (
         <>
         
-        <Flex flexDir="column" gap="26px">
+        <Flex flexDir="column" gap="26px" paddingBottom={100}>
 
             {/* ここに注文送信成功のアラートを表示したい */}
             {/* <Alert status='success'>
             <AlertIcon />
                 注文を送信しました
             </Alert> */} 
-            
+
             <Button as={Link} href="../orderEntry" size="lg" colorScheme="teal" h="100px" leftIcon={<IoClipboard />}>
                 注文入力
             </Button>

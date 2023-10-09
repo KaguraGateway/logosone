@@ -63,8 +63,8 @@ export default function orderEntry() {
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
               物販
             </Text>
-            <ProductQuantityControl name="（豆）ロゴスブレンド〜豊穣〜" quantity={0} onQuantityChange={() => {}} />
-            <ProductQuantityControl name="（豆）茜ブレンド" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="(豆)ロゴスブレンド〜豊穣〜" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="(豆)茜ブレンド" quantity={0} onQuantityChange={() => {}} />
           </Flex>
           <ChooseOptionModal
             isOpen={isOpen}

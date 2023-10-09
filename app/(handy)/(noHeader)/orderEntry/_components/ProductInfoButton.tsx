@@ -21,18 +21,20 @@ export default function ProductInfoButton(props: Props) {
                 color="gray.600" 
                 whiteSpace="unset" 
                 width="100%" 
-                paddingY={8} 
+                paddingY={4} 
                 boxShadow="base" 
                 border="1px" 
                 borderColor="gray.300"
                 justifyContent="flex-start" 
                 onClick={props.onClick}
                 isDisabled={props.isDisabled}
+                height={"min-content"}
+                minHeight={20}
                 // onClickの動作は頼んだ
             >
                     <Flex flexDir="column" width="100%" alignItems={"start"} gap={2}>
                         <Flex flexDir="row" width="100%">
-                            <Text overflowWrap="anywhere">{props.name}</Text>
+                            <Text overflowWrap="break-word">{props.name}</Text>
                             <Spacer />
                             {props.quantity <= 0 ? (
                                 <Spacer />

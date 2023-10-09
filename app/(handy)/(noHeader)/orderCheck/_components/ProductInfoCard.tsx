@@ -1,18 +1,15 @@
-import { Button, Flex, Text, Spacer, Badge, VisuallyHidden, Hide } from "@chakra-ui/react";
+import { Button, Flex, Text, Spacer, Badge,Box } from "@chakra-ui/react";
 
 type Props = {
     name: string;
     quantity: number;
-    onClick: () => void;
-    isDisabled?: boolean;
 }
 
 
-export default function ProductInfoButton(props: Props) {
+export default function ProductInfoCard(props: Props) {
     return (
         <>
-            <Button 
-                size="lg" 
+            <Box 
                 bg="white" 
                 color="gray.600" 
                 whiteSpace="unset" 
@@ -22,9 +19,10 @@ export default function ProductInfoButton(props: Props) {
                 border="1px" 
                 borderColor="gray.300"
                 justifyContent="flex-start" 
-                onClick={props.onClick}
-                isDisabled={props.isDisabled}
-                // onClickの動作は頼んだ
+                borderRadius={"6px"}
+                padding={6}
+                fontSize={"lg"}
+                fontWeight={"semibold"}
             >
                         <Flex flexDir="row" width="100%">
                             <Text overflowWrap="anywhere">{props.name}</Text>
@@ -37,7 +35,7 @@ export default function ProductInfoButton(props: Props) {
                                 </Badge>
                             ) }
                         </Flex>
-                    </Button>
+                    </Box>
         </>
     );
 }

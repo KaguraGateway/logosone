@@ -56,7 +56,7 @@ export default function orderEntry() {
             </Text>
             <ProductQuantityControl name="レモネード" quantity={0} onQuantityChange={() => {}} />
             <ProductQuantityControl name="レモネードスカッシュ" quantity={0} onQuantityChange={() => {}} />
-            <ProductQuantityControl name="ヨーグルッペ" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="ヨーグルッペ" quantity={0} onQuantityChange={() => {}} stock={48}/>
           </Flex>
           <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
@@ -69,8 +69,8 @@ export default function orderEntry() {
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
               物販
             </Text>
-            <ProductQuantityControl name="(豆)ロゴスブレンド〜豊穣〜" quantity={0} onQuantityChange={() => {}} />
-            <ProductQuantityControl name="(豆)茜ブレンド" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="(豆)ロゴスブレンド〜豊穣〜" quantity={0} onQuantityChange={() => {}} stock={0}/>
+            <ProductQuantityControl name="(豆)茜ブレンド" quantity={0} onQuantityChange={() => {}} stock={5}/>
           </Flex>
           <ChooseOptionModal
             isOpen={isOpenChooseOptionModal}

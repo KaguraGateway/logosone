@@ -1,12 +1,22 @@
-import { Button, Flex, Grid, Text } from "@chakra-ui/react";
+'use client';
+import { Alert, AlertIcon, Button, Flex, Grid, Text, useDisclosure } from "@chakra-ui/react";
 import { IoClipboard } from 'react-icons/io5';
 import { BiLogOut } from "react-icons/bi";
 import Link from 'next/link';
+import WorkEndModal from "./_components/WorkEndModal";
+import { on } from "events";
 
 
 export default function Waiter() {
+    const { isOpen: isOpenWorkEndModal, onOpen: onOpenWorkEndModal, onClose: onCloseWorkEndModal } = useDisclosure();
     return (
+        <>
+        
         <Flex flexDir="column" gap="26px">
+            {/* <Alert status='success'>
+            <AlertIcon />
+                注文を送信しました
+            </Alert> */}
             <Button as={Link} href="../orderEntry" size="lg" colorScheme="teal" h="100px" leftIcon={<IoClipboard />}>
                 注文入力
             </Button>
@@ -63,10 +73,19 @@ export default function Waiter() {
                     </Button>
                 </Grid>
             </Flex>
-            <Button size="lg" colorScheme="orange" leftIcon={<BiLogOut />} >
-                ホールを終了する
-            </Button>
+            <Flex flexDir="column"  position="fixed" width="100vw" alignItems="center" bottom="0" left="0" right="0" minHeight="70px" bg="white" paddingTop={3} paddingBottom={5} borderTop="2px" borderColor="gray.300" boxShadow="base" paddingX={4}>
+                <Button size="lg" colorScheme="orange" leftIcon={<BiLogOut />} width={"100%"} onClick={onOpenWorkEndModal}>
+                    ホールを終了する
+                </Button>
+            </Flex>
         </Flex>
+        <WorkEndModal
+            isOpen={isOpenWorkEndModal}
+            onClose={onCloseWorkEndModal}
+            onOpen={onOpenWorkEndModal}
+        />
+        
+        </>
 
     );
 }

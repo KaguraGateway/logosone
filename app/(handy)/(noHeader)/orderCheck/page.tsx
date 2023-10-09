@@ -1,14 +1,15 @@
 'use client';
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Spacer } from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/react";
 import { Button, Center, Flex, Text } from "@chakra-ui/react";
 import Link from 'next/link';
-import ProductInfoButton from "../orderEntry/_components/ProductInfoButton";
 import ProductInfoCard from "./_components/ProductInfoCard";
 import { HiCheckCircle } from "react-icons/hi";
 import { IoArrowBackOutline } from "react-icons/io5";
+import ErrorModal from "./_components/ErrorModal";
 
 export default function orderCheck() {
-  return (
+    const { isOpen: isOpenErrorModal, onOpen: onOpenErrorModal, onClose: onCloseErrorModal } = useDisclosure();
+    return (
     <>  
         <Center>
             <Text fontSize="2xl" fontWeight="semibold" color="gray.600"  p={4} >
@@ -26,10 +27,20 @@ export default function orderCheck() {
                 戻る
             </Button>
             <Button flex={3} size="lg" colorScheme="green" leftIcon={<HiCheckCircle />} 
-            as={Link} href="/orderCheck">
+            onClick={onOpenErrorModal}
+            // as={Link} href="/waiter"
+            >
                 注文送信
             </Button>
         </Flex>
+
+        <ErrorModal
+            isOpen={isOpenErrorModal}
+            onClose={onCloseErrorModal}
+            onOpen={onOpenErrorModal}
+            errorTitle="注文送信エラー"
+            errorMessage="注文を送信できませんでした。"
+        />
     </>
   );
 }

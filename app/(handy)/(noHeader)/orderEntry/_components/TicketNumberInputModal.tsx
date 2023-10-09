@@ -1,5 +1,4 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Flex, ModalFooter, Button, Radio, NumberInput, Input, Spacer, RadioGroup, Stack } from "@chakra-ui/react";
-import ProductQuantityControl from "./ProductQuantityControl";
 import React from "react";
 
 

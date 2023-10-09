@@ -3,6 +3,7 @@ import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, Mo
 import { DeleteIcon, MinusIcon, AddIcon } from '@chakra-ui/icons';
 import QuantitySelector from './QuantitySelector';
 import ProductInfoButton from './ProductInfoButton';
+import ProductQuantityControl from './ProductQuantityControl';
 
 type Props = {
     isOpen: boolean;
@@ -23,26 +24,10 @@ export default function ChooseOptionModal(props: Props) {
             {/* モーダル内のコンテンツ */}
             <Flex flexDir="column" gap={3}>
                 <Flex flexDir="column" gap={3}>
-                    <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300" justifyContent="flex-start" >
-                        
-                        <Flex flexDir="row" width="100%">
-                            <Text overflowWrap="anywhere">ペーパー</Text>
-                            <Spacer />
-                            <Badge colorScheme='green'>
-                                <Text fontSize="lg">1</Text>
-                            </Badge>
-                        </Flex>
-                    </Button>
-                <QuantitySelector quantity={0} onQuantityChange={() => {}} />
-                <ProductInfoButton name="サザエ" quantity={100000000000000000000000} />
-                <ProductInfoButton name="アツアツ" quantity={0} />
-            </Flex>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300" justifyContent="flex-start" >
-              <Text overflowWrap="anywhere">ネル</Text>
-            </Button>
-            <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300" justifyContent="flex-start" >
-              <Text overflowWrap="anywhere">サイフォン</Text>
-            </Button>
+                <ProductQuantityControl name="ペーパー" quantity={0} onQuantityChange={() => {}} />
+                <ProductQuantityControl name="ネル" quantity={0} onQuantityChange={() => {}} />
+                <ProductQuantityControl name="サイフォン" quantity={-1} onQuantityChange={() => {}} />                
+                </Flex>
             </Flex>
           </ModalBody>
 

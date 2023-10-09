@@ -20,11 +20,13 @@ export default function ProductInfoButton(props: Props) {
                 border="1px" 
                 borderColor="gray.300"
                 justifyContent="flex-start" 
+                onClick={() => {}}
+                // onClickの動作は頼んだ
             >
                         <Flex flexDir="row" width="100%">
                             <Text overflowWrap="anywhere">{props.name}</Text>
                             <Spacer />
-                            {props.quantity == 0 ? (
+                            {props.quantity <= 0 ? (
                                 <Spacer />
                             ):(
                                 <Badge colorScheme='green'>

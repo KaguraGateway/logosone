@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Text, useDisclosure, Flex, Spacer, HStack, Badge} from '@chakra-ui/react';
 import { DeleteIcon, MinusIcon, AddIcon } from '@chakra-ui/icons';
 import QuantitySelector from './QuantitySelector';
+import ProductInfoButton from './ProductInfoButton';
 
 type Props = {
     isOpen: boolean;
@@ -12,7 +13,6 @@ type Props = {
 export default function ChooseOptionModal(props: Props) {
   return (
     <>
-
       {/* モーダル */}
       <Modal closeOnOverlayClick={false} isOpen={props.isOpen} onClose={props.onClose} >
         <ModalOverlay />
@@ -33,7 +33,9 @@ export default function ChooseOptionModal(props: Props) {
                             </Badge>
                         </Flex>
                     </Button>
-                <QuantitySelector />
+                <QuantitySelector quantity={0} onQuantityChange={() => {}} />
+                <ProductInfoButton name="サザエ" quantity={100000000000000000000000} />
+                <ProductInfoButton name="アツアツ" quantity={0} />
             </Flex>
             <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300" justifyContent="flex-start" >
               <Text overflowWrap="anywhere">ネル</Text>

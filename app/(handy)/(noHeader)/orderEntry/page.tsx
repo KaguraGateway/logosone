@@ -7,7 +7,8 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure
+  useDisclosure,
+  VisuallyHidden
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import ChooseOptionModal from './_components/ChooseOptionModal';

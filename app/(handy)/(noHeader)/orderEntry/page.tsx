@@ -16,10 +16,15 @@ import { HiCheckCircle } from 'react-icons/hi';
 import CategorySelectButton from './_components/CategorySelectButton';
 import ProductInfoButton from './_components/ProductInfoButton';
 import ProductQuantityControl from './_components/ProductQuantityControl';
+import TicketNumberInputModal from './_components/TicketNumberInputModal';
+import React from 'react';
 
 export default function orderEntry() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { isOpen: isOpenChooseOptionModal, onOpen: onOpenChooseOptionModal, onClose: onCloseChooseOptionModal } = useDisclosure();
+  const { isOpen: isOpenTicketNumberInputModal, onOpen: onOpenTicketNumberInputModal, onClose: onCloseTicketNumberInputModal } = useDisclosure({
+    defaultIsOpen: true, // この行を追加して初期値をtrueに設定
+  });
+  
   return (
     <>
       {/* 全体 */}
@@ -41,8 +46,8 @@ export default function orderEntry() {
               コーヒー
             </Text>
             {/* CategoryItem */}
-            <ProductInfoButton name="ロゴスブレンド〜豊穣〜" quantity={0} onClick={onOpen} />
-            <ProductInfoButton name="茜ブレンド" quantity={0} onClick={onOpen} />
+            <ProductInfoButton name="ロゴスブレンド〜豊穣〜" quantity={0} onClick={onOpenChooseOptionModal} />
+            <ProductInfoButton name="茜ブレンド" quantity={0} onClick={onOpenChooseOptionModal} />
           </Flex>
           <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
@@ -67,9 +72,14 @@ export default function orderEntry() {
             <ProductQuantityControl name="(豆)茜ブレンド" quantity={0} onQuantityChange={() => {}} />
           </Flex>
           <ChooseOptionModal
-            isOpen={isOpen}
-            onClose={onClose}
-            onOpen={onOpen}
+            isOpen={isOpenChooseOptionModal}
+            onClose={onCloseChooseOptionModal}
+            onOpen={onOpenChooseOptionModal}
+          />
+          <TicketNumberInputModal
+            isOpen={isOpenTicketNumberInputModal}
+            onClose={onCloseTicketNumberInputModal}
+            onOpen={onOpenTicketNumberInputModal}
           />
         </Flex>
       </Flex>

@@ -33,7 +33,7 @@ export default function orderEntry() {
           <CategorySelectButton name="物販" isSelected ={false} />
         </Flex>
         {/* 右 */}
-        <Flex flexDir="column" width={7 / 10} alignItems="start" overflow="scroll" borderLeft="2px" borderColor="gray.300" >
+        <Flex flexDir="column" width={7 / 10} alignItems="start" overflow="scroll" borderLeft="2px" borderColor="gray.300" paddingBottom={100}>
           {/* Category */}
           <Flex flexDir="column" padding={1} width="100%" gap={2}>
             {/* CategoryName */}

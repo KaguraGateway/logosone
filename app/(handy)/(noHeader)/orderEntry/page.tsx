@@ -13,6 +13,7 @@ import {
 import Link from 'next/link';
 import ChooseOptionModal from './_components/ChooseOptionModal';
 import { HiCheckCircle } from 'react-icons/hi';
+import CategorySelectButton from './_components/CategorySelectButton';
 
 export default function orderEntry() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,6 +24,7 @@ export default function orderEntry() {
       <Flex flexDir="row" >
         {/* 左 */}
         <Flex flexDir="column" width={3 / 10} alignItems="start" overflow="scroll">
+          <CategorySelectButton name="すべて" isSelected ={true} />
           <Button size="lg" colorScheme="teal" whiteSpace="unset" width="100%" minHeight="80px" height="max-content" padding={1} borderRadius="0" borderY="1px" borderColor="gray.300">
             <Text overflowWrap="anywhere">すべて</Text>
           </Button>

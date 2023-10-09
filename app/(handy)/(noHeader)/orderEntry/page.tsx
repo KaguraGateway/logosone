@@ -62,8 +62,8 @@ export default function orderEntry() {
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">
               その他
             </Text>
-            <ProductQuantityControl name="薄皮饅頭" quantity={0} onQuantityChange={() => {}} />
-            <ProductQuantityControl name="チョコレート" quantity={0} onQuantityChange={() => {}} />
+            <ProductQuantityControl name="薄皮饅頭" quantity={0} onQuantityChange={() => {}} stock={3}/>
+            <ProductQuantityControl name="チョコレート" quantity={0} onQuantityChange={() => {}} stock={500}/>
           </Flex>
           <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
             <Text fontSize="xl" fontWeight="semibold" color="gray.600">

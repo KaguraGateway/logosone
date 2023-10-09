@@ -3,12 +3,16 @@ import { Button, Flex, Text, Spacer, Badge, VisuallyHidden, Hide } from "@chakra
 type Props = {
     name: string;
     quantity: number;
+    stock?: number;
     onClick: () => void;
     isDisabled?: boolean;
 }
 
 
 export default function ProductInfoButton(props: Props) {
+
+    const textColor = props.stock !== undefined && props.stock <= 3 ? "red.500" : "gray.500";
+
     return (
         <>
             <Button 
@@ -26,6 +30,7 @@ export default function ProductInfoButton(props: Props) {
                 isDisabled={props.isDisabled}
                 // onClickの動作は頼んだ
             >
+                    <Flex flexDir="column" width="100%" alignItems={"start"} gap={2}>
                         <Flex flexDir="row" width="100%">
                             <Text overflowWrap="anywhere">{props.name}</Text>
                             <Spacer />
@@ -37,6 +42,14 @@ export default function ProductInfoButton(props: Props) {
                                 </Badge>
                             ) }
                         </Flex>
+                        { props.stock === undefined ? (<></>) : (
+                            <Text fontSize="sm" color={textColor} >
+                            在庫数：{props.stock}
+                            </Text>
+                        )
+                        }
+                    
+                    </Flex>
                     </Button>
         </>
     );

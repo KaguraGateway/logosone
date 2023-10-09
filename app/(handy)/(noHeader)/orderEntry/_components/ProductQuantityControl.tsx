@@ -5,6 +5,7 @@ import QuantitySelector from "./QuantitySelector";
 type Props = {
     name: string;
     quantity: number;
+    stock?: number;
     onQuantityChange: (newQuantity: number) => void;
 }
 
@@ -13,7 +14,7 @@ export default function ProductQuantityControl(props: Props) {
         <>
         <Flex flexDir="column" gap={3}>
             {/* quantity周りの処理はGPTに聞いた適当なコードなので、適当に修正してください。不要なら消してOK。 */}
-            <ProductInfoButton name={props.name} quantity={props.quantity} onClick={() => {}}/>
+            <ProductInfoButton name={props.name} quantity={props.quantity} onClick={() => {}} stock={props.stock}/>
             { props.quantity <= 0 ? (
                 <></>
             ) : (

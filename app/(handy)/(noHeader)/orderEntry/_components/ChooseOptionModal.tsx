@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Text, useDisclosure, Flex, Spacer, HStack, Badge} from '@chakra-ui/react';
 import { DeleteIcon, MinusIcon, AddIcon } from '@chakra-ui/icons';
+import QuantitySelector from './QuantitySelector';
 
 type Props = {
     isOpen: boolean;
@@ -32,18 +33,7 @@ export default function ChooseOptionModal(props: Props) {
                             </Badge>
                         </Flex>
                     </Button>
-                <Flex flexDir="row" gap={3} m={2}>
-                    <Button size="lg" bg="red" color="white">
-                        <DeleteIcon />
-                    </Button>
-                    <Spacer />
-                    <Button size="lg" bg="gray" color="white" paddingX={10}>
-                        <MinusIcon />
-                    </Button>
-                    <Button size="lg" bg="gray" color="white" paddingX={10}>
-                        <AddIcon />
-                    </Button>
-                </Flex>
+                <QuantitySelector />
             </Flex>
             <Button size="lg" bg="white" color="gray.600" whiteSpace="unset" width="100%" paddingY={8} boxShadow="base" border="1px" borderColor="gray.300" justifyContent="flex-start" >
               <Text overflowWrap="anywhere">ネル</Text>

@@ -1,14 +1,12 @@
-import { Button, Flex } from '@chakra-ui/react';
-import Link from 'next/link';
+import Home from './(header)/home/page';
+import { Box } from '@chakra-ui/react';
 
-export default function Home() {
+export default function Handy() {
   return (
-    <Flex flexDir="column" gap="26px">
-      <Button as={Link} href="/waiter" size="lg" colorScheme="teal" h="100px">
-        ホール業務
-        <br />
-        (注文・配膳)
-      </Button>
-    </Flex>
+    <Box p="1.5rem">
+      <Home  />
+    </Box>
+    
   );
 }
+

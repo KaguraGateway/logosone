@@ -19,7 +19,7 @@ export function Header() {
       alignItems="center"
       zIndex={100}
     >
-      <Link href="/">
+      <Link href="/waiter">
         <Logo />
       </Link>
     </Flex>

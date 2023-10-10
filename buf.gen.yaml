@@ -17,8 +17,8 @@ plugins:
       - GenerateAsyncMethods=true
       - GenerateCallbackMethods=true
       - Visibility=Public
-    out: Swift
+    out: Sources/cafelogos-grpc
   - plugin: buf.build/apple/swift
     opt:
       - Visibility=Public
-    out: Swift
+    out: Sources/cafelogos-grpc

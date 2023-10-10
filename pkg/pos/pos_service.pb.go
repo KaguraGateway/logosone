@@ -2522,7 +2522,7 @@ type OrderDiscount struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id            string       `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            string       `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` //* 一旦何も入ってない
 	DiscountId    string       `protobuf:"bytes,2,opt,name=discount_id,json=discountId,proto3" json:"discount_id,omitempty"`
 	Type          DiscountType `protobuf:"varint,3,opt,name=type,proto3,enum=cafelogos.pos.DiscountType" json:"type,omitempty"`
 	DiscountPrice uint64       `protobuf:"varint,4,opt,name=discount_price,json=discountPrice,proto3" json:"discount_price,omitempty"`

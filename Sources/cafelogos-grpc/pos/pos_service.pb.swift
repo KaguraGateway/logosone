@@ -921,6 +921,7 @@ public struct Cafelogos_Pos_OrderDiscount {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  ///* 一旦何も入ってない 
   public var id: String = String()
 
   public var discountID: String = String()

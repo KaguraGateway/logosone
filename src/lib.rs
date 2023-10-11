@@ -17,12 +17,13 @@ pub async fn run_server() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
 
     let db = Database::connect(env::var("DATABASE_URL")?).await?;
+    let port = env::var("DATABASE_URL")?;
 
     let module = MyModule::builder()
         .with_component_parameters::<TicketRepositoryDb>(TicketRepositoryDbParameters { db })
         .build();
 
-    let addr = "[::1]:50051".parse().unwrap();
+    let addr = format!("[::1]:{port}").parse().unwrap();
     let service = TicketServiceServer::new(TicketServiceImpl { module });
 
     println!("Server listening on: {}", addr);

@@ -17,7 +17,7 @@ pub async fn run_server() -> Result<(), Box<dyn std::error::Error>> {
     dotenv().ok();
 
     let db = Database::connect(env::var("DATABASE_URL")?).await?;
-    let port = env::var("DATABASE_URL")?;
+    let port = env::var("PORT")?;
 
     let module = MyModule::builder()
         .with_component_parameters::<TicketRepositoryDb>(TicketRepositoryDbParameters { db })

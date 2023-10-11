@@ -1,4 +1,4 @@
-use cafelogos_grpc::cafelogos::{
+use cafelogos_grpc::cafelogos::ticket::{
     ticket_service_server::TicketService, RequestIssueTicket, RequestRevokeTicket,
     ResponseIssueTicket, ResponseRevokeTicket,
 };

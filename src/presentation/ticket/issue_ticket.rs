@@ -1,4 +1,4 @@
-use cafelogos_grpc::cafelogos::{RequestIssueTicket, ResponseIssueTicket, Ticket};
+use cafelogos_grpc::cafelogos::ticket::{RequestIssueTicket, ResponseIssueTicket, Ticket};
 use tonic::Status;
 
 use crate::application::ticket::issue_ticket::IssueTicket;

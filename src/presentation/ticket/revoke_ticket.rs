@@ -1,4 +1,4 @@
-use cafelogos_grpc::cafelogos::{RequestRevokeTicket, ResponseRevokeTicket};
+use cafelogos_grpc::cafelogos::ticket::{RequestRevokeTicket, ResponseRevokeTicket};
 use tonic::Status;
 
 use crate::application::ticket::revoke_ticket::RevokeTicket;

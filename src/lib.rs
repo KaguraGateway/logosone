@@ -1,3 +1,5 @@
 pub mod cafelogos {
-    include!("cafelogos.rs");
+    pub mod ticket {
+        include!("cafelogos.ticket.rs");
+    }
 }

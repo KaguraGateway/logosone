@@ -4,6 +4,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .build_client(true)
         .build_server(true)
         .out_dir("src/")
-        .compile(&["proto/ticket_service.proto"], &["proto/"])?;
+        .compile(&["proto/ticket/ticket_service.proto"], &["proto/"])?;
     Ok(())
 }

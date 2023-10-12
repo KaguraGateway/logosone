@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 import { createQueryService } from "@connectrpc/connect-query";
@@ -26,12 +26,12 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.GetOrderBySeatId
+     * @generated from rpc cafelogos.pos.PosService.GetUnpaidOrdersBySeatId
      */
-    getOrderBySeatId: {
-      name: "GetOrderBySeatId",
-      I: GetOrderBySeatIdRequest,
-      O: GetOrderResponse,
+    getUnpaidOrdersBySeatId: {
+      name: "GetUnpaidOrdersBySeatId",
+      I: GetUnpaidOrdersBySeatIdRequest,
+      O: GetOrdersResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -53,21 +53,21 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.PostOrderPayment
+     * @generated from rpc cafelogos.pos.PosService.PostPayment
      */
-    postOrderPayment: {
-      name: "PostOrderPayment",
-      I: PostOrderPaymentRequest,
-      O: OrderPaymentResponse,
+    postPayment: {
+      name: "PostPayment",
+      I: PostPaymentRequest,
+      O: PaymentResponse,
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+     * @generated from rpc cafelogos.pos.PosService.UpdatePayment
      */
-    updateOrderPayment: {
-      name: "UpdateOrderPayment",
-      I: UpdateOrderPaymentRequest,
-      O: OrderPaymentResponse,
+    updatePayment: {
+      name: "UpdatePayment",
+      I: UpdatePaymentRequest,
+      O: PaymentResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -245,11 +245,11 @@ export const getOrders = createQueryService({
 }).getOrders;
 
 /**
- * @generated from rpc cafelogos.pos.PosService.GetOrderBySeatId
+ * @generated from rpc cafelogos.pos.PosService.GetUnpaidOrdersBySeatId
  */
-export const getOrderBySeatId = createQueryService({
+export const getUnpaidOrdersBySeatId = createQueryService({
   service: PosService,
-}).getOrderBySeatId;
+}).getUnpaidOrdersBySeatId;
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostOrder
@@ -266,18 +266,18 @@ export const deleteOrder = createQueryService({
 }).deleteOrder;
 
 /**
- * @generated from rpc cafelogos.pos.PosService.PostOrderPayment
+ * @generated from rpc cafelogos.pos.PosService.PostPayment
  */
-export const postOrderPayment = createQueryService({
+export const postPayment = createQueryService({
   service: PosService,
-}).postOrderPayment;
+}).postPayment;
 
 /**
- * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+ * @generated from rpc cafelogos.pos.PosService.UpdatePayment
  */
-export const updateOrderPayment = createQueryService({
+export const updatePayment = createQueryService({
   service: PosService,
-}).updateOrderPayment;
+}).updatePayment;
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetProducts

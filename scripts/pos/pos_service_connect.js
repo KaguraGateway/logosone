@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -23,12 +23,12 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.GetOrderBySeatId
+     * @generated from rpc cafelogos.pos.PosService.GetUnpaidOrdersBySeatId
      */
-    getOrderBySeatId: {
-      name: "GetOrderBySeatId",
-      I: GetOrderBySeatIdRequest,
-      O: GetOrderResponse,
+    getUnpaidOrdersBySeatId: {
+      name: "GetUnpaidOrdersBySeatId",
+      I: GetUnpaidOrdersBySeatIdRequest,
+      O: GetOrdersResponse,
       kind: MethodKind.Unary,
     },
     /**
@@ -50,21 +50,21 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.PostOrderPayment
+     * @generated from rpc cafelogos.pos.PosService.PostPayment
      */
-    postOrderPayment: {
-      name: "PostOrderPayment",
-      I: PostOrderPaymentRequest,
-      O: OrderPaymentResponse,
+    postPayment: {
+      name: "PostPayment",
+      I: PostPaymentRequest,
+      O: PaymentResponse,
       kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+     * @generated from rpc cafelogos.pos.PosService.UpdatePayment
      */
-    updateOrderPayment: {
-      name: "UpdateOrderPayment",
-      I: UpdateOrderPaymentRequest,
-      O: OrderPaymentResponse,
+    updatePayment: {
+      name: "UpdatePayment",
+      I: UpdatePaymentRequest,
+      O: PaymentResponse,
       kind: MethodKind.Unary,
     },
     /**

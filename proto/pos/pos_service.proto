@@ -9,11 +9,13 @@ option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/pos;pos";
 
 service PosService {
     rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
-    rpc GetOrderBySeatId(GetOrderBySeatIdRequest) returns (GetOrderResponse) {}
+    rpc GetUnpaidOrdersBySeatId(GetUnpaidOrdersBySeatIdRequest) returns (GetOrdersResponse) {}
     rpc PostOrder(PostOrderRequest) returns (PostOrderResponse) {}
     rpc DeleteOrder(DeleteOrderRequest) returns (common.Empty) {}
-    rpc PostOrderPayment(PostOrderPaymentRequest) returns (OrderPaymentResponse) {}
-    rpc UpdateOrderPayment(UpdateOrderPaymentRequest) returns (OrderPaymentResponse) {}
+
+    rpc PostPayment(PostPaymentRequest) returns (PaymentResponse) {}
+    rpc UpdatePayment(UpdatePaymentRequest) returns (PaymentResponse) {}
+
     rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
 
     rpc PostNewClient(PostNewClientRequest) returns (PostNewClientResponse) {}
@@ -53,7 +55,7 @@ message GetOrdersResponse {
 message GetOrderResponse {
     Order order = 1;
 }
-message GetOrderBySeatIdRequest {
+message GetUnpaidOrdersBySeatIdRequest {
     string seat_id = 1;
 }
 
@@ -64,7 +66,6 @@ message PostOrderResponse {
     Code code = 1;
     string error_message = 2;
     string call_number = 3;
-    OrderPaymentResponse payment_response = 4;
 
     enum Code {
         OK = 0;
@@ -73,17 +74,16 @@ message PostOrderResponse {
         OTHER = 3;
     }
 }
-message PostOrderPaymentRequest {
-    string order_id = 1;
-    OrderPayment payment = 2;
+message PostPaymentRequest {
+    Payment payment = 1;
 }
-message UpdateOrderPaymentRequest {
-    string order_id = 1;
-    OrderPayment payment = 2;
+message UpdatePaymentRequest {
+    Payment payment = 1;
 }
-message OrderPaymentResponse {
+message PaymentResponse {
     bool is_ok = 1;
-    OrderPayment payment = 2;
+    Payment payment = 2;
+    repeated PostOrderResponse order_responses = 3;
 }
 message DeleteOrderRequest {
     string order_id = 1;
@@ -233,21 +233,19 @@ message Order {
     repeated OrderItem items = 2;
     repeated OrderDiscount discounts = 3;
     OrderType order_type = 4;
-    OrderPayment payment = 5;
-    string order_at = 6;
-    string call_number = 7;
-    string client_id = 8;
-    string seat_name = 9;
+    string order_at = 5;
+    string call_number = 6;
+    string client_id = 7;
+    string seat_name = 8;
 }
 message OrderParam {
     string id = 1; /** 代入した場合は代入したIDが使用され、しなかったら生成される */
     repeated OrderItem items = 2;
     repeated OrderDiscount discounts = 3;
     OrderType order_type = 4;
-    OrderPayment payment = 5;
-    string order_at = 6;
-    string client_id = 7;
-    string seat_id = 8;
+    string order_at = 5;
+    string client_id = 6;
+    string seat_id = 7;
 }
 
 
@@ -276,7 +274,7 @@ message Discount {
     uint64 discount_price = 4;
 }
 
-message OrderPayment {
+message Payment {
     string id = 1;
     PaymentType type = 2;
     uint64 receive_amount = 3;
@@ -284,6 +282,7 @@ message OrderPayment {
     uint64 change_amount = 5;
     string payment_at = 6;
     string updated_at = 7;
+    repeated Order orders = 8;
 
     enum PaymentType {
         CASH = 0;

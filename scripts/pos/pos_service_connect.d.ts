@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrderBySeatIdRequest, GetOrderResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, OrderPaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderPaymentRequest, PostOrderRequest, PostOrderResponse, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdateOrderPaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -23,12 +23,12 @@ export declare const PosService: {
       readonly kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.GetOrderBySeatId
+     * @generated from rpc cafelogos.pos.PosService.GetUnpaidOrdersBySeatId
      */
-    readonly getOrderBySeatId: {
-      readonly name: "GetOrderBySeatId",
-      readonly I: typeof GetOrderBySeatIdRequest,
-      readonly O: typeof GetOrderResponse,
+    readonly getUnpaidOrdersBySeatId: {
+      readonly name: "GetUnpaidOrdersBySeatId",
+      readonly I: typeof GetUnpaidOrdersBySeatIdRequest,
+      readonly O: typeof GetOrdersResponse,
       readonly kind: MethodKind.Unary,
     },
     /**
@@ -50,21 +50,21 @@ export declare const PosService: {
       readonly kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.PostOrderPayment
+     * @generated from rpc cafelogos.pos.PosService.PostPayment
      */
-    readonly postOrderPayment: {
-      readonly name: "PostOrderPayment",
-      readonly I: typeof PostOrderPaymentRequest,
-      readonly O: typeof OrderPaymentResponse,
+    readonly postPayment: {
+      readonly name: "PostPayment",
+      readonly I: typeof PostPaymentRequest,
+      readonly O: typeof PaymentResponse,
       readonly kind: MethodKind.Unary,
     },
     /**
-     * @generated from rpc cafelogos.pos.PosService.UpdateOrderPayment
+     * @generated from rpc cafelogos.pos.PosService.UpdatePayment
      */
-    readonly updateOrderPayment: {
-      readonly name: "UpdateOrderPayment",
-      readonly I: typeof UpdateOrderPaymentRequest,
-      readonly O: typeof OrderPaymentResponse,
+    readonly updatePayment: {
+      readonly name: "UpdatePayment",
+      readonly I: typeof UpdatePaymentRequest,
+      readonly O: typeof PaymentResponse,
       readonly kind: MethodKind.Unary,
     },
     /**

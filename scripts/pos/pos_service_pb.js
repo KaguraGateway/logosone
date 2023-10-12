@@ -71,10 +71,10 @@ export const GetOrderResponse = proto3.makeMessageType(
 );
 
 /**
- * @generated from message cafelogos.pos.GetOrderBySeatIdRequest
+ * @generated from message cafelogos.pos.GetUnpaidOrdersBySeatIdRequest
  */
-export const GetOrderBySeatIdRequest = proto3.makeMessageType(
-  "cafelogos.pos.GetOrderBySeatIdRequest",
+export const GetUnpaidOrdersBySeatIdRequest = proto3.makeMessageType(
+  "cafelogos.pos.GetUnpaidOrdersBySeatIdRequest",
   () => [
     { no: 1, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
@@ -99,7 +99,6 @@ export const PostOrderResponse = proto3.makeMessageType(
     { no: 1, name: "code", kind: "enum", T: proto3.getEnumType(PostOrderResponse_Code) },
     { no: 2, name: "error_message", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "call_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 4, name: "payment_response", kind: "message", T: OrderPaymentResponse },
   ],
 );
 
@@ -117,35 +116,34 @@ export const PostOrderResponse_Code = proto3.makeEnum(
 );
 
 /**
- * @generated from message cafelogos.pos.PostOrderPaymentRequest
+ * @generated from message cafelogos.pos.PostPaymentRequest
  */
-export const PostOrderPaymentRequest = proto3.makeMessageType(
-  "cafelogos.pos.PostOrderPaymentRequest",
+export const PostPaymentRequest = proto3.makeMessageType(
+  "cafelogos.pos.PostPaymentRequest",
   () => [
-    { no: 1, name: "order_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "payment", kind: "message", T: OrderPayment },
+    { no: 1, name: "payment", kind: "message", T: Payment },
   ],
 );
 
 /**
- * @generated from message cafelogos.pos.UpdateOrderPaymentRequest
+ * @generated from message cafelogos.pos.UpdatePaymentRequest
  */
-export const UpdateOrderPaymentRequest = proto3.makeMessageType(
-  "cafelogos.pos.UpdateOrderPaymentRequest",
+export const UpdatePaymentRequest = proto3.makeMessageType(
+  "cafelogos.pos.UpdatePaymentRequest",
   () => [
-    { no: 1, name: "order_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "payment", kind: "message", T: OrderPayment },
+    { no: 1, name: "payment", kind: "message", T: Payment },
   ],
 );
 
 /**
- * @generated from message cafelogos.pos.OrderPaymentResponse
+ * @generated from message cafelogos.pos.PaymentResponse
  */
-export const OrderPaymentResponse = proto3.makeMessageType(
-  "cafelogos.pos.OrderPaymentResponse",
+export const PaymentResponse = proto3.makeMessageType(
+  "cafelogos.pos.PaymentResponse",
   () => [
     { no: 1, name: "is_ok", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 2, name: "payment", kind: "message", T: OrderPayment },
+    { no: 2, name: "payment", kind: "message", T: Payment },
+    { no: 3, name: "order_responses", kind: "message", T: PostOrderResponse, repeated: true },
   ],
 );
 
@@ -453,11 +451,10 @@ export const Order = proto3.makeMessageType(
     { no: 2, name: "items", kind: "message", T: OrderItem, repeated: true },
     { no: 3, name: "discounts", kind: "message", T: OrderDiscount, repeated: true },
     { no: 4, name: "order_type", kind: "enum", T: proto3.getEnumType(OrderType) },
-    { no: 5, name: "payment", kind: "message", T: OrderPayment },
-    { no: 6, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "call_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 9, name: "seat_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "call_number", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "seat_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -471,10 +468,9 @@ export const OrderParam = proto3.makeMessageType(
     { no: 2, name: "items", kind: "message", T: OrderItem, repeated: true },
     { no: 3, name: "discounts", kind: "message", T: OrderDiscount, repeated: true },
     { no: 4, name: "order_type", kind: "enum", T: proto3.getEnumType(OrderType) },
-    { no: 5, name: "payment", kind: "message", T: OrderPayment },
-    { no: 6, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 7, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "order_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -518,26 +514,27 @@ export const Discount = proto3.makeMessageType(
 );
 
 /**
- * @generated from message cafelogos.pos.OrderPayment
+ * @generated from message cafelogos.pos.Payment
  */
-export const OrderPayment = proto3.makeMessageType(
-  "cafelogos.pos.OrderPayment",
+export const Payment = proto3.makeMessageType(
+  "cafelogos.pos.Payment",
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(OrderPayment_PaymentType) },
+    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(Payment_PaymentType) },
     { no: 3, name: "receive_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "payment_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 5, name: "change_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 6, name: "payment_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "orders", kind: "message", T: Order, repeated: true },
   ],
 );
 
 /**
- * @generated from enum cafelogos.pos.OrderPayment.PaymentType
+ * @generated from enum cafelogos.pos.Payment.PaymentType
  */
-export const OrderPayment_PaymentType = proto3.makeEnum(
-  "cafelogos.pos.OrderPayment.PaymentType",
+export const Payment_PaymentType = proto3.makeEnum(
+  "cafelogos.pos.Payment.PaymentType",
   [
     {no: 0, name: "CASH"},
   ],

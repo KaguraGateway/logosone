@@ -13,21 +13,36 @@ export type WSEventMsg = WSEvent & {
 };
 type WSEventMsgCallback = (event: WSEventMsg) => void;
 
-class WebSocketClient extends EventTarget {
+class WebSocketClient {
+  private listeners: { [key in EventType]: WSEventCallback[] } = {
+    open: [],
+    close: [],
+    event: [],
+  };
   private ws: WebSocket | null = null;
   private connectionRetryCount = 0;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private dispatchEvent = (key: EventType, args?: any) => {
+    this.listeners[key]?.forEach((callback) => {
+      callback({
+        target: this,
+        ...args,
+      });
+    });
+  };
 
   private onOpen = () => {
     console.log('WebSocketClient.onOpen');
     this.connectionRetryCount = 0;
-    this.dispatchEvent(new CustomEvent('open'));
+    this.dispatchEvent('open');
   };
 
   private onClose = () => {
     console.warn('WebSocketClient.onClose');
     this.ws = null;
     this.connectionRetryCount += 1;
-    this.dispatchEvent(new CustomEvent('close'));
+    this.dispatchEvent('close');
     if (this.connectionRetryCount > 3) {
       setTimeout(() => {
         this.connect();
@@ -42,7 +57,7 @@ class WebSocketClient extends EventTarget {
       const data = JSON.parse(event.data);
       const e = EventSchema.parse(data);
 
-      this.dispatchEvent(new CustomEvent('event', { detail: e }));
+      this.dispatchEvent('event', { detail: e });
     } catch (e) {
       console.error(e);
     }
@@ -53,7 +68,7 @@ class WebSocketClient extends EventTarget {
   on(type: 'event', callback: WSEventMsgCallback): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(type: EventType, callback: (...args: any[]) => void): void {
-    super.addEventListener(type, callback);
+    this.listeners[type] = [...this.listeners[type], callback];
   }
 
   off(type: 'open', callback: WSEventCallback): void;
@@ -61,7 +76,7 @@ class WebSocketClient extends EventTarget {
   off(type: 'event', callback: WSEventMsgCallback): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(type: EventType, callback: (...args: any[]) => void): void {
-    super.removeEventListener(type, callback);
+    this.listeners[type] = this.listeners[type].filter((cb) => cb !== callback);
   }
 
   readyState() {

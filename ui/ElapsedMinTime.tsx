@@ -1,7 +1,7 @@
 import { differenceInMinutes, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
 
-import { useUpdateTimerWhenMin } from '@/jotai/updatetimer';
+import { useUpdateTimerWhenMin } from '@/jotai/updateTimer';
 
 function getElapsedMin(date: Date | string) {
   if (typeof date === 'string') {

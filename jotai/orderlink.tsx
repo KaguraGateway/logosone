@@ -26,7 +26,10 @@ export function useOrderLink() {
     };
     const onNewOrder = (e: WSEventMsg) => {
       const order = NewOrderSchema.parse(e.detail.Message);
-      setOrders((orders) => [
+      // 既知の注文は無視する
+      if (orders.find((o) => o.OrderId === order.OrderId) != null) return;
+
+      setOrders([
         ...orders,
         {
           ...order,
@@ -72,6 +75,7 @@ export function useOrderLink() {
 
     // Event受信時の処理
     const onEvent = (e: WSEventMsg) => {
+      console.log(e);
       switch (e.detail.Topic) {
         case 'Orders':
           onOrders(e);
@@ -94,7 +98,7 @@ export function useOrderLink() {
     return () => {
       client.off('event', onEvent);
     };
-  }, [client, setOrders]);
+  }, [client, orders, setOrders]);
 
   // 注文を取得する
   const fetchOrders = useCallback(() => {

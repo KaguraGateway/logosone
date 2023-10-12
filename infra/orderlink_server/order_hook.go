@@ -12,14 +12,24 @@ import (
 )
 
 type orderHookOrderLink struct {
-	client orderlinkconnect.OrderLinkServiceClient
+	client         orderlinkconnect.OrderLinkServiceClient
+	seatRepository repository.SeatRepository
 }
 
 func NewOrderHookOrderLink(i *do.Injector) (repository.OrderHookRepository, error) {
-	return &orderHookOrderLink{client: do.MustInvoke[orderlinkconnect.OrderLinkServiceClient](i)}, nil
+	return &orderHookOrderLink{client: do.MustInvoke[orderlinkconnect.OrderLinkServiceClient](i), seatRepository: do.MustInvoke[repository.SeatRepository](i)}, nil
 }
 
 func (i *orderHookOrderLink) PostOrder(ctx context.Context, order *model.Order, ticket *model.OrderTicket) error {
+	var seatName string
+	if len(order.GetSeatId()) > 0 {
+		if seat, err := i.seatRepository.FindById(ctx, order.GetSeatId()); err != nil {
+			return err
+		} else {
+			seatName = seat.GetName()
+		}
+	}
+
 	_, err := i.client.PostOrder(ctx, connect.NewRequest(&orderlink.PostOrderInput{
 		OrderId: order.GetId(),
 		OrderAt: order.GetOrderAt().Format("2006-01-02T15:04:05Z"),
@@ -38,6 +48,7 @@ func (i *orderHookOrderLink) PostOrder(ctx context.Context, order *model.Order, 
 		Type:       orderlink.PostOrderInput_OrderType(order.GetOrderType()),
 		TicketId:   ticket.GetTicketId(),
 		TicketAddr: ticket.GetTicketAddr(),
+		SeatName:   seatName,
 	}))
 	if err != nil {
 		return err

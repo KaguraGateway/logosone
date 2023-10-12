@@ -18,7 +18,7 @@ func NewOrderItemDb(i *do.Injector) (repository.OrderItemRepository, error) {
 }
 
 func (i *orderItemDb) SaveTx(ctx context.Context, tx interface{}, orderId string, orderItem *model.OrderItem) error {
-	bunTx := tx.(*bun.Tx)
+	bunTx := tx.(bun.Tx)
 	coffeeBrewId := ""
 	brew := orderItem.GetCoffeeHowToBrew()
 	if &brew != nil {

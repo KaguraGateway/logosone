@@ -46,9 +46,11 @@ func (i *stockDb) FindById(ctx context.Context, id string) (*model.Stock, error)
 
 func (i *stockDb) Save(ctx context.Context, stock *model.Stock) error {
 	daoStock := &dao.Stock{
-		ID:       stock.GetId(),
-		Name:     stock.GetName(),
-		Quantity: int(stock.Quantity),
+		ID:        stock.GetId(),
+		Name:      stock.GetName(),
+		Quantity:  int(stock.Quantity),
+		CreatedAt: stock.GetCreatedAt().StdTime(),
+		UpdatedAt: synchro.Now[tz.UTC]().StdTime(),
 	}
 	if _, err := i.db.NewInsert().Model(daoStock).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("quantity = EXCLUDED.quantity").Exec(ctx); err != nil {
 		return err

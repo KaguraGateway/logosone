@@ -1,10 +1,17 @@
 package main
 
 import (
+	"connectrpc.com/connect"
+	"crypto/tls"
 	"database/sql"
 	"flag"
 	"fmt"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
+	"github.com/KaguraGateway/cafelogos-pos-backend/infra/orderlink_server"
+	"github.com/KaguraGateway/cafelogos-pos-backend/infra/ticket_server"
 	"log"
+	"net"
 	"net/http"
 	"os"
 
@@ -44,8 +51,27 @@ func main() {
 		}
 	}(db)
 
+	// Start Ticket Client
+	ticketClient := ticketconnect.NewTicketServiceClient(
+		&http.Client{
+			Transport: &http2.Transport{
+				AllowHTTP: true,
+				DialTLS: func(network, addr string, cfg *tls.Config) (net.Conn, error) {
+					return net.Dial(network, addr)
+				},
+			},
+		},
+		os.Getenv("TICKET_GRPC"),
+		connect.WithGRPC(),
+	)
+	// Start OrderLink Client
+	orderlinkClient := orderlinkconnect.NewOrderLinkServiceClient(
+		http.DefaultClient,
+		os.Getenv("ORDERLINK_GRPC"),
+	)
+
 	// Start DI
-	i := buildInjector(db)
+	i := buildInjector(db, ticketClient, orderlinkClient)
 
 	// Start gRPC server
 	mux := http.NewServeMux()
@@ -56,12 +82,18 @@ func main() {
 	}
 }
 
-func buildInjector(db *bun.DB) *do.Injector {
+func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, orderlinkClient orderlinkconnect.OrderLinkServiceClient) *do.Injector {
 	i := do.New()
 
 	// Register DB
 	do.Provide(i, func(i *do.Injector) (*bun.DB, error) {
 		return db, nil
+	})
+	do.Provide(i, func(i *do.Injector) (ticketconnect.TicketServiceClient, error) {
+		return ticketClient, nil
+	})
+	do.Provide(i, func(i *do.Injector) (orderlinkconnect.OrderLinkServiceClient, error) {
+		return orderlinkClient, nil
 	})
 	// Register repositories
 	do.Provide(i, bundb.NewCoffeeBeanDb)
@@ -77,6 +109,9 @@ func buildInjector(db *bun.DB) *do.Injector {
 	do.Provide(i, bundb.NewOrderItemDb)
 	do.Provide(i, bundb.NewOrderPaymentDb)
 	do.Provide(i, bundb.NewTxRepositoryDb)
+	// gRPC Repository
+	do.Provide(i, ticket_server.NewOrderTicketServer)
+	do.Provide(i, orderlink_server.NewOrderHookOrderLink)
 	// Register QueryService
 	do.Provide(i, bundb.NewProductQueryServiceDb)
 	do.Provide(i, bundb.NewOrderQueryServiceDb)

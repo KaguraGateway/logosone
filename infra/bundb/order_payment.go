@@ -65,7 +65,7 @@ func (i *orderPaymentDb) Save(ctx context.Context, orderPayment *model.OrderPaym
 }
 
 func (i *orderPaymentDb) SaveTx(ctx context.Context, tx interface{}, orderPayment *model.OrderPayment) error {
-	bunTx := tx.(*bun.Tx)
+	bunTx := tx.(bun.Tx)
 	daoOrderPayment := toDaoOrderPayment(orderPayment)
 	if _, err := orderPaymentInsertQuery(bunTx.NewInsert().Model(daoOrderPayment)).Exec(ctx); err != nil {
 		return err

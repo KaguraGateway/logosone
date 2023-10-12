@@ -14,8 +14,10 @@ func ToProtoProductCategory(category *model.ProductCategory) *pos.ProductCategor
 		return nil
 	}
 	return &pos.ProductCategory{
-		Id:   category.GetId(),
-		Name: category.GetName(),
+		Id:        category.GetId(),
+		Name:      category.GetName(),
+		CreatedAt: ToISO8601(category.GetCreatedAt()),
+		UpdatedAt: ToISO8601(category.GetUpdatedAt()),
 	}
 }
 
@@ -27,6 +29,8 @@ func ToProtoCoffeeBean(bean *model.CoffeeBean) *pos.CoffeeBean {
 		Id:           bean.GetId(),
 		Name:         bean.GetName(),
 		GramQuantity: int32(bean.GramQuantity),
+		CreatedAt:    ToISO8601(bean.GetCreatedAt()),
+		UpdatedAt:    ToISO8601(bean.GetUpdatedAt()),
 	}
 }
 
@@ -39,6 +43,8 @@ func ToProtoCoffeeBrew(brew *model.ProductCoffeeBrew) *pos.CoffeeBrew {
 		Name:              brew.GetName(),
 		BeanQuantityGrams: brew.BeanQuantityGrams,
 		Amount:            brew.Amount,
+		CreatedAt:         ToISO8601(brew.GetCreatedAt()),
+		UpdatedAt:         ToISO8601(brew.GetUpdatedAt()),
 	}
 }
 
@@ -47,9 +53,11 @@ func ToProtoStock(stock *model.Stock) *pos.Stock {
 		return nil
 	}
 	return &pos.Stock{
-		Id:       stock.GetId(),
-		Name:     stock.GetName(),
-		Quantity: uint32(stock.Quantity),
+		Id:        stock.GetId(),
+		Name:      stock.GetName(),
+		Quantity:  uint32(stock.Quantity),
+		CreatedAt: ToISO8601(stock.GetCreatedAt()),
+		UpdatedAt: ToISO8601(stock.GetUpdatedAt()),
 	}
 }
 
@@ -104,8 +112,8 @@ func ToProtoOrderPayment(payment *model.OrderPayment) *pos.OrderPayment {
 		ReceiveAmount: payment.ReceiveAmount,
 		PaymentAmount: payment.PaymentAmount,
 		ChangeAmount:  payment.GetChangeAmount(),
-		PaymentAt:     payment.GetPaymentAt().String(),
-		UpdatedAt:     payment.GetUpdatedAt().String(),
+		PaymentAt:     ToISO8601(payment.GetPaymentAt()),
+		UpdatedAt:     ToISO8601(payment.GetUpdatedAt()),
 	}
 }
 
@@ -123,7 +131,7 @@ func ToProtoOrder(order *model.Order) *pos.Order {
 		}),
 		OrderType:  pos.OrderType(order.GetOrderType()),
 		Payment:    ToProtoOrderPayment(order.GetPayment()),
-		OrderAt:    order.GetOrderAt().String(),
+		OrderAt:    ToISO8601(order.GetOrderAt()),
 		CallNumber: "", // TODO: implement
 		SeatName:   "", // TODO: implement
 		ClientId:   order.GetClientId(),
@@ -174,4 +182,8 @@ func ToOrderPaymentParam(payment *pos.OrderPayment) (*application.OrderPaymentPa
 		PaymentAt:     paymentAt,
 		UpdatedAt:     updatedAt,
 	}, nil
+}
+
+func ToISO8601(t synchro.Time[tz.UTC]) string {
+	return t.Format("2006-01-02T15:04:05Z")
 }

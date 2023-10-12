@@ -22,7 +22,7 @@ func NewOrderDb(i *do.Injector) (repository.OrderRepository, error) {
 }
 
 func (i *orderDb) SaveTx(ctx context.Context, tx interface{}, order *model.Order) error {
-	bunTx := tx.(*bun.Tx)
+	bunTx := tx.(bun.Tx)
 	daoOrder := &dao.Order{
 		ID:        order.GetId(),
 		OrderType: uint(order.GetOrderType()),

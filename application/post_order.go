@@ -7,6 +7,7 @@ import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
 	"github.com/samber/do"
+	"log"
 )
 
 type OrderItemParam struct {
@@ -47,6 +48,8 @@ type postOrderUseCase struct {
 	productQS         ProductQueryService
 	coffeeBrewRepo    repository.ProductCoffeeBrewRepository
 	discountRepo      repository.DiscountRepository
+	orderTicketRepo   repository.OrderTicketRepository
+	orderHookRepo     repository.OrderHookRepository
 	txRepo            repository.TxRepository
 }
 
@@ -60,6 +63,8 @@ func NewPostOrderUseCase(i *do.Injector) (PostOrder, error) {
 		productQS:         do.MustInvoke[ProductQueryService](i),
 		coffeeBrewRepo:    do.MustInvoke[repository.ProductCoffeeBrewRepository](i),
 		discountRepo:      do.MustInvoke[repository.DiscountRepository](i),
+		orderTicketRepo:   do.MustInvoke[repository.OrderTicketRepository](i),
+		orderHookRepo:     do.MustInvoke[repository.OrderHookRepository](i),
 		txRepo:            do.MustInvoke[repository.TxRepository](i),
 	}, nil
 }
@@ -111,6 +116,7 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 	}
 
 	var order *model.Order
+	var ticket *model.OrderTicket
 	// 以下、トランザクション処理
 	err := uc.txRepo.Transaction(ctx, func(ctx context.Context, tx interface{}) error {
 		// IDがない場合は新規作成, IDがある場合はそのIDを用いて作成
@@ -170,11 +176,23 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 			}
 		}
 
+		// Ticket発行
+		t, err := uc.orderTicketRepo.Create(ctx, order.GetId())
+		if err != nil {
+			return err
+		}
+		ticket = t
+		// Hook
+		if err := uc.orderHookRepo.PostOrder(ctx, order, t); err != nil {
+			log.Printf("failed to post order: %v", err)
+		}
+
 		return nil
 	})
 	if err != nil {
+		log.Printf(err.Error())
 		return nil, nil, err
 	}
 
-	return order, nil, nil
+	return order, ticket, nil
 }

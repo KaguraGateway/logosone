@@ -29,6 +29,8 @@ func (s *GrpcServer) GetProducts(ctx context.Context, _ *connect.Request[common.
 				ProductCategory: ToProtoProductCategory(&product.ProductCategory),
 				ProductType:     pos.ProductType(product.ProductType),
 				IsNowSales:      product.IsNowSales,
+				CreatedAt:       ToISO8601(product.GetCreatedAt()),
+				UpdatedAt:       ToISO8601(product.GetUpdatedAt()),
 				CoffeeBean:      ToProtoCoffeeBean(product.CoffeeBean),
 				CoffeeBrews: lo.Map(product.CoffeeBrews, func(coffeeBrew *model.ProductCoffeeBrew, _ int) *pos.CoffeeBrew {
 					return ToProtoCoffeeBrew(coffeeBrew)

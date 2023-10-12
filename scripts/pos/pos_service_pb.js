@@ -526,7 +526,8 @@ export const Payment = proto3.makeMessageType(
     { no: 5, name: "change_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 6, name: "payment_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "orders", kind: "message", T: Order, repeated: true },
+    { no: 8, name: "post_orders", kind: "message", T: Order, repeated: true },
+    { no: 9, name: "order_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ],
 );
 

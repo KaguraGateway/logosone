@@ -937,7 +937,9 @@ public struct Cafelogos_Pos_Payment {
 
   public var updatedAt: String = String()
 
-  public var orders: [Cafelogos_Pos_Order] = []
+  public var postOrders: [Cafelogos_Pos_Order] = []
+
+  public var orderIds: [String] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -2819,7 +2821,8 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     5: .standard(proto: "change_amount"),
     6: .standard(proto: "payment_at"),
     7: .standard(proto: "updated_at"),
-    8: .same(proto: "orders"),
+    8: .standard(proto: "post_orders"),
+    9: .standard(proto: "order_ids"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2835,7 +2838,8 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 5: try { try decoder.decodeSingularUInt64Field(value: &self.changeAmount) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.paymentAt) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.updatedAt) }()
-      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.orders) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.postOrders) }()
+      case 9: try { try decoder.decodeRepeatedStringField(value: &self.orderIds) }()
       default: break
       }
     }
@@ -2863,8 +2867,11 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.updatedAt.isEmpty {
       try visitor.visitSingularStringField(value: self.updatedAt, fieldNumber: 7)
     }
-    if !self.orders.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.orders, fieldNumber: 8)
+    if !self.postOrders.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.postOrders, fieldNumber: 8)
+    }
+    if !self.orderIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.orderIds, fieldNumber: 9)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2877,7 +2884,8 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.changeAmount != rhs.changeAmount {return false}
     if lhs.paymentAt != rhs.paymentAt {return false}
     if lhs.updatedAt != rhs.updatedAt {return false}
-    if lhs.orders != rhs.orders {return false}
+    if lhs.postOrders != rhs.postOrders {return false}
+    if lhs.orderIds != rhs.orderIds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

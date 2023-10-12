@@ -1401,9 +1401,14 @@ export declare class Payment extends Message<Payment> {
   updatedAt: string;
 
   /**
-   * @generated from field: repeated cafelogos.pos.Order orders = 8;
+   * @generated from field: repeated cafelogos.pos.Order post_orders = 8;
    */
-  orders: Order[];
+  postOrders: Order[];
+
+  /**
+   * @generated from field: repeated string order_ids = 9;
+   */
+  orderIds: string[];
 
   constructor(data?: PartialMessage<Payment>);
 

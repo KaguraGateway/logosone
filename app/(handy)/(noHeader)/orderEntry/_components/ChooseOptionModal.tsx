@@ -1,21 +1,29 @@
+import {
+  Button,
+  Flex,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 import React from 'react';
-import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Text, useDisclosure, Flex, Spacer, HStack, Badge} from '@chakra-ui/react';
-import { DeleteIcon, MinusIcon, AddIcon } from '@chakra-ui/icons';
-import QuantitySelector from './QuantitySelector';
-import ProductInfoButton from './ProductInfoButton';
+
 import ProductQuantityControl from './ProductQuantityControl';
 
 type Props = {
-    isOpen: boolean;
-    onClose: () => void;
-    onOpen: () => void;
-  }
+  isOpen: boolean;
+  onClose: () => void;
+  onOpen: () => void;
+};
 
 export default function ChooseOptionModal(props: Props) {
   return (
     <>
       {/* モーダル */}
-      <Modal closeOnOverlayClick={false} isOpen={props.isOpen} onClose={props.onClose} >
+      <Modal closeOnOverlayClick={false} isOpen={props.isOpen} onClose={props.onClose}>
         <ModalOverlay />
         <ModalContent bg="gray.100">
           <ModalHeader>ドリップ方法を選択</ModalHeader>
@@ -23,11 +31,11 @@ export default function ChooseOptionModal(props: Props) {
           <ModalBody pb={6}>
             {/* モーダル内のコンテンツ */}
             <Flex flexDir="column" gap={3}>
-                <Flex flexDir="column" gap={3}>
+              <Flex flexDir="column" gap={3}>
                 <ProductQuantityControl name="ペーパー" quantity={0} onQuantityChange={() => {}} />
                 <ProductQuantityControl name="ネル" quantity={0} onQuantityChange={() => {}} />
-                <ProductQuantityControl name="サイフォン" quantity={-1} onQuantityChange={() => {}} />                
-                </Flex>
+                <ProductQuantityControl name="サイフォン" quantity={-1} onQuantityChange={() => {}} />
+              </Flex>
             </Flex>
           </ModalBody>
 

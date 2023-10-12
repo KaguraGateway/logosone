@@ -937,7 +937,7 @@ public struct Cafelogos_Pos_Payment {
 
   public var updatedAt: String = String()
 
-  public var postOrders: [Cafelogos_Pos_Order] = []
+  public var postOrders: [Cafelogos_Pos_OrderParam] = []
 
   public var orderIds: [String] = []
 

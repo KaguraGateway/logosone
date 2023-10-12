@@ -282,7 +282,7 @@ message Payment {
     uint64 change_amount = 5;
     string payment_at = 6;
     string updated_at = 7;
-    repeated Order post_orders = 8;
+    repeated OrderParam post_orders = 8;
     repeated string order_ids = 9;
 
     enum PaymentType {

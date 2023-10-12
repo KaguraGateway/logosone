@@ -1401,9 +1401,9 @@ export declare class Payment extends Message<Payment> {
   updatedAt: string;
 
   /**
-   * @generated from field: repeated cafelogos.pos.Order post_orders = 8;
+   * @generated from field: repeated cafelogos.pos.OrderParam post_orders = 8;
    */
-  postOrders: Order[];
+  postOrders: OrderParam[];
 
   /**
    * @generated from field: repeated string order_ids = 9;

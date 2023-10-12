@@ -1,5 +1,7 @@
 import { AiOutlineHistory, AiOutlineHome } from 'react-icons/ai';
 import { FaChartPie, FaJava, FaReact } from 'react-icons/fa';
+import { GiTable } from 'react-icons/gi';
+import { TbShoppingBagDiscount } from 'react-icons/tb';
 
 import { styled } from '@/panda/jsx';
 
@@ -30,6 +32,16 @@ const navigations: Array<Navigation> = [
     label: '売上分析',
     href: '/analysis',
     icon: <FaChartPie />,
+  },
+  {
+    label: '座席管理',
+    href: '/seats',
+    icon: <GiTable />,
+  },
+  {
+    label: '割引券',
+    href: '/discounts',
+    icon: <TbShoppingBagDiscount />,
   },
 ];
 

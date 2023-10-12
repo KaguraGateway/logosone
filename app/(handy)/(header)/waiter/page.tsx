@@ -1,5 +1,5 @@
 'use client';
-import { Button, Flex, Grid, Text, useDisclosure } from '@chakra-ui/react';
+import { Alert, AlertIcon, Button, Flex, Grid, Text, useDisclosure } from '@chakra-ui/react';
 import Link from 'next/link';
 import { BiLogOut } from 'react-icons/bi';
 import { IoClipboard } from 'react-icons/io5';
@@ -7,16 +7,17 @@ import { IoClipboard } from 'react-icons/io5';
 import TicketSelectButton from './_components/TicketSelectButton';
 import WorkEndModal from './_components/WorkEndModal';
 
-export default function Waiter() {
+export default function Waiter({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const { isOpen: isOpenWorkEndModal, onOpen: onOpenWorkEndModal, onClose: onCloseWorkEndModal } = useDisclosure();
   return (
     <>
       <Flex flexDir="column" gap="26px" paddingBottom={100}>
-        {/* ここに注文送信成功のアラートを表示したい */}
-        {/* <Alert status='success'>
+        {searchParams.isSendSuccess != null && Boolean(searchParams.isSendSuccess) && (
+          <Alert status="success">
             <AlertIcon />
-                注文を送信しました
-            </Alert> */}
+            注文を送信しました
+          </Alert>
+        )}
 
         <Button as={Link} href="../orderEntry" size="lg" colorScheme="teal" h="100px" leftIcon={<IoClipboard />}>
           注文入力

@@ -16,7 +16,9 @@ import ProductQuantityControl from './ProductQuantityControl';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onOpen: () => void;
+  onConfirm: (id: string) => void;
+  onQuantityChange: (id: string, newQuantity: number) => void;
+  options: Array<{ id: string; name: string; quantity: number }>;
 };
 
 export default function ChooseOptionModal(props: Props) {
@@ -32,9 +34,15 @@ export default function ChooseOptionModal(props: Props) {
             {/* モーダル内のコンテンツ */}
             <Flex flexDir="column" gap={3}>
               <Flex flexDir="column" gap={3}>
-                <ProductQuantityControl name="ペーパー" quantity={0} onQuantityChange={() => {}} />
-                <ProductQuantityControl name="ネル" quantity={0} onQuantityChange={() => {}} />
-                <ProductQuantityControl name="サイフォン" quantity={-1} onQuantityChange={() => {}} />
+                {props.options.map((option) => (
+                  <ProductQuantityControl
+                    key={option.id}
+                    name={option.name}
+                    quantity={option.quantity}
+                    onQuantityChange={(newQuantity) => props.onQuantityChange(option.id, newQuantity)}
+                    onClick={() => props.onConfirm(option.id)}
+                  />
+                ))}
               </Flex>
             </Flex>
           </ModalBody>

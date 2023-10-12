@@ -15,7 +15,6 @@ import React from 'react';
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  onOpen: () => void;
   errorTitle: string;
   errorMessage: string;
 };

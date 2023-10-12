@@ -1,34 +1,107 @@
 'use client';
-import {
-  Button,
-  Flex,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Button, Center, Flex, Text } from '@chakra-ui/react';
+import { Product, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { HiCheckCircle } from 'react-icons/hi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 
+import ProductInfoCard from '../_components/ProductInfoCard';
 import CategorySelectButton from './_components/CategorySelectButton';
 import ChooseOptionModal from './_components/ChooseOptionModal';
 import ProductInfoButton from './_components/ProductInfoButton';
 import ProductQuantityControl from './_components/ProductQuantityControl';
 import TicketNumberInputModal from './_components/TicketNumberInputModal';
+import { useOrderEntryUseCase } from './usecase';
 
-export default function OrderEntry() {
-  const {
-    isOpen: isOpenChooseOptionModal,
-    onOpen: onOpenChooseOptionModal,
-    onClose: onCloseChooseOptionModal,
-  } = useDisclosure();
-  const {
-    isOpen: isOpenTicketNumberInputModal,
-    onOpen: onOpenTicketNumberInputModal,
-    onClose: onCloseTicketNumberInputModal,
-  } = useDisclosure({
-    defaultIsOpen: true, // この行を追加して初期値をtrueに設定
-  });
+function OrderCheck({
+  backToOrderEntry,
+  onPostOrder,
+  orderItems,
+  getProductInfo,
+  isOrderSending,
+}: ReturnType<typeof useOrderEntryUseCase>) {
+  return (
+    <>
+      <Center>
+        <Text fontSize="2xl" fontWeight="semibold" color="gray.600" p={4}>
+          注文確認
+        </Text>
+      </Center>
+      <Flex flexDir="column" padding={1} width="100%" gap={4} paddingX={4}>
+        {orderItems.map((item) => {
+          const { product, coffeeBrew } = getProductInfo(item.productId, item.coffeeBrewId);
+          return (
+            <ProductInfoCard
+              key={`${item.productId}${item.coffeeBrewId}`}
+              name={coffeeBrew != null ? `${product?.productName} (${coffeeBrew.name})` : product?.productName ?? ''}
+              quantity={item.quantity}
+            />
+          );
+        })}
+      </Flex>
+      <Flex
+        flexDir="row"
+        position="fixed"
+        width="100vw"
+        alignItems="center"
+        bottom="0"
+        left="0"
+        right="0"
+        minHeight="70px"
+        bg="white"
+        paddingTop={3}
+        paddingBottom={5}
+        borderTop="2px"
+        borderColor="gray.300"
+        boxShadow="base"
+        paddingX={4}
+      >
+        <Button
+          flex={1}
+          size="lg"
+          colorScheme="red"
+          leftIcon={<IoArrowBackOutline />}
+          marginRight={4}
+          onClick={backToOrderEntry}
+        >
+          戻る
+        </Button>
+        <Button
+          flex={3}
+          size="lg"
+          colorScheme="green"
+          leftIcon={<HiCheckCircle />}
+          onClick={onPostOrder}
+          isLoading={isOrderSending}
+        >
+          注文送信
+        </Button>
+      </Flex>
+    </>
+  );
+}
+
+function OrderEntry({
+  onConfirmSeatName,
+  isOpenChooseOptionModal,
+  onOpenChooseOptionModal,
+  onCloseChooseOptionModal,
+  isOpenTicketNumberInputModal,
+  onOpenTicketNumberInputModal,
+  onCloseTicketNumberInputModal,
+  categories,
+  onAddItem,
+  onChangeQuantity,
+  getQuantity,
+  toOrderCheck,
+}: ReturnType<typeof useOrderEntryUseCase>) {
+  const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+
+  const onOpenChooseOptionModalOverride = (product: Product) => {
+    setCurrentProduct(product);
+    onOpenChooseOptionModal();
+  };
 
   return (
     <>
@@ -36,11 +109,9 @@ export default function OrderEntry() {
       <Flex flexDir="row">
         {/* 左 */}
         <Flex flexDir="column" width={3 / 10} alignItems="start" overflow="scroll">
-          <CategorySelectButton name="すべて" isSelected={true} />
-          <CategorySelectButton name="コーヒー" isSelected={false} />
-          <CategorySelectButton name="ソフトドリンク" isSelected={false} />
-          <CategorySelectButton name="その他" isSelected={false} />
-          <CategorySelectButton name="物販" isSelected={false} />
+          {categories.map((category) => (
+            <CategorySelectButton key={category.id} name={category.name} isSelected={false} />
+          ))}
         </Flex>
         {/* 右 */}
         <Flex
@@ -53,52 +124,37 @@ export default function OrderEntry() {
           paddingBottom={100}
         >
           {/* Category */}
-          <Flex flexDir="column" padding={1} width="100%" gap={2}>
-            {/* CategoryName */}
-            <Text fontSize="xl" fontWeight="semibold" color="gray.600">
-              コーヒー
-            </Text>
-            {/* CategoryItem */}
-            <ProductInfoButton name="ロゴスブレンド〜豊穣〜" quantity={0} onClick={onOpenChooseOptionModal} />
-            <ProductInfoButton name="茜ブレンド" quantity={0} onClick={onOpenChooseOptionModal} />
-          </Flex>
-          <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
-            <Text fontSize="xl" fontWeight="semibold" color="gray.600">
-              ソフトドリンク
-            </Text>
-            <ProductQuantityControl name="レモネード" quantity={0} onQuantityChange={() => {}} />
-            <ProductQuantityControl name="レモネードスカッシュ" quantity={0} onQuantityChange={() => {}} />
-            <ProductQuantityControl name="ヨーグルッペ" quantity={0} onQuantityChange={() => {}} stock={48} />
-          </Flex>
-          <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
-            <Text fontSize="xl" fontWeight="semibold" color="gray.600">
-              その他
-            </Text>
-            <ProductQuantityControl name="薄皮饅頭" quantity={0} onQuantityChange={() => {}} stock={3} />
-            <ProductQuantityControl name="チョコレート" quantity={0} onQuantityChange={() => {}} stock={500} />
-          </Flex>
-          <Flex flexDir="column" padding={1} width="100%" gap={2} paddingTop={2}>
-            <Text fontSize="xl" fontWeight="semibold" color="gray.600">
-              物販
-            </Text>
-            <ProductQuantityControl
-              name="(豆)ロゴスブレンド〜豊穣〜"
-              quantity={0}
-              onQuantityChange={() => {}}
-              stock={0}
-            />
-            <ProductQuantityControl name="(豆)茜ブレンド" quantity={0} onQuantityChange={() => {}} stock={5} />
-          </Flex>
-          <ChooseOptionModal
-            isOpen={isOpenChooseOptionModal}
-            onClose={onCloseChooseOptionModal}
-            onOpen={onOpenChooseOptionModal}
-          />
-          <TicketNumberInputModal
-            isOpen={isOpenTicketNumberInputModal}
-            onClose={onCloseTicketNumberInputModal}
-            onOpen={onOpenTicketNumberInputModal}
-          />
+          {categories.map((category) => (
+            <Flex flexDir="column" padding={1} width="100%" gap={2} key={category.id}>
+              {/* CategoryName */}
+              <Text fontSize="xl" fontWeight="semibold" color="gray.600">
+                {category.name}
+              </Text>
+              {category.products.map((product) => {
+                if (product.productType === ProductType.COFFEE) {
+                  return (
+                    <ProductInfoButton
+                      key={product.productId}
+                      name={product.productName}
+                      quantity={getQuantity(product) ?? 0}
+                      onClick={() => onOpenChooseOptionModalOverride(product)}
+                    />
+                  );
+                } else {
+                  return (
+                    <ProductQuantityControl
+                      key={product.productId}
+                      name={product.productName}
+                      quantity={getQuantity(product) ?? 0}
+                      onClick={() => onAddItem(product)}
+                      onQuantityChange={(newQuantity) => onChangeQuantity(product, newQuantity)}
+                      stock={product.stock?.quantity ?? -1}
+                    />
+                  );
+                }
+              })}
+            </Flex>
+          ))}
         </Flex>
       </Flex>
 
@@ -130,10 +186,51 @@ export default function OrderEntry() {
         >
           戻る
         </Button>
-        <Button flex={3} size="lg" colorScheme="green" leftIcon={<HiCheckCircle />} as={Link} href="/orderCheck">
+        <Button flex={3} size="lg" colorScheme="green" leftIcon={<HiCheckCircle />} onClick={toOrderCheck}>
           注文確認
         </Button>
       </Flex>
+      <TicketNumberInputModal
+        isOpen={isOpenTicketNumberInputModal}
+        onClose={onCloseTicketNumberInputModal}
+        onOpen={onOpenTicketNumberInputModal}
+        onConfirm={onConfirmSeatName}
+      />
+      <ChooseOptionModal
+        isOpen={isOpenChooseOptionModal}
+        onClose={onCloseChooseOptionModal}
+        onConfirm={(id) => {
+          if (currentProduct == null) return;
+          onAddItem(
+            currentProduct,
+            currentProduct.coffeeBrews.find((v) => v.id === id)
+          );
+        }}
+        onQuantityChange={(id, newQuantity) => {
+          if (currentProduct == null) return;
+          onChangeQuantity(
+            currentProduct,
+            newQuantity,
+            currentProduct.coffeeBrews.find((v) => v.id === id)
+          );
+        }}
+        options={
+          currentProduct?.coffeeBrews.map((v) => ({
+            id: v.id,
+            name: v.name,
+            quantity: getQuantity(currentProduct, v) ?? 0,
+          })) ?? []
+        }
+      />
     </>
   );
+}
+
+export default function Page() {
+  const usecase = useOrderEntryUseCase();
+
+  if (usecase.state === 0) {
+    return <OrderEntry {...usecase} />;
+  }
+  return <OrderCheck {...usecase} />;
 }

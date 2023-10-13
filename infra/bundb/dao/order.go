@@ -15,7 +15,7 @@ type Order struct {
 	Seat   *Seat `bun:"rel:belongs-to,join:seat_id=id"`
 
 	OrderItems     []*OrderItem     `bun:"rel:has-many,join:id=order_id"`
-	OrderPayment   *OrderPayment    `bun:"rel:has-one"`
 	OrderDiscounts []*OrderDiscount `bun:"rel:has-many"`
 	OrderTicket    *OrderTicket     `bun:"rel:has-one,join:id=order_id"`
+	OrderPayment   *OrderPayment    `bun:"rel:has-one,join:id=order_id"`
 }

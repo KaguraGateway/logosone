@@ -25,9 +25,11 @@ type ProductParam struct {
 	StockId           string
 }
 
-type OrderPaymentParam struct {
+type PaymentParam struct {
 	Id            string
 	PaymentType   model.PaymentType
+	PostOrders    []PostOrderParam
+	OrderIds      []string
 	ReceiveAmount uint64
 	PaymentAmount uint64
 	ChangeAmount  uint64

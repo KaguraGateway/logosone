@@ -14,5 +14,5 @@ type ProductQueryService interface {
 type OrderQueryService interface {
 	FindAll(ctx context.Context) ([]*model.Order, error)
 	FindById(ctx context.Context, id string) (*model.Order, error)
-	FindBySeatId(ctx context.Context, seatId string) (*model.Order, error)
+	FindAllBySeatId(ctx context.Context, seatId string) ([]*model.Order, error)
 }

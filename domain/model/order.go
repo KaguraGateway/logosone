@@ -3,7 +3,6 @@ package model
 import (
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
 	"github.com/oklog/ulid/v2"
 )
 
@@ -12,7 +11,6 @@ type Order struct {
 	orderItems []OrderItem
 	discounts  []Discount
 	orderType  OrderType
-	payment    *OrderPayment
 	orderAt    synchro.Time[tz.UTC]
 	clientId   string
 	seatId     string
@@ -30,13 +28,12 @@ func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType,
 	}
 }
 
-func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, orderType OrderType, payment *OrderPayment, orderAt synchro.Time[tz.UTC], clientId string, seatId string) *Order {
+func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, orderType OrderType, orderAt synchro.Time[tz.UTC], clientId string, seatId string) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
 		discounts:  discounts,
 		orderType:  orderType,
-		payment:    payment,
 		orderAt:    orderAt,
 		clientId:   clientId,
 		seatId:     seatId,
@@ -78,10 +75,6 @@ func (order *Order) GetDiscounts() []Discount {
 	return order.discounts
 }
 
-func (order *Order) GetPayment() *OrderPayment {
-	return order.payment
-}
-
 func (order *Order) GetOrderAt() synchro.Time[tz.UTC] {
 	return order.orderAt
 }
@@ -96,15 +89,4 @@ func (order *Order) GetSeatId() string {
 
 func (order *Order) GetOrderType() OrderType {
 	return order.orderType
-}
-
-func (order *Order) Pay(payment OrderPayment) error {
-	if payment.PaymentAmount != order.GetTotalAmount() {
-		return domain.ErrPaymentAmountInvalid
-	} else if !payment.IsEnoughAmount() {
-		return domain.ErrPaymentNotEnough
-	}
-	order.payment = &payment
-
-	return nil
 }

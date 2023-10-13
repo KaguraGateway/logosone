@@ -29,7 +29,6 @@ type PostOrderParam struct {
 	OrderItems     []*OrderItemParam
 	OrderDiscounts []*OrderDiscountParam
 	OrderType      model.OrderType
-	Payment        *OrderPaymentParam
 	OrderAt        synchro.Time[tz.UTC]
 	ClientId       string
 	SeatId         string
@@ -42,7 +41,7 @@ type PostOrder interface {
 type postOrderUseCase struct {
 	orderRepo         repository.OrderRepository
 	orderItemRepo     repository.OrderItemRepository
-	orderPaymentRepo  repository.OrderPaymentRepository
+	orderPaymentRepo  repository.PaymentRepository
 	orderDiscountRepo repository.OrderDiscountRepository
 	orderQS           OrderQueryService
 	productQS         ProductQueryService
@@ -56,7 +55,7 @@ type postOrderUseCase struct {
 func NewPostOrderUseCase(i *do.Injector) (PostOrder, error) {
 	return &postOrderUseCase{
 		orderRepo:         do.MustInvoke[repository.OrderRepository](i),
-		orderPaymentRepo:  do.MustInvoke[repository.OrderPaymentRepository](i),
+		orderPaymentRepo:  do.MustInvoke[repository.PaymentRepository](i),
 		orderDiscountRepo: do.MustInvoke[repository.OrderDiscountRepository](i),
 		orderItemRepo:     do.MustInvoke[repository.OrderItemRepository](i),
 		orderQS:           do.MustInvoke[OrderQueryService](i),
@@ -133,7 +132,6 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 				orderItems,
 				discounts,
 				param.OrderType,
-				nil,
 				param.OrderAt,
 				param.ClientId,
 				param.SeatId,
@@ -150,28 +148,6 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		}
 		for _, item := range orderDiscounts {
 			if err := uc.orderDiscountRepo.SaveTx(ctx, tx, item); err != nil {
-				return err
-			}
-		}
-		// 支払い情報がある場合は保存
-		if param.Payment != nil {
-			payment := model.ReconstructOrderPayment(
-				param.Payment.Id,
-				order.GetId(),
-				param.Payment.PaymentType,
-				param.Payment.ReceiveAmount,
-				param.Payment.PaymentAmount,
-				param.Payment.PaymentAt,
-				param.Payment.UpdatedAt,
-			)
-			// 入力側とお釣りに違いがないか
-			if payment.GetChangeAmount() != param.Payment.ChangeAmount {
-				return ErrPaymentChangeAmountDiff
-			}
-			if err := order.Pay(*payment); err != nil {
-				return err
-			}
-			if err := uc.orderPaymentRepo.SaveTx(ctx, tx, payment); err != nil {
 				return err
 			}
 		}

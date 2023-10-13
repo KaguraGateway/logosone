@@ -16,6 +16,7 @@ func init() {
 		(*dao.OrderDiscount)(nil),
 		(*dao.OrderItem)(nil),
 		(*dao.OrderPayment)(nil),
+		(*dao.Payment)(nil),
 		(*dao.Product)(nil),
 		(*dao.ProductCategory)(nil),
 		(*dao.ProductCoffeeBrew)(nil),

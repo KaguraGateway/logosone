@@ -1,6 +1,7 @@
 package grpc_server
 
 import (
+	"connectrpc.com/connect"
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
@@ -102,13 +103,14 @@ func ToProtoOrderDiscount(discount *model.Discount) *pos.OrderDiscount {
 	}
 }
 
-func ToProtoOrderPayment(payment *model.OrderPayment) *pos.OrderPayment {
+func ToProtoPayment(payment *model.Payment) *pos.Payment {
 	if payment == nil {
 		return nil
 	}
-	return &pos.OrderPayment{
+	return &pos.Payment{
 		Id:            payment.GetId(),
-		Type:          pos.OrderPayment_PaymentType(payment.GetPaymentType()),
+		Type:          pos.Payment_PaymentType(payment.GetPaymentType()),
+		OrderIds:      payment.GetOrderIds(),
 		ReceiveAmount: payment.ReceiveAmount,
 		PaymentAmount: payment.PaymentAmount,
 		ChangeAmount:  payment.GetChangeAmount(),
@@ -130,7 +132,6 @@ func ToProtoOrder(order *model.Order) *pos.Order {
 			return ToProtoOrderDiscount(&discount)
 		}),
 		OrderType:  pos.OrderType(order.GetOrderType()),
-		Payment:    ToProtoOrderPayment(order.GetPayment()),
 		OrderAt:    ToISO8601(order.GetOrderAt()),
 		CallNumber: "", // TODO: implement
 		SeatName:   "", // TODO: implement
@@ -161,7 +162,37 @@ func ToProductParam(product *pos.ProductParam) *application.ProductParam {
 	}
 }
 
-func ToOrderPaymentParam(payment *pos.OrderPayment) (*application.OrderPaymentParam, error) {
+func ToOrderParam(reqOrder *pos.OrderParam) (*application.PostOrderParam, error) {
+	orderAt, err := synchro.ParseISO[tz.UTC](reqOrder.OrderAt)
+	if err != nil {
+		return nil, connect.NewError(connect.CodeInternal, err)
+	}
+	return &application.PostOrderParam{
+		Id: reqOrder.Id,
+		OrderItems: lo.Map(reqOrder.Items, func(orderItem *pos.OrderItem, _ int) *application.OrderItemParam {
+			return &application.OrderItemParam{
+				ProductId:    orderItem.ProductId,
+				Quantity:     uint64(orderItem.Quantity),
+				Amount:       orderItem.Amount,
+				CoffeeBrewId: orderItem.CoffeeBrewId,
+			}
+		}),
+		OrderDiscounts: lo.Map(reqOrder.Discounts, func(orderDiscount *pos.OrderDiscount, _ int) *application.OrderDiscountParam {
+			return &application.OrderDiscountParam{
+				Id:            orderDiscount.Id,
+				DiscountId:    orderDiscount.DiscountId,
+				DiscountType:  model.DiscountType(orderDiscount.Type),
+				DiscountPrice: orderDiscount.DiscountPrice,
+			}
+		}),
+		OrderType: model.OrderType(reqOrder.OrderType),
+		OrderAt:   orderAt,
+		ClientId:  reqOrder.ClientId,
+		SeatId:    reqOrder.SeatId,
+	}, nil
+}
+
+func ToPaymentParam(payment *pos.Payment) (*application.PaymentParam, error) {
 	if payment == nil {
 		return nil, nil
 	}
@@ -173,7 +204,15 @@ func ToOrderPaymentParam(payment *pos.OrderPayment) (*application.OrderPaymentPa
 	if err != nil {
 		return nil, err
 	}
-	return &application.OrderPaymentParam{
+	postOrders := make([]application.PostOrderParam, 0)
+	for _, postOrder := range payment.PostOrders {
+		if orderParam, err := ToOrderParam(postOrder); err != nil {
+			return nil, err
+		} else {
+			postOrders = append(postOrders, *orderParam)
+		}
+	}
+	return &application.PaymentParam{
 		Id:            payment.Id,
 		PaymentType:   model.PaymentType(payment.Type),
 		ReceiveAmount: payment.ReceiveAmount,
@@ -181,6 +220,8 @@ func ToOrderPaymentParam(payment *pos.OrderPayment) (*application.OrderPaymentPa
 		ChangeAmount:  payment.ChangeAmount,
 		PaymentAt:     paymentAt,
 		UpdatedAt:     updatedAt,
+		OrderIds:      payment.OrderIds,
+		PostOrders:    postOrders,
 	}, nil
 }
 

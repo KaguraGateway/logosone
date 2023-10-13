@@ -11,6 +11,7 @@ import (
 	"github.com/samber/do"
 	"github.com/samber/lo"
 	"github.com/uptrace/bun"
+	"log"
 )
 
 type orderDb struct {
@@ -82,7 +83,6 @@ func toOrder(daoOrder *dao.Order) *model.Order {
 			return *toOrderDiscount(*discount)
 		}),
 		model.OrderType(daoOrder.OrderType),
-		toOrderPayment(daoOrder.OrderPayment),
 		synchro.In[tz.UTC](daoOrder.OrderAt),
 		daoOrder.ClientID,
 		daoOrder.SeatID,
@@ -92,6 +92,7 @@ func toOrder(daoOrder *dao.Order) *model.Order {
 func orderRelationQuery(q *bun.SelectQuery) *bun.SelectQuery {
 	return q.
 		Relation("OrderItems").
+		Relation("OrderItems.CoffeeBrew").
 		Relation("OrderItems.Product").
 		Relation("OrderItems.Product.Category").
 		Relation("OrderItems.Product.CoffeeBean").
@@ -99,7 +100,9 @@ func orderRelationQuery(q *bun.SelectQuery) *bun.SelectQuery {
 		Relation("OrderItems.Product.Stock").
 		Relation("OrderDiscounts").
 		Relation("OrderDiscounts.Discount").
-		Relation("OrderPayment")
+		Relation("OrderPayment").
+		Relation("OrderPayment.Payment").
+		Relation("Seat")
 }
 
 func (i *orderQueryServiceDb) FindAll(ctx context.Context) ([]*model.Order, error) {
@@ -114,16 +117,24 @@ func (i *orderQueryServiceDb) FindAll(ctx context.Context) ([]*model.Order, erro
 
 func (i *orderQueryServiceDb) FindById(ctx context.Context, id string) (*model.Order, error) {
 	daoOrder := new(dao.Order)
-	if err := orderRelationQuery(i.db.NewSelect().Model(daoOrder).Column("order.*")).Where("order.id = ?", id).Scan(ctx); err != nil {
+	if err := orderRelationQuery(i.db.NewSelect().Model(daoOrder).Column("order.*").Where("\"order\".\"id\" = ?", id)).Scan(ctx); err != nil {
 		return nil, err
 	}
 	return toOrder(daoOrder), nil
 }
 
-func (i *orderQueryServiceDb) FindBySeatId(ctx context.Context, seatId string) (*model.Order, error) {
-	daoOrder := new(dao.Order)
-	if err := orderRelationQuery(i.db.NewSelect().Model(daoOrder).Column("order.*")).Where("order.seat_id = ?", seatId).Scan(ctx); err != nil {
+func (i *orderQueryServiceDb) FindAllBySeatId(ctx context.Context, seatId string) ([]*model.Order, error) {
+	daoOrders := make([]dao.Order, 0)
+	if err := orderRelationQuery(i.db.NewSelect().Model(&daoOrders).Where("seat_id = ?", seatId)).Scan(ctx); err != nil {
 		return nil, err
 	}
-	return toOrder(daoOrder), nil
+	log.Printf("daoOrders: %+v", daoOrders)
+	filteredOrders := lo.Filter(daoOrders, func(daoOrder dao.Order, _ int) bool {
+		return daoOrder.OrderPayment == nil
+	})
+	log.Printf("filteredOrders: %+v", filteredOrders)
+
+	return lo.Map(filteredOrders, func(daoOrder dao.Order, _ int) *model.Order {
+		return toOrder(&daoOrder)
+	}), nil
 }

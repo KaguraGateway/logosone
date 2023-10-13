@@ -10,4 +10,4 @@ RUN cargo build --release
 
 ENV PORT 8080
 
-ENTRYPOINT ["/app/target/release/cafelogos-ticket-backend"]
+CMD ["/app/target/release/cafelogos-ticket-backend"]

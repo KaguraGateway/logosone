@@ -1,5 +1,8 @@
 import { atom, useAtom } from 'jotai';
 import { useCallback, useContext, useEffect } from 'react';
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+///@ts-ignore
+import useSound from 'use-sound';
 
 import { EventSchema } from '@/zod/event';
 import { OrderItemStatus } from '@/zod/order_items';
@@ -16,6 +19,7 @@ export function useOrderLink() {
   const { client } = useContext(WebSocketContext);
   const [orders, setOrders] = useAtom(ordersAtom);
   const [isConnected, setIsConnected] = useAtom(connectionStateAtom);
+  const [play] = useSound('/orderlink_sound.mp3');
 
   // Ordersまわりの処理
   useEffect(() => {
@@ -40,6 +44,7 @@ export function useOrderLink() {
           })),
         },
       ]);
+      play();
     };
     const onUpdatedOrder = (e: WSEventMsg) => {
       const orderStatus = UpdatedOrderSchema.parse(e.detail.Message);
@@ -96,7 +101,7 @@ export function useOrderLink() {
     return () => {
       client.off('event', onEvent);
     };
-  }, [client, orders, setOrders]);
+  }, [client, orders, play, setOrders]);
 
   // 注文を取得する
   const fetchOrders = useCallback(() => {

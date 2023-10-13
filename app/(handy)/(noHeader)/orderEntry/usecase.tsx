@@ -116,7 +116,11 @@ export function useOrderEntryUseCase() {
     }
     if (items.has(key)) {
       setItems((prev) => {
-        prev.get(key)!.quantity = newQuantity;
+        if (newQuantity === 0) {
+          prev.delete(key);
+        } else {
+          prev.get(key)!.quantity = newQuantity;
+        }
         return rebuildMap(prev);
       });
     }

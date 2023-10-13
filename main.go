@@ -10,7 +10,6 @@ import (
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/orderlink_server"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/ticket_server"
-	"log"
 	"net"
 	"net/http"
 	"os"
@@ -19,7 +18,6 @@ import (
 	"github.com/KaguraGateway/cafelogos-pos-backend/application"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/bundb"
 	"github.com/KaguraGateway/cafelogos-pos-backend/presentation/grpc_server"
-	"github.com/joho/godotenv"
 	"github.com/rs/cors"
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
@@ -36,9 +34,9 @@ var (
 
 func main() {
 	// Load .env
-	if err := godotenv.Load(); err != nil {
-		log.Print(err)
-	}
+	//if err := godotenv.Load(); err != nil {
+	//	log.Print(err)
+	//}
 
 	// Start DB
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(os.Getenv("DATABASE_URL"))))

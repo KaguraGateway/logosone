@@ -1,9 +1,14 @@
-FROM oven/bun:latest
+FROM node:18
+
+WORKDIR /usr/src/app/logos
 
 COPY . ./
 
-RUN bun install
-RUN bun run build
+RUN npm install
+
+ENV NEXT_PUBLIC_POS_GRPC=https://cafelogos-pos-backend-qlrb2to2zq-an.a.run.app
+
+RUN npm run build
 
 EXPOSE 3000
-CMD ["bun", "start"]
+CMD ["npm", "start"]

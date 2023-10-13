@@ -37,7 +37,7 @@ var (
 func main() {
 	// Load .env
 	if err := godotenv.Load(); err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 
 	// Start DB

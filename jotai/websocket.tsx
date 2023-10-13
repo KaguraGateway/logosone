@@ -20,6 +20,7 @@ class WebSocketClient {
     event: [],
   };
   private ws: WebSocket | null = null;
+  private pingTimer: NodeJS.Timeout | null = null;
   private connectionRetryCount = 0;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

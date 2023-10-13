@@ -124,11 +124,15 @@ export function useOrderLink() {
     client.on('open', onOpen);
     client.on('close', onClose);
 
+    if (!isConnected && client.readyState() === WebSocket.OPEN) {
+      onOpen();
+    }
+
     return () => {
       client.off('open', onOpen);
       client.off('close', onClose);
     };
-  }, [client, fetchOrders, setIsConnected]);
+  }, [client, fetchOrders, isConnected, setIsConnected]);
 
   // Order状態遷移
   const UpdateOrderStatus = (orderId: string, newStatus: OrderStatus) => {

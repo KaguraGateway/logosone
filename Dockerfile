@@ -2,7 +2,7 @@ FROM oven/bun:latest
 
 COPY . ./
 
-RUN bun install --frozen-lockfile
+RUN bun install
 RUN bun run build
 
 EXPOSE 3000

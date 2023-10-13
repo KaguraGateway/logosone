@@ -2,7 +2,6 @@ package main
 
 import (
 	"connectrpc.com/connect"
-	"crypto/tls"
 	"database/sql"
 	"flag"
 	"fmt"
@@ -10,7 +9,6 @@ import (
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/orderlink_server"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/ticket_server"
-	"net"
 	"net/http"
 	"os"
 
@@ -24,7 +22,6 @@ import (
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
 	"github.com/uptrace/bun/extra/bundebug"
-	"golang.org/x/net/http2"
 )
 
 var (
@@ -50,14 +47,7 @@ func main() {
 
 	// Start Ticket Client
 	ticketClient := ticketconnect.NewTicketServiceClient(
-		&http.Client{
-			Transport: &http2.Transport{
-				AllowHTTP: true,
-				DialTLS: func(network, addr string, cfg *tls.Config) (net.Conn, error) {
-					return net.Dial(network, addr)
-				},
-			},
-		},
+		http.DefaultClient,
 		os.Getenv("TICKET_GRPC"),
 		connect.WithGRPC(),
 	)

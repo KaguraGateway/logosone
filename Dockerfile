@@ -1,5 +1,7 @@
 FROM node:18
 
+WORKDIR /usr/src/app/logos
+
 COPY . ./
 
 RUN npm install

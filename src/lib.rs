@@ -23,7 +23,7 @@ pub async fn run_server() -> Result<(), Box<dyn std::error::Error>> {
         .with_component_parameters::<TicketRepositoryDb>(TicketRepositoryDbParameters { db })
         .build();
 
-    let addr = format!("[::1]:{port}").parse().unwrap();
+    let addr = format!("0.0.0.0:{port}").parse().unwrap();
     let service = TicketServiceServer::new(TicketServiceImpl { module });
 
     println!("Server listening on: {}", addr);

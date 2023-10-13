@@ -1,10 +1,9 @@
-FROM oven/bun:latest
+FROM node:18
 
 COPY . ./
 
-RUN bun install
-RUN npm install git+https://github.com/KaguraGateway/cafelogos-grpc.git
-RUN bun run build
+RUN npm install
+RUN npm run build
 
 EXPOSE 3000
-CMD ["bun", "start"]
+CMD ["npm", "start"]

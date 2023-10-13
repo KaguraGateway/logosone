@@ -1,3 +1,4 @@
+'use client';
 import { createPromiseClient } from '@connectrpc/connect';
 import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
 import { atom, useAtom } from 'jotai';
@@ -5,6 +6,10 @@ import { atom, useAtom } from 'jotai';
 import { createTransport } from '@/query/transport';
 
 const clientIdAtom = atom(async () => {
+  if (typeof window === 'undefined') {
+    return '';
+  }
+
   let clientId = window.localStorage.getItem('clientId');
   if (clientId == null) {
     const transport = createTransport();

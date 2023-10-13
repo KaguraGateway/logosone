@@ -14,7 +14,11 @@ pub mod infra;
 pub mod presentation;
 
 pub async fn run_server() -> Result<(), Box<dyn std::error::Error>> {
-    dotenv().ok();
+    if env::var("DATABASE_URL").is_err() {
+        dotenv().ok();
+    }
+
+    println!("Starting server...");
 
     let db = Database::connect(env::var("DATABASE_URL")?).await?;
     let port = env::var("PORT")?;

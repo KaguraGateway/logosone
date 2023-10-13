@@ -44,15 +44,28 @@ func (i *stockDb) FindById(ctx context.Context, id string) (*model.Stock, error)
 	return toStock(*daoStock), nil
 }
 
-func (i *stockDb) Save(ctx context.Context, stock *model.Stock) error {
-	daoStock := &dao.Stock{
+func toDaoStock(stock *model.Stock) *dao.Stock {
+	return &dao.Stock{
 		ID:        stock.GetId(),
 		Name:      stock.GetName(),
 		Quantity:  int(stock.Quantity),
 		CreatedAt: stock.GetCreatedAt().StdTime(),
 		UpdatedAt: synchro.Now[tz.UTC]().StdTime(),
 	}
+}
+
+func (i *stockDb) Save(ctx context.Context, stock *model.Stock) error {
+	daoStock := toDaoStock(stock)
 	if _, err := i.db.NewInsert().Model(daoStock).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("quantity = EXCLUDED.quantity").Exec(ctx); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (i *stockDb) SaveTx(ctx context.Context, tx interface{}, stock *model.Stock) error {
+	bunTx := tx.(bun.Tx)
+	daoStock := toDaoStock(stock)
+	if _, err := bunTx.NewInsert().Model(daoStock).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("quantity = EXCLUDED.quantity").Exec(ctx); err != nil {
 		return err
 	}
 	return nil

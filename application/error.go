@@ -11,3 +11,4 @@ var ErrProductAmountDiff = errors.New("Product amount entered differs from the p
 var ErrPaymentAmountDiff = errors.New("payment amount diff")
 var ErrPaymentChangeAmountDiff = errors.New("Wrong change.")
 var ErrPaymentNotEnough = errors.New("Payment not enough")
+var ErrProductStockShortage = errors.New("Product stock shortage")

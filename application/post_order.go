@@ -49,6 +49,7 @@ type postOrderUseCase struct {
 	discountRepo      repository.DiscountRepository
 	orderTicketRepo   repository.OrderTicketRepository
 	orderHookRepo     repository.OrderHookRepository
+	stockRepo         repository.StockRepository
 	txRepo            repository.TxRepository
 }
 
@@ -64,6 +65,7 @@ func NewPostOrderUseCase(i *do.Injector) (PostOrder, error) {
 		discountRepo:      do.MustInvoke[repository.DiscountRepository](i),
 		orderTicketRepo:   do.MustInvoke[repository.OrderTicketRepository](i),
 		orderHookRepo:     do.MustInvoke[repository.OrderHookRepository](i),
+		stockRepo:         do.MustInvoke[repository.StockRepository](i),
 		txRepo:            do.MustInvoke[repository.TxRepository](i),
 	}, nil
 }
@@ -73,6 +75,7 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 	defer cancel()
 
 	var orderItems []model.OrderItem
+	var updateStocks []*model.Stock
 	for _, item := range param.OrderItems {
 		product, err := uc.productQS.FindById(ctx, item.ProductId)
 		if err != nil {
@@ -82,6 +85,16 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		// コーヒの場合とその他で処理が違うので分岐
 		if len(item.CoffeeBrewId) == 0 {
 			orderItem = model.NewOrderItem(*product, item.Quantity)
+			// 在庫減らす
+			if product.Stock != nil {
+				// 在庫チェック
+				if product.Stock.Quantity < int32(item.Quantity) {
+					return nil, nil, ErrProductStockShortage
+				}
+				// 減らす
+				product.Stock.Quantity = product.Stock.Quantity - int32(item.Quantity)
+				updateStocks = append(updateStocks, product.Stock)
+			}
 		} else {
 			coffeeBrew, err := uc.coffeeBrewRepo.FindById(ctx, item.CoffeeBrewId)
 			if err != nil {
@@ -148,6 +161,13 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		}
 		for _, item := range orderDiscounts {
 			if err := uc.orderDiscountRepo.SaveTx(ctx, tx, item); err != nil {
+				return err
+			}
+		}
+
+		// 在庫減らす
+		for _, item := range updateStocks {
+			if err := uc.stockRepo.SaveTx(ctx, tx, item); err != nil {
 				return err
 			}
 		}

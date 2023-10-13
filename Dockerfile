@@ -4,8 +4,8 @@ COPY . ./
 
 RUN bun install
 RUN bun add git+https://github.com/KaguraGateway/cafelogos-grpc.git
-RUN ls -la
-RUN ls -la node_modules
+RUN pwd
+RUN ls -la node_modules/@kaguragateway
 RUN bun run build
 
 EXPOSE 3000

@@ -25,7 +25,6 @@ import (
 	"github.com/uptrace/bun/driver/pgdriver"
 	"github.com/uptrace/bun/extra/bundebug"
 	"golang.org/x/net/http2"
-	"golang.org/x/net/http2/h2c"
 )
 
 var (
@@ -75,7 +74,8 @@ func main() {
 	mux := http.NewServeMux()
 	path, handler := posconnect.NewPosServiceHandler(grpc_server.NewGrpcServer(db, i))
 	mux.Handle(path, handler)
-	if err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), cors.AllowAll().Handler(h2c.NewHandler(mux, &http2.Server{}))); err != nil {
+	corsHandler := cors.AllowAll().Handler(mux)
+	if err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), corsHandler); err != nil {
 		panic(err)
 	}
 }

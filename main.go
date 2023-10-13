@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -36,7 +37,7 @@ import (
 func main() {
 	// Load .env
 	if err := godotenv.Load(); err != nil {
-		panic(err)
+		log.Print(err)
 	}
 
 	// Sentry

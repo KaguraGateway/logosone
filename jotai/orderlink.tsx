@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { EventSchema } from '@/zod/event';
 import { OrderItemStatus } from '@/zod/order_items';
-import { Order, OrdersSchema, OrderStatus, OrderStatusEnum } from '@/zod/orders';
+import { Order, OrdersSchema, OrderStatus } from '@/zod/orders';
 import { NewOrderSchema, UpdatedOrderItemSchema, UpdatedOrderSchema } from '@/zod/to_client';
 import { UpdateOrderItemStatusSchema, UpdateOrderStatusSchema } from '@/zod/to_server';
 
@@ -44,14 +44,12 @@ export function useOrderLink() {
     const onUpdatedOrder = (e: WSEventMsg) => {
       const orderStatus = UpdatedOrderSchema.parse(e.detail.Message);
       setOrders((orders) =>
-        orders
-          .map((order) => {
-            if (order.OrderId === orderStatus.Id) {
-              return { ...order, Status: orderStatus.Status };
-            }
-            return order;
-          })
-          .filter((order) => order.Status !== OrderStatusEnum.Provided)
+        orders.map((order) => {
+          if (order.OrderId === orderStatus.Id) {
+            return { ...order, Status: orderStatus.Status };
+          }
+          return order;
+        })
       );
     };
     const onUpdatedOrderItem = (e: WSEventMsg) => {

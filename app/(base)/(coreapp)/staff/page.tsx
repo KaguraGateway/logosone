@@ -57,6 +57,7 @@ export default function StaffPage() {
     onConfirmFilterModal,
     onAllEatInOnly,
     onAllTakeoutOnly,
+    onAllProvidedOnly,
     filteredOrders,
     staffFilter,
     onCall,
@@ -77,7 +78,7 @@ export default function StaffPage() {
             leftIcon={<FiCheckSquare />}
             fontSize="sm"
             textAlign="left"
-            onClick={onAllTakeoutOnly}
+            onClick={onAllProvidedOnly}
           >
             提供済
             <br />

@@ -17,6 +17,7 @@ export function useStaff() {
     items: getDefaultFilterItems(),
     isTakeout: true,
     isEatIn: true,
+    isProvided: false,
   });
   const { orders, UpdateOrderStatus } = useOrderLink();
   const [isOpenFilterModal, setIsFilterModal] = useState(false);
@@ -32,6 +33,7 @@ export function useStaff() {
       items,
       isTakeout: takeout,
       isEatIn: eatIn,
+      isProvided: false,
     });
   };
   const onAllTakeoutOnly = () => {
@@ -39,6 +41,7 @@ export function useStaff() {
       items: getDefaultFilterItems(),
       isTakeout: true,
       isEatIn: false,
+      isProvided: false,
     });
   };
   const onAllEatInOnly = () => {
@@ -46,6 +49,15 @@ export function useStaff() {
       items: getDefaultFilterItems(),
       isTakeout: false,
       isEatIn: true,
+      isProvided: false,
+    });
+  };
+  const onAllProvidedOnly = () => {
+    setStaffFilter({
+      items: getDefaultFilterItems(),
+      isTakeout: true,
+      isEatIn: true,
+      isProvided: true,
     });
   };
   const onCall = (orderId: string) => {
@@ -63,6 +75,9 @@ export function useStaff() {
       if (order.OrderType === OrderTypeEnum.TakeOut && !staffFilter.isTakeout) {
         return false;
       } else if (order.OrderType === OrderTypeEnum.EatIn && !staffFilter.isEatIn) {
+        return false;
+      }
+      if (order.Status === OrderStatusEnum.Provided && !staffFilter.isProvided) {
         return false;
       }
 
@@ -85,7 +100,7 @@ export function useStaff() {
         });
       });
     });
-  }, [getProductByProductId, orders, staffFilter.isEatIn, staffFilter.isTakeout, staffFilter.items]);
+  }, [getProductByProductId, orders, staffFilter.isEatIn, staffFilter.isProvided, staffFilter.isTakeout, staffFilter.items]);
   const cookedOrdersLen = useMemo(
     () =>
       filteredOrders.filter(
@@ -112,6 +127,7 @@ export function useStaff() {
     onConfirmFilterModal,
     onAllEatInOnly,
     onAllTakeoutOnly,
+    onAllProvidedOnly,
     filteredOrders,
     staffFilter,
     onCall,

@@ -137,7 +137,7 @@ export default function StaffPage() {
             未調理: {notYetOrdersLen}
           </Text>
         </Flex>
-        <Flex alignItems="flex-start">
+        <Flex alignItems="flex-start" flexWrap="wrap">
           {filteredOrders.map((order) => (
             <ItemCard
               key={order.OrderId}

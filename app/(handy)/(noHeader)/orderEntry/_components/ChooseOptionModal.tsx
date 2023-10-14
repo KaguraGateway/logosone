@@ -50,7 +50,7 @@ export default function ChooseOptionModal(props: Props) {
           <ModalFooter>
             {/* モーダル内での操作ボタン */}
             <Button colorScheme="green" mr={3} onClick={props.onClose} width="100%">
-              確認
+              閉じる
             </Button>
           </ModalFooter>
         </ModalContent>

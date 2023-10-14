@@ -2,6 +2,8 @@ package main
 
 import (
 	"connectrpc.com/connect"
+	"context"
+	"crypto/tls"
 	"database/sql"
 	"flag"
 	"fmt"
@@ -9,6 +11,10 @@ import (
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/orderlink_server"
 	"github.com/KaguraGateway/cafelogos-pos-backend/infra/ticket_server"
+	"github.com/joho/godotenv"
+	"golang.org/x/net/http2"
+	"log"
+	"net"
 	"net/http"
 	"os"
 
@@ -30,9 +36,17 @@ var (
 
 func main() {
 	// Load .env
-	//if err := godotenv.Load(); err != nil {
-	//	log.Print(err)
-	//}
+	if _, ok := os.LookupEnv("DATABASE_URL"); !ok {
+		if err := godotenv.Load(); err != nil {
+			log.Print(err)
+		}
+	}
+
+	// 開発環境であるか、そうでないかを判定する
+	var isDev = false
+	if _, ok := os.LookupEnv("DEV_MODE"); ok {
+		isDev = true
+	}
 
 	// Start DB
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(os.Getenv("DATABASE_URL"))))
@@ -46,19 +60,30 @@ func main() {
 	}(db)
 
 	// Start Ticket Client
+	var ticketHttpClient = http.DefaultClient
+	if isDev {
+		ticketHttpClient = &http.Client{
+			Transport: &http2.Transport{
+				AllowHTTP: true,
+				DialTLSContext: func(ctx context.Context, network, addr string, cfg *tls.Config) (net.Conn, error) {
+					return net.Dial(network, addr)
+				},
+			},
+		}
+	}
 	ticketClient := ticketconnect.NewTicketServiceClient(
-		http.DefaultClient,
+		ticketHttpClient,
 		os.Getenv("TICKET_GRPC"),
 		connect.WithGRPC(),
 	)
 	// Start OrderLink Client
-	orderlinkClient := orderlinkconnect.NewOrderLinkServiceClient(
+	orderLinkClient := orderlinkconnect.NewOrderLinkServiceClient(
 		http.DefaultClient,
 		os.Getenv("ORDERLINK_GRPC"),
 	)
 
 	// Start DI
-	i := buildInjector(db, ticketClient, orderlinkClient)
+	i := buildInjector(db, ticketClient, orderLinkClient)
 
 	// Start gRPC server
 	mux := http.NewServeMux()
@@ -70,7 +95,7 @@ func main() {
 	}
 }
 
-func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, orderlinkClient orderlinkconnect.OrderLinkServiceClient) *do.Injector {
+func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, orderLinkClient orderlinkconnect.OrderLinkServiceClient) *do.Injector {
 	i := do.New()
 
 	// Register DB
@@ -81,7 +106,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 		return ticketClient, nil
 	})
 	do.Provide(i, func(i *do.Injector) (orderlinkconnect.OrderLinkServiceClient, error) {
-		return orderlinkClient, nil
+		return orderLinkClient, nil
 	})
 	// Register repositories
 	do.Provide(i, bundb.NewCoffeeBeanDb)

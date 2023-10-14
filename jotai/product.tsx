@@ -32,7 +32,9 @@ export function useProduct() {
   };
   const getCoffeeBrew = (coffeeBrew: string) => {
     for (const product of products) {
-      return product.coffeeBrews.find((brew) => brew.id === coffeeBrew);
+      if (product.coffeeBrews.find((brew) => brew.id === coffeeBrew) != null) {
+        return product.coffeeBrews.find((brew) => brew.id === coffeeBrew);
+      }
     }
     return undefined;
   };

@@ -32,7 +32,7 @@ func (i *orderItemDb) SaveTx(ctx context.Context, tx interface{}, orderId string
 		Amount:       orderItem.GetProductAmount(),
 		CoffeeBrewID: coffeeBrewId,
 	}
-	if _, err := bunTx.NewInsert().Model(daoOrderItem).Ignore().Exec(ctx); err != nil {
+	if _, err := bunTx.NewInsert().Model(daoOrderItem).Exec(ctx); err != nil {
 		return err
 	}
 	return nil

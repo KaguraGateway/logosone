@@ -1,37 +1,45 @@
 import {
   Button,
   Flex,
-  Input,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   Radio,
   RadioGroup,
   Spacer,
   Stack,
+  VStack,
 } from '@chakra-ui/react';
-import React, { ChangeEvent } from 'react';
+import React, { useMemo } from 'react';
+
+import { useSeatQuery } from '@/query/getSeats';
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
-  onConfirm: (seat: string) => void;
+  onConfirm: (seatId: string) => void;
 };
 
 export default function TicketNumberInputModal(props: Props) {
   const [group, setGroup] = React.useState('テーブル');
-  const [value, setValue] = React.useState('');
 
-  const onChangeValue = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-  const onConfirm = () => {
-    props.onConfirm(`${group}${value}`);
+  const seatQuery = useSeatQuery();
+  const groupSeats = useMemo(() => {
+    if (group === 'その他') {
+      return (
+        seatQuery.data?.seats.filter(
+          (seat) => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター')
+        ) ?? []
+      );
+    }
+    return seatQuery.data?.seats.filter((seat) => seat.name.startsWith(group)) ?? [];
+  }, [group, seatQuery.data?.seats]);
+
+  const onConfirm = (seatId: string) => {
+    props.onConfirm(seatId);
     props.onClose();
   };
 
@@ -42,7 +50,6 @@ export default function TicketNumberInputModal(props: Props) {
         <ModalOverlay />
         <ModalContent bg="gray.100">
           <ModalHeader>座席・伝票番号を入力</ModalHeader>
-          <ModalCloseButton />
           <ModalBody pb={6}>
             {/* モーダル内のコンテンツ */}
             <Flex flexDir="column" gap={3}>
@@ -59,18 +66,22 @@ export default function TicketNumberInputModal(props: Props) {
                   </Radio>
                 </Stack>
               </RadioGroup>
-
               <Spacer />
-              <Input size={'md'} bg={'white'} placeholder="1" value={value} onChange={onChangeValue} />
+              <VStack flexWrap="wrap" spacing={4} align="stretch">
+                {groupSeats.map((seat) => (
+                  <Button
+                    key={seat.id}
+                    size={'lg'}
+                    colorScheme="teal"
+                    fontSize={'2xl'}
+                    onClick={() => onConfirm(seat.id)}
+                  >
+                    {seat.name}
+                  </Button>
+                ))}
+              </VStack>
             </Flex>
           </ModalBody>
-
-          <ModalFooter>
-            {/* モーダル内での操作ボタン */}
-            <Button colorScheme="green" mr={3} onClick={onConfirm} width="100%">
-              決定
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

@@ -74,10 +74,10 @@ export function useOrderEntryUseCase() {
   }, [productQuery.data]);
   const orderItems = useMemo(() => Array.from(items.values()), [items]);
 
-  const onConfirmSeatName = (newSeatName: string) => {
-    const seat = seatQuery.data?.seats.find((seat) => seat.name === newSeatName);
+  const onConfirmSeatId = (newSeatId: string) => {
+    const seat = seatQuery.data?.seats.find((seat) => seat.id === newSeatId);
     if (seat == null) {
-      onErrorModalOpen('存在しない番号', `${newSeatName} は存在しません`);
+      onErrorModalOpen('存在しない座席ID', `${newSeatId} は存在しません。Handyを再読み込みしてください`);
       onOpenTicketNumberInputModal();
       return;
     }
@@ -86,7 +86,6 @@ export function useOrderEntryUseCase() {
   };
 
   const onAddItem = (product: Product, coffeeBrew?: CoffeeBrew) => {
-    console.log('onAdd');
     let key = product.productId;
     if (product.productType === ProductType.COFFEE) {
       key = `${product.productId}${coffeeBrew?.id}`;
@@ -150,6 +149,14 @@ export function useOrderEntryUseCase() {
     setState(1);
   };
   const onPostOrder = () => {
+    if (currentSeatId == null || currentSeatId.length === 0) {
+      onErrorModalOpen('座席IDが未入力', '座席IDを入力してください');
+      return;
+    } else if (orderItems.length === 0) {
+      onErrorModalOpen('注文が空です', '商品を追加してください');
+      return;
+    }
+
     orderMutate.mutateAsync(
       {
         order: {
@@ -182,7 +189,7 @@ export function useOrderEntryUseCase() {
   return {
     currentSeatId,
     currentSeatName,
-    onConfirmSeatName,
+    onConfirmSeatId,
     isOpenChooseOptionModal,
     onOpenChooseOptionModal,
     onCloseChooseOptionModal,

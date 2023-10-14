@@ -20,12 +20,13 @@ function OrderCheck({
   orderItems,
   getProductInfo,
   isOrderSending,
+  currentSeatName,
 }: ReturnType<typeof useOrderEntryUseCase>) {
   return (
     <>
       <Center>
         <Text fontSize="2xl" fontWeight="semibold" color="gray.600" p={4}>
-          注文確認
+          注文確認 - {currentSeatName}
         </Text>
       </Center>
       <Flex flexDir="column" padding={1} width="100%" gap={4} paddingX={4}>
@@ -83,7 +84,7 @@ function OrderCheck({
 }
 
 function OrderEntry({
-  onConfirmSeatName,
+  onConfirmSeatId,
   isOpenChooseOptionModal,
   onOpenChooseOptionModal,
   onCloseChooseOptionModal,
@@ -194,7 +195,7 @@ function OrderEntry({
         isOpen={isOpenTicketNumberInputModal}
         onClose={onCloseTicketNumberInputModal}
         onOpen={onOpenTicketNumberInputModal}
-        onConfirm={onConfirmSeatName}
+        onConfirm={onConfirmSeatId}
       />
       <ChooseOptionModal
         isOpen={isOpenChooseOptionModal}

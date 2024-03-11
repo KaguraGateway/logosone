@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/gcp"
 	"github.com/getsentry/sentry-go"
 	"github.com/labstack/echo/v4"
 	"log"
@@ -23,6 +24,8 @@ import (
 	"golang.org/x/net/http2"
 
 	gorilla "github.com/gorilla/websocket"
+
+	cloudpubsub "cloud.google.com/go/pubsub"
 
 	sentryecho "github.com/getsentry/sentry-go/echo"
 
@@ -62,23 +65,35 @@ func main() {
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(os.Getenv("DATABASE_URL"))))
 	db := bun.NewDB(sqldb, pgdialect.New())
 	db.AddQueryHook(bundebug.NewQueryHook(bundebug.WithVerbose(true)))
-	defer db.Close()
+	defer func(db *bun.DB) {
+		err := db.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}(db)
 
 	// WebSocket Clients
 	wsClients := make([]*gorilla.Conn, 0)
 
-	// Start Redis Client (Only Dev)
 	var redisClient *redis.Client
+	var cloudPubSubClient *cloudpubsub.Client
+	// Start Redis Client (Only Dev)
 	if isDev {
 		redisClient = redis.NewClient(&redis.Options{
 			Addr:     os.Getenv("REDIS_URL"),
 			Password: os.Getenv("REDIS_PASSWORD"),
 			DB:       0,
 		})
+	} else {
+		var err error
+		cloudPubSubClient, err = cloudpubsub.NewClient(context.Background(), os.Getenv("GCP_PROJECT_ID"))
+		if err != nil {
+			log.Fatalf("Cloud Pub/Sub NewClient: %v", err)
+		}
 	}
 
 	// Build Injector
-	i := buildInjector(db, wsClients, redisClient)
+	i := buildInjector(isDev, db, wsClients, redisClient, cloudPubSubClient)
 
 	// PubSub Subscribe
 	pubsubReceiver := pubsub.NewPubSubReceiver(i)
@@ -113,7 +128,7 @@ func main() {
 	}
 }
 
-func buildInjector(db *bun.DB, wsClients []*gorilla.Conn, redisClient *redis.Client) *do.Injector {
+func buildInjector(isDev bool, db *bun.DB, wsClients []*gorilla.Conn, redisClient *redis.Client, cloudPubSubClient *cloudpubsub.Client) *do.Injector {
 	i := do.New()
 
 	// Register DB
@@ -128,13 +143,20 @@ func buildInjector(db *bun.DB, wsClients []*gorilla.Conn, redisClient *redis.Cli
 	do.Provide(i, func(i *do.Injector) (*redis.Client, error) {
 		return redisClient, nil
 	})
+	// Register CloudPubSubClient
+	do.Provide(i, func(i *do.Injector) (*cloudpubsub.Client, error) {
+		return cloudPubSubClient, nil
+	})
 	// Register Repo
 	do.Provide(i, bundb.NewOrderItemRepositoryDb)
 	do.Provide(i, bundb.NewOrderTicketRepositoryDb)
 	do.Provide(i, bundb.NewOrderRepositoryDb)
 	do.Provide(i, bundb.NewTxRepositoryDb)
-	do.Provide(i, bundb.NewServerToServerPubSubBun)
 	do.Provide(i, websocket.NewServerToClientPubSubWS)
+	// Register S2S PubSub
+	if !isDev {
+		do.Provide(i, gcp.NewServerToServerPubSubCloudPubSub)
+	}
 	// Register QueryService
 	do.Provide(i, bundb.NewOrderQueryServiceDb)
 	// Register UseCase

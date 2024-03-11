@@ -31,15 +31,8 @@ func (r *serverToServerPubSubCloudPubSub) Publish(ctx context.Context, event mod
 }
 
 func (r *serverToServerPubSubCloudPubSub) Subscribe(ctx context.Context, channel string, callback func(context.Context, model.Event)) error {
-	sub, err := r.client.CreateSubscription(ctx, fmt.Sprintf("sub-%s", channel), pubsub.SubscriptionConfig{
-		Topic: r.client.Topic(channel),
-	})
-	if err != nil {
-		log.Printf("Failed S2S Subscribe: %v\n", err)
-		return err
-	}
-
-	err = sub.Receive(ctx, func(ctx context.Context, msg *pubsub.Message) {
+	sub := r.client.Subscription(fmt.Sprintf("sub-%s", channel))
+	err := sub.Receive(ctx, func(ctx context.Context, msg *pubsub.Message) {
 		log.Printf("S2S Received message: [%s] %q\n", channel, string(msg.Data))
 		callback(ctx, *model.RebuildEvent(channel, string(msg.Data)))
 		msg.Ack()

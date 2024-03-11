@@ -4,6 +4,7 @@ import { useOrderLink } from '@/jotai/orderlink';
 import { useProduct } from '@/jotai/product';
 import { FilterItem } from '@/usecase/Filter';
 import { OrderItemStatusEnum, OrderItemStatusSchema } from '@/zod/order_items';
+import { OrderStatusEnum } from '@/zod/orders';
 
 export type KitchenFilter = {
   items: FilterItem[];
@@ -30,28 +31,30 @@ export function useKitchen() {
 
   const filteredOrders = useMemo(
     () =>
-      orders.map((order) => ({
-        ...order,
-        OrderItems: order.OrderItems.filter((item) => {
-          const product = getProductByProductId(item.ProductId);
-          const coffeeBrew = item.CoffeeBrewId != null ? getCoffeeBrew(item.CoffeeBrewId) : null;
+      orders
+        .map((order) => ({
+          ...order,
+          OrderItems: order.OrderItems.filter((item) => {
+            const product = getProductByProductId(item.ProductId);
+            const coffeeBrew = item.CoffeeBrewId != null ? getCoffeeBrew(item.CoffeeBrewId) : null;
 
-          return kitchenFilter.items.some((category) => {
-            if (category.id !== product?.productCategory.id) return false;
-            if (category.checked) return true;
-            return category.children?.some((child) => {
-              if (child.id !== product.productId) return false;
-              if (child.checked) return true;
-              return (
-                child.children?.some((brew) => {
-                  if (brew.id !== coffeeBrew?.id) return false;
-                  return brew.checked;
-                }) ?? false
-              );
+            return kitchenFilter.items.some((category) => {
+              if (category.id !== product?.productCategory.id) return false;
+              if (category.checked) return true;
+              return category.children?.some((child) => {
+                if (child.id !== product.productId) return false;
+                if (child.checked) return true;
+                return (
+                  child.children?.some((brew) => {
+                    if (brew.id !== coffeeBrew?.id) return false;
+                    return brew.checked;
+                  }) ?? false
+                );
+              });
             });
-          });
-        }),
-      })),
+          }),
+        }))
+        .filter((order) => order.Status !== OrderStatusEnum.Provided),
     [getCoffeeBrew, getProductByProductId, kitchenFilter.items, orders]
   );
   const filteredOrderItems = useMemo(() => filteredOrders.flatMap((order) => order.OrderItems), [filteredOrders]);

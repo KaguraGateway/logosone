@@ -21,11 +21,7 @@ func NewServerToServerPubSubCloudPubSub(i *do.Injector) (repository.SrvToSrvPubS
 }
 
 func (r *serverToServerPubSubCloudPubSub) Publish(ctx context.Context, event model.Event) error {
-	topic, err := r.client.CreateTopic(ctx, event.GetTopic())
-	if err != nil {
-		return err
-	}
-
+	topic := r.client.Topic(event.GetTopic())
 	topic.Publish(ctx, &pubsub.Message{
 		Data: []byte(event.GetMessage().(string)),
 	})
@@ -39,6 +35,7 @@ func (r *serverToServerPubSubCloudPubSub) Subscribe(ctx context.Context, channel
 		Topic: r.client.Topic(channel),
 	})
 	if err != nil {
+		log.Printf("Failed S2S Subscribe: %v\n", err)
 		return err
 	}
 

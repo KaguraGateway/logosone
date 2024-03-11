@@ -2,11 +2,11 @@ package websocket
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
-	"github.com/getsentry/sentry-go"
 	"github.com/gorilla/websocket"
 	"github.com/samber/do"
 )
@@ -49,7 +49,7 @@ func (r *serverToClientPubSubWS) Publish(ctx context.Context, event model.Event)
 		for _, client := range resends {
 			// 再送に失敗したらエラー握りつぶす
 			if err := client.WriteJSON(outputEvent); err != nil {
-				sentry.CaptureException(err)
+				log.Printf("Failed to resend message: %v\n", err)
 			}
 		}
 	}

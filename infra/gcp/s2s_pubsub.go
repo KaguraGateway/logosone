@@ -30,6 +30,8 @@ func (r *serverToServerPubSubCloudPubSub) Publish(ctx context.Context, event mod
 		Data: []byte(event.GetMessage().(string)),
 	})
 	log.Printf("S2S Published message: [%s] %q\n", event.GetTopic(), event.GetMessage().(string))
+
+	return nil
 }
 
 func (r *serverToServerPubSubCloudPubSub) Subscribe(ctx context.Context, channel string, callback func(context.Context, model.Event)) error {

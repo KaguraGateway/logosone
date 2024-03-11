@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/gcp"
+	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/goredis"
 	"github.com/getsentry/sentry-go"
 	"github.com/labstack/echo/v4"
 	"log"
@@ -78,12 +78,12 @@ func main() {
 	var redisClient *redis.Client
 	var cloudPubSubClient *cloudpubsub.Client
 	// Start Redis Client (Only Dev)
+	redisClient = redis.NewClient(&redis.Options{
+		Addr: os.Getenv("REDIS_URL"),
+		DB:   0,
+	})
 	if isDev {
-		redisClient = redis.NewClient(&redis.Options{
-			Addr:     os.Getenv("REDIS_URL"),
-			Password: os.Getenv("REDIS_PASSWORD"),
-			DB:       0,
-		})
+
 	} else {
 		var err error
 		cloudPubSubClient, err = cloudpubsub.NewClient(context.Background(), os.Getenv("GCP_PROJECT_ID"))
@@ -154,9 +154,10 @@ func buildInjector(isDev bool, db *bun.DB, wsClients []*gorilla.Conn, redisClien
 	do.Provide(i, bundb.NewTxRepositoryDb)
 	do.Provide(i, websocket.NewServerToClientPubSubWS)
 	// Register S2S PubSub
-	if !isDev {
-		do.Provide(i, gcp.NewServerToServerPubSubCloudPubSub)
-	}
+	//if !isDev {
+	//	do.Provide(i, gcp.NewServerToServerPubSubCloudPubSub)
+	//}
+	do.Provide(i, goredis.NewServerToServerPubSubRedis)
 	// Register QueryService
 	do.Provide(i, bundb.NewOrderQueryServiceDb)
 	// Register UseCase

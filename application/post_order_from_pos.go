@@ -2,6 +2,8 @@ package application
 
 import (
 	"context"
+	"log"
+	"time"
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
@@ -54,6 +56,9 @@ func NewPostOrderFromPosUseCase(i *do.Injector) (PostOrderFromPos, error) {
 func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderInput) error {
 	cctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
+
+	// 時間計測開始
+	s := time.Now()
 
 	// 既知の注文かどうかを確認する
 	if exists, err := u.orderRepo.Exists(cctx, input.OrderId); exists {
@@ -111,8 +116,11 @@ func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderI
 	}
 	// TODO: Publish失敗した場合のエラー処理を考える
 	if err := u.pubsubService.Publish(cctx, *event); err != nil {
+		log.Printf("failed to publish event: %v", err)
 		return err
 	}
+
+	log.Printf("PostOrderFromPos Time: %v", time.Since(s).String())
 
 	return nil
 }

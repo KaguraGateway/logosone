@@ -3,6 +3,8 @@ package application
 import (
 	"context"
 	"errors"
+	"log"
+	"time"
 
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
 	orderPkg "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order"
@@ -35,6 +37,9 @@ func (u *updateOrderStatusUseCase) Execute(ctx context.Context, input UpdateOrde
 	ctx, cancel := context.WithTimeout(ctx, CtxTimeoutDur)
 	defer cancel()
 
+	// 時間計測開始
+	s := time.Now()
+
 	// 注文を取得
 	order, err := u.orderRepo.FindById(ctx, input.Id)
 	if err != nil {
@@ -63,6 +68,8 @@ func (u *updateOrderStatusUseCase) Execute(ctx context.Context, input UpdateOrde
 	if err := u.pubsub.Publish(ctx, *event); err != nil {
 		return err
 	}
+
+	log.Printf("UpdateOrderStatus time: %v", time.Since(s).String())
 
 	return nil
 }

@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/getsentry/sentry-go"
+	"github.com/labstack/echo/v4"
 	"log"
 	"net/http"
 	"os"
@@ -11,8 +13,8 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
-	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/redis/go-redis/v9"
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -22,7 +24,6 @@ import (
 
 	gorilla "github.com/gorilla/websocket"
 
-	"github.com/getsentry/sentry-go"
 	sentryecho "github.com/getsentry/sentry-go/echo"
 
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
@@ -38,6 +39,11 @@ func main() {
 	// Load .env
 	if err := godotenv.Load(); err != nil {
 		log.Print(err)
+	}
+	// 開発環境であるか、そうでないかを判定する
+	var isDev = false
+	if _, ok := os.LookupEnv("DEV_MODE"); ok {
+		isDev = true
 	}
 
 	// Sentry
@@ -61,8 +67,18 @@ func main() {
 	// WebSocket Clients
 	wsClients := make([]*gorilla.Conn, 0)
 
+	// Start Redis Client (Only Dev)
+	var redisClient *redis.Client
+	if isDev {
+		redisClient = redis.NewClient(&redis.Options{
+			Addr:     os.Getenv("REDIS_URL"),
+			Password: os.Getenv("REDIS_PASSWORD"),
+			DB:       0,
+		})
+	}
+
 	// Build Injector
-	i := buildInjector(db, wsClients)
+	i := buildInjector(db, wsClients, redisClient)
 
 	// PubSub Subscribe
 	pubsubReceiver := pubsub.NewPubSubReceiver(i)
@@ -97,7 +113,7 @@ func main() {
 	}
 }
 
-func buildInjector(db *bun.DB, wsClients []*gorilla.Conn) *do.Injector {
+func buildInjector(db *bun.DB, wsClients []*gorilla.Conn, redisClient *redis.Client) *do.Injector {
 	i := do.New()
 
 	// Register DB
@@ -107,6 +123,10 @@ func buildInjector(db *bun.DB, wsClients []*gorilla.Conn) *do.Injector {
 	// Register WebSocket
 	do.Provide(i, func(i *do.Injector) (*[]*gorilla.Conn, error) {
 		return &wsClients, nil
+	})
+	// Register RedisClient
+	do.Provide(i, func(i *do.Injector) (*redis.Client, error) {
+		return redisClient, nil
 	})
 	// Register Repo
 	do.Provide(i, bundb.NewOrderItemRepositoryDb)

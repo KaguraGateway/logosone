@@ -2,13 +2,11 @@ package websocket
 
 import (
 	"context"
-	"log"
-	"time"
-
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
 	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
 	"github.com/gorilla/websocket"
 	"github.com/samber/do"
+	"log"
 )
 
 type serverToClientPubSubWS struct {
@@ -36,22 +34,11 @@ func fromEvent(event *model.Event) *eventOutput {
 func (r *serverToClientPubSubWS) Publish(ctx context.Context, event model.Event) error {
 	outputEvent := fromEvent(&event)
 
-	var resends []*websocket.Conn
 	for _, client := range *r.clients {
 		if err := client.WriteJSON(outputEvent); err != nil {
-			resends = append(resends, client)
+			log.Printf("Failed Client Publish: %v", err)
 		}
 	}
 
-	// 5秒待って再送
-	if len(resends) > 0 {
-		time.Sleep(5 * time.Second)
-		for _, client := range resends {
-			// 再送に失敗したらエラー握りつぶす
-			if err := client.WriteJSON(outputEvent); err != nil {
-				log.Printf("Failed to resend message: %v\n", err)
-			}
-		}
-	}
 	return nil
 }

@@ -99,6 +99,9 @@ func main() {
 	pubsubReceiver := pubsub.NewPubSubReceiver(i)
 	pubsubReceiver.SubscriptionRegister(context.Background())
 
+	// Start WebSocket Time Signal Goroutine
+	httpserver.StartWSTimeSignal(context.Background(), i)
+
 	// Start server
 	app := echo.New()
 	app.Use(middleware.Logger())

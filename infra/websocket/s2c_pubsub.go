@@ -7,6 +7,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/samber/do"
 	"log"
+	"slices"
 )
 
 type serverToClientPubSubWS struct {
@@ -37,6 +38,12 @@ func (r *serverToClientPubSubWS) Publish(ctx context.Context, event model.Event)
 	for _, client := range *r.clients {
 		if err := client.WriteJSON(outputEvent); err != nil {
 			log.Printf("Failed Client Publish: %v", err)
+			if err := client.Close(); err != nil {
+				log.Printf("Failed Client Close: %v", err)
+			}
+			*r.clients = slices.DeleteFunc(*r.clients, func(tConn *websocket.Conn) bool {
+				return tConn == client
+			})
 		}
 	}
 

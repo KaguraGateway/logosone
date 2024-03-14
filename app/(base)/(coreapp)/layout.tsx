@@ -1,11 +1,13 @@
 'use client';
 
-import { Center, Modal, ModalOverlay, Spinner } from '@chakra-ui/react';
+import { Box, Center, Modal, ModalOverlay, Spinner, Text } from '@chakra-ui/react';
+import { format, fromUnixTime } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
 
 import { useOrderLink } from '@/jotai/orderlink';
 
 export default function CoreAppLayout({ children }: { children: React.ReactNode }) {
-  const { isConnected } = useOrderLink();
+  const { isConnected, lastServerTimeSignal } = useOrderLink();
 
   return (
     <>
@@ -16,6 +18,11 @@ export default function CoreAppLayout({ children }: { children: React.ReactNode 
           <Spinner thickness="4px" speed="1s" emptyColor="gray.200" color="blue.500" size="2xl"></Spinner>
         </Center>
       </Modal>
+      <Box position="fixed" bottom="0" right="0" p="2" zIndex={9999999}>
+        <Text color="gray.400">
+          {format(utcToZonedTime(fromUnixTime(lastServerTimeSignal), 'Asia/Tokyo'), 'yyyy/MM/dd HH:mm:ss')}
+        </Text>
+      </Box>
     </>
   );
 }

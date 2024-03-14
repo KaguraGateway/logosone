@@ -14,11 +14,13 @@ import { WebSocketContext, WSEventMsg } from './websocket';
 
 const ordersAtom = atom<Array<Order>>([]);
 const connectionStateAtom = atom<boolean>(false);
+const lastServerTimeSignalAtom = atom<number>(0);
 
 export function useOrderLink() {
   const { client } = useContext(WebSocketContext);
   const [orders, setOrders] = useAtom(ordersAtom);
   const [isConnected, setIsConnected] = useAtom(connectionStateAtom);
+  const [lastServerTimeSignal, setLastServerTimeSignal] = useAtom(lastServerTimeSignalAtom);
   const [play] = useSound('/orderlink_sound.mp3');
 
   // Ordersまわりの処理
@@ -75,6 +77,9 @@ export function useOrderLink() {
         })
       );
     };
+    const onTimeSignal = (e: WSEventMsg) => {
+      setLastServerTimeSignal(e.detail.Message);
+    };
 
     // Event受信時の処理
     const onEvent = (e: WSEventMsg) => {
@@ -92,6 +97,9 @@ export function useOrderLink() {
         case 'UpdatedOrderItemStatus':
           onUpdatedOrderItem(e);
           break;
+        case 'TimeSignal':
+          onTimeSignal(e);
+          break;
       }
     };
     // イベント登録
@@ -101,7 +109,7 @@ export function useOrderLink() {
     return () => {
       client.off('event', onEvent);
     };
-  }, [client, orders, play, setOrders]);
+  }, [client, orders, play, setOrders, setLastServerTimeSignal]);
 
   // 注文を取得する
   const fetchOrders = useCallback(() => {
@@ -159,5 +167,5 @@ export function useOrderLink() {
     client.send(event);
   };
 
-  return { orders, isConnected, fetchOrders, UpdateOrderStatus, UpdateOrderItemStatus };
+  return { orders, isConnected, lastServerTimeSignal, fetchOrders, UpdateOrderStatus, UpdateOrderItemStatus };
 }

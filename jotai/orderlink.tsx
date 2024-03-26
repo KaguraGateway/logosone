@@ -13,12 +13,10 @@ import { UpdateOrderItemStatusSchema, UpdateOrderStatusSchema } from '@/zod/to_s
 import { WebSocketContext, WSEventMsg } from './websocket';
 
 const ordersAtom = atom<Array<Order>>([]);
-const connectionStateAtom = atom<boolean>(false);
 
 export function useOrderLink() {
   const { client } = useContext(WebSocketContext);
   const [orders, setOrders] = useAtom(ordersAtom);
-  const [isConnected, setIsConnected] = useAtom(connectionStateAtom);
   const [play] = useSound('/orderlink_sound.mp3');
 
   // Ordersまわりの処理
@@ -113,25 +111,14 @@ export function useOrderLink() {
   // 接続状況の処理
   useEffect(() => {
     const onOpen = () => {
-      setIsConnected(true);
       // 接続時に注文を取得する
       fetchOrders();
     };
-    const onClose = () => {
-      setIsConnected(false);
-    };
     client.on('open', onOpen);
-    client.on('close', onClose);
-
-    if (!isConnected && client.readyState() === WebSocket.OPEN) {
-      onOpen();
-    }
-
     return () => {
       client.off('open', onOpen);
-      client.off('close', onClose);
     };
-  }, [client, fetchOrders, isConnected, setIsConnected]);
+  }, [client, fetchOrders]);
 
   // Order状態遷移
   const UpdateOrderStatus = (orderId: string, newStatus: OrderStatus) => {
@@ -158,5 +145,5 @@ export function useOrderLink() {
     client.send(event);
   };
 
-  return { orders, isConnected, fetchOrders, UpdateOrderStatus, UpdateOrderItemStatus };
+  return { orders, fetchOrders, UpdateOrderStatus, UpdateOrderItemStatus };
 }

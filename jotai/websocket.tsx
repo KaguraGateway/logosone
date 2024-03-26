@@ -1,4 +1,4 @@
-import { createContext, useEffect, useMemo } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 
 import { Event, EventSchema } from '@/zod/event';
 
@@ -103,6 +103,7 @@ class WebSocketClient {
 
 type WebSocketContextObject = {
   client: WebSocketClient;
+  isConnected: boolean;
 };
 export const WebSocketContext = createContext<WebSocketContextObject>(null!);
 
@@ -110,15 +111,38 @@ export function WebSocketProvider({ children }: { children: React.ReactNode }) {
   const client = useMemo(() => {
     return new WebSocketClient();
   }, []);
+  const [isConnected, setIsConnected] = useState(false);
+
   const contextValue = useMemo(
     () => ({
       client,
+      isConnected,
     }),
-    [client]
+    [client, isConnected]
   );
+
+  // 接続状況の処理
   useEffect(() => {
-    if (client.readyState() === WebSocket.OPEN) return;
-    client.connect();
+    const onOpen = () => {
+      setIsConnected(true);
+    };
+    const onClose = () => {
+      setIsConnected(false);
+    };
+    client.on('open', onOpen);
+    client.on('close', onClose);
+
+    return () => {
+      client.off('open', onOpen);
+      client.off('close', onClose);
+    };
+  }, [client, isConnected, setIsConnected]);
+
+  // 初回接続
+  useEffect(() => {
+    if (client.readyState() !== WebSocket.OPEN && client.readyState() !== WebSocket.CONNECTING) {
+      client.connect();
+    }
   }, [client]);
 
   return <WebSocketContext.Provider value={contextValue}>{children}</WebSocketContext.Provider>;

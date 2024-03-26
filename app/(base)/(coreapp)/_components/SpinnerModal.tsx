@@ -1,9 +1,9 @@
 'use client';
 
 import { Center, Modal, ModalOverlay, Spinner } from '@chakra-ui/react';
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 
-import { useOrderLink } from '@/jotai/orderlink';
+import { WebSocketContext } from '@/jotai/websocket';
 
 function SpinnerModalComponent({ isConnected }: { isConnected: boolean }) {
   return (
@@ -18,7 +18,7 @@ function SpinnerModalComponent({ isConnected }: { isConnected: boolean }) {
 const SpinnerModalComponentMemo = memo(SpinnerModalComponent);
 
 export function SpinnerModal() {
-  const { isConnected } = useOrderLink();
+  const { isConnected } = useContext(WebSocketContext);
 
   return <SpinnerModalComponentMemo isConnected={isConnected} />;
 }

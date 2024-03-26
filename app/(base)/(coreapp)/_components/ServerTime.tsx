@@ -4,10 +4,10 @@ import { Box, Text } from '@chakra-ui/react';
 import { format, fromUnixTime } from 'date-fns';
 import { utcToZonedTime } from 'date-fns-tz';
 
-import { useOrderLink } from '@/jotai/orderlink';
+import { useServerTime } from '@/jotai/serverTime';
 
 export function ServerTime() {
-  const { lastServerTimeSignal } = useOrderLink();
+  const lastServerTimeSignal = useServerTime();
 
   return (
     <Box position="fixed" bottom="0" right="0" p="2" zIndex={9999999}>

@@ -7,6 +7,7 @@ export const OrderItemStatusEnum = {
 } as const;
 
 export const OrderItemIdSchema = z.string();
+export type OrderItemId = z.infer<typeof OrderItemIdSchema>;
 export const ProductIdSchema = z.string();
 export const OrderItemStatusSchema = z.nativeEnum(OrderItemStatusEnum);
 export type OrderItemStatus = z.infer<typeof OrderItemStatusSchema>;

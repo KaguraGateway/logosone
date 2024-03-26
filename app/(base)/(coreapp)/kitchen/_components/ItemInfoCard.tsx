@@ -1,6 +1,6 @@
 'use client';
 
-import { Badge, Button, Flex, Text } from '@chakra-ui/react';
+import { Badge, Button, Flex, Text, VStack } from '@chakra-ui/react';
 
 import { CancelButton } from '@/ui/CancelButton';
 
@@ -15,6 +15,7 @@ export type ItemInfoCardProps = {
   prefix: string;
   waitingTime: React.ReactNode;
   cookingStatus: 'notyet' | 'cooking' | 'done';
+  isMyTask: boolean;
   onCancelState?: (itemId: string) => void;
   onNextState?: (itemId: string) => void;
 };
@@ -28,8 +29,9 @@ export function ItemInfoCard({
   waitingTime,
   cookingStatus,
   productColor,
+  isMyTask,
   onCancelState,
-  onNextState
+  onNextState,
 }: ItemInfoCardProps) {
   return (
     <Flex
@@ -43,7 +45,11 @@ export function ItemInfoCard({
       borderRadius="lg"
       mb="4"
     >
-      <CancelButton mr="8" visibility={cookingStatus === "notyet" ? "hidden" : "visible"} onCancel={() => onCancelState?.(itemId)} />
+      <CancelButton
+        mr="8"
+        visibility={cookingStatus === 'notyet' ? 'hidden' : 'visible'}
+        onCancel={() => onCancelState?.(itemId)}
+      />
       <Button
         variant="unstyled"
         display="flex"
@@ -55,9 +61,16 @@ export function ItemInfoCard({
         outline="0"
         onClick={() => onNextState?.(itemId)}
       >
-        <Text fontSize="3xl" fontWeight="semibold" color="gray.700">
-          {callNumber}
-        </Text>
+        <VStack spacing={0}>
+          <Text fontSize="3xl" fontWeight="semibold" color="gray.700">
+            {callNumber}
+          </Text>
+          {isMyTask && (
+            <Badge bg="gray.500" color="white" variant="subtle" fontSize="xl" fontWeight="semibold">
+              担当分
+            </Badge>
+          )}
+        </VStack>
         <Flex alignItems="center" ml="8" flex="1" maxW="300px" flexWrap="wrap">
           <Text fontSize="2xl" fontWeight="semibold" color={productColor}>
             {productName}

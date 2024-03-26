@@ -1,9 +1,10 @@
 'use client';
-import { Button, Flex, Text, VStack } from '@chakra-ui/react';
-import { FiCheckSquare } from 'react-icons/fi';
+import { Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
+import { FiCheckSquare, FiRepeat } from 'react-icons/fi';
 import { IoReloadOutline } from 'react-icons/io5';
 
 import { FilterModal } from '@/app/(base)/(coreapp)/kitchen/_components/FilterModal';
+import { useMyTasks } from '@/jotai/myTasks';
 import { useProduct } from '@/jotai/product';
 import { ElapsedMinTime } from '@/ui/ElapsedMinTime';
 import { HeaderBase } from '@/ui/HeaderBase';
@@ -34,6 +35,7 @@ type FilteredItemsProps = {
 };
 function FilteredItems({ filteredOrders, onCancelState, onNextState }: FilteredItemsProps) {
   const { getProductByProductId, getCoffeeBrew } = useProduct();
+  const { isMyTask } = useMyTasks();
 
   const items: Array<ItemInfoCardProps> = filteredOrders
     .flatMap((order) =>
@@ -41,6 +43,7 @@ function FilteredItems({ filteredOrders, onCancelState, onNextState }: FilteredI
         const product = getProductByProductId(item.ProductId);
         const coffeeBrew = item.CoffeeBrewId != null ? getCoffeeBrew(item.CoffeeBrewId) : null;
         const prefix = coffeeBrew != null ? ToRomazi(coffeeBrew.name).toLocaleUpperCase()[0] : '';
+        const isMyTaskFlag = isMyTask(item.Id);
 
         return {
           itemId: item.Id,
@@ -51,6 +54,7 @@ function FilteredItems({ filteredOrders, onCancelState, onNextState }: FilteredI
           productColor: product?.productColor ?? 'blue.500',
           waitingTime: <ElapsedMinTime dateISO={order.OrderAt} />,
           cookingStatus: fromItemStatus(item.Status),
+          isMyTask: isMyTaskFlag,
           onCancelState: onCancelState,
           onNextState: onNextState,
         };
@@ -113,28 +117,32 @@ export default function KitchenPage() {
     onCloseFilterModal,
     onConfirmFilterModal,
     kitchenFilter,
+    isOnlyMyTasks,
+    onToggleShowOnlyMyTasks,
   } = useKitchen();
 
   return (
     <>
       <HeaderBase name="キッチン">
-        <Flex>
+        <HStack>
           <Button
             leftIcon={<IoReloadOutline />}
             color="white"
             size="lg"
             bg="red.500"
-            mr="8px"
             onClick={() => {
               window.location.reload();
             }}
           >
-            再読み込み
+            再読込
           </Button>
           <Button leftIcon={<FiCheckSquare />} color="white" size="lg" bg="blue.500" onClick={onOpenFilterModal}>
             絞り込み
           </Button>
-        </Flex>
+          <Button leftIcon={<FiRepeat />} color="white" size="lg" bg="orange.500" onClick={onToggleShowOnlyMyTasks}>
+            担当分表示{isOnlyMyTasks ? '中' : ''}
+          </Button>
+        </HStack>
       </HeaderBase>
       <MainBox>
         <FilterTexts kitchenFilter={kitchenFilter} />

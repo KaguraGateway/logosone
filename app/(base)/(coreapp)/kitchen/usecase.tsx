@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 
+import { useMyTasks } from '@/jotai/myTasks';
 import { useOrderLink } from '@/jotai/orderlink';
 import { useProduct } from '@/jotai/product';
 import { FilterItem } from '@/usecase/Filter';
@@ -13,11 +14,13 @@ export type KitchenFilter = {
 export function useKitchen() {
   const { orders, UpdateOrderItemStatus } = useOrderLink();
   const { getDefaultFilterItems, getProductByProductId, getCoffeeBrew } = useProduct();
+  const { isMyTask, setMyTask } = useMyTasks();
   const [kitchenFilter, setKitchenFilter] = useState({
     items: getDefaultFilterItems(),
   });
 
   const [isOpenFilterModal, setIsFilterModal] = useState(false);
+  const [isOnlyMyTasks, setIsOnlyMyTasks] = useState(false);
 
   const onOpenFilterModal = () => {
     setIsFilterModal(true);
@@ -28,6 +31,9 @@ export function useKitchen() {
   const onConfirmFilterModal = (items: FilterItem[]) => {
     setKitchenFilter({ items: items });
   };
+  const onToggleShowOnlyMyTasks = () => {
+    setIsOnlyMyTasks((prev) => !prev);
+  };
 
   const filteredOrders = useMemo(
     () =>
@@ -35,6 +41,11 @@ export function useKitchen() {
         .map((order) => ({
           ...order,
           OrderItems: order.OrderItems.filter((item) => {
+            // 担当分表示機能
+            if (isOnlyMyTasks && item.Status !== OrderItemStatusEnum.NotYet && !isMyTask(item.Id)) {
+              return false;
+            }
+            // 絞り込み機能
             const product = getProductByProductId(item.ProductId);
             const coffeeBrew = item.CoffeeBrewId != null ? getCoffeeBrew(item.CoffeeBrewId) : null;
 
@@ -55,7 +66,7 @@ export function useKitchen() {
           }),
         }))
         .filter((order) => order.Status !== OrderStatusEnum.Provided),
-    [getCoffeeBrew, getProductByProductId, kitchenFilter.items, orders]
+    [getCoffeeBrew, getProductByProductId, isMyTask, isOnlyMyTasks, kitchenFilter.items, orders]
   );
   const filteredOrderItems = useMemo(() => filteredOrders.flatMap((order) => order.OrderItems), [filteredOrders]);
   const cookingItemsLen = useMemo(
@@ -86,6 +97,7 @@ export function useKitchen() {
     const result = OrderItemStatusSchema.safeParse(item.Status + 1);
     if (result.success) {
       UpdateOrderItemStatus(itemId, result.data);
+      !isMyTask(itemId) && setMyTask(itemId);
     }
   };
 
@@ -100,5 +112,7 @@ export function useKitchen() {
     onOpenFilterModal,
     onCloseFilterModal,
     onConfirmFilterModal,
+    isOnlyMyTasks,
+    onToggleShowOnlyMyTasks,
   };
 }

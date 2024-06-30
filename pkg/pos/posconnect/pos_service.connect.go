@@ -19,7 +19,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// PosServiceName is the fully-qualified name of the PosService service.
@@ -94,6 +94,35 @@ const (
 	PosServicePostDiscountProcedure = "/cafelogos.pos.PosService/PostDiscount"
 )
 
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	posServiceServiceDescriptor                       = pos.File_pos_pos_service_proto.Services().ByName("PosService")
+	posServiceGetOrdersMethodDescriptor               = posServiceServiceDescriptor.Methods().ByName("GetOrders")
+	posServiceGetUnpaidOrdersBySeatIdMethodDescriptor = posServiceServiceDescriptor.Methods().ByName("GetUnpaidOrdersBySeatId")
+	posServicePostOrderMethodDescriptor               = posServiceServiceDescriptor.Methods().ByName("PostOrder")
+	posServiceDeleteOrderMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("DeleteOrder")
+	posServicePostPaymentMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("PostPayment")
+	posServiceUpdatePaymentMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("UpdatePayment")
+	posServiceGetProductsMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("GetProducts")
+	posServicePostNewClientMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("PostNewClient")
+	posServiceUpdateClientMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("UpdateClient")
+	posServiceGetProductCategoriesMethodDescriptor    = posServiceServiceDescriptor.Methods().ByName("GetProductCategories")
+	posServicePostProductCategoryMethodDescriptor     = posServiceServiceDescriptor.Methods().ByName("PostProductCategory")
+	posServicePostProductMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("PostProduct")
+	posServiceUpdateProductMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("UpdateProduct")
+	posServiceDeleteProductMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("DeleteProduct")
+	posServicePostStockMethodDescriptor               = posServiceServiceDescriptor.Methods().ByName("PostStock")
+	posServiceGetStocksMethodDescriptor               = posServiceServiceDescriptor.Methods().ByName("GetStocks")
+	posServicePostCoffeeBeanMethodDescriptor          = posServiceServiceDescriptor.Methods().ByName("PostCoffeeBean")
+	posServiceGetCoffeeBeansMethodDescriptor          = posServiceServiceDescriptor.Methods().ByName("GetCoffeeBeans")
+	posServiceDeleteAllOrdersMethodDescriptor         = posServiceServiceDescriptor.Methods().ByName("DeleteAllOrders")
+	posServicePostSeatMethodDescriptor                = posServiceServiceDescriptor.Methods().ByName("PostSeat")
+	posServiceUpdateSeatMethodDescriptor              = posServiceServiceDescriptor.Methods().ByName("UpdateSeat")
+	posServiceGetSeatsMethodDescriptor                = posServiceServiceDescriptor.Methods().ByName("GetSeats")
+	posServiceGetDiscountsMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("GetDiscounts")
+	posServicePostDiscountMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("PostDiscount")
+)
+
 // PosServiceClient is a client for the cafelogos.pos.PosService service.
 type PosServiceClient interface {
 	GetOrders(context.Context, *connect.Request[pos.GetOrdersRequest]) (*connect.Response[pos.GetOrdersResponse], error)
@@ -136,122 +165,146 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 		getOrders: connect.NewClient[pos.GetOrdersRequest, pos.GetOrdersResponse](
 			httpClient,
 			baseURL+PosServiceGetOrdersProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetOrdersMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getUnpaidOrdersBySeatId: connect.NewClient[pos.GetUnpaidOrdersBySeatIdRequest, pos.GetOrdersResponse](
 			httpClient,
 			baseURL+PosServiceGetUnpaidOrdersBySeatIdProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetUnpaidOrdersBySeatIdMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postOrder: connect.NewClient[pos.PostOrderRequest, pos.PostOrderResponse](
 			httpClient,
 			baseURL+PosServicePostOrderProcedure,
-			opts...,
+			connect.WithSchema(posServicePostOrderMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteOrder: connect.NewClient[pos.DeleteOrderRequest, common.Empty](
 			httpClient,
 			baseURL+PosServiceDeleteOrderProcedure,
-			opts...,
+			connect.WithSchema(posServiceDeleteOrderMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postPayment: connect.NewClient[pos.PostPaymentRequest, pos.PaymentResponse](
 			httpClient,
 			baseURL+PosServicePostPaymentProcedure,
-			opts...,
+			connect.WithSchema(posServicePostPaymentMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updatePayment: connect.NewClient[pos.UpdatePaymentRequest, pos.PaymentResponse](
 			httpClient,
 			baseURL+PosServiceUpdatePaymentProcedure,
-			opts...,
+			connect.WithSchema(posServiceUpdatePaymentMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getProducts: connect.NewClient[common.Empty, pos.GetProductsResponse](
 			httpClient,
 			baseURL+PosServiceGetProductsProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetProductsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postNewClient: connect.NewClient[pos.PostNewClientRequest, pos.PostNewClientResponse](
 			httpClient,
 			baseURL+PosServicePostNewClientProcedure,
-			opts...,
+			connect.WithSchema(posServicePostNewClientMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateClient: connect.NewClient[pos.UpdateClientRequest, common.Empty](
 			httpClient,
 			baseURL+PosServiceUpdateClientProcedure,
-			opts...,
+			connect.WithSchema(posServiceUpdateClientMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getProductCategories: connect.NewClient[common.Empty, pos.GetProductCategoriesResponse](
 			httpClient,
 			baseURL+PosServiceGetProductCategoriesProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetProductCategoriesMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postProductCategory: connect.NewClient[pos.PostProductCategoryRequest, common.Empty](
 			httpClient,
 			baseURL+PosServicePostProductCategoryProcedure,
-			opts...,
+			connect.WithSchema(posServicePostProductCategoryMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postProduct: connect.NewClient[pos.PostProductRequest, common.Empty](
 			httpClient,
 			baseURL+PosServicePostProductProcedure,
-			opts...,
+			connect.WithSchema(posServicePostProductMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateProduct: connect.NewClient[pos.UpdateProductRequest, common.Empty](
 			httpClient,
 			baseURL+PosServiceUpdateProductProcedure,
-			opts...,
+			connect.WithSchema(posServiceUpdateProductMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteProduct: connect.NewClient[pos.DeleteProductRequest, common.Empty](
 			httpClient,
 			baseURL+PosServiceDeleteProductProcedure,
-			opts...,
+			connect.WithSchema(posServiceDeleteProductMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postStock: connect.NewClient[pos.PostStockRequest, common.Empty](
 			httpClient,
 			baseURL+PosServicePostStockProcedure,
-			opts...,
+			connect.WithSchema(posServicePostStockMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getStocks: connect.NewClient[common.Empty, pos.GetStocksResponse](
 			httpClient,
 			baseURL+PosServiceGetStocksProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetStocksMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postCoffeeBean: connect.NewClient[pos.PostCoffeeBeanRequest, common.Empty](
 			httpClient,
 			baseURL+PosServicePostCoffeeBeanProcedure,
-			opts...,
+			connect.WithSchema(posServicePostCoffeeBeanMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getCoffeeBeans: connect.NewClient[common.Empty, pos.GetCoffeeBeansResponse](
 			httpClient,
 			baseURL+PosServiceGetCoffeeBeansProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetCoffeeBeansMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		deleteAllOrders: connect.NewClient[common.Empty, common.Empty](
 			httpClient,
 			baseURL+PosServiceDeleteAllOrdersProcedure,
-			opts...,
+			connect.WithSchema(posServiceDeleteAllOrdersMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postSeat: connect.NewClient[pos.PostSeatRequest, common.Empty](
 			httpClient,
 			baseURL+PosServicePostSeatProcedure,
-			opts...,
+			connect.WithSchema(posServicePostSeatMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		updateSeat: connect.NewClient[pos.UpdateSeatRequest, common.Empty](
 			httpClient,
 			baseURL+PosServiceUpdateSeatProcedure,
-			opts...,
+			connect.WithSchema(posServiceUpdateSeatMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getSeats: connect.NewClient[common.Empty, pos.GetSeatsResponse](
 			httpClient,
 			baseURL+PosServiceGetSeatsProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetSeatsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		getDiscounts: connect.NewClient[common.Empty, pos.GetDiscountsResponse](
 			httpClient,
 			baseURL+PosServiceGetDiscountsProcedure,
-			opts...,
+			connect.WithSchema(posServiceGetDiscountsMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		postDiscount: connect.NewClient[pos.PostDiscountRequest, common.Empty](
 			httpClient,
 			baseURL+PosServicePostDiscountProcedure,
-			opts...,
+			connect.WithSchema(posServicePostDiscountMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -442,122 +495,146 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 	posServiceGetOrdersHandler := connect.NewUnaryHandler(
 		PosServiceGetOrdersProcedure,
 		svc.GetOrders,
-		opts...,
+		connect.WithSchema(posServiceGetOrdersMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetUnpaidOrdersBySeatIdHandler := connect.NewUnaryHandler(
 		PosServiceGetUnpaidOrdersBySeatIdProcedure,
 		svc.GetUnpaidOrdersBySeatId,
-		opts...,
+		connect.WithSchema(posServiceGetUnpaidOrdersBySeatIdMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostOrderHandler := connect.NewUnaryHandler(
 		PosServicePostOrderProcedure,
 		svc.PostOrder,
-		opts...,
+		connect.WithSchema(posServicePostOrderMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceDeleteOrderHandler := connect.NewUnaryHandler(
 		PosServiceDeleteOrderProcedure,
 		svc.DeleteOrder,
-		opts...,
+		connect.WithSchema(posServiceDeleteOrderMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostPaymentHandler := connect.NewUnaryHandler(
 		PosServicePostPaymentProcedure,
 		svc.PostPayment,
-		opts...,
+		connect.WithSchema(posServicePostPaymentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceUpdatePaymentHandler := connect.NewUnaryHandler(
 		PosServiceUpdatePaymentProcedure,
 		svc.UpdatePayment,
-		opts...,
+		connect.WithSchema(posServiceUpdatePaymentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetProductsHandler := connect.NewUnaryHandler(
 		PosServiceGetProductsProcedure,
 		svc.GetProducts,
-		opts...,
+		connect.WithSchema(posServiceGetProductsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostNewClientHandler := connect.NewUnaryHandler(
 		PosServicePostNewClientProcedure,
 		svc.PostNewClient,
-		opts...,
+		connect.WithSchema(posServicePostNewClientMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceUpdateClientHandler := connect.NewUnaryHandler(
 		PosServiceUpdateClientProcedure,
 		svc.UpdateClient,
-		opts...,
+		connect.WithSchema(posServiceUpdateClientMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetProductCategoriesHandler := connect.NewUnaryHandler(
 		PosServiceGetProductCategoriesProcedure,
 		svc.GetProductCategories,
-		opts...,
+		connect.WithSchema(posServiceGetProductCategoriesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostProductCategoryHandler := connect.NewUnaryHandler(
 		PosServicePostProductCategoryProcedure,
 		svc.PostProductCategory,
-		opts...,
+		connect.WithSchema(posServicePostProductCategoryMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostProductHandler := connect.NewUnaryHandler(
 		PosServicePostProductProcedure,
 		svc.PostProduct,
-		opts...,
+		connect.WithSchema(posServicePostProductMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceUpdateProductHandler := connect.NewUnaryHandler(
 		PosServiceUpdateProductProcedure,
 		svc.UpdateProduct,
-		opts...,
+		connect.WithSchema(posServiceUpdateProductMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceDeleteProductHandler := connect.NewUnaryHandler(
 		PosServiceDeleteProductProcedure,
 		svc.DeleteProduct,
-		opts...,
+		connect.WithSchema(posServiceDeleteProductMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostStockHandler := connect.NewUnaryHandler(
 		PosServicePostStockProcedure,
 		svc.PostStock,
-		opts...,
+		connect.WithSchema(posServicePostStockMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetStocksHandler := connect.NewUnaryHandler(
 		PosServiceGetStocksProcedure,
 		svc.GetStocks,
-		opts...,
+		connect.WithSchema(posServiceGetStocksMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostCoffeeBeanHandler := connect.NewUnaryHandler(
 		PosServicePostCoffeeBeanProcedure,
 		svc.PostCoffeeBean,
-		opts...,
+		connect.WithSchema(posServicePostCoffeeBeanMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetCoffeeBeansHandler := connect.NewUnaryHandler(
 		PosServiceGetCoffeeBeansProcedure,
 		svc.GetCoffeeBeans,
-		opts...,
+		connect.WithSchema(posServiceGetCoffeeBeansMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceDeleteAllOrdersHandler := connect.NewUnaryHandler(
 		PosServiceDeleteAllOrdersProcedure,
 		svc.DeleteAllOrders,
-		opts...,
+		connect.WithSchema(posServiceDeleteAllOrdersMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostSeatHandler := connect.NewUnaryHandler(
 		PosServicePostSeatProcedure,
 		svc.PostSeat,
-		opts...,
+		connect.WithSchema(posServicePostSeatMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceUpdateSeatHandler := connect.NewUnaryHandler(
 		PosServiceUpdateSeatProcedure,
 		svc.UpdateSeat,
-		opts...,
+		connect.WithSchema(posServiceUpdateSeatMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetSeatsHandler := connect.NewUnaryHandler(
 		PosServiceGetSeatsProcedure,
 		svc.GetSeats,
-		opts...,
+		connect.WithSchema(posServiceGetSeatsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetDiscountsHandler := connect.NewUnaryHandler(
 		PosServiceGetDiscountsProcedure,
 		svc.GetDiscounts,
-		opts...,
+		connect.WithSchema(posServiceGetDiscountsMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	posServicePostDiscountHandler := connect.NewUnaryHandler(
 		PosServicePostDiscountProcedure,
 		svc.PostDiscount,
-		opts...,
+		connect.WithSchema(posServicePostDiscountMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/cafelogos.pos.PosService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {

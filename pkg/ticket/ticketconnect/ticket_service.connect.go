@@ -18,7 +18,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// TicketServiceName is the fully-qualified name of the TicketService service.
@@ -41,6 +41,13 @@ const (
 	TicketServiceRevokeTicketProcedure = "/cafelogos.ticket.TicketService/RevokeTicket"
 )
 
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	ticketServiceServiceDescriptor            = ticket.File_ticket_ticket_service_proto.Services().ByName("TicketService")
+	ticketServiceIssueTicketMethodDescriptor  = ticketServiceServiceDescriptor.Methods().ByName("IssueTicket")
+	ticketServiceRevokeTicketMethodDescriptor = ticketServiceServiceDescriptor.Methods().ByName("RevokeTicket")
+)
+
 // TicketServiceClient is a client for the cafelogos.ticket.TicketService service.
 type TicketServiceClient interface {
 	IssueTicket(context.Context, *connect.Request[ticket.RequestIssueTicket]) (*connect.Response[ticket.ResponseIssueTicket], error)
@@ -60,12 +67,14 @@ func NewTicketServiceClient(httpClient connect.HTTPClient, baseURL string, opts 
 		issueTicket: connect.NewClient[ticket.RequestIssueTicket, ticket.ResponseIssueTicket](
 			httpClient,
 			baseURL+TicketServiceIssueTicketProcedure,
-			opts...,
+			connect.WithSchema(ticketServiceIssueTicketMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 		revokeTicket: connect.NewClient[ticket.RequestRevokeTicket, ticket.ResponseRevokeTicket](
 			httpClient,
 			baseURL+TicketServiceRevokeTicketProcedure,
-			opts...,
+			connect.WithSchema(ticketServiceRevokeTicketMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -101,12 +110,14 @@ func NewTicketServiceHandler(svc TicketServiceHandler, opts ...connect.HandlerOp
 	ticketServiceIssueTicketHandler := connect.NewUnaryHandler(
 		TicketServiceIssueTicketProcedure,
 		svc.IssueTicket,
-		opts...,
+		connect.WithSchema(ticketServiceIssueTicketMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	ticketServiceRevokeTicketHandler := connect.NewUnaryHandler(
 		TicketServiceRevokeTicketProcedure,
 		svc.RevokeTicket,
-		opts...,
+		connect.WithSchema(ticketServiceRevokeTicketMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/cafelogos.ticket.TicketService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {

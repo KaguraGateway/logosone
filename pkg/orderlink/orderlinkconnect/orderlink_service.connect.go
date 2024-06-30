@@ -19,7 +19,7 @@ import (
 // generated with a version of connect newer than the one compiled into your binary. You can fix the
 // problem by either regenerating this code with an older version of connect or updating the connect
 // version compiled into your binary.
-const _ = connect.IsAtLeastVersion0_1_0
+const _ = connect.IsAtLeastVersion1_13_0
 
 const (
 	// OrderLinkServiceName is the fully-qualified name of the OrderLinkService service.
@@ -37,6 +37,12 @@ const (
 	// OrderLinkServicePostOrderProcedure is the fully-qualified name of the OrderLinkService's
 	// PostOrder RPC.
 	OrderLinkServicePostOrderProcedure = "/cafelogos.orderlink.OrderLinkService/PostOrder"
+)
+
+// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
+var (
+	orderLinkServiceServiceDescriptor         = orderlink.File_orderlink_orderlink_service_proto.Services().ByName("OrderLinkService")
+	orderLinkServicePostOrderMethodDescriptor = orderLinkServiceServiceDescriptor.Methods().ByName("PostOrder")
 )
 
 // OrderLinkServiceClient is a client for the cafelogos.orderlink.OrderLinkService service.
@@ -57,7 +63,8 @@ func NewOrderLinkServiceClient(httpClient connect.HTTPClient, baseURL string, op
 		postOrder: connect.NewClient[orderlink.PostOrderInput, common.Empty](
 			httpClient,
 			baseURL+OrderLinkServicePostOrderProcedure,
-			opts...,
+			connect.WithSchema(orderLinkServicePostOrderMethodDescriptor),
+			connect.WithClientOptions(opts...),
 		),
 	}
 }
@@ -86,7 +93,8 @@ func NewOrderLinkServiceHandler(svc OrderLinkServiceHandler, opts ...connect.Han
 	orderLinkServicePostOrderHandler := connect.NewUnaryHandler(
 		OrderLinkServicePostOrderProcedure,
 		svc.PostOrder,
-		opts...,
+		connect.WithSchema(orderLinkServicePostOrderMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
 	)
 	return "/cafelogos.orderlink.OrderLinkService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {

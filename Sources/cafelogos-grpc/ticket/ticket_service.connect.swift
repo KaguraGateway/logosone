@@ -32,22 +32,22 @@ public final class Cafelogos_Ticket_TicketServiceClient: Cafelogos_Ticket_Ticket
 
     @discardableResult
     public func `issueTicket`(request: Cafelogos_Ticket_RequestIssueTicket, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Ticket_ResponseIssueTicket>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.ticket.TicketService/IssueTicket", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.ticket.TicketService/IssueTicket", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `issueTicket`(request: Cafelogos_Ticket_RequestIssueTicket, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Ticket_ResponseIssueTicket> {
-        return await self.client.unary(path: "/cafelogos.ticket.TicketService/IssueTicket", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.ticket.TicketService/IssueTicket", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `revokeTicket`(request: Cafelogos_Ticket_RequestRevokeTicket, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Ticket_ResponseRevokeTicket>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.ticket.TicketService/RevokeTicket", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.ticket.TicketService/RevokeTicket", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `revokeTicket`(request: Cafelogos_Ticket_RequestRevokeTicket, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Ticket_ResponseRevokeTicket> {
-        return await self.client.unary(path: "/cafelogos.ticket.TicketService/RevokeTicket", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.ticket.TicketService/RevokeTicket", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     public enum Metadata {

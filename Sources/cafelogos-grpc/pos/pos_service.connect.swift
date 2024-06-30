@@ -166,242 +166,242 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
 
     @discardableResult
     public func `getOrders`(request: Cafelogos_Pos_GetOrdersRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetOrdersResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetOrders", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetOrders", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getOrders`(request: Cafelogos_Pos_GetOrdersRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetOrdersResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetOrders", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetOrders", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `getUnpaidOrdersBySeatID`(request: Cafelogos_Pos_GetUnpaidOrdersBySeatIdRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetOrdersResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetUnpaidOrdersBySeatId", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetUnpaidOrdersBySeatId", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getUnpaidOrdersBySeatID`(request: Cafelogos_Pos_GetUnpaidOrdersBySeatIdRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetOrdersResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetUnpaidOrdersBySeatId", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetUnpaidOrdersBySeatId", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postOrder`(request: Cafelogos_Pos_PostOrderRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_PostOrderResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostOrder", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostOrder", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postOrder`(request: Cafelogos_Pos_PostOrderRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_PostOrderResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostOrder", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostOrder", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `deleteOrder`(request: Cafelogos_Pos_DeleteOrderRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/DeleteOrder", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/DeleteOrder", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `deleteOrder`(request: Cafelogos_Pos_DeleteOrderRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/DeleteOrder", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/DeleteOrder", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postPayment`(request: Cafelogos_Pos_PostPaymentRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_PaymentResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostPayment", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostPayment", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postPayment`(request: Cafelogos_Pos_PostPaymentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_PaymentResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostPayment", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostPayment", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `updatePayment`(request: Cafelogos_Pos_UpdatePaymentRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_PaymentResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/UpdatePayment", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/UpdatePayment", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `updatePayment`(request: Cafelogos_Pos_UpdatePaymentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_PaymentResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdatePayment", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdatePayment", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `getProducts`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetProductsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetProducts", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetProducts", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getProducts`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetProductsResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetProducts", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetProducts", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postNewClient`(request: Cafelogos_Pos_PostNewClientRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_PostNewClientResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostNewClient", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostNewClient", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postNewClient`(request: Cafelogos_Pos_PostNewClientRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_PostNewClientResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostNewClient", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostNewClient", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `updateClient`(request: Cafelogos_Pos_UpdateClientRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/UpdateClient", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/UpdateClient", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `updateClient`(request: Cafelogos_Pos_UpdateClientRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdateClient", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdateClient", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `getProductCategories`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetProductCategoriesResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetProductCategories", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetProductCategories", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getProductCategories`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetProductCategoriesResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetProductCategories", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetProductCategories", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postProductCategory`(request: Cafelogos_Pos_PostProductCategoryRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostProductCategory", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostProductCategory", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postProductCategory`(request: Cafelogos_Pos_PostProductCategoryRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostProductCategory", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostProductCategory", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postProduct`(request: Cafelogos_Pos_PostProductRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostProduct", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostProduct", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postProduct`(request: Cafelogos_Pos_PostProductRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostProduct", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostProduct", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `updateProduct`(request: Cafelogos_Pos_UpdateProductRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/UpdateProduct", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/UpdateProduct", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `updateProduct`(request: Cafelogos_Pos_UpdateProductRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdateProduct", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdateProduct", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `deleteProduct`(request: Cafelogos_Pos_DeleteProductRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/DeleteProduct", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/DeleteProduct", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `deleteProduct`(request: Cafelogos_Pos_DeleteProductRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/DeleteProduct", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/DeleteProduct", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postStock`(request: Cafelogos_Pos_PostStockRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostStock", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostStock", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postStock`(request: Cafelogos_Pos_PostStockRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostStock", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostStock", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `getStocks`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetStocksResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetStocks", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetStocks", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getStocks`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetStocksResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetStocks", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetStocks", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postCoffeeBean`(request: Cafelogos_Pos_PostCoffeeBeanRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostCoffeeBean", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostCoffeeBean", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postCoffeeBean`(request: Cafelogos_Pos_PostCoffeeBeanRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostCoffeeBean", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostCoffeeBean", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `getCoffeeBeans`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetCoffeeBeansResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetCoffeeBeans", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetCoffeeBeans", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getCoffeeBeans`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetCoffeeBeansResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetCoffeeBeans", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetCoffeeBeans", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `deleteAllOrders`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/DeleteAllOrders", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/DeleteAllOrders", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `deleteAllOrders`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/DeleteAllOrders", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/DeleteAllOrders", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postSeat`(request: Cafelogos_Pos_PostSeatRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostSeat", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostSeat", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postSeat`(request: Cafelogos_Pos_PostSeatRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostSeat", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostSeat", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `updateSeat`(request: Cafelogos_Pos_UpdateSeatRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/UpdateSeat", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/UpdateSeat", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `updateSeat`(request: Cafelogos_Pos_UpdateSeatRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdateSeat", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdateSeat", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `getSeats`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetSeatsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetSeats", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetSeats", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getSeats`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetSeatsResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetSeats", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetSeats", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `getDiscounts`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetDiscountsResponse>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/GetDiscounts", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetDiscounts", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `getDiscounts`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetDiscountsResponse> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/GetDiscounts", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetDiscounts", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
     public func `postDiscount`(request: Cafelogos_Pos_PostDiscountRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.pos.PosService/PostDiscount", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.pos.PosService/PostDiscount", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postDiscount`(request: Cafelogos_Pos_PostDiscountRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.pos.PosService/PostDiscount", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.pos.PosService/PostDiscount", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     public enum Metadata {

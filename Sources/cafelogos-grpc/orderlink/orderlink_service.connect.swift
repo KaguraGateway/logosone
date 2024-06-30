@@ -26,12 +26,12 @@ public final class Cafelogos_Orderlink_OrderLinkServiceClient: Cafelogos_Orderli
 
     @discardableResult
     public func `postOrder`(request: Cafelogos_Orderlink_PostOrderInput, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
-        return self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/PostOrder", request: request, headers: headers, completion: completion)
+        return self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/PostOrder", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
 
     @available(iOS 13, *)
     public func `postOrder`(request: Cafelogos_Orderlink_PostOrderInput, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
-        return await self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/PostOrder", request: request, headers: headers)
+        return await self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/PostOrder", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     public enum Metadata {

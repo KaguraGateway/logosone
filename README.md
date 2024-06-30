@@ -11,11 +11,11 @@ go install connectrpc.com/connect/cmd/protoc-gen-connect-go@latest
 # only Swift
 brew install swift-protobuf grpc-swift
 # only TypeScript
-npm install
+pnpm install
 
 # Make
 # Go & Swift & TypeScript
-npx buf generate proto
+pnpm buf generate
 # Rust
 cargo build
 ```

@@ -17,7 +17,7 @@ const clientIdAtom = atom(async () => {
     const res = await client.postNewClient({ name: 'Handy' });
     clientId = res.id;
 
-    window.localStorage.setItem('clientId', clientId);
+    window.localStorage.setItem('clientId', clientId ?? '');
   }
   return clientId;
 });

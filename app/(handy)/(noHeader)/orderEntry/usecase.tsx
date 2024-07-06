@@ -168,7 +168,7 @@ export function useOrderEntryUseCase() {
           })),
           orderType: OrderType.EatIn,
           orderAt: new Date().toISOString(),
-          clientId: clientId,
+          clientId: clientId ?? '',
           seatId: currentSeatId,
         },
       },

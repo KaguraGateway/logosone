@@ -1,0 +1,10 @@
+/**
+ * iPad mini2でChromeと同じ表示にするためのリセットCSS
+ */
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+}

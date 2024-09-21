@@ -1,0 +1,51 @@
+{
+  "name": "cafelogos-orderlink-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/next-js": "^2.1.5",
+    "@chakra-ui/react": "^2.8.1",
+    "@connectrpc/connect": "^1.0.0",
+    "@connectrpc/connect-web": "^1.0.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@kaguragateway/cafelogos-grpc": "git+https://github.com/KaguraGateway/cafelogos-grpc.git",
+    "@types/node": "20.6.2",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.1",
+    "eslint": "8.49.0",
+    "eslint-config-next": "13.4.19",
+    "framer-motion": "^10.16.4",
+    "jotai": "^2.4.2",
+    "next": "^13.5.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.11.0",
+    "typescript": "5.2.2",
+    "use-sound": "^4.0.1",
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.22.11",
+    "@babel/plugin-transform-optional-chaining": "^7.23.0",
+    "@babel/preset-env": "^7.22.20",
+    "@svgr/webpack": "^8.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "babel-loader": "^9.1.3",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^3.0.3"
+  }
+}

@@ -1,6 +1,6 @@
 module github.com/KaguraGateway/cafelogos-grpc
 
-go 1.21
+go 1.23
 
 require (
 	connectrpc.com/connect v1.11.1

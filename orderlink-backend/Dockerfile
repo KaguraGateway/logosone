@@ -1,6 +1,6 @@
 
 # FROM: https://github.com/docker/docker-gs-ping/blob/main/Dockerfile
-FROM golang:1.21
+FROM golang:1.23
 
 # Set destination for COPY
 WORKDIR /app

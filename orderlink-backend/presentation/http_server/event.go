@@ -1,6 +1,6 @@
 package httpserver
 
-import "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
+import "github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
 
 type EventOutput struct {
 	Topic   string

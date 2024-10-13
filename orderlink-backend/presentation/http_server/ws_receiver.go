@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"slices"
 
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 	"github.com/samber/do"

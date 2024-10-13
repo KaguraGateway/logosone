@@ -3,7 +3,7 @@ package migrations
 import (
 	"context"
 
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/bundb/dao"
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/bundb/dao"
 	"github.com/uptrace/bun"
 )
 

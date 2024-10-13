@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	orderitem "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order_item"
+	orderitem "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
 )
 
 type OrderItemRepository interface {

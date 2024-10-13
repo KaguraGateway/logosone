@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
 )

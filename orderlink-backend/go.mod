@@ -1,4 +1,4 @@
-module github.com/KaguraGateway/cafelogos-orderlink-backend
+module github.com/KaguraGateway/logosone/orderlink-backend
 
 go 1.23
 

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/application"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
+	"github.com/KaguraGateway/logosone/orderlink-backend/application"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
 	"github.com/cockroachdb/errors"
 	"github.com/gorilla/websocket"
 	"github.com/mitchellh/mapstructure"
@@ -24,7 +24,7 @@ func NewUpdateOrderStatus(i *do.Injector) *UpdateOrderStatus {
 
 func (r *UpdateOrderStatus) UpdateOrderStatus(ctx context.Context, conn *websocket.Conn, event model.Event) error {
 	var input application.UpdateOrderStatusInput
-	if err := mapstructure.Decode(event.GetMessage(), &input); err != nil  {
+	if err := mapstructure.Decode(event.GetMessage(), &input); err != nil {
 		return errors.WithMessage(ErrTypeAssertion, fmt.Sprintf("event.GetMessage(): %v", event.GetMessage()))
 	}
 

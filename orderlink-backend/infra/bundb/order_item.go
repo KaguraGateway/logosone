@@ -3,9 +3,9 @@ package bundb
 import (
 	"context"
 
-	orderitem "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order_item"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/bundb/dao"
+	orderitem "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/bundb/dao"
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
 )

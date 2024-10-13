@@ -5,8 +5,8 @@ import (
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain"
-	orderitem "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order_item"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain"
+	orderitem "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
 )
 
 type Order struct {

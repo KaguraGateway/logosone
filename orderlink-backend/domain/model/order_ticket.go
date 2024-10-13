@@ -1,6 +1,6 @@
 package model
 
-import "github.com/KaguraGateway/cafelogos-orderlink-backend/domain"
+import "github.com/KaguraGateway/logosone/orderlink-backend/domain"
 
 type OrderTicket struct {
 	orderId    string

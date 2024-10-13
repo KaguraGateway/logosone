@@ -5,8 +5,8 @@ import (
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order"
-	orderitem "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order_item"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order"
+	orderitem "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
 )
 
 type OrderQueryService interface {
@@ -15,7 +15,7 @@ type OrderQueryService interface {
 }
 
 type OrderDto struct {
-	Id    string
+	Id         string
 	OrderAt    synchro.Time[tz.UTC]
 	OrderType  order.OrderType
 	TicketAddr string

@@ -4,14 +4,15 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/goredis"
-	"github.com/getsentry/sentry-go"
-	"github.com/labstack/echo/v4"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/goredis"
+	"github.com/getsentry/sentry-go"
+	"github.com/labstack/echo/v4"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4/middleware"
@@ -30,12 +31,12 @@ import (
 	sentryecho "github.com/getsentry/sentry-go/echo"
 
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/application"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/bundb"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/infra/websocket"
-	grpcserver "github.com/KaguraGateway/cafelogos-orderlink-backend/presentation/grpc_server"
-	httpserver "github.com/KaguraGateway/cafelogos-orderlink-backend/presentation/http_server"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/presentation/pubsub"
+	"github.com/KaguraGateway/logosone/orderlink-backend/application"
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/bundb"
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/websocket"
+	grpcserver "github.com/KaguraGateway/logosone/orderlink-backend/presentation/grpc_server"
+	httpserver "github.com/KaguraGateway/logosone/orderlink-backend/presentation/http_server"
+	"github.com/KaguraGateway/logosone/orderlink-backend/presentation/pubsub"
 )
 
 func main() {

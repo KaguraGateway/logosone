@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/application"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
+	"github.com/KaguraGateway/logosone/orderlink-backend/application"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
 	"github.com/getsentry/sentry-go"
 	"github.com/samber/do"
 )

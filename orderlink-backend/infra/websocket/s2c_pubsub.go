@@ -2,12 +2,13 @@ package websocket
 
 import (
 	"context"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
-	"github.com/gorilla/websocket"
-	"github.com/samber/do"
 	"log"
 	"slices"
+
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
+	"github.com/gorilla/websocket"
+	"github.com/samber/do"
 )
 
 type serverToClientPubSubWS struct {

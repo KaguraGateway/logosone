@@ -2,11 +2,12 @@ package httpserver
 
 import (
 	"context"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
-	"github.com/samber/do"
 	"log"
 	"time"
+
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
+	"github.com/samber/do"
 )
 
 func StartWSTimeSignal(ctx context.Context, i *do.Injector) {

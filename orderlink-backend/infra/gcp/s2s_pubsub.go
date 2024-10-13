@@ -1,13 +1,14 @@
 package gcp
 
 import (
-	"cloud.google.com/go/pubsub"
 	"context"
 	"fmt"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
-	"github.com/samber/do"
 	"log"
+
+	"cloud.google.com/go/pubsub"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
+	"github.com/samber/do"
 )
 
 type serverToServerPubSubCloudPubSub struct {

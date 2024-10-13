@@ -6,9 +6,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
-	orderPkg "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
+	orderPkg "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
 	"github.com/samber/do"
 )
 

@@ -5,9 +5,9 @@ import (
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
-	orderitem "github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model/order_item"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
+	orderitem "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
 	"github.com/cockroachdb/errors"
 	"github.com/samber/do"
 	"github.com/samber/lo"

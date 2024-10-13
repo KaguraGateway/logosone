@@ -1,7 +1,7 @@
 package orderitem
 
 import (
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain"
 	"github.com/oklog/ulid/v2"
 )
 

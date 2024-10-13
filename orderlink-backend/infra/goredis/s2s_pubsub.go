@@ -2,8 +2,9 @@ package goredis
 
 import (
 	"context"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-orderlink-backend/domain/repository"
+
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
 	"github.com/redis/go-redis/v9"
 	"github.com/samber/do"
 )

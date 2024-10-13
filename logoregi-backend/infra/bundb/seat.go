@@ -2,11 +2,12 @@ package bundb
 
 import (
 	"context"
+
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
-	"github.com/KaguraGateway/cafelogos-pos-backend/infra/bundb/dao"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/logoregi-backend/infra/bundb/dao"
 	"github.com/samber/do"
 	"github.com/samber/lo"
 	"github.com/uptrace/bun"

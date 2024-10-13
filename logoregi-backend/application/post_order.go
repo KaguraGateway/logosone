@@ -2,12 +2,13 @@ package application
 
 import (
 	"context"
+	"log"
+
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/samber/do"
-	"log"
 )
 
 type OrderItemParam struct {

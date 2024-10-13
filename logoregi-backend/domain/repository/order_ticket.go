@@ -2,7 +2,8 @@ package repository
 
 import (
 	"context"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
+
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 )
 
 type OrderTicketRepository interface {

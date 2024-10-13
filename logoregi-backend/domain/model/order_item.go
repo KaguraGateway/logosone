@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain"
 )
 
 type OrderItem struct {

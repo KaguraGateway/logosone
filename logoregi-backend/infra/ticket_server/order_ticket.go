@@ -1,12 +1,13 @@
 package ticket_server
 
 import (
-	"connectrpc.com/connect"
 	"context"
+
+	"connectrpc.com/connect"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/samber/do"
 )
 

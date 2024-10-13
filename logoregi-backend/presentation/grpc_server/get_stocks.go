@@ -7,8 +7,8 @@ import (
 	"connectrpc.com/connect"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/common"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
-	"github.com/KaguraGateway/cafelogos-pos-backend/application"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/application"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/samber/do"
 	"github.com/samber/lo"
 )

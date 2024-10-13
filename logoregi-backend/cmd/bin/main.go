@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/KaguraGateway/cafelogos-pos-backend/cmd/bin/migrations"
+	"github.com/KaguraGateway/logosone/logoregi-backend/cmd/bin/migrations"
 	"github.com/joho/godotenv"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"

@@ -5,8 +5,8 @@ import (
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
-	"github.com/KaguraGateway/cafelogos-pos-backend/application"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/application"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/samber/lo"
 )
 

@@ -1,6 +1,6 @@
 package model
 
-import "github.com/KaguraGateway/cafelogos-pos-backend/domain"
+import "github.com/KaguraGateway/logosone/logoregi-backend/domain"
 
 type ProductName struct {
 	value string

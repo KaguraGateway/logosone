@@ -3,8 +3,8 @@ package application
 import (
 	"context"
 
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/cockroachdb/errors"
 	"github.com/samber/do"
 )

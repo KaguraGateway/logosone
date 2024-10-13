@@ -3,7 +3,7 @@ package application
 import (
 	"context"
 
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/samber/do"
 )
 

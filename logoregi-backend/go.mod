@@ -1,4 +1,4 @@
-module github.com/KaguraGateway/cafelogos-pos-backend
+module github.com/KaguraGateway/logosone/logoregi-backend
 
 go 1.23
 

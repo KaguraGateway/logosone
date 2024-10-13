@@ -1,7 +1,7 @@
 package domain_service
 
 import (
-	"github.com/KaguraGateway/cafelogos-pos-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/samber/lo"
 )
 

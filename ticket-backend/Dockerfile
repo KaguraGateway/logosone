@@ -8,6 +8,8 @@ RUN apt install unzip
 RUN unzip -q protoc.zip bin/protoc 'include/*' -d /usr/local
 RUN cargo build --release
 
-ENV PORT 8080
+cargo install sea-orm-cli
+
+ENTRYPOINT ["sea-orm-cli", "migrate", "up"]
 
 CMD ["/app/target/release/cafelogos-ticket-backend"]

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare": "panda codegen",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -11,31 +10,31 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
-    "@ark-ui/react": "^0.14.0",
+    "@ark-ui/react": "^4.1.1",
     "@bufbuild/connect-query": "^0.4.1",
     "@bufbuild/connect-web": "^0.13.0",
     "@kaguragateway/cafelogos-grpc": "github:KaguraGateway/cafelogos-grpc",
-    "@tanstack/react-query": "^4.35.0",
-    "@types/node": "20.6.0",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "clsx": "^2.0.0",
-    "eslint": "8.49.0",
-    "eslint-config-next": "13.4.19",
-    "next": "13.4.19",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.11.0",
-    "typescript": "5.2.2"
+    "@tanstack/react-query": "^5.59.13",
+    "@types/node": "22.7.5",
+    "@types/react": "18.3.11",
+    "@types/react-dom": "18.3.1",
+    "clsx": "^2.1.1",
+    "eslint": "9.12.0",
+    "eslint-config-next": "14.2.15",
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-icons": "^5.3.0",
+    "typescript": "5.6.3"
   },
   "devDependencies": {
-    "@pandacss/dev": "^0.14.0",
-    "@typescript-eslint/eslint-plugin": "^6.6.0",
-    "@typescript-eslint/parser": "^6.6.0",
+    "@pandacss/dev": "^0.46.1",
+    "@typescript-eslint/eslint-plugin": "^8.8.1",
+    "@typescript-eslint/parser": "^8.8.1",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-typescript": "^17.1.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "prettier": "^3.0.3"
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "prettier": "^3.3.3"
   }
 }

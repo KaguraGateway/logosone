@@ -232,5 +232,5 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
   }
-} as const;
+};
 

@@ -19,7 +19,7 @@ export const getOrders = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetUnpaidOrdersBySeatId
@@ -33,7 +33,7 @@ export const getUnpaidOrdersBySeatId = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostOrder
@@ -47,7 +47,7 @@ export const postOrder = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.DeleteOrder
@@ -61,7 +61,7 @@ export const deleteOrder = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostPayment
@@ -75,7 +75,7 @@ export const postPayment = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.UpdatePayment
@@ -89,7 +89,7 @@ export const updatePayment = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetProducts
@@ -103,7 +103,7 @@ export const getProducts = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostNewClient
@@ -117,7 +117,7 @@ export const postNewClient = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.UpdateClient
@@ -131,7 +131,7 @@ export const updateClient = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * Only Admin
@@ -147,7 +147,7 @@ export const getProductCategories = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostProductCategory
@@ -161,7 +161,7 @@ export const postProductCategory = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostProduct
@@ -175,7 +175,7 @@ export const postProduct = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.UpdateProduct
@@ -189,7 +189,7 @@ export const updateProduct = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.DeleteProduct
@@ -203,7 +203,7 @@ export const deleteProduct = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostStock
@@ -217,7 +217,7 @@ export const postStock = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetStocks
@@ -231,7 +231,7 @@ export const getStocks = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostCoffeeBean
@@ -245,7 +245,7 @@ export const postCoffeeBean = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetCoffeeBeans
@@ -259,7 +259,7 @@ export const getCoffeeBeans = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.DeleteAllOrders
@@ -273,7 +273,7 @@ export const deleteAllOrders = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostSeat
@@ -287,7 +287,7 @@ export const postSeat = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.UpdateSeat
@@ -301,7 +301,7 @@ export const updateSeat = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetSeats
@@ -315,7 +315,7 @@ export const getSeats = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.GetDiscounts
@@ -329,7 +329,7 @@ export const getDiscounts = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};
 
 /**
  * @generated from rpc cafelogos.pos.PosService.PostDiscount
@@ -343,4 +343,4 @@ export const postDiscount = {
   service: {
     typeName: "cafelogos.pos.PosService"
   }
-} as const;
+};

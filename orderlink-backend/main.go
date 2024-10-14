@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/getsentry/sentry-go"
 	"log"
 	"net/http"
 	"os"
@@ -11,7 +12,6 @@ import (
 	"time"
 
 	"github.com/KaguraGateway/logosone/orderlink-backend/infra/goredis"
-	"github.com/getsentry/sentry-go"
 	"github.com/labstack/echo/v4"
 
 	"github.com/joho/godotenv"
@@ -42,7 +42,7 @@ import (
 func main() {
 	// Load .env
 	if err := godotenv.Load(); err != nil {
-		log.Print(err)
+		log.Println(err)
 	}
 	// 開発環境であるか、そうでないかを判定する
 	var isDev = false
@@ -51,15 +51,25 @@ func main() {
 	}
 
 	// Sentry
-	if err := sentry.Init(sentry.ClientOptions{
-		Dsn:           os.Getenv("SENTRY_DSN"),
-		EnableTracing: true,
-		// Set TracesSampleRate to 1.0 to capture 100%
-		// of transactions for performance monitoring.
-		// We recommend adjusting this value in production,
-		TracesSampleRate: 1.0,
-	}); err != nil {
-		fmt.Printf("Sentry initialization failed: %v", err)
+	if _, ok := os.LookupEnv("SENTRY_DSN"); ok {
+		if err := sentry.Init(sentry.ClientOptions{
+			Dsn:           os.Getenv("SENTRY_DSN"),
+			EnableTracing: true,
+			// Set TracesSampleRate to 1.0 to capture 100%
+			// of transactions for performance monitoring.
+			// We recommend adjusting this value in production,
+			TracesSampleRate: 1.0,
+		}); err != nil {
+			fmt.Printf("Sentry initialization failed: %v", err)
+		}
+	}
+
+	// Envチェック
+	if _, ok := os.LookupEnv("DATABASE_URL"); !ok {
+		log.Fatalf("DATABASE_URL is not set")
+	}
+	if _, ok := os.LookupEnv("REDIS_URL"); !ok {
+		log.Fatalf("REDIS_URL is not set")
 	}
 
 	// Start DB

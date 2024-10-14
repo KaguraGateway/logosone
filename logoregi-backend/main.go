@@ -16,7 +16,6 @@ import (
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
 	"github.com/KaguraGateway/logosone/logoregi-backend/infra/orderlink_server"
 	"github.com/KaguraGateway/logosone/logoregi-backend/infra/ticket_server"
-	"github.com/joho/godotenv"
 	"golang.org/x/net/http2"
 
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos/posconnect"
@@ -38,9 +37,10 @@ var (
 func main() {
 	// Load .env
 	if _, ok := os.LookupEnv("DATABASE_URL"); !ok {
-		if err := godotenv.Load(); err != nil {
-			log.Print(err)
-		}
+		//if err := godotenv.Load(); err != nil {
+		//	log.Print(err)
+		//}
+		log.Fatal("DATABASE_URL is not set")
 	}
 
 	// 開発環境であるか、そうでないかを判定する

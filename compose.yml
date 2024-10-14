@@ -1,4 +1,3 @@
-version: '3'
 services:
   db:
     image: postgres:16
@@ -15,6 +14,42 @@ services:
       - '6379:6379'
     volumes:
       - redis-data:/data
+  logoregi-backend:
+    build:
+      context: ./logoregi-backend
+    ports:
+      - '8080:8080'
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db/pos?sslmode=disable
+      - PORT=8080
+      - TICKET_GRPC=http://ticket-backend:8081
+      - ORDERLINK_GRPC=http://orderlink-backend:8082
+      - DEV_MODE=1
+    depends_on:
+      - db
+      - ticket-backend
+  ticket-backend:
+    build:
+      context: ./ticket-backend
+    ports:
+      - '8081:8081'
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db/ticket?sslmode=disable
+      - PORT=8081
+  orderlink-backend:
+    build:
+      context: ./orderlink-backend
+    ports:
+      - '8082:8082'
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db/orderlink?sslmode=disable
+      - SENTRY_DSN=example
+      - PORT=8082
+      - REDIS_URL=redis:6379
+      - DEV_MODE=1
+    depends_on:
+      - db
+      - redis
 
 volumes:
   db-data:

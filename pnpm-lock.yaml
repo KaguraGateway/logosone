@@ -15,8 +15,8 @@ dependencies:
     specifier: 1.6.1
     version: 1.6.1(@bufbuild/protobuf@2.2.0)
   '@connectrpc/connect-query':
-    specifier: 2.0.0-beta.2
-    version: 2.0.0-beta.2(@bufbuild/protobuf@2.2.0)(@connectrpc/connect@1.6.1)(@tanstack/react-query@5.59.13)(react-dom@18.3.1)(react@18.3.1)
+    specifier: 1.4.2
+    version: 1.4.2(@bufbuild/protobuf@2.2.0)(@connectrpc/connect@1.6.1)(@tanstack/react-query@5.59.13)(react-dom@18.3.1)(react@18.3.1)
   '@connectrpc/connect-web':
     specifier: 1.6.1
     version: 1.6.1(@bufbuild/protobuf@2.2.0)(@connectrpc/connect@1.6.1)
@@ -29,8 +29,8 @@ devDependencies:
     specifier: 1.6.1
     version: 1.6.1(@bufbuild/protoc-gen-es@2.2.0)(@connectrpc/connect@1.6.1)
   '@connectrpc/protoc-gen-connect-query':
-    specifier: 2.0.0-beta.2
-    version: 2.0.0-beta.2(@bufbuild/protoc-gen-es@2.2.0)
+    specifier: 1.4.2
+    version: 1.4.2(@bufbuild/protoc-gen-es@2.2.0)
 
 packages:
 
@@ -145,11 +145,11 @@ packages:
       - supports-color
     dev: true
 
-  /@connectrpc/connect-query@2.0.0-beta.2(@bufbuild/protobuf@2.2.0)(@connectrpc/connect@1.6.1)(@tanstack/react-query@5.59.13)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-uwJScUU1aL3I1+xmIwN9/tFgIhPK8txQbetGKd1oBlkrk7ABwFRXgq4CYy1eNV1+0MG15hA1uEpXhYm9jJoLYg==}
+  /@connectrpc/connect-query@1.4.2(@bufbuild/protobuf@2.2.0)(@connectrpc/connect@1.6.1)(@tanstack/react-query@5.59.13)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-ZjBLtaGoBPDMtdRu4KiX7KpSigifiZiVaenhXHUsmNRjLj9r4OxQM+O2OqvTQ1YJhP4/h1xL+HX7YB0gcQ0FoA==}
     peerDependencies:
-      '@bufbuild/protobuf': 2.x
-      '@connectrpc/connect': 2.x
+      '@bufbuild/protobuf': ^1.10.0
+      '@connectrpc/connect': ^1.1.2
       '@tanstack/react-query': 5.x
       react: ^18.3.1
       react-dom: ^18.3.1
@@ -159,6 +159,7 @@ packages:
       '@tanstack/react-query': 5.59.13(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+      stable-hash: 0.0.4
     dev: false
 
   /@connectrpc/connect-web@1.6.1(@bufbuild/protobuf@2.2.0)(@connectrpc/connect@1.6.1):
@@ -199,19 +200,19 @@ packages:
       - supports-color
     dev: true
 
-  /@connectrpc/protoc-gen-connect-query@2.0.0-beta.2(@bufbuild/protoc-gen-es@2.2.0):
-    resolution: {integrity: sha512-tEk5ilD01DNVwYdQblLpE7DvslSAjjo8Isq2LZT6PmI2kYtzhOwOciRc2wrkRXrYAV97/Z8aFiPh4hx28rAZZg==}
+  /@connectrpc/protoc-gen-connect-query@1.4.2(@bufbuild/protoc-gen-es@2.2.0):
+    resolution: {integrity: sha512-F2cdrN8p3q+ASO10FgS1ijStkB7QCGsjvLtYPfopCL53zusNbV6W7+0N61QoGJrV/4rdj1gHCigSRCopDcivAg==}
     engines: {node: '>=16'}
     hasBin: true
     peerDependencies:
-      '@bufbuild/protoc-gen-es': 2.x
+      '@bufbuild/protoc-gen-es': 1.x
     peerDependenciesMeta:
       '@bufbuild/protoc-gen-es':
         optional: true
     dependencies:
-      '@bufbuild/protobuf': 2.2.0
+      '@bufbuild/protobuf': 1.10.0
       '@bufbuild/protoc-gen-es': 2.2.0(@bufbuild/protobuf@2.2.0)
-      '@bufbuild/protoplugin': 2.2.0
+      '@bufbuild/protoplugin': 1.10.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -299,6 +300,10 @@ packages:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
     dependencies:
       loose-envify: 1.4.0
+    dev: false
+
+  /stable-hash@0.0.4:
+    resolution: {integrity: sha512-LjdcbuBeLcdETCrPn9i8AYAZ1eCtu4ECAWtP7UleOiZ9LzVxRzzUZEoZ8zB24nhkQnDWyET0I+3sWokSDS3E7g==}
     dev: false
 
   /typescript@4.5.2:

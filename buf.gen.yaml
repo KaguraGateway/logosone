@@ -12,6 +12,9 @@ plugins:
   - local: protoc-gen-connect-es
     out: scripts
     opt: target=ts
+  - local: protoc-gen-connect-query
+    out: scripts
+    opt: target=ts
   - remote: buf.build/connectrpc/swift
     opt:
       - GenerateAsyncMethods=true

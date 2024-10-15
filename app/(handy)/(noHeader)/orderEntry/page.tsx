@@ -2,7 +2,7 @@
 import { Button, Center, Flex, Text } from '@chakra-ui/react';
 import { Product, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { HiCheckCircle } from 'react-icons/hi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 
@@ -98,10 +98,18 @@ function OrderEntry({
   toOrderCheck,
 }: ReturnType<typeof useOrderEntryUseCase>) {
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+  const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   const onOpenChooseOptionModalOverride = (product: Product) => {
     setCurrentProduct(product);
     onOpenChooseOptionModal();
+  };
+
+  const handleCategoryClick = (categoryName: string) => {
+    const categoryRef = categoryRefs.current[categoryName];
+    if (categoryRef) {
+      categoryRef.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -111,7 +119,12 @@ function OrderEntry({
         {/* 左 */}
         <Flex flexDir="column" width={3 / 10} alignItems="start" overflow="scroll">
           {categories.map((category) => (
-            <CategorySelectButton key={category.id} name={category.name} isSelected={false} />
+            <CategorySelectButton
+              key={category.id}
+              name={category.name}
+              isSelected={false}
+              onClick={() => handleCategoryClick(category.name)}
+            />
           ))}
         </Flex>
         {/* 右 */}
@@ -126,7 +139,7 @@ function OrderEntry({
         >
           {/* Category */}
           {categories.map((category) => (
-            <Flex flexDir="column" padding={1} width="100%" gap={2} key={category.id}>
+            <Flex flexDir="column" padding={1} width="100%" gap={2} key={category.id} ref={(el) => (categoryRefs.current[category.name] = el)}>
               {/* CategoryName */}
               <Text fontSize="xl" fontWeight="semibold" color="gray.600">
                 {category.name}

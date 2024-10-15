@@ -8,6 +8,7 @@ import { useErrorModal } from '@/jotai/errorModal';
 import { useProductQuery } from '@/query/getProducts';
 import { useSeatQuery } from '@/query/getSeats';
 import { usePostOrderMutation } from '@/query/postOrder';
+
 import { getProductInfo } from './utils/productUtils';
 
 export type CategoryWithProducts = {

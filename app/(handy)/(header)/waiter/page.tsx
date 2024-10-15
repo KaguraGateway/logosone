@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { BiLogOut } from 'react-icons/bi';
 import { IoClipboard } from 'react-icons/io5';
 
+import { useSeatQuery } from '@/query/getSeats';
+
 import TicketSelectButton from './_components/TicketSelectButton';
 import WorkEndModal from './_components/WorkEndModal';
-import { useSeatQuery } from '@/query/getSeats';
 
 export default function Waiter({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
   const { isOpen: isOpenWorkEndModal, onOpen: onOpenWorkEndModal, onClose: onCloseWorkEndModal } = useDisclosure();
@@ -14,7 +15,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
 
   return (
     <>
-      <Flex flexDir="column" gap="26px" paddingBottom={100}>
+      <Flex flexDir="column" gap="26px" marginBottom={100}>
         {searchParams.isSendSuccess != null && Boolean(searchParams.isSendSuccess) && (
           <Alert status="success">
             <AlertIcon />

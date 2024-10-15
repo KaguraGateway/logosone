@@ -2,10 +2,11 @@
 import { Button, Center, Flex, Text } from '@chakra-ui/react';
 import { Product, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import Link from 'next/link';
-import React, { useState, useRef, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect,useRef, useState } from 'react';
 import { HiCheckCircle } from 'react-icons/hi';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import { useSearchParams } from 'next/navigation';
+
 import ProductInfoCard from '../_components/ProductInfoCard';
 import CategorySelectButton from './_components/CategorySelectButton';
 import ChooseOptionModal from './_components/ChooseOptionModal';
@@ -158,7 +159,7 @@ function OrderEntry({
   return (
     <>
       {/* 全体 */}
-      <Flex flexDir="row" height="100vh">
+      <Flex flexDir="row">
         {/* 左側のカテゴリー */}
         <Flex
           flexDir="column"
@@ -178,11 +179,7 @@ function OrderEntry({
               isSelected={selectedCategory === category.name}
               onClick={() => {
                 setSelectedCategory(category.name); // カテゴリを選択する処理
-                // スクロールする処理を追加
-                const element = document.getElementById(category.name);
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
+                handleCategoryClick(category.name);
               }}
             />
           ))}
@@ -192,9 +189,10 @@ function OrderEntry({
         <Flex
           flexDir="column"
           width="70%"
-          marginLeft="30%" // 左側の幅に合わせてマージンを設定
+          marginLeft="30%"
           overflowY="auto"
           padding={4}
+          marginBottom={70}
         >
           {/* Category */}
           {categories.map((category) => (

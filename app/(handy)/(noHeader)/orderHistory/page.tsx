@@ -1,12 +1,14 @@
 'use client';
-import { Center, Text, Flex, Spinner, Box, VStack, HStack, Spacer, Button} from '@chakra-ui/react';
+import { Box, Button,Center, Flex, HStack, Spacer, Spinner, Text, VStack} from '@chakra-ui/react';
 import Link from 'next/link';
-import { IoArrowBackOutline, IoClipboard } from 'react-icons/io5';
 import { useSearchParams } from 'next/navigation';
-import { useUnpaidOrdersQuery } from '@/query/getUnpaidOrders';
+import { IoArrowBackOutline, IoClipboard } from 'react-icons/io5';
+
 import { useProductQuery } from '@/query/getProducts';
-import { getProductInfo } from '../orderEntry/utils/productUtils';
 import { useSeatQuery } from '@/query/getSeats';
+import { useUnpaidOrdersQuery } from '@/query/getUnpaidOrders';
+
+import { getProductInfo } from '../orderEntry/utils/productUtils';
 
 export default function OrderHistory() {
     const searchParams = useSearchParams();
@@ -73,13 +75,13 @@ export default function OrderHistory() {
             </Text>
           </HStack>
           <Text fontSize="xl" fontWeight="bold" color="gray.800" marginTop={4}>
-                合計金額: {totalAmount.toString()}円
+                合計金額: ¥{totalAmount.toString()}
           </Text>
             {ordersData?.orders.length > 0 ? (
                 ordersData.orders.map(order => (
                     <Box key={order.id} borderWidth="1px" borderRadius="lg" padding={4} marginY={2} bg={"white"}>
-                        <Text fontSize="lg" fontWeight="bold">注文ID: {order.id}</Text>
-                        <Text>注文日時: {new Date(order.orderAt).toLocaleString()}</Text>
+                        <Text fontSize="lg" fontWeight="bold">注文日時: {new Date(order.orderAt).toLocaleString()}</Text>
+                        <Text >注文ID: {order.id}</Text>
                         <VStack spacing={2} align="start">
                             {order.items.map(item => {
                                 const { product, coffeeBrew } = getProductInfo(productsData?.products || [], item.productId, item.coffeeBrewId);

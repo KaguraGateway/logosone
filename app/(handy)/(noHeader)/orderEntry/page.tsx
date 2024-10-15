@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React, { useState, useRef, useEffect } from 'react';
 import { HiCheckCircle } from 'react-icons/hi';
 import { IoArrowBackOutline } from 'react-icons/io5';
-
+import { useSearchParams } from 'next/navigation';
 import ProductInfoCard from '../_components/ProductInfoCard';
 import CategorySelectButton from './_components/CategorySelectButton';
 import ChooseOptionModal from './_components/ChooseOptionModal';
@@ -144,6 +144,16 @@ function OrderEntry({
     };
   }, [categories]);
 
+  // ここに座席IDを取得する処理を追加
+  const searchParams = useSearchParams();
+  const seatId = searchParams.get('seatId');
+
+  useEffect(() => {
+    if (seatId) {
+      onConfirmSeatId(seatId); // 座席IDを確認する
+    }
+  }, [seatId, onConfirmSeatId]);
+
   return (
     <>
       {/* 全体 */}
@@ -252,12 +262,14 @@ function OrderEntry({
           注文確認
         </Button>
       </Flex>
-      <TicketNumberInputModal
-        isOpen={isOpenTicketNumberInputModal}
-        onClose={onCloseTicketNumberInputModal}
-        onOpen={onOpenTicketNumberInputModal}
-        onConfirm={onConfirmSeatId}
-      />
+      {seatId == null && (
+        <TicketNumberInputModal
+          isOpen={isOpenTicketNumberInputModal}
+          onClose={onCloseTicketNumberInputModal}
+          onOpen={onOpenTicketNumberInputModal}
+          onConfirm={onConfirmSeatId}
+        />
+      )}
       <ChooseOptionModal
         isOpen={isOpenChooseOptionModal}
         onClose={onCloseChooseOptionModal}

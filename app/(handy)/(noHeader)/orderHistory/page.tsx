@@ -1,57 +1,72 @@
 'use client';
-import { Button, Center, Flex, Text } from '@chakra-ui/react';
-import Link from 'next/link';
-import { IoArrowBackOutline, IoClipboard } from 'react-icons/io5';
+import { Center, Text, Flex, Spinner, Box, VStack } from '@chakra-ui/react';
+import { useSearchParams } from 'next/navigation';
+import { useUnpaidOrdersQuery } from '@/query/getUnpaidOrders';
+import { useProductQuery } from '@/query/getProducts';
+import { getProductInfo } from '../orderEntry/utils/productUtils';
 
-import ProductInfoCard from '../_components/ProductInfoCard';
+export default function OrderHistory() {
+    const searchParams = useSearchParams();
+    const seatId = searchParams.get('seatId');
 
-export default function orderCheck() {
-  return (
-    <>
-      <Center>
-        <Text fontSize="2xl" fontWeight="semibold" color="gray.600" p={4}>
-          テーブル1　注文履歴
-          {/* なんかいい感じに値渡してくれ */}
-        </Text>
-      </Center>
-      <Flex flexDir="column" padding={1} width="100%" gap={4} paddingX={4}>
-        <ProductInfoCard name="ロゴスブレンド〜豊穣〜（ネル）" quantity={2} />
-        <ProductInfoCard name="茜ブレンド（サイフォン）" quantity={1} />
-        <ProductInfoCard name="レモネード" quantity={1} />
-      </Flex>
-      <Flex
-        flexDir="row"
-        position="fixed"
-        width="100vw"
-        alignItems="center"
-        bottom="0"
-        left="0"
-        right="0"
-        minHeight="70px"
-        bg="white"
-        paddingTop={3}
-        paddingBottom={5}
-        borderTop="2px"
-        borderColor="gray.300"
-        boxShadow="base"
-        paddingX={4}
-      >
-        <Button
-          flex={1}
-          size="lg"
-          colorScheme="gray"
-          leftIcon={<IoArrowBackOutline />}
-          marginRight={4}
-          bg={'gray.300'}
-          as={Link}
-          href="/waiter"
-        >
-          戻る
-        </Button>
-        <Button flex={3} size="lg" colorScheme="blue" leftIcon={<IoClipboard />} as={Link} href="/orderEntry">
-          追加注文
-        </Button>
-      </Flex>
-    </>
-  );
+    const { data: ordersData, error: ordersError, isLoading: ordersLoading } = useUnpaidOrdersQuery(seatId as string);
+    const { data: productsData, error: productsError, isLoading: productsLoading } = useProductQuery();
+
+    if (ordersLoading || productsLoading) {
+        return (
+            <Center>
+                <Spinner />
+            </Center>
+        );
+    }
+
+    if (ordersError) {
+        return (
+            <Center>
+                <Text color="red.500">未払いの注文を取得できませんでした。</Text>
+            </Center>
+        );
+    }
+
+    if (productsError) {
+        return (
+            <Center>
+                <Text color="red.500">商品情報を取得できませんでした。</Text>
+            </Center>
+        );
+    }
+
+    return (
+        <Flex flexDir="column" padding={4}>
+            <Text fontSize="2xl" fontWeight="semibold" color="gray.600">
+                注文履歴
+            </Text>
+            {ordersData?.orders.length > 0 ? (
+                ordersData.orders.map(order => (
+                    <Box key={order.id} borderWidth="1px" borderRadius="lg" padding={4} marginY={2}>
+                        <Text fontSize="lg" fontWeight="bold">注文ID: {order.id}</Text>
+                        <Text>注文日時: {new Date(order.orderAt).toLocaleString()}</Text>
+                        <Text>座席名: {order.seatName || '未指定'}</Text>
+                        <Text>商品:</Text>
+                        <VStack spacing={2} align="start">
+                            {order.items.map(item => {
+                                // 商品名と淹れ方の情報を取得
+                                const { product, coffeeBrew } = getProductInfo(productsData?.products || [], item.productId, item.coffeeBrewId);
+                                return (
+                                    <Box key={item.productId} padding={2} borderWidth="1px" borderRadius="md">
+                                        <Text>商品名: {product ? product.productName : '不明'}</Text>
+                                        <Text>数量: {item.quantity}</Text>
+                                        <Text>金額: {item.amount.toString()}円</Text>
+                                        {coffeeBrew && <Text>淹れ方: {coffeeBrew.name}</Text>}
+                                    </Box>
+                                );
+                            })}
+                        </VStack>
+                    </Box>
+                ))
+            ) : (
+                <Text color="gray.500">未支払いの注文はありません。</Text>
+            )}
+        </Flex>
+    );
 }

@@ -8,6 +8,7 @@ import { useErrorModal } from '@/jotai/errorModal';
 import { useProductQuery } from '@/query/getProducts';
 import { useSeatQuery } from '@/query/getSeats';
 import { usePostOrderMutation } from '@/query/postOrder';
+import { getProductInfo } from './utils/productUtils';
 
 export type CategoryWithProducts = {
   id: string;
@@ -137,10 +138,8 @@ export function useOrderEntryUseCase() {
     }
     return items.get(key)?.quantity;
   };
-  const getProductInfo = (productId: string, coffeeBrewId?: string) => {
-    const product = productQuery.data?.products.find((v) => v.productId === productId);
-    const coffeeBrew = coffeeBrewId != null ? product?.coffeeBrews.find((v) => v.id === coffeeBrewId) : undefined;
-    return { product, coffeeBrew };
+  const getProductInfoWrapper = (productId: string, coffeeBrewId?: string) => {
+    return getProductInfo(productQuery.data?.products || [], productId, coffeeBrewId);
   };
   const backToOrderEntry = () => {
     setState(0);
@@ -205,7 +204,7 @@ export function useOrderEntryUseCase() {
     toOrderCheck,
     onPostOrder,
     orderItems,
-    getProductInfo,
+    getProductInfo: getProductInfoWrapper,
     isOrderSending,
   };
 }

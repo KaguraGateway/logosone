@@ -34,7 +34,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           {seatQuery.data?.seats
             .filter(seat => seat.name.startsWith('テーブル')) // カウンターの座席をフィルタリング
             .map(seat => (
-              <Link key={seat.id} href={`/orderHistory/${seat.id}`} passHref>
+              <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
                 <TicketSelectButton 
                   id={seat.id} 
                   title={seat.name.replace('テーブル', '')} 
@@ -51,7 +51,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           {seatQuery.data?.seats
             .filter(seat => seat.name.startsWith('カウンター')) // カウンターの座席をフィルタリング
             .map(seat => (
-              <Link key={seat.id} href={`/orderHistory/${seat.id}`} passHref>
+              <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
                 <TicketSelectButton 
                   id={seat.id} 
                   title={seat.name.replace('カウンター', '')} 
@@ -68,7 +68,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           {seatQuery.data?.seats
             .filter(seat => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター')) // その他の座席をフィルタリング
             .map(seat => (
-              <Link key={seat.id} href={`/orderHistory/${seat.id}`} passHref>
+              <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
                 <TicketSelectButton 
                   id={seat.id} 
                   title={seat.name} 

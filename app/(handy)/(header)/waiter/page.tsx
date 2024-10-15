@@ -32,9 +32,14 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
         <Grid templateColumns="repeat(3, 1fr)" gap="17px">
           {/* テーブルの座席ボタンを動的に生成 */}
           {seatQuery.data?.seats
-            .filter(seat => seat.name.startsWith('テーブル')) // テーブルの座席をフィルタリング
+            .filter(seat => seat.name.startsWith('テーブル')) // カウンターの座席をフィルタリング
             .map(seat => (
-              <TicketSelectButton key={seat.id} id={seat.id} title={seat.name.replace('テーブル', '')} />
+              <Link key={seat.id} href={`/orderHistory/${seat.id}`} passHref>
+                <TicketSelectButton 
+                  id={seat.id} 
+                  title={seat.name.replace('テーブル', '')} 
+                />
+              </Link>
             ))}
         </Grid>
         

@@ -46,7 +46,12 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           {seatQuery.data?.seats
             .filter(seat => seat.name.startsWith('カウンター')) // カウンターの座席をフィルタリング
             .map(seat => (
-              <TicketSelectButton key={seat.id} id={seat.id} title={seat.name.replace('カウンター', '')} />
+              <Link key={seat.id} href={`/orderHistory/${seat.id}`} passHref>
+                <TicketSelectButton 
+                  id={seat.id} 
+                  title={seat.name.replace('カウンター', '')} 
+                />
+              </Link>
             ))}
         </Grid>
 
@@ -58,7 +63,12 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           {seatQuery.data?.seats
             .filter(seat => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター')) // その他の座席をフィルタリング
             .map(seat => (
-              <TicketSelectButton key={seat.id} id={seat.id} title={seat.name} />
+              <Link key={seat.id} href={`/orderHistory/${seat.id}`} passHref>
+                <TicketSelectButton 
+                  id={seat.id} 
+                  title={seat.name} 
+                />
+              </Link>
             ))}
         </Grid>
       </Flex>

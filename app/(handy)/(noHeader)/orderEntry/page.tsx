@@ -96,6 +96,7 @@ function OrderEntry({
   onChangeQuantity,
   getQuantity,
   toOrderCheck,
+  currentSeatName,
 }: ReturnType<typeof useOrderEntryUseCase>) {
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -259,7 +260,7 @@ function OrderEntry({
           戻る
         </Button>
         <Button flex={3} size="lg" colorScheme="green" leftIcon={<HiCheckCircle />} onClick={toOrderCheck}>
-          注文確認
+          {currentSeatName}：注文確認
         </Button>
       </Flex>
       {seatId == null && (

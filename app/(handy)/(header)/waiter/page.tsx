@@ -22,12 +22,6 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
         <Button as={Link} href="../orderEntry" size="lg" colorScheme="orange" h="100px" leftIcon={<IoClipboard />} bg={"orange.700"}>
           注文入力
         </Button>
-        <Button size="lg" colorScheme="gray" h="100px" leftIcon={<IoClipboard />} bg="gray.500" color="gray.50">
-          {/* OrderLink Staffに遷移 */}
-          配膳管理
-          <br />
-          (OrderLinkスタッフ)
-        </Button>
         <Flex flexDir="column" gap="3">
           <Text fontSize="xl" fontWeight="semibold" color="gray.600">
             テーブル

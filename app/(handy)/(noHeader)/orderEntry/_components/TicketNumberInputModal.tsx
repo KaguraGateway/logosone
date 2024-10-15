@@ -55,13 +55,13 @@ export default function TicketNumberInputModal(props: Props) {
             <Flex flexDir="column" gap={3}>
               <RadioGroup onChange={setGroup} value={group}>
                 <Stack direction="row" width={'100%'}>
-                  <Radio size={'lg'} defaultChecked={true} colorScheme="teal" fontSize={'2xl'} value="テーブル">
+                  <Radio size={'lg'} defaultChecked={true} colorScheme="orange" fontSize={'2xl'} value="テーブル">
                     テーブル
                   </Radio>
-                  <Radio size={'lg'} defaultChecked={false} colorScheme="teal" fontSize={'2xl'} value="カウンター">
+                  <Radio size={'lg'} defaultChecked={false} colorScheme="orange" fontSize={'2xl'} value="カウンター">
                     カウンター
                   </Radio>
-                  <Radio size={'lg'} defaultChecked={false} colorScheme="teal" fontSize={'2xl'} value="その他">
+                  <Radio size={'lg'} defaultChecked={false} colorScheme="orange" fontSize={'2xl'} value="その他">
                     その他
                   </Radio>
                 </Stack>
@@ -72,7 +72,7 @@ export default function TicketNumberInputModal(props: Props) {
                   <Button
                     key={seat.id}
                     size={'lg'}
-                    colorScheme="teal"
+                    colorScheme="orange"
                     fontSize={'2xl'}
                     onClick={() => onConfirm(seat.id)}
                   >

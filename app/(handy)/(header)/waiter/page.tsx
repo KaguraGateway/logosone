@@ -19,7 +19,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           </Alert>
         )}
 
-        <Button as={Link} href="../orderEntry" size="lg" colorScheme="teal" h="100px" leftIcon={<IoClipboard />}>
+        <Button as={Link} href="../orderEntry" size="lg" colorScheme="orange" h="100px" leftIcon={<IoClipboard />} bg={"orange.700"}>
           注文入力
         </Button>
         <Button size="lg" colorScheme="gray" h="100px" leftIcon={<IoClipboard />} bg="gray.500" color="gray.50">
@@ -82,7 +82,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           boxShadow="base"
           paddingX={4}
         >
-          <Button size="lg" colorScheme="orange" leftIcon={<BiLogOut />} width={'100%'} onClick={onOpenWorkEndModal}>
+          <Button size="lg" colorScheme="red" leftIcon={<BiLogOut />} width={'100%'} onClick={onOpenWorkEndModal}>
             ホールを終了する
           </Button>
         </Flex>

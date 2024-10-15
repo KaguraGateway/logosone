@@ -11,8 +11,8 @@ export default function CategorySelectButton(props: Props) {
     <>
     <Button
       size="lg"
-      colorScheme={props.isSelected ? 'orange' : 'whiorangepha'}
       color={props.isSelected ? 'white' : 'gray.600'}
+      bg={props.isSelected ? 'orange.700' : 'white'}
       whiteSpace="unset"
       width="100%"
       minHeight="80px"

@@ -134,6 +134,10 @@ function OrderEntry({
   };
 
   useEffect(() => {
+    if (categories.length > 0) {
+      setSelectedCategory(categories[0].name);
+    }
+
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -143,27 +147,43 @@ function OrderEntry({
   return (
     <>
       {/* 全体 */}
-      <Flex flexDir="row">
-        {/* 左 */}
-        <Flex flexDir="column" width={3 / 10} alignItems="start" overflow="scroll">
+      <Flex flexDir="row" height="100vh">
+        {/* 左側のカテゴリー */}
+        <Flex
+          flexDir="column"
+          width="30%"
+          alignItems="start"
+          overflowY="auto"
+          position="fixed"
+          height="100%"
+          bg="gray.100"
+          borderRight="1px"
+          borderColor="gray.300"
+        >
           {categories.map((category) => (
             <CategorySelectButton
               key={category.id}
               name={category.name}
               isSelected={selectedCategory === category.name}
-              onClick={() => handleCategoryClick(category.name)}
+              onClick={() => {
+                setSelectedCategory(category.name); // カテゴリを選択する処理
+                // スクロールする処理を追加
+                const element = document.getElementById(category.name);
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
             />
           ))}
         </Flex>
-        {/* 右 */}
+
+        {/* 右側のコンテンツ */}
         <Flex
           flexDir="column"
-          width={7 / 10}
-          alignItems="start"
-          overflow="scroll"
-          borderLeft="2px"
-          borderColor="gray.300"
-          paddingBottom={100}
+          width="70%"
+          marginLeft="30%" // 左側の幅に合わせてマージンを設定
+          overflowY="auto"
+          padding={4}
         >
           {/* Category */}
           {categories.map((category) => (

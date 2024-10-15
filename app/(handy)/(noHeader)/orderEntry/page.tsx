@@ -2,7 +2,7 @@
 import { Button, Center, Flex, Text } from '@chakra-ui/react';
 import { Product, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import Link from 'next/link';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { HiCheckCircle } from 'react-icons/hi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 
@@ -99,6 +99,7 @@ function OrderEntry({
 }: ReturnType<typeof useOrderEntryUseCase>) {
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(categories[0]?.name || null);
 
   const onOpenChooseOptionModalOverride = (product: Product) => {
     setCurrentProduct(product);
@@ -112,6 +113,33 @@ function OrderEntry({
     }
   };
 
+  const handleScroll = () => {
+    const categoryElements = categories.map(category => document.getElementById(category.name));
+    const scrollPosition = window.scrollY;
+
+    if (scrollPosition === 0) {
+      // スクロール位置がゼロの場合、一番上のカテゴリを選択
+      setSelectedCategory(categories[0]?.name);
+      return;
+    }
+
+    categoryElements.forEach((element, index) => {
+      if (element) {
+        const { top, bottom } = element.getBoundingClientRect();
+        if (top <= window.innerHeight && bottom >= 0) {
+          setSelectedCategory(categories[index].name);
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [categories]);
+
   return (
     <>
       {/* 全体 */}
@@ -122,7 +150,7 @@ function OrderEntry({
             <CategorySelectButton
               key={category.id}
               name={category.name}
-              isSelected={false}
+              isSelected={selectedCategory === category.name}
               onClick={() => handleCategoryClick(category.name)}
             />
           ))}

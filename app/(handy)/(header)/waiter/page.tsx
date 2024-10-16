@@ -33,7 +33,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
         <Grid templateColumns="repeat(3, 1fr)" gap="17px">
           {/* テーブルの座席ボタンを動的に生成 */}
           {seatQuery.data?.seats
-            .filter(seat => seat.name.startsWith('テーブル')) // カウンターの座席をフィルタリング
+            .filter(seat => seat.name.startsWith('テーブル'))
             .map(seat => (
               <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
                 <TicketSelectButton 
@@ -50,7 +50,7 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
         <Grid templateColumns="repeat(3, 1fr)" gap="17px">
           {/* カウンターの座席ボタンを動的に生成 */}
           {seatQuery.data?.seats
-            .filter(seat => seat.name.startsWith('カウンター')) // カウンターの座席をフィルタリング
+            .filter(seat => seat.name.startsWith('カウンター'))
             .map(seat => (
               <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
                 <TicketSelectButton 
@@ -64,10 +64,10 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
         <Text fontSize="xl" fontWeight="semibold" color="gray.600">
           その他
         </Text>
-        <Grid templateColumns="repeat(3, 1fr)" gap="17px">
+        <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap="17px">
           {/* その他の座席ボタンを動的に生成 */}
           {seatQuery.data?.seats
-            .filter(seat => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター')) // その他の座席をフィルタリング
+            .filter(seat => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター'))
             .map(seat => (
               <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
                 <TicketSelectButton 

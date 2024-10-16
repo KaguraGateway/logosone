@@ -27,56 +27,68 @@ export default function Waiter({ searchParams }: { searchParams: { [key: string]
           注文入力
         </Button>
         <Flex flexDir="column" gap="3">
-        <Text fontSize="xl" fontWeight="semibold" color="gray.600">
-          テーブル
-        </Text>
-        <Grid templateColumns="repeat(3, 1fr)" gap="17px">
-          {/* テーブルの座席ボタンを動的に生成 */}
-          {seatQuery.data?.seats
-            .filter(seat => seat.name.startsWith('テーブル'))
-            .map(seat => (
-              <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
-                <TicketSelectButton 
-                  id={seat.id} 
-                  title={seat.name.replace('テーブル', '')} 
-                />
-              </Link>
-            ))}
-        </Grid>
-        
-        <Text fontSize="xl" fontWeight="semibold" color="gray.600">
-          カウンター
-        </Text>
-        <Grid templateColumns="repeat(3, 1fr)" gap="17px">
-          {/* カウンターの座席ボタンを動的に生成 */}
-          {seatQuery.data?.seats
-            .filter(seat => seat.name.startsWith('カウンター'))
-            .map(seat => (
-              <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
-                <TicketSelectButton 
-                  id={seat.id} 
-                  title={seat.name.replace('カウンター', '')} 
-                />
-              </Link>
-            ))}
-        </Grid>
+        {seatQuery.data?.seats?.some(seat => seat.name.startsWith('テーブル')) && (
+          <>
+            <Text fontSize="xl" fontWeight="semibold" color="gray.600">
+              テーブル
+            </Text>
+            <Grid templateColumns="repeat(3, 1fr)" gap="17px">
+              {/* テーブルの座席ボタンを動的に生成 */}
+              {seatQuery.data.seats
+                .filter(seat => seat.name.startsWith('テーブル'))
+                .map(seat => (
+                  <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
+                    <TicketSelectButton 
+                      id={seat.id} 
+                      title={seat.name.replace('テーブル', '')} 
+                    />
+                  </Link>
+                ))}
+            </Grid>
+          </>
+        )}
 
-        <Text fontSize="xl" fontWeight="semibold" color="gray.600">
-          その他
-        </Text>
-        <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap="17px">
-          {/* その他の座席ボタンを動的に生成 */}
-          {seatQuery.data?.seats
-            .filter(seat => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター'))
-            .map(seat => (
-              <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
-                <TicketSelectButton 
-                  id={seat.id} 
-                  title={seat.name} 
-                />
-              </Link>
-            ))}
-        </Grid>
+        {seatQuery.data?.seats?.some(seat => seat.name.startsWith('カウンター')) && (
+          <>
+            <Text fontSize="xl" fontWeight="semibold" color="gray.600">
+              カウンター
+            </Text>
+            <Grid templateColumns="repeat(3, 1fr)" gap="17px">
+              {/* カウンターの座席ボタンを動的に生成 */}
+              {seatQuery.data.seats
+                .filter(seat => seat.name.startsWith('カウンター'))
+                .map(seat => (
+                  <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
+                    <TicketSelectButton 
+                      id={seat.id} 
+                      title={seat.name.replace('カウンター', '')} 
+                    />
+                  </Link>
+                ))}
+            </Grid>
+          </>
+        )}
+
+        {seatQuery.data?.seats?.some(seat => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター')) && (
+          <>
+            <Text fontSize="xl" fontWeight="semibold" color="gray.600">
+              その他
+            </Text>
+            <Grid templateColumns="repeat(auto-fit, minmax(200px, 1fr))" gap="17px">
+              {/* その他の座席ボタンを動的に生成 */}
+              {seatQuery.data.seats
+                .filter(seat => !seat.name.startsWith('テーブル') && !seat.name.startsWith('カウンター'))
+                .map(seat => (
+                  <Link key={seat.id} href={`/orderHistory?seatId=${seat.id}`} passHref>
+                    <TicketSelectButton 
+                      id={seat.id} 
+                      title={seat.name} 
+                    />
+                  </Link>
+                ))}
+            </Grid>
+          </>
+        )}
       </Flex>
         <Flex
           flexDir="column"

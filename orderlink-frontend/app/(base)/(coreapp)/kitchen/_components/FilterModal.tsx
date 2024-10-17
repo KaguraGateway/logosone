@@ -57,7 +57,7 @@ export function FilterModal(props: Props) {
             onChange={() => allCheckChange(!isAllFilterChecked)}
             isChecked={isAllFilterChecked}
           >
-            全件表示
+            商品すべて
           </Checkbox>
           <FilterAccordion
             tempFilter={tempFilter}
@@ -68,14 +68,13 @@ export function FilterModal(props: Props) {
         </ModalBody>
         <ModalFooter>
           <Button
-            leftIcon={<FaReact />}
             size="md"
             w="full"
             colorScheme="red"
             mr="3"
             onClick={() => allCheckChange(false)}
           >
-            絞り込みクリア
+            絞り込み解除
           </Button>
           <Button leftIcon={<MdOutlineDone />} size="md" w="full" colorScheme="green" onClick={onConfirm}>
             確定

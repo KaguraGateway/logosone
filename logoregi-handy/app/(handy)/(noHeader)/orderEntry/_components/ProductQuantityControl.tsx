@@ -28,7 +28,7 @@ export default function ProductQuantityControl(props: Props) {
           stock={props.stock}
           isDisabled={isDisabled}
         />
-        {props.quantity >= 0 && (
+        {props.quantity > 0 && (
           <QuantitySelector
             quantity={props.quantity}
             onQuantityChange={(newQuantity) => {

@@ -2,7 +2,8 @@
 import { Button, Center, Flex, Text } from '@chakra-ui/react';
 import { Product, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect,useRef, useState } from 'react';
 import { HiCheckCircle } from 'react-icons/hi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 
@@ -96,37 +97,106 @@ function OrderEntry({
   onChangeQuantity,
   getQuantity,
   toOrderCheck,
+  currentSeatName,
 }: ReturnType<typeof useOrderEntryUseCase>) {
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+  const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(categories[0]?.name || null);
 
   const onOpenChooseOptionModalOverride = (product: Product) => {
     setCurrentProduct(product);
     onOpenChooseOptionModal();
   };
 
+  const handleCategoryClick = (categoryName: string) => {
+    const categoryRef = categoryRefs.current[categoryName];
+    if (categoryRef) {
+      categoryRef.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleScroll = () => {
+    const categoryElements = categories.map(category => document.getElementById(category.name));
+    const scrollPosition = window.scrollY;
+
+    if (scrollPosition === 0) {
+      // スクロール位置がゼロの場合、一番上のカテゴリを選択
+      setSelectedCategory(categories[0]?.name);
+      return;
+    }
+
+    categoryElements.forEach((element, index) => {
+      if (element) {
+        const { top, bottom } = element.getBoundingClientRect();
+        if (top <= window.innerHeight && bottom >= 0) {
+          setSelectedCategory(categories[index].name);
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setSelectedCategory(categories[0].name);
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [categories]);
+
+  // ここに座席IDを取得する処理を追加
+  const searchParams = useSearchParams();
+  const seatId = searchParams.get('seatId');
+
+  useEffect(() => {
+    if (seatId) {
+      onConfirmSeatId(seatId); // 座席IDを確認する
+    }
+  }, [seatId, onConfirmSeatId]);
+
   return (
     <>
       {/* 全体 */}
       <Flex flexDir="row">
-        {/* 左 */}
-        <Flex flexDir="column" width={3 / 10} alignItems="start" overflow="scroll">
-          {categories.map((category) => (
-            <CategorySelectButton key={category.id} name={category.name} isSelected={false} />
-          ))}
-        </Flex>
-        {/* 右 */}
+        {/* 左側のカテゴリー */}
         <Flex
           flexDir="column"
-          width={7 / 10}
+          width="30%"
           alignItems="start"
-          overflow="scroll"
-          borderLeft="2px"
+          overflowY="auto"
+          position="fixed"
+          height="100%"
+          bg="gray.100"
+          borderRight="1px"
           borderColor="gray.300"
-          paddingBottom={100}
+        >
+          {categories.map((category) => (
+            <CategorySelectButton
+              key={category.id}
+              name={category.name}
+              isSelected={selectedCategory === category.name}
+              onClick={() => {
+                setSelectedCategory(category.name); // カテゴリを選択する処理
+                handleCategoryClick(category.name);
+              }}
+            />
+          ))}
+        </Flex>
+
+        {/* 右側のコンテンツ */}
+        <Flex
+          flexDir="column"
+          width="70%"
+          marginLeft="30%"
+          overflowY="auto"
+          padding={4}
+          marginBottom={70}
         >
           {/* Category */}
           {categories.map((category) => (
-            <Flex flexDir="column" padding={1} width="100%" gap={2} key={category.id}>
+            <Flex flexDir="column" padding={1} width="100%" gap={2} key={category.id} ref={(el) => (categoryRefs.current[category.name] = el)}>
               {/* CategoryName */}
               <Text fontSize="xl" fontWeight="semibold" color="gray.600">
                 {category.name}
@@ -188,15 +258,17 @@ function OrderEntry({
           戻る
         </Button>
         <Button flex={3} size="lg" colorScheme="green" leftIcon={<HiCheckCircle />} onClick={toOrderCheck}>
-          注文確認
+          {currentSeatName}：注文確認
         </Button>
       </Flex>
-      <TicketNumberInputModal
-        isOpen={isOpenTicketNumberInputModal}
-        onClose={onCloseTicketNumberInputModal}
-        onOpen={onOpenTicketNumberInputModal}
-        onConfirm={onConfirmSeatId}
-      />
+      {seatId == null && (
+        <TicketNumberInputModal
+          isOpen={isOpenTicketNumberInputModal}
+          onClose={onCloseTicketNumberInputModal}
+          onOpen={onOpenTicketNumberInputModal}
+          onConfirm={onConfirmSeatId}
+        />
+      )}
       <ChooseOptionModal
         isOpen={isOpenChooseOptionModal}
         onClose={onCloseChooseOptionModal}

@@ -11,7 +11,7 @@ export default function staffSelection() {
             担当者選択
           </Text>
         </Center>
-        <Button size="lg" colorScheme="teal" h="100px" leftIcon={<IoPeople />} as={Link} href="/waiter">
+        <Button size="lg" colorScheme="orange" h="100px" leftIcon={<IoPeople />} as={Link} href="/waiter">
           ロゴスメンバー
         </Button>
         <Button

@@ -1,6 +1,7 @@
 package main
 
 import (
+	connectcors "connectrpc.com/cors"
 	"context"
 	"crypto/tls"
 	"database/sql"
@@ -90,10 +91,20 @@ func main() {
 	mux := http.NewServeMux()
 	path, handler := posconnect.NewPosServiceHandler(grpc_server.NewGrpcServer(db, i))
 	mux.Handle(path, handler)
-	corsHandler := cors.AllowAll().Handler(mux)
+	corsHandler := withCORS(mux)
 	if err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), corsHandler); err != nil {
 		panic(err)
 	}
+}
+
+func withCORS(h http.Handler) http.Handler {
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"},
+		AllowedMethods: connectcors.AllowedMethods(),
+		AllowedHeaders: connectcors.AllowedHeaders(),
+		ExposedHeaders: connectcors.ExposedHeaders(),
+	})
+	return corsMiddleware.Handler(h)
 }
 
 func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, orderLinkClient orderlinkconnect.OrderLinkServiceClient) *do.Injector {

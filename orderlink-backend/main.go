@@ -30,6 +30,8 @@ import (
 
 	sentryecho "github.com/getsentry/sentry-go/echo"
 
+	connectcors "connectrpc.com/cors"
+
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
 	"github.com/KaguraGateway/logosone/orderlink-backend/application"
 	"github.com/KaguraGateway/logosone/orderlink-backend/infra/bundb"
@@ -131,6 +133,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	// CORS
+	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:  []string{"*"},
+		AllowMethods:  connectcors.AllowedMethods(),
+		AllowHeaders:  connectcors.AllowedHeaders(),
+		ExposeHeaders: connectcors.ExposedHeaders(),
+	}))
 
 	h2s := &http2.Server{
 		MaxConcurrentStreams: 250,

@@ -13,6 +13,7 @@ require (
 )
 
 require (
+	connectrpc.com/cors v0.1.0 // indirect
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/itchyny/timefmt-go v0.1.6 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect

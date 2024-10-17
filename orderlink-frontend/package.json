@@ -11,18 +11,17 @@
   "dependencies": {
     "@chakra-ui/next-js": "^2.4.2",
     "@chakra-ui/react": "^2.10.2",
-    "@connectrpc/connect": "^1.6.1",
-    "@connectrpc/connect-web": "^1.6.1",
+    "@connectrpc/connect": "^1.4.0",
+    "@connectrpc/connect-query": "^1.4.0",
+    "@connectrpc/connect-web": "^1.4.0",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@kaguragateway/cafelogos-grpc": "github:KaguraGateway/cafelogos-grpc",
+    "@kaguragateway/cafelogos-grpc": "https://github.com/KaguraGateway/cafelogos-grpc/archive/refs/tags/v1.0.21.tar.gz",
     "@types/node": "22.7.5",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
-    "eslint": "9.12.0",
-    "eslint-config-next": "14.2.15",
     "framer-motion": "^11.11.8",
     "jotai": "^2.10.0",
     "next": "^14.2.15",
@@ -42,10 +41,6 @@
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
     "babel-loader": "^9.2.1",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-typescript": "^18.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
     "prettier": "^3.3.3"
   }
 }

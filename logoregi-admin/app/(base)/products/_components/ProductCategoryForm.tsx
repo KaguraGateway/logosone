@@ -32,7 +32,7 @@ export function ProductCategoryForm(props: Props) {
       { name: name },
       {
         onSuccess: () => {
-          client.invalidateQueries(getProductCategories.getQueryKey());
+          //client.invalidateQueries(getProductCategories.getQueryKey());
           props.onCancel();
         },
         onSettled: () => {

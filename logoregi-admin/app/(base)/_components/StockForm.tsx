@@ -1,6 +1,6 @@
 'use client';
 import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { css } from '@/panda/css';
 import { HStack, Stack } from '@/panda/jsx';

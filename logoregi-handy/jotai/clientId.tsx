@@ -1,6 +1,6 @@
 'use client';
 import { createPromiseClient } from '@connectrpc/connect';
-import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_connect';
 import { atom, useAtom } from 'jotai';
 
 import { createTransport } from '@/query/transport';

@@ -1,9 +1,7 @@
-import { createPromiseClient } from '@connectrpc/connect';
-import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_connect';
-import { cache } from 'react';
+'use client';
+import {cache, useEffect, useState} from 'react';
 
-import { createTransport } from '@/app/transport';
-import { toDiscountFromProto } from '@/types/Discount';
+import {Discount, toDiscountFromProto} from '@/types/Discount';
 import { Table } from '@/ui/table/Table';
 import { TableHeader } from '@/ui/table/TableHader';
 import { Tbody } from '@/ui/table/Tbody';
@@ -13,18 +11,13 @@ import { Th } from '@/ui/table/Th';
 import { Tr } from '@/ui/table/Tr';
 
 import { AddButton } from './_components/AddButton';
+import {useQueryDiscounts} from "@/query/getDiscounts";
 
-const getDiscounts = cache(async () => {
-  const transport = createTransport();
-  const client = createPromiseClient(PosService, transport);
-  const data = await client.getDiscounts({});
-  return data.discounts.map((discount) => {
+export default function Discounts() {
+  const { data } = useQueryDiscounts();
+  const discounts = data?.discounts?.map((discount) => {
     return toDiscountFromProto(discount);
-  });
-});
-
-export default async function Discounts() {
-  const discounts = await getDiscounts();
+  }) ?? [];
 
   return (
     <div>

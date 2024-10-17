@@ -1,6 +1,6 @@
 import { postSeat } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation } from '@connectrpc/connect-query';
 
 export function useMutationAddSeat() {
-  return useMutation(postSeat.useMutation());
+  return useMutation(postSeat);
 }

@@ -1,9 +1,6 @@
-import { createPromiseClient } from '@connectrpc/connect';
-import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_connect';
-import { cache } from 'react';
+'use client';
 
-import { createTransport } from '@/app/transport';
-import { toProductFromProto } from '@/types/Product';
+import {toProductFromProto} from '@/types/Product';
 import { Table } from '@/ui/table/Table';
 import { TableHeader } from '@/ui/table/TableHader';
 import { Tbody } from '@/ui/table/Tbody';
@@ -11,18 +8,13 @@ import { Th } from '@/ui/table/Th';
 
 import { ProductAddButton } from './_components/ProductAddButton';
 import { ProductItem } from './_components/ProductItem';
+import {useQueryProducts} from "@/query/getProducts";
 
-const getProducts = cache(async () => {
-  const transport = createTransport();
-  const client = createPromiseClient(PosService, transport);
-  const data = await client.getProducts({});
-  return data.products.map((product) => {
+export default function Products() {
+  const { data } = useQueryProducts();
+  const products = data?.products?.map((product) => {
     return toProductFromProto(product);
-  });
-});
-
-export default async function Products() {
-  const products = await getProducts();
+  }) ?? [];
 
   return (
     <div>

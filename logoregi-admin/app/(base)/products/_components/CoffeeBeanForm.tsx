@@ -2,7 +2,7 @@
 import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
 import { getCoffeeBeans } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
 import { useQueryClient } from '@tanstack/react-query';
-import { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import { css } from '@/panda/css';
 import { HStack, Stack } from '@/panda/jsx';
@@ -39,7 +39,8 @@ export function CoffeeBeanForm(props: Props) {
       { name: name, gramQuantity: quantity },
       {
         onSuccess: () => {
-          client.invalidateQueries(getCoffeeBeans.getQueryKey());
+          // TODO: ここでキャッシュを更新する
+          //client.invalidateQueries(getCoffeeBeans.getQueryKey());
           props.onCancel();
         },
         onSettled: () => {

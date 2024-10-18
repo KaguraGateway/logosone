@@ -25,7 +25,7 @@ export default function ChooseOptionModal(props: Props) {
   return (
     <>
       {/* モーダル */}
-      <Modal closeOnOverlayClick={false} isOpen={props.isOpen} onClose={props.onClose}>
+      <Modal closeOnOverlayClick={true} isOpen={props.isOpen} onClose={props.onClose}>
         <ModalOverlay />
         <ModalContent bg="gray.100">
           <ModalHeader>ドリップ方法を選択</ModalHeader>

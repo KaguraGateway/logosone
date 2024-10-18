@@ -4,7 +4,7 @@ go 1.23
 
 require (
 	connectrpc.com/connect v1.17.0
-	github.com/KaguraGateway/cafelogos-grpc v1.0.23
+	github.com/KaguraGateway/cafelogos-grpc v1.0.24
 	github.com/cockroachdb/errors v1.11.3
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/rs/cors v1.11.1

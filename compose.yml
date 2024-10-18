@@ -43,7 +43,7 @@ services:
     build:
       context: ./logoregi-handy
       args:
-        - NEXT_PUBLIC_API_URL=http://localhost:8080
+        - NEXT_PUBLIC_POS_GRPC=http://localhost:8080
     ports:
       - '3002:3002'
     environment:

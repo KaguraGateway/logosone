@@ -3,7 +3,7 @@ import { Button, Center, Flex, Text } from '@chakra-ui/react';
 import { Product, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect,useRef, useState } from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import { HiCheckCircle } from 'react-icons/hi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 
@@ -100,51 +100,12 @@ function OrderEntry({
   currentSeatName,
 }: ReturnType<typeof useOrderEntryUseCase>) {
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
-  const categoryRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categories[0]?.name || null);
 
   const onOpenChooseOptionModalOverride = (product: Product) => {
     setCurrentProduct(product);
     onOpenChooseOptionModal();
   };
-
-  const handleCategoryClick = (categoryName: string) => {
-    const categoryRef = categoryRefs.current[categoryName];
-    if (categoryRef) {
-      categoryRef.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleScroll = () => {
-    const categoryElements = categories.map(category => document.getElementById(category.name));
-    const scrollPosition = window.scrollY;
-
-    if (scrollPosition === 0) {
-      // スクロール位置がゼロの場合、一番上のカテゴリを選択
-      setSelectedCategory(categories[0]?.name);
-      return;
-    }
-
-    categoryElements.forEach((element, index) => {
-      if (element) {
-        const { top, bottom } = element.getBoundingClientRect();
-        if (top <= window.innerHeight && bottom >= 0) {
-          setSelectedCategory(categories[index].name);
-        }
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (categories.length > 0) {
-      setSelectedCategory(categories[0].name);
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [categories]);
 
   // ここに座席IDを取得する処理を追加
   const searchParams = useSearchParams();
@@ -179,7 +140,6 @@ function OrderEntry({
               isSelected={selectedCategory === category.name}
               onClick={() => {
                 setSelectedCategory(category.name); // カテゴリを選択する処理
-                handleCategoryClick(category.name);
               }}
             />
           ))}
@@ -196,7 +156,7 @@ function OrderEntry({
         >
           {/* Category */}
           {categories.map((category) => (
-            <Flex flexDir="column" padding={1} width="100%" gap={2} key={category.id} ref={(el) => (categoryRefs.current[category.name] = el)}>
+            <Flex flexDir="column" padding={1} width="100%" gap={2} key={category.id}>
               {/* CategoryName */}
               <Text fontSize="xl" fontWeight="semibold" color="gray.600">
                 {category.name}
@@ -303,7 +263,7 @@ export default function Page() {
   const usecase = useOrderEntryUseCase();
 
   if (usecase.state === 0) {
-    return <OrderEntry {...usecase} />;
+    return <Suspense><OrderEntry {...usecase} /></Suspense>
   }
   return <OrderCheck {...usecase} />;
 }

@@ -9,12 +9,22 @@ import { useSeatQuery } from '@/query/getSeats';
 import { useUnpaidOrdersQuery } from '@/query/getUnpaidOrders';
 
 import { getProductInfo } from '../orderEntry/utils/productUtils';
+import {Suspense} from "react";
 
-export default function OrderHistory() {
+function OrderHistory() {
     const searchParams = useSearchParams();
     const seatId = searchParams.get('seatId');
 
-    const { data: ordersData, error: ordersError, isLoading: ordersLoading } = useUnpaidOrdersQuery(seatId as string);
+    if(seatId == null) {
+        return (
+            <Center>
+                <Text color="red.500">座席情報が取得できませんでした。</Text>
+                <Text color="red.500">seadId params is not set</Text>
+            </Center>
+        );
+    }
+
+    const { data: ordersData, error: ordersError, isLoading: ordersLoading } = useUnpaidOrdersQuery(seatId);
     const { data: productsData, error: productsError, isLoading: productsLoading } = useProductQuery();
     const seatQuery = useSeatQuery();
 
@@ -26,7 +36,7 @@ export default function OrderHistory() {
         );
     }
 
-    if (ordersError) {
+    if (ordersError || ordersData == null) {
         return (
             <Center>
                 <Text color="red.500">未払いの注文を取得できませんでした。</Text>
@@ -62,6 +72,8 @@ export default function OrderHistory() {
         }, 0);
     }, 0) || 0;
 
+    const orderLen = ordersData?.orders.length;
+
     return (
       <>
         <Flex flexDir="column" padding={4} marginBottom={70}>
@@ -77,7 +89,7 @@ export default function OrderHistory() {
           <Text fontSize="xl" fontWeight="bold" color="gray.800" marginTop={4}>
                 合計金額: ¥{totalAmount.toString()}
           </Text>
-            {ordersData?.orders.length > 0 ? (
+            {orderLen > 0 ? (
                 ordersData.orders.map(order => (
                     <Box key={order.id} borderWidth="1px" borderRadius="lg" padding={4} marginY={2} bg={"white"}>
                         <Text fontSize="lg" fontWeight="bold">注文日時: {new Date(order.orderAt).toLocaleString()}</Text>
@@ -144,4 +156,8 @@ export default function OrderHistory() {
         </Flex>
       </>
     );
+}
+
+export default function OrderHistoryPage() {
+    return <Suspense><OrderHistory /></Suspense>
 }

@@ -1,6 +1,7 @@
 'use client';
-import { Button, Flex, HStack, Text, VStack } from '@chakra-ui/react';
-import { FiCheckSquare, FiRepeat } from 'react-icons/fi';
+import { Button, Flex, HStack, Spacer, Text, VStack } from '@chakra-ui/react';
+import { FiRepeat } from 'react-icons/fi';
+import { MdFilterListAlt } from 'react-icons/md';
 import { IoReloadOutline } from 'react-icons/io5';
 
 import { FilterModal } from '@/app/(base)/(coreapp)/kitchen/_components/FilterModal';
@@ -136,10 +137,18 @@ export default function KitchenPage() {
           >
             再読込
           </Button>
-          <Button leftIcon={<FiCheckSquare />} color="white" size="lg" bg="blue.500" onClick={onOpenFilterModal}>
+          <Spacer />
+          <Button leftIcon={<MdFilterListAlt />} color="white" size="lg" bg="blue.500" onClick={onOpenFilterModal}>
             絞り込み
           </Button>
-          <Button leftIcon={<FiRepeat />} color="white" size="lg" bg="orange.500" onClick={onToggleShowOnlyMyTasks}>
+          <Button
+            leftIcon={<FiRepeat />}
+            colorScheme="orange"
+            variant={isOnlyMyTasks ? 'solid' : 'outline'}
+            size="lg"
+            borderRadius={80}
+            onClick={onToggleShowOnlyMyTasks}
+          >
             担当分表示{isOnlyMyTasks ? '中' : ''}
           </Button>
         </HStack>

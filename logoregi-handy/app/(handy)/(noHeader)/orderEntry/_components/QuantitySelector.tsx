@@ -27,10 +27,10 @@ export default function QuantitySelector(props: Props) {
         <DeleteIcon />
       </Button>
       <Spacer />
-      <Button size="lg" bg="gray" color="white" width={"100%"} onClick={handleMinusClick}>
+      <Button size="lg" bg="gray" color="white" paddingX={10} onClick={handleMinusClick}>
         <MinusIcon />
       </Button>
-      <Button size="lg" bg="gray" color="white" width={"100%"} onClick={handleAddClick}>
+      <Button size="lg" bg="gray" color="white" paddingX={10} onClick={handleAddClick}>
         <AddIcon />
       </Button>
     </Flex>

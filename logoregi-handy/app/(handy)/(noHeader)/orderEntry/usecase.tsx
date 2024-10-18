@@ -9,8 +9,6 @@ import { useProductQuery } from '@/query/getProducts';
 import { useSeatQuery } from '@/query/getSeats';
 import { usePostOrderMutation } from '@/query/postOrder';
 
-import { getProductInfo } from './utils/productUtils';
-
 export type CategoryWithProducts = {
   id: string;
   name: string;
@@ -139,8 +137,10 @@ export function useOrderEntryUseCase() {
     }
     return items.get(key)?.quantity;
   };
-  const getProductInfoWrapper = (productId: string, coffeeBrewId?: string) => {
-    return getProductInfo(productQuery.data?.products || [], productId, coffeeBrewId);
+  const getProductInfo = (productId: string, coffeeBrewId?: string) => {
+    const product = productQuery.data?.products.find((v) => v.productId === productId);
+    const coffeeBrew = coffeeBrewId != null ? product?.coffeeBrews.find((v) => v.id === coffeeBrewId) : undefined;
+    return { product, coffeeBrew };
   };
   const backToOrderEntry = () => {
     setState(0);
@@ -205,7 +205,7 @@ export function useOrderEntryUseCase() {
     toOrderCheck,
     onPostOrder,
     orderItems,
-    getProductInfo: getProductInfoWrapper,
+    getProductInfo,
     isOrderSending,
   };
 }

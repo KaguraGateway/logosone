@@ -21,38 +21,60 @@ type Props = {
 
 export function FilterAccordion({tempFilter, onChildCheckChange, onGrandChildCheckChange, onParentCheckChange}: Props) {
   return (
-    <Accordion allowMultiple defaultIndex={[0]}>
+    <Box>
       {tempFilter.map((item) => (
-        <AccordionItem key={item.name}>
-          <AccordionButton>
-            <Text fontSize="2xl" fontWeight="semibold">
-              {item.name}
-            </Text>
-            <AccordionIcon />
-          </AccordionButton>
-          <AccordionPanel>
+        <Box key={item.name} mb={4}>
+          <Box mb={2}>
+            {/* ヘッダー */}
+            <Box bg="gray.100" p={2} borderY="1px" borderColor="gray.300">
+              <Text fontSize="xl" fontWeight="semibold">
+                {item.name}
+              </Text>
+            </Box>
+
             <Checkbox
               size="lg"
               fontSize="2xl"
               fontWeight="semibold"
               isChecked={item.checked}
               onChange={() => onParentCheckChange(item, !item.checked)}
+              margin={3}
             >
-              {item.name}
+              {item.name}すべて（{(item.children?.length || 0) + (item.children?.flatMap(child => child.children)?.length || 0)}）
             </Checkbox>
-            <Box mt="2" px="4">
+          </Box>
+          <Box mt="2" px="4">
               {item.children?.map((child) => (
-                <Box key={child.name}>
+                <Box key={child.name} mb={2}>
+                  {child.children && child.children.length > 0 ? (
+                    <Text fontSize="xl" fontWeight="semibold">
+                      {child.name}
+                    </Text>
+                  ) : (
+                    <Checkbox
+                      size="lg"
+                      fontSize="xl"
+                      fontWeight="semibold"
+                      isChecked={child.checked}
+                      onChange={() => onChildCheckChange(item, child, !child.checked)}
+                      mr="4"
+                    >
+                      {child.name}
+                    </Checkbox>
+                  )}
+                  <Flex justifyContent="flex-end">
+                  {Array.isArray(child.children) && child.children.length > 0 && (
                   <Checkbox
                     size="lg"
                     fontSize="xl"
                     fontWeight="semibold"
                     isChecked={child.checked}
                     onChange={() => onChildCheckChange(item, child, !child.checked)}
+                    mr="4"
                   >
-                    {child.name}
-                  </Checkbox>
-                  <Flex justifyContent="flex-end">
+                      すべて
+                    </Checkbox>
+                  )}
                     {child.children?.map((grandChild) => (
                       <Checkbox
                         key={grandChild.name}
@@ -64,15 +86,15 @@ export function FilterAccordion({tempFilter, onChildCheckChange, onGrandChildChe
                         onChange={() => onGrandChildCheckChange(item, child, grandChild, !grandChild.checked)}
                       >
                         {grandChild.name}
-                      </Checkbox>
-                    ))}
-                  </Flex>
+                        </Checkbox>
+                      ))}
+                    </Flex>
+                  
                 </Box>
-              ))}
-            </Box>
-          </AccordionPanel>
-        </AccordionItem>
+            ))}
+          </Box>
+        </Box>
       ))}
-    </Accordion>
+    </Box>
   );
 }

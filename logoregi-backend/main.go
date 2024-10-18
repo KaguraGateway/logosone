@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"net"
 	"net/http"
@@ -38,10 +39,10 @@ var (
 func main() {
 	// Load .env
 	if _, ok := os.LookupEnv("DATABASE_URL"); !ok {
-		//if err := godotenv.Load(); err != nil {
-		//	log.Print(err)
-		//}
-		log.Fatal("DATABASE_URL is not set")
+		if err := godotenv.Load(); err != nil {
+			log.Print(err)
+			log.Fatal("DATABASE_URL is not set")
+		}
 	}
 
 	// 開発環境であるか、そうでないかを判定する

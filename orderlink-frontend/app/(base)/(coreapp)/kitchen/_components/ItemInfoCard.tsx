@@ -5,6 +5,7 @@ import { Badge, Button, Flex, Text, VStack } from '@chakra-ui/react';
 import { CancelButton } from '@/ui/CancelButton';
 
 import { CookingDoneBox, CookingStartBox, CookingTakingBox } from './CookingStatusButton';
+import {useEffect, useState} from "react";
 
 export type ItemInfoCardProps = {
   itemId: string;
@@ -33,6 +34,12 @@ export function ItemInfoCard({
   onCancelState,
   onNextState,
 }: ItemInfoCardProps) {
+  const [isSubmittable, setIsSubmittable] = useState(true);
+
+  useEffect(() => {
+    setIsSubmittable(true);
+  }, [cookingStatus, setIsSubmittable]);
+
   return (
     <Flex
       alignItems="center"
@@ -44,11 +51,16 @@ export function ItemInfoCard({
       boxShadow="base"
       borderRadius="lg"
       mb="4"
+      opacity={isSubmittable ? 1 : 0.5}
     >
       <CancelButton
         mr="8"
         visibility={cookingStatus === 'notyet' ? 'hidden' : 'visible'}
-        onCancel={() => onCancelState?.(itemId)}
+        disabled={!isSubmittable}
+        onCancel={() => {
+          setIsSubmittable(false);
+          onCancelState?.(itemId)
+        }}
       />
       <Button
         variant="unstyled"
@@ -59,7 +71,11 @@ export function ItemInfoCard({
         flex="1"
         border="none"
         outline="0"
-        onClick={() => onNextState?.(itemId)}
+        disabled={!isSubmittable}
+        onClick={() => {
+          setIsSubmittable(false);
+          onNextState?.(itemId);
+        }}
       >
         <VStack spacing={0}>
           <Text fontSize="3xl" fontWeight="semibold" color="gray.700">

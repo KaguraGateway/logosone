@@ -74,3 +74,11 @@ func (OrderItem *OrderItem) SetCoffeeHowToBrew(brew ProductCoffeeBrew) error {
 	}
 	return domain.ErrProductCoffeeBrewNotFound
 }
+
+func (OrderItem *OrderItem) IsManagingOrder() bool {
+	return OrderItem.product.IsManagingOrder
+}
+
+func (OrderItem *OrderItem) IsOlUseKitchen() bool {
+	return OrderItem.product.IsOlUseKitchen
+}

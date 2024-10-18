@@ -41,9 +41,11 @@ func (i *orderHookOrderLink) PostOrder(ctx context.Context, order *model.Order, 
 				coffeeBrewId = coffeeBrew.GetId()
 			}
 			return &orderlink.PostOrderItemInput{
-				ProductId:    item.GetProductId(),
-				CoffeeBrewId: coffeeBrewId,
-				Quantity:     uint32(item.Quantity),
+				ProductId:       item.GetProductId(),
+				CoffeeBrewId:    coffeeBrewId,
+				Quantity:        uint32(item.Quantity),
+				IsManagingOrder: item.IsManagingOrder(),
+				IsOlKitchen:     item.IsOlUseKitchen(),
 			}
 		}),
 		Type:       orderlink.PostOrderInput_OrderType(order.GetOrderType()),

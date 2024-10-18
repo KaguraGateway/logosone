@@ -18,5 +18,8 @@ type Product struct {
 	CreatedAt    time.Time `bun:",nullzero,notnull"`
 	UpdatedAt    time.Time `bun:",nullzero,notnull,default:current_timestamp"`
 
+	IsManagingOrder bool `bun:",notnull"`
+	IsOlUseKitchen  bool `bun:",notnull"`
+
 	CoffeeBrews []*ProductCoffeeBrew `bun:"rel:has-many,join:id=product_id"`
 }

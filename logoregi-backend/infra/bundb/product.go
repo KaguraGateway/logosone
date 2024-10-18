@@ -102,6 +102,8 @@ func toProduct(product *dao.Product) *model.Product {
 		productCoffeeBrews,
 		uint64(product.Amount),
 		stock,
+		product.IsManagingOrder,
+		product.IsOlUseKitchen,
 	)
 }
 

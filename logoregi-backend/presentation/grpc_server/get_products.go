@@ -35,8 +35,10 @@ func (s *GrpcServer) GetProducts(ctx context.Context, _ *connect.Request[common.
 				CoffeeBrews: lo.Map(product.CoffeeBrews, func(coffeeBrew *model.ProductCoffeeBrew, _ int) *pos.CoffeeBrew {
 					return ToProtoCoffeeBrew(coffeeBrew)
 				}),
-				Amount: amount,
-				Stock:  ToProtoStock(product.Stock),
+				Amount:          amount,
+				Stock:           ToProtoStock(product.Stock),
+				IsManagingOrder: product.IsManagingOrder,
+				IsOlKitchen:     product.IsOlUseKitchen,
 			}
 		}),
 	}), nil

@@ -54,7 +54,7 @@ func (uc *postProductUseCase) Execute(ctx context.Context, param *ProductParam) 
 		var coffeeBrews []*model.ProductCoffeeBrew
 
 		// 先にproductを作成しておかないと、brewのproduct_idが空になってしまう
-		product = *model.NewProductCoffee(*productName, *productCategory, param.Color, param.IsNowSales, *coffeeBean, coffeeBrews)
+		product = *model.NewProductCoffee(*productName, *productCategory, param.Color, param.IsNowSales, *coffeeBean, coffeeBrews, param.IsManagingOrder, param.IsOlUseKitchen)
 
 		for _, pBrew := range param.CoffeeBrews {
 			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount)
@@ -73,7 +73,7 @@ func (uc *postProductUseCase) Execute(ctx context.Context, param *ProductParam) 
 		if err != nil {
 			return errors.Join(err, ErrFailedFetchStock)
 		}
-		product = *model.NewProductOther(*productName, *productCategory, param.Color, param.IsNowSales, param.Amount, *stock)
+		product = *model.NewProductOther(*productName, *productCategory, param.Color, param.IsNowSales, param.Amount, *stock, param.IsManagingOrder, param.IsOlUseKitchen)
 	}
 
 	if err := uc.productRepo.Save(cctx, &product); err != nil {

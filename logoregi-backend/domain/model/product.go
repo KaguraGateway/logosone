@@ -22,9 +22,12 @@ type Product struct {
 	// Only Other
 	amount uint64
 	Stock  *Stock
+	// Only Admin
+	IsManagingOrder bool
+	IsOlUseKitchen  bool
 }
 
-func NewProductCoffee(productName ProductName, productCategory ProductCategory, color string, isNowSales bool, coffeeBean CoffeeBean, brews []*ProductCoffeeBrew) *Product {
+func NewProductCoffee(productName ProductName, productCategory ProductCategory, color string, isNowSales bool, coffeeBean CoffeeBean, brews []*ProductCoffeeBrew, isManagingOrder bool, isOlUseKitchen bool) *Product {
 	product := &Product{
 		productId:       ulid.Make().String(),
 		ProductName:     productName,
@@ -36,11 +39,13 @@ func NewProductCoffee(productName ProductName, productCategory ProductCategory, 
 		updatedAt:       synchro.Now[tz.UTC](),
 		CoffeeBean:      &coffeeBean,
 		CoffeeBrews:     brews,
+		IsManagingOrder: isManagingOrder,
+		IsOlUseKitchen:  isOlUseKitchen,
 	}
 	return product
 }
 
-func NewProductOther(productName ProductName, productCategory ProductCategory, color string, isNowSales bool, amount uint64, stock Stock) *Product {
+func NewProductOther(productName ProductName, productCategory ProductCategory, color string, isNowSales bool, amount uint64, stock Stock, isManagingOrder bool, isOlUseKitchen bool) *Product {
 	product := &Product{
 		productId:       ulid.Make().String(),
 		ProductName:     productName,
@@ -51,11 +56,13 @@ func NewProductOther(productName ProductName, productCategory ProductCategory, c
 		updatedAt:       synchro.Now[tz.UTC](),
 		amount:          amount,
 		Stock:           &stock,
+		IsManagingOrder: isManagingOrder,
+		IsOlUseKitchen:  isOlUseKitchen,
 	}
 	return product
 }
 
-func ReconstructProduct(productId string, productName ProductName, productCategory ProductCategory, productType ProductType, color string, isNowSales bool, createdAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC], coffeeBean *CoffeeBean, brews []*ProductCoffeeBrew, amount uint64, stock *Stock) *Product {
+func ReconstructProduct(productId string, productName ProductName, productCategory ProductCategory, productType ProductType, color string, isNowSales bool, createdAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC], coffeeBean *CoffeeBean, brews []*ProductCoffeeBrew, amount uint64, stock *Stock, isManagingOrder bool, isOlUseKitchen bool) *Product {
 	return &Product{
 		productId:       productId,
 		ProductName:     productName,
@@ -69,6 +76,8 @@ func ReconstructProduct(productId string, productName ProductName, productCatego
 		CoffeeBrews:     brews,
 		amount:          amount,
 		Stock:           stock,
+		IsManagingOrder: isManagingOrder,
+		IsOlUseKitchen:  isOlUseKitchen,
 	}
 }
 

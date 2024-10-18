@@ -157,8 +157,10 @@ func ToProductParam(product *pos.ProductParam) *application.ProductParam {
 				Amount:            brew.Amount,
 			}
 		}),
-		Amount:  product.Amount,
-		StockId: product.StockId,
+		Amount:          product.Amount,
+		StockId:         product.StockId,
+		IsManagingOrder: product.IsManagingOrder,
+		IsOlUseKitchen:  product.IsOlUseKitchen,
 	}
 }
 

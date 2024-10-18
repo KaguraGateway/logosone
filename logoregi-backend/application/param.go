@@ -23,6 +23,8 @@ type ProductParam struct {
 	CoffeeBrews       []CoffeeBrewParam
 	Amount            uint64
 	StockId           string
+	IsManagingOrder   bool
+	IsOlUseKitchen    bool
 }
 
 type PaymentParam struct {

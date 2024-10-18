@@ -55,8 +55,11 @@ public struct Cafelogos_Orderlink_PostOrderInput: Sendable {
 
   public var seatName: String = String()
 
+  /// 注文管理を行うかどうか
+  public var isManagingOrder: Bool = false
+
   /// OrderLinkでキッチン機能を使うかどうか
-  public var isOlUseKitchen: Bool = false
+  public var isOlKitchen: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -155,7 +158,8 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     5: .standard(proto: "ticket_id"),
     6: .standard(proto: "ticket_addr"),
     7: .standard(proto: "seat_name"),
-    21: .standard(proto: "is_ol_use_kitchen"),
+    20: .standard(proto: "is_managing_order"),
+    21: .standard(proto: "is_ol_kitchen"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -171,7 +175,8 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
       case 5: try { try decoder.decodeSingularStringField(value: &self.ticketID) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.ticketAddr) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.seatName) }()
-      case 21: try { try decoder.decodeSingularBoolField(value: &self.isOlUseKitchen) }()
+      case 20: try { try decoder.decodeSingularBoolField(value: &self.isManagingOrder) }()
+      case 21: try { try decoder.decodeSingularBoolField(value: &self.isOlKitchen) }()
       default: break
       }
     }
@@ -199,8 +204,11 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     if !self.seatName.isEmpty {
       try visitor.visitSingularStringField(value: self.seatName, fieldNumber: 7)
     }
-    if self.isOlUseKitchen != false {
-      try visitor.visitSingularBoolField(value: self.isOlUseKitchen, fieldNumber: 21)
+    if self.isManagingOrder != false {
+      try visitor.visitSingularBoolField(value: self.isManagingOrder, fieldNumber: 20)
+    }
+    if self.isOlKitchen != false {
+      try visitor.visitSingularBoolField(value: self.isOlKitchen, fieldNumber: 21)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -213,7 +221,8 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     if lhs.ticketID != rhs.ticketID {return false}
     if lhs.ticketAddr != rhs.ticketAddr {return false}
     if lhs.seatName != rhs.seatName {return false}
-    if lhs.isOlUseKitchen != rhs.isOlUseKitchen {return false}
+    if lhs.isManagingOrder != rhs.isManagingOrder {return false}
+    if lhs.isOlKitchen != rhs.isOlKitchen {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

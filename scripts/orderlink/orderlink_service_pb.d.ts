@@ -80,11 +80,18 @@ export declare class PostOrderInput extends Message<PostOrderInput> {
   seatName: string;
 
   /**
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder: boolean;
+
+  /**
    * OrderLinkでキッチン機能を使うかどうか
    *
-   * @generated from field: bool is_ol_use_kitchen = 21;
+   * @generated from field: bool is_ol_kitchen = 21;
    */
-  isOlUseKitchen: boolean;
+  isOlKitchen: boolean;
 
   constructor(data?: PartialMessage<PostOrderInput>);
 

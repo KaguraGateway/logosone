@@ -95,11 +95,18 @@ export class PostOrderInput extends Message<PostOrderInput> {
   seatName = "";
 
   /**
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder = false;
+
+  /**
    * OrderLinkでキッチン機能を使うかどうか
    *
-   * @generated from field: bool is_ol_use_kitchen = 21;
+   * @generated from field: bool is_ol_kitchen = 21;
    */
-  isOlUseKitchen = false;
+  isOlKitchen = false;
 
   constructor(data?: PartialMessage<PostOrderInput>) {
     super();
@@ -116,7 +123,8 @@ export class PostOrderInput extends Message<PostOrderInput> {
     { no: 5, name: "ticket_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "ticket_addr", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "seat_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 21, name: "is_ol_use_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 20, name: "is_managing_order", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 21, name: "is_ol_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderInput {

@@ -5,8 +5,8 @@ WORKDIR /usr/src/app/logos
 COPY . ./
 
 RUN bun install --frozen-lockfile
-ARG NEXT_PUBLIC_API_URL
-ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+ARG NEXT_PUBLIC_GRPC_HOST
+ENV NEXT_PUBLIC_GRPC_HOST=${NEXT_PUBLIC_GRPC_HOST}
 RUN bun run build
 
 FROM oven/bun:latest

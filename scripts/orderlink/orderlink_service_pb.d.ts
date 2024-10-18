@@ -79,6 +79,13 @@ export declare class PostOrderInput extends Message<PostOrderInput> {
    */
   seatName: string;
 
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_use_kitchen = 21;
+   */
+  isOlUseKitchen: boolean;
+
   constructor(data?: PartialMessage<PostOrderInput>);
 
   static readonly runtime: typeof proto3;

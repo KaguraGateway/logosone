@@ -25,6 +25,8 @@ message PostOrderInput {
     string ticket_addr = 6;
     string seat_name = 7;
 
+    bool is_ol_use_kitchen = 21; // OrderLinkでキッチン機能を使うかどうか
+
     enum OrderType {
         EAT_IN = 0;
         TAKE_OUT = 1;

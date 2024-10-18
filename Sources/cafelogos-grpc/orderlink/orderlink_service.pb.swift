@@ -55,6 +55,9 @@ public struct Cafelogos_Orderlink_PostOrderInput: Sendable {
 
   public var seatName: String = String()
 
+  /// OrderLinkでキッチン機能を使うかどうか
+  public var isOlUseKitchen: Bool = false
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OrderType: SwiftProtobuf.Enum, Swift.CaseIterable {
@@ -152,6 +155,7 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     5: .standard(proto: "ticket_id"),
     6: .standard(proto: "ticket_addr"),
     7: .standard(proto: "seat_name"),
+    21: .standard(proto: "is_ol_use_kitchen"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -167,6 +171,7 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
       case 5: try { try decoder.decodeSingularStringField(value: &self.ticketID) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.ticketAddr) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.seatName) }()
+      case 21: try { try decoder.decodeSingularBoolField(value: &self.isOlUseKitchen) }()
       default: break
       }
     }
@@ -194,6 +199,9 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     if !self.seatName.isEmpty {
       try visitor.visitSingularStringField(value: self.seatName, fieldNumber: 7)
     }
+    if self.isOlUseKitchen != false {
+      try visitor.visitSingularBoolField(value: self.isOlUseKitchen, fieldNumber: 21)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -205,6 +213,7 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     if lhs.ticketID != rhs.ticketID {return false}
     if lhs.ticketAddr != rhs.ticketAddr {return false}
     if lhs.seatName != rhs.seatName {return false}
+    if lhs.isOlUseKitchen != rhs.isOlUseKitchen {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

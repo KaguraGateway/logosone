@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { Empty } from "../common/common_pb.js";
 
 /**
@@ -340,6 +340,34 @@ export const postDiscount = {
   kind: MethodKind.Unary,
   I: PostDiscountRequest,
   O: Empty,
+  service: {
+    typeName: "cafelogos.pos.PosService"
+  }
+} as const;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetDailySales
+ */
+export const getDailySales = {
+  localName: "getDailySales",
+  name: "GetDailySales",
+  kind: MethodKind.Unary,
+  I: Empty,
+  O: GetDailySalesResponse,
+  service: {
+    typeName: "cafelogos.pos.PosService"
+  }
+} as const;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetProductSales
+ */
+export const getProductSales = {
+  localName: "getProductSales",
+  name: "GetProductSales",
+  kind: MethodKind.Unary,
+  I: Empty,
+  O: GetProductSalesResponse,
   service: {
     typeName: "cafelogos.pos.PosService"
   }

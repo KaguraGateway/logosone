@@ -154,6 +154,18 @@ public protocol Cafelogos_Pos_PosServiceClientInterface: Sendable {
 
     @available(iOS 13, *)
     func `postDiscount`(request: Cafelogos_Pos_PostDiscountRequest, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Common_Empty>
+
+    @discardableResult
+    func `getDailySales`(request: Cafelogos_Common_Empty, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetDailySalesResponse>) -> Void) -> Connect.Cancelable
+
+    @available(iOS 13, *)
+    func `getDailySales`(request: Cafelogos_Common_Empty, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Pos_GetDailySalesResponse>
+
+    @discardableResult
+    func `getProductSales`(request: Cafelogos_Common_Empty, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetProductSalesResponse>) -> Void) -> Connect.Cancelable
+
+    @available(iOS 13, *)
+    func `getProductSales`(request: Cafelogos_Common_Empty, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Pos_GetProductSalesResponse>
 }
 
 /// Concrete implementation of `Cafelogos_Pos_PosServiceClientInterface`.
@@ -404,6 +416,26 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
         return await self.client.unary(path: "/cafelogos.pos.PosService/PostDiscount", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @discardableResult
+    public func `getDailySales`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetDailySalesResponse>) -> Void) -> Connect.Cancelable {
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetDailySales", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
+    }
+
+    @available(iOS 13, *)
+    public func `getDailySales`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetDailySalesResponse> {
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetDailySales", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @discardableResult
+    public func `getProductSales`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetProductSalesResponse>) -> Void) -> Connect.Cancelable {
+        return self.client.unary(path: "/cafelogos.pos.PosService/GetProductSales", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
+    }
+
+    @available(iOS 13, *)
+    public func `getProductSales`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetProductSalesResponse> {
+        return await self.client.unary(path: "/cafelogos.pos.PosService/GetProductSales", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let getOrders = Connect.MethodSpec(name: "GetOrders", service: "cafelogos.pos.PosService", type: .unary)
@@ -430,6 +462,8 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
             public static let getSeats = Connect.MethodSpec(name: "GetSeats", service: "cafelogos.pos.PosService", type: .unary)
             public static let getDiscounts = Connect.MethodSpec(name: "GetDiscounts", service: "cafelogos.pos.PosService", type: .unary)
             public static let postDiscount = Connect.MethodSpec(name: "PostDiscount", service: "cafelogos.pos.PosService", type: .unary)
+            public static let getDailySales = Connect.MethodSpec(name: "GetDailySales", service: "cafelogos.pos.PosService", type: .unary)
+            public static let getProductSales = Connect.MethodSpec(name: "GetProductSales", service: "cafelogos.pos.PosService", type: .unary)
         }
     }
 }

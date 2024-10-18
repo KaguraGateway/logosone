@@ -799,6 +799,54 @@ export declare class PostDiscountRequest extends Message<PostDiscountRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.GetDailySalesResponse
+ */
+export declare class GetDailySalesResponse extends Message<GetDailySalesResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.DailySale daily_sales = 1;
+   */
+  dailySales: DailySale[];
+
+  constructor(data?: PartialMessage<GetDailySalesResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetDailySalesResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDailySalesResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDailySalesResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDailySalesResponse;
+
+  static equals(a: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined, b: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetProductSalesResponse
+ */
+export declare class GetProductSalesResponse extends Message<GetProductSalesResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.ProductSale product_sales = 1;
+   */
+  productSales: ProductSale[];
+
+  constructor(data?: PartialMessage<GetProductSalesResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetProductSalesResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetProductSalesResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetProductSalesResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetProductSalesResponse;
+
+  static equals(a: GetProductSalesResponse | PlainMessage<GetProductSalesResponse> | undefined, b: GetProductSalesResponse | PlainMessage<GetProductSalesResponse> | undefined): boolean;
+}
+
+/**
  * * Product 
  *
  * @generated from message cafelogos.pos.Product
@@ -868,6 +916,22 @@ export declare class Product extends Message<Product> {
    */
   stock?: Stock;
 
+  /**
+   * Only Admin
+   *
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder: boolean;
+
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_kitchen = 21;
+   */
+  isOlKitchen: boolean;
+
   constructor(data?: PartialMessage<Product>);
 
   static readonly runtime: typeof proto3;
@@ -935,6 +999,22 @@ export declare class ProductParam extends Message<ProductParam> {
    * @generated from field: string stock_id = 9;
    */
   stockId: string;
+
+  /**
+   * Only Admin
+   *
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder: boolean;
+
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_use_kitchen = 21;
+   */
+  isOlUseKitchen: boolean;
 
   constructor(data?: PartialMessage<ProductParam>);
 
@@ -1462,5 +1542,86 @@ export declare class Seat extends Message<Seat> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): Seat;
 
   static equals(a: Seat | PlainMessage<Seat> | undefined, b: Seat | PlainMessage<Seat> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.DailySale
+ */
+export declare class DailySale extends Message<DailySale> {
+  /**
+   * @generated from field: string date = 1;
+   */
+  date: string;
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 2;
+   */
+  totalSales: bigint;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 3;
+   */
+  totalQuantity: bigint;
+
+  constructor(data?: PartialMessage<DailySale>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.DailySale";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DailySale;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DailySale;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DailySale;
+
+  static equals(a: DailySale | PlainMessage<DailySale> | undefined, b: DailySale | PlainMessage<DailySale> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.ProductSale
+ */
+export declare class ProductSale extends Message<ProductSale> {
+  /**
+   * @generated from field: string product_id = 1;
+   */
+  productId: string;
+
+  /**
+   * @generated from field: string product_name = 2;
+   */
+  productName: string;
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 3;
+   */
+  totalSales: bigint;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 4;
+   */
+  totalQuantity: bigint;
+
+  constructor(data?: PartialMessage<ProductSale>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.ProductSale";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ProductSale;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ProductSale;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ProductSale;
+
+  static equals(a: ProductSale | PlainMessage<ProductSale> | undefined, b: ProductSale | PlainMessage<ProductSale> | undefined): boolean;
 }
 

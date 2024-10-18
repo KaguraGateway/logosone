@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -292,6 +292,30 @@ export const postDiscount: {
       readonly name: "PostDiscount",
       readonly I: typeof PostDiscountRequest,
       readonly O: typeof Empty,
+      readonly kind: MethodKind.Unary,
+  readonly service: {
+    readonly typeName: "cafelogos.pos.PosService"
+  }
+};
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetDailySales
+ */
+export const getDailySales: {
+      readonly name: "GetDailySales",
+      readonly I: typeof Empty,
+      readonly O: typeof GetDailySalesResponse,
+      readonly kind: MethodKind.Unary,
+  readonly service: {
+    readonly typeName: "cafelogos.pos.PosService"
+  }
+};
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetProductSales
+ */
+export const getProductSales: {
+      readonly name: "GetProductSales",
+      readonly I: typeof Empty,
+      readonly O: typeof GetProductSalesResponse,
       readonly kind: MethodKind.Unary,
   readonly service: {
     readonly typeName: "cafelogos.pos.PosService"

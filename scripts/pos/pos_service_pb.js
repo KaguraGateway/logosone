@@ -345,6 +345,26 @@ export const PostDiscountRequest = /*@__PURE__*/ proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.GetDailySalesResponse
+ */
+export const GetDailySalesResponse = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetDailySalesResponse",
+  () => [
+    { no: 1, name: "daily_sales", kind: "message", T: DailySale, repeated: true },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.GetProductSalesResponse
+ */
+export const GetProductSalesResponse = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetProductSalesResponse",
+  () => [
+    { no: 1, name: "product_sales", kind: "message", T: ProductSale, repeated: true },
+  ],
+);
+
+/**
  * * Product 
  *
  * @generated from message cafelogos.pos.Product
@@ -364,6 +384,8 @@ export const Product = /*@__PURE__*/ proto3.makeMessageType(
     { no: 10, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
     { no: 11, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 12, name: "stock", kind: "message", T: Stock },
+    { no: 20, name: "is_managing_order", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 21, name: "is_ol_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ],
 );
 
@@ -382,6 +404,8 @@ export const ProductParam = /*@__PURE__*/ proto3.makeMessageType(
     { no: 7, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
     { no: 8, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 9, name: "stock_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 20, name: "is_managing_order", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 21, name: "is_ol_use_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ],
 );
 
@@ -549,6 +573,31 @@ export const Seat = /*@__PURE__*/ proto3.makeMessageType(
   () => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.DailySale
+ */
+export const DailySale = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.DailySale",
+  () => [
+    { no: 1, name: "date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 3, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.ProductSale
+ */
+export const ProductSale = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.ProductSale",
+  () => [
+    { no: 1, name: "product_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "product_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 

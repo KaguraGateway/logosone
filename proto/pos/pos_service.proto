@@ -43,6 +43,9 @@ service PosService {
 
     rpc GetDiscounts(common.Empty) returns (GetDiscountsResponse) {}
     rpc PostDiscount(PostDiscountRequest) returns (common.Empty) {}
+
+    rpc GetDailySales(common.Empty) returns (GetDailySalesResponse) {}
+    rpc GetProductSales(common.Empty) returns (GetProductSalesResponse) {}
 }
 
 /**
@@ -157,6 +160,14 @@ message PostDiscountRequest {
     uint64 discount_price = 3;
 }
 
+message GetDailySalesResponse {
+    repeated DailySale daily_sales = 1;
+}
+
+message GetProductSalesResponse {
+    repeated ProductSale product_sales = 1;
+}
+
 /**
  * Types
  */
@@ -176,6 +187,10 @@ message Product {
     // Only Other
     uint64 amount = 11;
     Stock stock = 12;
+
+    // Only Admin
+    bool is_managing_order = 20; // 注文管理を行うかどうか
+    bool is_ol_kitchen = 21; // OrderLinkでキッチン機能を使うかどうか
 }
 message ProductParam {
     string product_name = 1;
@@ -189,6 +204,10 @@ message ProductParam {
     // Only Other
     uint64 amount = 8;
     string stock_id = 9;
+
+    // Only Admin
+    bool is_managing_order = 20; // 注文管理を行うかどうか
+    bool is_ol_use_kitchen = 21; // OrderLinkでキッチン機能を使うかどうか
 }
 message ProductCategory {
     string id = 1;
@@ -293,4 +312,17 @@ message Payment {
 message Seat {
     string id = 1;
     string name = 2;
+}
+
+message DailySale {
+    string date = 1;
+    uint64 total_sales = 2; // 総売上
+    uint64 total_quantity = 3; // 総数量
+}
+
+message ProductSale {
+    string product_id = 1;
+    string product_name = 2;
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
 }

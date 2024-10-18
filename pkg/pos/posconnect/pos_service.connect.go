@@ -92,6 +92,12 @@ const (
 	PosServiceGetDiscountsProcedure = "/cafelogos.pos.PosService/GetDiscounts"
 	// PosServicePostDiscountProcedure is the fully-qualified name of the PosService's PostDiscount RPC.
 	PosServicePostDiscountProcedure = "/cafelogos.pos.PosService/PostDiscount"
+	// PosServiceGetDailySalesProcedure is the fully-qualified name of the PosService's GetDailySales
+	// RPC.
+	PosServiceGetDailySalesProcedure = "/cafelogos.pos.PosService/GetDailySales"
+	// PosServiceGetProductSalesProcedure is the fully-qualified name of the PosService's
+	// GetProductSales RPC.
+	PosServiceGetProductSalesProcedure = "/cafelogos.pos.PosService/GetProductSales"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
@@ -121,6 +127,8 @@ var (
 	posServiceGetSeatsMethodDescriptor                = posServiceServiceDescriptor.Methods().ByName("GetSeats")
 	posServiceGetDiscountsMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("GetDiscounts")
 	posServicePostDiscountMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("PostDiscount")
+	posServiceGetDailySalesMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("GetDailySales")
+	posServiceGetProductSalesMethodDescriptor         = posServiceServiceDescriptor.Methods().ByName("GetProductSales")
 )
 
 // PosServiceClient is a client for the cafelogos.pos.PosService service.
@@ -150,6 +158,8 @@ type PosServiceClient interface {
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
 	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
 	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
+	GetDailySales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error)
+	GetProductSales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error)
 }
 
 // NewPosServiceClient constructs a client for the cafelogos.pos.PosService service. By default, it
@@ -306,6 +316,18 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			connect.WithSchema(posServicePostDiscountMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		getDailySales: connect.NewClient[common.Empty, pos.GetDailySalesResponse](
+			httpClient,
+			baseURL+PosServiceGetDailySalesProcedure,
+			connect.WithSchema(posServiceGetDailySalesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getProductSales: connect.NewClient[common.Empty, pos.GetProductSalesResponse](
+			httpClient,
+			baseURL+PosServiceGetProductSalesProcedure,
+			connect.WithSchema(posServiceGetProductSalesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
@@ -335,6 +357,8 @@ type posServiceClient struct {
 	getSeats                *connect.Client[common.Empty, pos.GetSeatsResponse]
 	getDiscounts            *connect.Client[common.Empty, pos.GetDiscountsResponse]
 	postDiscount            *connect.Client[pos.PostDiscountRequest, common.Empty]
+	getDailySales           *connect.Client[common.Empty, pos.GetDailySalesResponse]
+	getProductSales         *connect.Client[common.Empty, pos.GetProductSalesResponse]
 }
 
 // GetOrders calls cafelogos.pos.PosService.GetOrders.
@@ -457,6 +481,16 @@ func (c *posServiceClient) PostDiscount(ctx context.Context, req *connect.Reques
 	return c.postDiscount.CallUnary(ctx, req)
 }
 
+// GetDailySales calls cafelogos.pos.PosService.GetDailySales.
+func (c *posServiceClient) GetDailySales(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error) {
+	return c.getDailySales.CallUnary(ctx, req)
+}
+
+// GetProductSales calls cafelogos.pos.PosService.GetProductSales.
+func (c *posServiceClient) GetProductSales(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error) {
+	return c.getProductSales.CallUnary(ctx, req)
+}
+
 // PosServiceHandler is an implementation of the cafelogos.pos.PosService service.
 type PosServiceHandler interface {
 	GetOrders(context.Context, *connect.Request[pos.GetOrdersRequest]) (*connect.Response[pos.GetOrdersResponse], error)
@@ -484,6 +518,8 @@ type PosServiceHandler interface {
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
 	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
 	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
+	GetDailySales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error)
+	GetProductSales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error)
 }
 
 // NewPosServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -636,6 +672,18 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		connect.WithSchema(posServicePostDiscountMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	posServiceGetDailySalesHandler := connect.NewUnaryHandler(
+		PosServiceGetDailySalesProcedure,
+		svc.GetDailySales,
+		connect.WithSchema(posServiceGetDailySalesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	posServiceGetProductSalesHandler := connect.NewUnaryHandler(
+		PosServiceGetProductSalesProcedure,
+		svc.GetProductSales,
+		connect.WithSchema(posServiceGetProductSalesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/cafelogos.pos.PosService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case PosServiceGetOrdersProcedure:
@@ -686,6 +734,10 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServiceGetDiscountsHandler.ServeHTTP(w, r)
 		case PosServicePostDiscountProcedure:
 			posServicePostDiscountHandler.ServeHTTP(w, r)
+		case PosServiceGetDailySalesProcedure:
+			posServiceGetDailySalesHandler.ServeHTTP(w, r)
+		case PosServiceGetProductSalesProcedure:
+			posServiceGetProductSalesHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -789,4 +841,12 @@ func (UnimplementedPosServiceHandler) GetDiscounts(context.Context, *connect.Req
 
 func (UnimplementedPosServiceHandler) PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.PostDiscount is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) GetDailySales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetDailySales is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) GetProductSales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetProductSales is not implemented"))
 }

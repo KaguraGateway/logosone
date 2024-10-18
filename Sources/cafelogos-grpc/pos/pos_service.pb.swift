@@ -591,6 +591,30 @@ public struct Cafelogos_Pos_PostDiscountRequest: Sendable {
   public init() {}
 }
 
+public struct Cafelogos_Pos_GetDailySalesResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var dailySales: [Cafelogos_Pos_DailySale] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Pos_GetProductSalesResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var productSales: [Cafelogos_Pos_ProductSale] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 ///* Product 
 public struct Cafelogos_Pos_Product: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
@@ -671,6 +695,18 @@ public struct Cafelogos_Pos_Product: @unchecked Sendable {
   /// Clears the value of `stock`. Subsequent reads from it will return its default value.
   public mutating func clearStock() {_uniqueStorage()._stock = nil}
 
+  /// Only Admin
+  public var isManagingOrder: Bool {
+    get {return _storage._isManagingOrder}
+    set {_uniqueStorage()._isManagingOrder = newValue}
+  }
+
+  /// OrderLinkでキッチン機能を使うかどうか
+  public var isOlKitchen: Bool {
+    get {return _storage._isOlKitchen}
+    set {_uniqueStorage()._isOlKitchen = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -702,6 +738,12 @@ public struct Cafelogos_Pos_ProductParam: Sendable {
   public var amount: UInt64 = 0
 
   public var stockID: String = String()
+
+  /// Only Admin
+  public var isManagingOrder: Bool = false
+
+  /// OrderLinkでキッチン機能を使うかどうか
+  public var isOlUseKitchen: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -960,6 +1002,44 @@ public struct Cafelogos_Pos_Seat: Sendable {
   public var id: String = String()
 
   public var name: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Pos_DailySale: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var date: String = String()
+
+  /// 総売上
+  public var totalSales: UInt64 = 0
+
+  /// 総数量
+  public var totalQuantity: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Pos_ProductSale: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var productID: String = String()
+
+  public var productName: String = String()
+
+  /// 総売上
+  public var totalSales: UInt64 = 0
+
+  /// 総数量
+  public var totalQuantity: UInt64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -1980,6 +2060,70 @@ extension Cafelogos_Pos_PostDiscountRequest: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
+extension Cafelogos_Pos_GetDailySalesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetDailySalesResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "daily_sales"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.dailySales) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.dailySales.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.dailySales, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_GetDailySalesResponse, rhs: Cafelogos_Pos_GetDailySalesResponse) -> Bool {
+    if lhs.dailySales != rhs.dailySales {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_GetProductSalesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetProductSalesResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "product_sales"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.productSales) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.productSales.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.productSales, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_GetProductSalesResponse, rhs: Cafelogos_Pos_GetProductSalesResponse) -> Bool {
+    if lhs.productSales != rhs.productSales {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Product"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -1995,6 +2139,8 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     10: .standard(proto: "coffee_brews"),
     11: .same(proto: "amount"),
     12: .same(proto: "stock"),
+    20: .standard(proto: "is_managing_order"),
+    21: .standard(proto: "is_ol_kitchen"),
   ]
 
   fileprivate class _StorageClass {
@@ -2010,6 +2156,8 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     var _coffeeBrews: [Cafelogos_Pos_CoffeeBrew] = []
     var _amount: UInt64 = 0
     var _stock: Cafelogos_Pos_Stock? = nil
+    var _isManagingOrder: Bool = false
+    var _isOlKitchen: Bool = false
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -2036,6 +2184,8 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       _coffeeBrews = source._coffeeBrews
       _amount = source._amount
       _stock = source._stock
+      _isManagingOrder = source._isManagingOrder
+      _isOlKitchen = source._isOlKitchen
     }
   }
 
@@ -2066,6 +2216,8 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         case 10: try { try decoder.decodeRepeatedMessageField(value: &_storage._coffeeBrews) }()
         case 11: try { try decoder.decodeSingularUInt64Field(value: &_storage._amount) }()
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._stock) }()
+        case 20: try { try decoder.decodeSingularBoolField(value: &_storage._isManagingOrder) }()
+        case 21: try { try decoder.decodeSingularBoolField(value: &_storage._isOlKitchen) }()
         default: break
         }
       }
@@ -2114,6 +2266,12 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       try { if let v = _storage._stock {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
       } }()
+      if _storage._isManagingOrder != false {
+        try visitor.visitSingularBoolField(value: _storage._isManagingOrder, fieldNumber: 20)
+      }
+      if _storage._isOlKitchen != false {
+        try visitor.visitSingularBoolField(value: _storage._isOlKitchen, fieldNumber: 21)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -2135,6 +2293,8 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
         if _storage._coffeeBrews != rhs_storage._coffeeBrews {return false}
         if _storage._amount != rhs_storage._amount {return false}
         if _storage._stock != rhs_storage._stock {return false}
+        if _storage._isManagingOrder != rhs_storage._isManagingOrder {return false}
+        if _storage._isOlKitchen != rhs_storage._isOlKitchen {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -2156,6 +2316,8 @@ extension Cafelogos_Pos_ProductParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
     7: .standard(proto: "coffee_brews"),
     8: .same(proto: "amount"),
     9: .standard(proto: "stock_id"),
+    20: .standard(proto: "is_managing_order"),
+    21: .standard(proto: "is_ol_use_kitchen"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -2173,6 +2335,8 @@ extension Cafelogos_Pos_ProductParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
       case 7: try { try decoder.decodeRepeatedMessageField(value: &self.coffeeBrews) }()
       case 8: try { try decoder.decodeSingularUInt64Field(value: &self.amount) }()
       case 9: try { try decoder.decodeSingularStringField(value: &self.stockID) }()
+      case 20: try { try decoder.decodeSingularBoolField(value: &self.isManagingOrder) }()
+      case 21: try { try decoder.decodeSingularBoolField(value: &self.isOlUseKitchen) }()
       default: break
       }
     }
@@ -2206,6 +2370,12 @@ extension Cafelogos_Pos_ProductParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if !self.stockID.isEmpty {
       try visitor.visitSingularStringField(value: self.stockID, fieldNumber: 9)
     }
+    if self.isManagingOrder != false {
+      try visitor.visitSingularBoolField(value: self.isManagingOrder, fieldNumber: 20)
+    }
+    if self.isOlUseKitchen != false {
+      try visitor.visitSingularBoolField(value: self.isOlUseKitchen, fieldNumber: 21)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -2219,6 +2389,8 @@ extension Cafelogos_Pos_ProductParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.coffeeBrews != rhs.coffeeBrews {return false}
     if lhs.amount != rhs.amount {return false}
     if lhs.stockID != rhs.stockID {return false}
+    if lhs.isManagingOrder != rhs.isManagingOrder {return false}
+    if lhs.isOlUseKitchen != rhs.isOlUseKitchen {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -2859,6 +3031,100 @@ extension Cafelogos_Pos_Seat: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   public static func ==(lhs: Cafelogos_Pos_Seat, rhs: Cafelogos_Pos_Seat) -> Bool {
     if lhs.id != rhs.id {return false}
     if lhs.name != rhs.name {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_DailySale: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DailySale"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "date"),
+    2: .standard(proto: "total_sales"),
+    3: .standard(proto: "total_quantity"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.date) }()
+      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.totalSales) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.totalQuantity) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.date.isEmpty {
+      try visitor.visitSingularStringField(value: self.date, fieldNumber: 1)
+    }
+    if self.totalSales != 0 {
+      try visitor.visitSingularUInt64Field(value: self.totalSales, fieldNumber: 2)
+    }
+    if self.totalQuantity != 0 {
+      try visitor.visitSingularUInt64Field(value: self.totalQuantity, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_DailySale, rhs: Cafelogos_Pos_DailySale) -> Bool {
+    if lhs.date != rhs.date {return false}
+    if lhs.totalSales != rhs.totalSales {return false}
+    if lhs.totalQuantity != rhs.totalQuantity {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Pos_ProductSale: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ProductSale"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "product_id"),
+    2: .standard(proto: "product_name"),
+    3: .standard(proto: "total_sales"),
+    4: .standard(proto: "total_quantity"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.productID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.productName) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.totalSales) }()
+      case 4: try { try decoder.decodeSingularUInt64Field(value: &self.totalQuantity) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.productID.isEmpty {
+      try visitor.visitSingularStringField(value: self.productID, fieldNumber: 1)
+    }
+    if !self.productName.isEmpty {
+      try visitor.visitSingularStringField(value: self.productName, fieldNumber: 2)
+    }
+    if self.totalSales != 0 {
+      try visitor.visitSingularUInt64Field(value: self.totalSales, fieldNumber: 3)
+    }
+    if self.totalQuantity != 0 {
+      try visitor.visitSingularUInt64Field(value: self.totalQuantity, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_ProductSale, rhs: Cafelogos_Pos_ProductSale) -> Bool {
+    if lhs.productID != rhs.productID {return false}
+    if lhs.productName != rhs.productName {return false}
+    if lhs.totalSales != rhs.totalSales {return false}
+    if lhs.totalQuantity != rhs.totalQuantity {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

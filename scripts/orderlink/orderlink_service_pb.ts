@@ -94,6 +94,13 @@ export class PostOrderInput extends Message<PostOrderInput> {
    */
   seatName = "";
 
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_use_kitchen = 21;
+   */
+  isOlUseKitchen = false;
+
   constructor(data?: PartialMessage<PostOrderInput>) {
     super();
     proto3.util.initPartial(data, this);
@@ -109,6 +116,7 @@ export class PostOrderInput extends Message<PostOrderInput> {
     { no: 5, name: "ticket_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "ticket_addr", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "seat_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 21, name: "is_ol_use_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderInput {

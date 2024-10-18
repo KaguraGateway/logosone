@@ -1194,6 +1194,80 @@ export class PostDiscountRequest extends Message<PostDiscountRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.GetDailySalesResponse
+ */
+export class GetDailySalesResponse extends Message<GetDailySalesResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.DailySale daily_sales = 1;
+   */
+  dailySales: DailySale[] = [];
+
+  constructor(data?: PartialMessage<GetDailySalesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetDailySalesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "daily_sales", kind: "message", T: DailySale, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDailySalesResponse {
+    return new GetDailySalesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDailySalesResponse {
+    return new GetDailySalesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDailySalesResponse {
+    return new GetDailySalesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined, b: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined): boolean {
+    return proto3.util.equals(GetDailySalesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.GetProductSalesResponse
+ */
+export class GetProductSalesResponse extends Message<GetProductSalesResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.ProductSale product_sales = 1;
+   */
+  productSales: ProductSale[] = [];
+
+  constructor(data?: PartialMessage<GetProductSalesResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetProductSalesResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "product_sales", kind: "message", T: ProductSale, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetProductSalesResponse {
+    return new GetProductSalesResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetProductSalesResponse {
+    return new GetProductSalesResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetProductSalesResponse {
+    return new GetProductSalesResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetProductSalesResponse | PlainMessage<GetProductSalesResponse> | undefined, b: GetProductSalesResponse | PlainMessage<GetProductSalesResponse> | undefined): boolean {
+    return proto3.util.equals(GetProductSalesResponse, a, b);
+  }
+}
+
+/**
  * * Product 
  *
  * @generated from message cafelogos.pos.Product
@@ -1263,6 +1337,22 @@ export class Product extends Message<Product> {
    */
   stock?: Stock;
 
+  /**
+   * Only Admin
+   *
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder = false;
+
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_kitchen = 21;
+   */
+  isOlKitchen = false;
+
   constructor(data?: PartialMessage<Product>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1283,6 +1373,8 @@ export class Product extends Message<Product> {
     { no: 10, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
     { no: 11, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 12, name: "stock", kind: "message", T: Stock },
+    { no: 20, name: "is_managing_order", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 21, name: "is_ol_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Product {
@@ -1355,6 +1447,22 @@ export class ProductParam extends Message<ProductParam> {
    */
   stockId = "";
 
+  /**
+   * Only Admin
+   *
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder = false;
+
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_use_kitchen = 21;
+   */
+  isOlUseKitchen = false;
+
   constructor(data?: PartialMessage<ProductParam>) {
     super();
     proto3.util.initPartial(data, this);
@@ -1372,6 +1480,8 @@ export class ProductParam extends Message<ProductParam> {
     { no: 7, name: "coffee_brews", kind: "message", T: CoffeeBrew, repeated: true },
     { no: 8, name: "amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 9, name: "stock_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 20, name: "is_managing_order", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 21, name: "is_ol_use_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ProductParam {
@@ -2095,6 +2205,118 @@ export class Seat extends Message<Seat> {
 
   static equals(a: Seat | PlainMessage<Seat> | undefined, b: Seat | PlainMessage<Seat> | undefined): boolean {
     return proto3.util.equals(Seat, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.DailySale
+ */
+export class DailySale extends Message<DailySale> {
+  /**
+   * @generated from field: string date = 1;
+   */
+  date = "";
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 2;
+   */
+  totalSales = protoInt64.zero;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 3;
+   */
+  totalQuantity = protoInt64.zero;
+
+  constructor(data?: PartialMessage<DailySale>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.DailySale";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 3, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DailySale {
+    return new DailySale().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DailySale {
+    return new DailySale().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DailySale {
+    return new DailySale().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DailySale | PlainMessage<DailySale> | undefined, b: DailySale | PlainMessage<DailySale> | undefined): boolean {
+    return proto3.util.equals(DailySale, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.ProductSale
+ */
+export class ProductSale extends Message<ProductSale> {
+  /**
+   * @generated from field: string product_id = 1;
+   */
+  productId = "";
+
+  /**
+   * @generated from field: string product_name = 2;
+   */
+  productName = "";
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 3;
+   */
+  totalSales = protoInt64.zero;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 4;
+   */
+  totalQuantity = protoInt64.zero;
+
+  constructor(data?: PartialMessage<ProductSale>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.ProductSale";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "product_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "product_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ProductSale {
+    return new ProductSale().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): ProductSale {
+    return new ProductSale().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): ProductSale {
+    return new ProductSale().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: ProductSale | PlainMessage<ProductSale> | undefined, b: ProductSale | PlainMessage<ProductSale> | undefined): boolean {
+    return proto3.util.equals(ProductSale, a, b);
   }
 }
 

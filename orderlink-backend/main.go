@@ -24,8 +24,6 @@ import (
 	"github.com/uptrace/bun/extra/bundebug"
 	"golang.org/x/net/http2"
 
-	gorilla "github.com/gorilla/websocket"
-
 	cloudpubsub "cloud.google.com/go/pubsub"
 
 	sentryecho "github.com/getsentry/sentry-go/echo"
@@ -86,7 +84,7 @@ func main() {
 	}(db)
 
 	// WebSocket Clients
-	wsClients := make([]*gorilla.Conn, 0)
+	wsClients := make([]*websocket.OrderLinkWSClient, 0)
 
 	var redisClient *redis.Client
 	var cloudPubSubClient *cloudpubsub.Client
@@ -152,7 +150,7 @@ func main() {
 	}
 }
 
-func buildInjector(isDev bool, db *bun.DB, wsClients []*gorilla.Conn, redisClient *redis.Client, cloudPubSubClient *cloudpubsub.Client) *do.Injector {
+func buildInjector(isDev bool, db *bun.DB, wsClients []*websocket.OrderLinkWSClient, redisClient *redis.Client, cloudPubSubClient *cloudpubsub.Client) *do.Injector {
 	i := do.New()
 
 	// Register DB
@@ -160,7 +158,7 @@ func buildInjector(isDev bool, db *bun.DB, wsClients []*gorilla.Conn, redisClien
 		return db, nil
 	})
 	// Register WebSocket
-	do.Provide(i, func(i *do.Injector) (*[]*gorilla.Conn, error) {
+	do.Provide(i, func(i *do.Injector) (*[]*websocket.OrderLinkWSClient, error) {
 		return &wsClients, nil
 	})
 	// Register RedisClient

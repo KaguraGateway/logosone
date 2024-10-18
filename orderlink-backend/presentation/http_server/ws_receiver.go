@@ -9,13 +9,15 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 	"github.com/samber/do"
+
+	s2cWebSocket "github.com/KaguraGateway/logosone/orderlink-backend/infra/websocket"
 )
 
 type WSReceiver struct {
 	getOrders             GetOrders
 	updateOrderStatus     UpdateOrderStatus
 	updateOrderItemStatus UpdateOrderItemStatus
-	clients               *[]*websocket.Conn
+	clients               *[]*s2cWebSocket.OrderLinkWSClient
 }
 
 func NewWSReceiver(i *do.Injector) *WSReceiver {
@@ -23,7 +25,7 @@ func NewWSReceiver(i *do.Injector) *WSReceiver {
 		getOrders:             *NewGetOrders(i),
 		updateOrderStatus:     *NewUpdateOrderStatus(i),
 		updateOrderItemStatus: *NewUpdateOrderItemStatus(i),
-		clients:               do.MustInvoke[*[]*websocket.Conn](i),
+		clients:               do.MustInvoke[*[]*s2cWebSocket.OrderLinkWSClient](i),
 	}
 }
 
@@ -46,16 +48,17 @@ func (r *WSReceiver) OnReceive(ctx echo.Context) error {
 		return err
 	}
 	defer conn.Close()
+	olWSClient := &s2cWebSocket.OrderLinkWSClient{Conn: conn}
 
 	// Close Handler
-	conn.SetCloseHandler(func(code int, text string) error {
-		*r.clients = slices.DeleteFunc(*r.clients, func(tConn *websocket.Conn) bool {
-			return tConn == conn
+	olWSClient.SetCloseHandler(func(code int, text string) error {
+		*r.clients = slices.DeleteFunc(*r.clients, func(tConn *s2cWebSocket.OrderLinkWSClient) bool {
+			return tConn == olWSClient
 		})
 		return nil
 	})
 	// Add client
-	*r.clients = append(*r.clients, conn)
+	*r.clients = append(*r.clients, olWSClient)
 
 	var eventInput EventInput
 	var event *model.Event

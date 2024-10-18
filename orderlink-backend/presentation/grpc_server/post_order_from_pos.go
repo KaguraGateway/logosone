@@ -28,9 +28,11 @@ func (r *GrpcServer) PostOrder(ctx context.Context, req *connect.Request[orderli
 		OrderAt: orderAt,
 		OrderItems: lo.Map(msg.Items, func(item *orderlink.PostOrderItemInput, _ int) application.PostOrderItemInput {
 			return application.PostOrderItemInput{
-				ProductId:    item.ProductId,
-				CoffeeBrewId: &item.CoffeeBrewId,
-				Quantity:     uint(item.Quantity),
+				ProductId:       item.ProductId,
+				CoffeeBrewId:    &item.CoffeeBrewId,
+				Quantity:        uint(item.Quantity),
+				IsManagingOrder: item.IsManagingOrder,
+				IsOlUseKitchen:  item.IsOlKitchen, // TODO: 名前が違うのを直したい
 			}
 		}),
 		OrderType:  order.OrderType(msg.Type),

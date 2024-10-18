@@ -6,7 +6,7 @@ require (
 	cloud.google.com/go/pubsub v1.44.0
 	connectrpc.com/connect v1.17.0
 	github.com/Code-Hex/synchro v0.5.2
-	github.com/KaguraGateway/cafelogos-grpc v1.0.12
+	github.com/KaguraGateway/cafelogos-grpc v1.0.24
 	github.com/cockroachdb/errors v1.11.3
 	github.com/getsentry/sentry-go v0.29.0
 	github.com/gorilla/websocket v1.5.3

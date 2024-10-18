@@ -35,6 +35,8 @@ github.com/Code-Hex/synchro v0.5.2 h1:xBk/EIsqfu+yiuX9XC39xLXWm9mcLJ3zegem9itybz
 github.com/Code-Hex/synchro v0.5.2/go.mod h1:F9Z4Uf1SP7V5K1xPM17h19sS8DmuH6OFt8LI917ZpQ4=
 github.com/KaguraGateway/cafelogos-grpc v1.0.12 h1:xz7xgnT3tmJg7+AsoVxMoWNqhBbBbBXEdScsDSojgUw=
 github.com/KaguraGateway/cafelogos-grpc v1.0.12/go.mod h1:ki0BshLbTm51nuvBQ4HIUJCQjL/kFRcN4xiNY+3UUS8=
+github.com/KaguraGateway/cafelogos-grpc v1.0.24 h1:H9laCC/6GXIEMRCPZh3iox4qrNHpyxQXQvm3xVLyCBQ=
+github.com/KaguraGateway/cafelogos-grpc v1.0.24/go.mod h1:ki0BshLbTm51nuvBQ4HIUJCQjL/kFRcN4xiNY+3UUS8=
 github.com/bsm/ginkgo/v2 v2.12.0 h1:Ny8MWAHyOepLGlLKYmXG4IEkioBysk6GpaRTLC8zwWs=
 github.com/bsm/ginkgo/v2 v2.12.0/go.mod h1:SwYbGRRDovPVboqFv0tPTcG1sN61LM1Z4ARdbAV9g4c=
 github.com/bsm/gomega v1.27.10 h1:yeMWxP2pV2fG3FgAODIY8EiRE3dy0aeFYt4l7wh6yKA=

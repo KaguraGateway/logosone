@@ -16,9 +16,11 @@ import (
 )
 
 type PostOrderItemInput struct {
-	ProductId    string
-	CoffeeBrewId *string
-	Quantity     uint
+	ProductId       string
+	CoffeeBrewId    *string
+	Quantity        uint
+	IsManagingOrder bool
+	IsOlUseKitchen  bool
 }
 
 type PostOrderInput struct {
@@ -72,17 +74,35 @@ func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderI
 		// 注文アイテムを保存する
 		var orderItems []orderitem.OrderItem
 		for _, item := range input.OrderItems {
+			// 注文管理しないのであれば、注文アイテムを保存せず無視する
+			if !item.IsManagingOrder {
+				log.Println("Skip order item because it is not managing order")
+				continue
+			}
+
 			// 注文アイテムを保存
 			for i := 0; i < int(item.Quantity); i++ {
 				orderItem, err := orderitem.NewOrderItem(input.OrderId, item.ProductId, item.CoffeeBrewId)
 				if err != nil {
 					return errors.Join(err, ErrInvalidParam)
 				}
+
+				// TODO: 突貫工事なので、IsOlUseKitchenのもっといい処理方法を検討するべし
+				if !item.IsOlUseKitchen {
+					orderItem.UpdateStatus(orderitem.Cooked)
+				}
+
 				if err := u.orderItemRepo.SaveTx(cctx, tx, orderItem); err != nil {
 					return err
 				}
 				orderItems = append(orderItems, *orderItem)
 			}
+		}
+
+		// TODO: 注文管理をしない商品しかなかった場合の処理を考える
+		if len(orderItems) == 0 {
+			log.Println("No order items to save")
+			return nil
 		}
 
 		// 注文を保存する

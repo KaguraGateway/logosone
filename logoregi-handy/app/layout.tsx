@@ -6,10 +6,10 @@ import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | LogoREGI Handy',
-    default: 'LogoREGI Handy',
+    template: '%s | OrderLink Handy',
+    default: 'OrderLink Handy',
   },
-  description: 'LogoREGI Handy powered by LOGOS Systems',
+  description: 'OrderLink Handy powered by LOGOS Systems',
   applicationName: 'Handy',
   appleWebApp: {
     title: 'Handy',

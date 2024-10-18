@@ -25,6 +25,20 @@ export declare class PostOrderItemInput extends Message<PostOrderItemInput> {
    */
   quantity: number;
 
+  /**
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder: boolean;
+
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_kitchen = 21;
+   */
+  isOlKitchen: boolean;
+
   constructor(data?: PartialMessage<PostOrderItemInput>);
 
   static readonly runtime: typeof proto3;
@@ -78,20 +92,6 @@ export declare class PostOrderInput extends Message<PostOrderInput> {
    * @generated from field: string seat_name = 7;
    */
   seatName: string;
-
-  /**
-   * 注文管理を行うかどうか
-   *
-   * @generated from field: bool is_managing_order = 20;
-   */
-  isManagingOrder: boolean;
-
-  /**
-   * OrderLinkでキッチン機能を使うかどうか
-   *
-   * @generated from field: bool is_ol_kitchen = 21;
-   */
-  isOlKitchen: boolean;
 
   constructor(data?: PartialMessage<PostOrderInput>);
 

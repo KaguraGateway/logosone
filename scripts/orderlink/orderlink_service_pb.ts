@@ -25,6 +25,20 @@ export class PostOrderItemInput extends Message<PostOrderItemInput> {
    */
   quantity = 0;
 
+  /**
+   * 注文管理を行うかどうか
+   *
+   * @generated from field: bool is_managing_order = 20;
+   */
+  isManagingOrder = false;
+
+  /**
+   * OrderLinkでキッチン機能を使うかどうか
+   *
+   * @generated from field: bool is_ol_kitchen = 21;
+   */
+  isOlKitchen = false;
+
   constructor(data?: PartialMessage<PostOrderItemInput>) {
     super();
     proto3.util.initPartial(data, this);
@@ -36,6 +50,8 @@ export class PostOrderItemInput extends Message<PostOrderItemInput> {
     { no: 1, name: "product_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 2, name: "coffee_brew_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "quantity", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+    { no: 20, name: "is_managing_order", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 21, name: "is_ol_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderItemInput {
@@ -94,20 +110,6 @@ export class PostOrderInput extends Message<PostOrderInput> {
    */
   seatName = "";
 
-  /**
-   * 注文管理を行うかどうか
-   *
-   * @generated from field: bool is_managing_order = 20;
-   */
-  isManagingOrder = false;
-
-  /**
-   * OrderLinkでキッチン機能を使うかどうか
-   *
-   * @generated from field: bool is_ol_kitchen = 21;
-   */
-  isOlKitchen = false;
-
   constructor(data?: PartialMessage<PostOrderInput>) {
     super();
     proto3.util.initPartial(data, this);
@@ -123,8 +125,6 @@ export class PostOrderInput extends Message<PostOrderInput> {
     { no: 5, name: "ticket_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 6, name: "ticket_addr", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "seat_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 20, name: "is_managing_order", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
-    { no: 21, name: "is_ol_kitchen", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderInput {

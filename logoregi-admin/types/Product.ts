@@ -19,6 +19,9 @@ export type Product = {
   stockId?: string;
   stockName?: string;
   stockQuantity?: number;
+
+  isManagingOrder: boolean;
+  isOlUseKitchen: boolean;
 };
 
 export function toProductFromProto(product: ProtoProduct): Product {
@@ -37,6 +40,8 @@ export function toProductFromProto(product: ProtoProduct): Product {
     stockId: product.stock?.id,
     stockName: product.stock?.name,
     stockQuantity: product.stock?.quantity,
+    isManagingOrder: product.isManagingOrder,
+    isOlUseKitchen: product.isOlKitchen,
   };
 }
 

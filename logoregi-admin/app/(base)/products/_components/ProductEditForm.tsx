@@ -1,17 +1,24 @@
 'use client';
-import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogContainer,
+  DialogContent,
+  DialogTitle,
+  Portal
+} from '@ark-ui/react';
 import {
   CoffeeBrew as ProtoCoffeeBrew,
   ProductParam,
   ProductType,
 } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
 import { css } from '@/panda/css';
-import { styled } from '@/panda/jsx';
+import {styled, VStack} from '@/panda/jsx';
 import { HStack, Stack } from '@/panda/jsx';
 import { dialog } from '@/panda/recipes';
 import { useMutationAddProduct } from '@/query/addProduct';
@@ -40,6 +47,7 @@ import { Tr } from '@/ui/table/Tr';
 import { StockFormDialog } from '../../_components/StockForm';
 import { CoffeeBeanFormDialog } from './CoffeeBeanForm';
 import { ProductCategoryFormDialog } from './ProductCategoryForm';
+import {Switch} from "@/ui/form/Switch";
 
 const ProductTypeOptions = [
   {
@@ -97,6 +105,8 @@ export function ProductEditForm(props: Props) {
       ? toOptionFromCategory({ id: props.product.categoryId, name: props.product.categoryName })
       : null
   );
+  const [isManagingOrder, setIsManagingOrder] = useState(props.product?.isManagingOrder ?? true);
+  const [isOlUseKitchen, setIsOlUseKitchen] = useState(props.product?.isOlUseKitchen ?? true);
 
   // Coffee
   const [coffeeBean, setCoffeeBean] = useState<Option | null>(
@@ -205,6 +215,8 @@ export function ProductEditForm(props: Props) {
       }),
       amount: BigInt(amount),
       stockId: stock?.value ?? '',
+      isManagingOrder: isManagingOrder,
+      isOlUseKitchen: isOlUseKitchen,
     });
     const onSuccess = () => {
       props.onCancel();
@@ -368,6 +380,18 @@ export function ProductEditForm(props: Props) {
               />
             </HStack>
           )}
+          <VStack alignItems="baseline">
+            <Switch
+              label="OrderLinkでの注文管理を利用するか"
+              onChange={(v) => setIsManagingOrder(v)}
+              checked={isManagingOrder}
+            />
+            <Switch
+              label="OrderLinkでのキッチン機能を利用するか"
+              onChange={(v) => setIsOlUseKitchen(v)}
+              checked={isOlUseKitchen}
+            />
+          </VStack>
           <HStack width="full">
             <Button type="button" width="full" onClick={() => props.onCancel()}>
               キャンセル

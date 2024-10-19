@@ -36,17 +36,19 @@ func (i *productDb) Save(ctx context.Context, product *model.Product) error {
 	}
 
 	daoProduct := &dao.Product{
-		ID:           product.GetId(),
-		Name:         product.ProductName.Get(),
-		CategoryID:   product.ProductCategory.GetId(),
-		ProductType:  uint(product.ProductType),
-		Color:        product.Color,
-		IsNowSales:   product.IsNowSales,
-		CoffeeBeanID: coffeeBeanId,
-		Amount:       amount,
-		StockId:      stockId,
-		CreatedAt:    product.GetCreatedAt().StdTime(),
-		UpdatedAt:    product.GetUpdatedAt().StdTime(),
+		ID:              product.GetId(),
+		Name:            product.ProductName.Get(),
+		CategoryID:      product.ProductCategory.GetId(),
+		ProductType:     uint(product.ProductType),
+		Color:           product.Color,
+		IsNowSales:      product.IsNowSales,
+		CoffeeBeanID:    coffeeBeanId,
+		Amount:          amount,
+		StockId:         stockId,
+		CreatedAt:       product.GetCreatedAt().StdTime(),
+		UpdatedAt:       product.GetUpdatedAt().StdTime(),
+		IsManagingOrder: product.IsManagingOrder,
+		IsOlUseKitchen:  product.IsOlUseKitchen,
 	}
 	if _, err := i.db.NewInsert().Model(daoProduct).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("category_id = EXCLUDED.category_id").Set("product_type = EXCLUDED.product_type").Set("is_now_sales = EXCLUDED.is_now_sales").Set("coffee_bean_id = EXCLUDED.coffee_bean_id").Set("amount = EXCLUDED.amount").Set("stock_id = EXCLUDED.stock_id").Exec(ctx); err != nil {
 		return err

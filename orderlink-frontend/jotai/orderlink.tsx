@@ -110,6 +110,11 @@ export function useOrderLink() {
 
   // 接続状況の処理
   useEffect(() => {
+    // すでに接続済みの場合（主にホームからの動線）
+    if(client.readyState() === WebSocket.OPEN) {
+      fetchOrders();
+    }
+
     const onOpen = () => {
       // 接続時に注文を取得する
       fetchOrders();

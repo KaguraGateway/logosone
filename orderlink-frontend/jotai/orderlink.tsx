@@ -35,10 +35,8 @@ export function useOrderLink() {
         ...orders,
         {
           ...order,
-          Status: 0,
           OrderItems: order.OrderItems.map((item) => ({
             ...item,
-            Status: 0,
           })),
         },
       ]);

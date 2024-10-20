@@ -76,7 +76,9 @@ func (u *updateOrderItemStatusUseCase) Execute(ctx context.Context, input Update
 			return item.Status() == orderitem.OrderItemStatus(orderitem.NotYet)
 		})
 		if notYetCount+1 == len(order.OrderItems()) {
-			order.UpdateStatus(orderPkg.NotYet)
+			if err := order.UpdateStatus(orderPkg.NotYet); err != nil {
+				return errors.Join(err, ErrInvalidParam)
+			}
 		}
 	} else
 	// 調理中->調理完了への状態遷移
@@ -85,12 +87,16 @@ func (u *updateOrderItemStatusUseCase) Execute(ctx context.Context, input Update
 			return item.Status() == orderitem.OrderItemStatus(orderitem.Cooked)
 		})
 		if cookedCount+1 == len(order.OrderItems()) {
-			order.UpdateStatus(orderPkg.Cooked)
+			if err := order.UpdateStatus(orderPkg.Cooked); err != nil {
+				return errors.Join(err, ErrInvalidParam)
+			}
 		}
 	} else
 	// 調理完了->調理中への状態遷移
 	if input.Status == uint(orderitem.Cooking) && order.Status() == orderPkg.Cooked {
-		order.UpdateStatus(orderPkg.Cooking)
+		if err := order.UpdateStatus(orderPkg.Cooking); err != nil {
+			return errors.Join(err, ErrInvalidParam)
+		}
 	}
 
 	err = u.txRepo.Transaction(ctx, func(ctx context.Context, tx interface{}) error {

@@ -55,6 +55,7 @@ func (u *onReceiveOrderUseCase) Execute(ctx context.Context, orderId string) err
 			Id:           item.Id(),
 			ProductId:    item.ProductId(),
 			CoffeeBrewId: item.CoffeeBrewId(),
+			Status:       uint(item.Status()),
 		}
 	})
 	orderDto := NewOrderOutput{
@@ -64,6 +65,7 @@ func (u *onReceiveOrderUseCase) Execute(ctx context.Context, orderId string) err
 		TicketAddr: ticket.TicketAddr(),
 		SeatName:   order.SeatName(),
 		OrderItems: orderItemDtos,
+		Status:     uint(order.Status()),
 	}
 
 	// Clientに通知
@@ -81,10 +83,12 @@ type NewOrderOutput struct {
 	TicketAddr string
 	SeatName   *string
 	OrderItems []NewOrderItemOutput
+	Status     uint
 }
 
 type NewOrderItemOutput struct {
 	Id           string
 	ProductId    string
 	CoffeeBrewId *string
+	Status       uint
 }

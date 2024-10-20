@@ -2,13 +2,14 @@ package application
 
 import (
 	"context"
+	"github.com/samber/lo"
 	"log"
 	"time"
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model"
-	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order"
+	orderPkg "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order"
 	orderitem "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
 	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
 	"github.com/cockroachdb/errors"
@@ -27,7 +28,7 @@ type PostOrderInput struct {
 	OrderId    string
 	OrderAt    synchro.Time[tz.UTC]
 	OrderItems []PostOrderItemInput
-	OrderType  order.OrderType
+	OrderType  orderPkg.OrderType
 	TicketId   string
 	TicketAddr string
 	SeatName   *string
@@ -105,11 +106,29 @@ func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderI
 			return nil
 		}
 
-		// 注文を保存する
-		order, err := order.NewOrder(input.OrderId, orderItems, input.OrderAt, input.OrderType, input.SeatName)
+		order, err := orderPkg.NewOrder(input.OrderId, orderItems, input.OrderAt, input.OrderType, input.SeatName)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}
+
+		// TODO: 全部 キッチン機能を使わないものだったらの処理を考える
+		// というか、これってドメイン知識の流出なのでドメインモデルを見直すべき
+		// とりあえず、キッチン機能を使わないものは調理済みにしておく
+		cookedOrderItemsCount := lo.CountBy(orderItems, func(item orderitem.OrderItem) bool {
+			return item.Status() == orderitem.Cooked
+		})
+		if cookedOrderItemsCount > 0 {
+			if err := order.UpdateStatus(orderPkg.Cooking); err != nil {
+				log.Printf("failed to update order status: %v", err)
+			}
+		}
+		if cookedOrderItemsCount == len(orderItems) {
+			if err := order.UpdateStatus(orderPkg.Cooked); err != nil {
+				log.Printf("failed to update order status: %v", err)
+			}
+		}
+
+		// 注文を保存する
 		if err := u.orderRepo.SaveTx(cctx, tx, order); err != nil {
 			return err
 		}

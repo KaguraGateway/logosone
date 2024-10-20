@@ -12,7 +12,7 @@ export type KitchenFilter = {
 };
 
 export function useKitchen() {
-  const { orders, UpdateOrderItemStatus } = useOrderLink();
+  const { orders, UpdateOrderItemStatus, SendClientEventLog } = useOrderLink();
   const { getDefaultFilterItems, getProductByProductId, getCoffeeBrew } = useProduct();
   const { isMyTask, setMyTask } = useMyTasks();
   const [kitchenFilter, setKitchenFilter] = useState({
@@ -87,6 +87,7 @@ export function useKitchen() {
       return;
     }
     const newStatus = OrderItemStatusSchema.parse(item.Status - 1);
+    SendClientEventLog(`CancelOrderItemStatus: ${item.Status} -> ${newStatus} ID: ${itemId}`);
     UpdateOrderItemStatus(itemId, newStatus);
   };
   const onNextState = (itemId: string) => {
@@ -96,6 +97,7 @@ export function useKitchen() {
     }
     const result = OrderItemStatusSchema.safeParse(item.Status + 1);
     if (result.success) {
+      SendClientEventLog(`NextItemStatus: ${item.Status} -> ${result.data} ID: ${itemId}`);
       UpdateOrderItemStatus(itemId, result.data);
       !isMyTask(itemId) && setMyTask(itemId);
     }

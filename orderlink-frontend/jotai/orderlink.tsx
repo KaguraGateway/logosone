@@ -123,6 +123,13 @@ export function useOrderLink() {
     };
   }, [client, fetchOrders]);
 
+  const SendClientEventLog = (message: string) => {
+    const event = EventSchema.parse({
+      Topic: 'ClientEventLog',
+      Message: message,
+    });
+    client.send(event);
+  };
   // Order状態遷移
   const UpdateOrderStatus = (orderId: string, newStatus: OrderStatus) => {
     const eventMsg = UpdateOrderStatusSchema.parse({
@@ -148,5 +155,5 @@ export function useOrderLink() {
     client.send(event);
   };
 
-  return { orders, fetchOrders, UpdateOrderStatus, UpdateOrderItemStatus };
+  return { orders, fetchOrders, UpdateOrderStatus, UpdateOrderItemStatus, SendClientEventLog };
 }

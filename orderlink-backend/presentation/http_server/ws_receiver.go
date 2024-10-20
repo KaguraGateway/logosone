@@ -81,6 +81,8 @@ func (r *WSReceiver) OnReceive(ctx echo.Context) error {
 			err = r.updateOrderStatus.UpdateOrderStatus(ctx.Request().Context(), conn, *event)
 		case "UpdateOrderItemStatus":
 			err = r.updateOrderItemStatus.UpdateOrderItemStatus(ctx.Request().Context(), conn, *event)
+		case "ClientEventLog":
+			log.Printf("ClientEventLog: %v", event.GetMessage())
 		}
 
 		// Error handling

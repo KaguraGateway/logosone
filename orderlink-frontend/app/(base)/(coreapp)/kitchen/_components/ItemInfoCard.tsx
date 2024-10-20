@@ -59,7 +59,7 @@ export function ItemInfoCard({
         disabled={!isSubmittable}
         onCancel={() => {
           setIsSubmittable(false);
-          onCancelState?.(itemId)
+          onCancelState?.(itemId);
         }}
       />
       <Button

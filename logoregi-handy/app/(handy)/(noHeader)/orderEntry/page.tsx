@@ -161,7 +161,7 @@ function OrderEntry({
               <Text fontSize="xl" fontWeight="semibold" color="gray.600">
                 {category.name}
               </Text>
-              {category.products.map((product) => {
+              {category.products.filter(product => product.isNowSales).map((product) => {
                 if (product.productType === ProductType.COFFEE) {
                   return (
                     <ProductInfoButton

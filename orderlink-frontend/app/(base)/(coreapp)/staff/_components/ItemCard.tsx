@@ -41,6 +41,11 @@ function ProductItem(props: ProductItemProps) {
                   return rebuildMap(newMap);
                 });
               }}
+              sx={{
+                '& .chakra-checkbox__control': {
+                  transform: 'scale(1.25)',
+                },
+              }}
             >
               <Flex alignItems="center">
                 {item.status === 'done' ? (

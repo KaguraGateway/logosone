@@ -19,12 +19,15 @@ services:
       context: ./logoregi-backend
     ports:
       - '8080:8080'
+    command: go run .
     environment:
       - DATABASE_URL=postgres://postgres:password@db/pos?sslmode=disable
       - PORT=8080
       - TICKET_GRPC=http://ticket-backend:8081
       - ORDERLINK_GRPC=http://orderlink-backend:8082
       - DEV_MODE=1
+    volumes:
+      - ./logoregi-backend:/app
     depends_on:
       - db
       - ticket-backend
@@ -73,12 +76,15 @@ services:
       context: ./orderlink-backend
     ports:
       - '8082:8082'
+    command: go run .
     environment:
       - DATABASE_URL=postgres://postgres:password@db/orderlink?sslmode=disable
       - SENTRY_DSN=example
       - PORT=8082
       - REDIS_URL=redis:6379
       - DEV_MODE=1
+    volumes:
+      - ./orderlink-backend:/app
     depends_on:
       - db
       - redis

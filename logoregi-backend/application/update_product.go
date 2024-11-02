@@ -62,6 +62,8 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 	}
 	product.Color = param.Color
 	product.IsNowSales = param.IsNowSales
+	product.IsManagingOrder = param.IsManagingOrder
+	product.IsOlUseKitchen = param.IsOlUseKitchen
 
 	// Only Coffee
 	if product.CoffeeBean != nil && param.CoffeeBeanId != product.CoffeeBean.GetId() {

@@ -33,10 +33,15 @@ services:
       context: ./logoregi-admin
       args:
         - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080
+    stdin_open: true
+    tty: true
+    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
     ports:
       - '3000:3000'
     environment:
       - PORT=3000
+    volumes:
+      - ./logoregi-admin:/usr/src/app/logos
     depends_on:
       - logoregi-backend
   logoregi-handy:
@@ -44,10 +49,15 @@ services:
       context: ./logoregi-handy
       args:
         - NEXT_PUBLIC_POS_GRPC=http://localhost:8080
+    stdin_open: true
+    tty: true
+    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
     ports:
       - '3002:3002'
     environment:
       - PORT=3002
+    volumes:
+      - ./logoregi-handy:/usr/src/app/logos
     depends_on:
       - logoregi-backend
   ticket-backend:
@@ -78,10 +88,15 @@ services:
       args:
         - NEXT_PUBLIC_WEBSOCKET_API=ws://localhost:8082/
         - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080
+    stdin_open: true
+    tty: true
+    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
     ports:
       - '3001:3001'
     environment:
       - PORT=3001
+    volumes:
+      - ./orderlink-frontend:/usr/src/app/logos
     depends_on:
       - orderlink-backend
 

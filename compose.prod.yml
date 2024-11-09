@@ -95,6 +95,18 @@ services:
       - PORT=3001
     depends_on:
       - orderlink-backend
+  orderlink-webcall:
+    build:
+      context: ./orderlink-webcall
+      args:
+        - NEXT_PUBLIC_WEBSOCKET_API=ws://localhost:8082/
+        - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080
+    ports:
+      - '3004:3004'
+    environment:
+      - PORT=3004
+    depends_on:
+      - orderlink-backend
 
 volumes:
   db-data:

@@ -1,0 +1,16 @@
+FROM oven/bun:latest
+
+WORKDIR /usr/src/app/logos
+
+COPY . ./
+
+RUN bun install --frozen-lockfile
+
+ARG NEXT_PUBLIC_WEBSOCKET_API
+ENV NEXT_PUBLIC_WEBSOCKET_API=${NEXT_PUBLIC_WEBSOCKET_API}
+ARG NEXT_PUBLIC_GRPC_HOST
+ENV NEXT_PUBLIC_GRPC_HOST=${NEXT_PUBLIC_GRPC_HOST}
+RUN bun run build
+
+EXPOSE 3000
+CMD ["bun", "run", "preview"]

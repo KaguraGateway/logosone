@@ -121,6 +121,23 @@ services:
       - ./orderlink-frontend:/usr/src/app/logos
     depends_on:
       - orderlink-backend
+  orderlink-webcall:
+    build:
+      context: ./orderlink-webcall
+      args:
+        - NEXT_PUBLIC_WEBSOCKET_API=ws://localhost:8082/
+        - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080
+    stdin_open: true
+    tty: true
+    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
+    ports:
+      - '3004:3004'
+    environment:
+      - PORT=3004
+    volumes:
+      - ./orderlink-webcall:/usr/src/app/logos
+    depends_on:
+      - orderlink-backend
 
 volumes:
   db-data:

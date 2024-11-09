@@ -50,6 +50,17 @@ services:
       - PORT=3002
     depends_on:
       - logoregi-backend
+  logoregi-togo:
+    build:
+      context: ./logoregi-togo
+      args:
+        - NEXT_PUBLIC_POS_GRPC=http://localhost:8080
+    ports:
+      - '3003:3003'
+    environment:
+      - PORT=3003
+    depends_on:
+      - logoregi-backend
   ticket-backend:
     build:
       context: ./ticket-backend

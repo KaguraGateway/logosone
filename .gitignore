@@ -4,3 +4,4 @@ node_modules
 *.xcodeproj/xcuserdata/
 
 .idea
+.next

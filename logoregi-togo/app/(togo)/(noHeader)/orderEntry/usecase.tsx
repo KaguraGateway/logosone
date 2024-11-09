@@ -1,0 +1,191 @@
+import { useDisclosure } from '@chakra-ui/react';
+import { CoffeeBrew, OrderType, Product, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+
+import { useClientId } from '@/jotai/clientId';
+import { useErrorModal } from '@/jotai/errorModal';
+import { useProductQuery } from '@/query/getProducts';
+import { useSeatQuery } from '@/query/getSeats';
+import { usePostOrderMutation } from '@/query/postOrder';
+
+import { getProductInfo } from './utils/productUtils';
+
+export type CategoryWithProducts = {
+  id: string;
+  name: string;
+  products: Array<Product>;
+};
+
+export type Item = {
+  productId: string;
+  quantity: number;
+  amount: number;
+  coffeeBrewId?: string;
+};
+
+function rebuildMap<K, T>(map: Map<K, T>): Map<K, T> {
+  return new Map(map.entries());
+}
+
+export function useOrderEntryUseCase() {
+  const router = useRouter();
+  const { onErrorModalOpen } = useErrorModal();
+  const clientId = useClientId();
+  const [items, setItems] = useState<Map<string, Item>>(new Map());
+  const [state, setState] = useState(0);
+  const [isOrderSending, setIsOrderSending] = useState(false);
+
+  const {
+    isOpen: isOpenChooseOptionModal,
+    onOpen: onOpenChooseOptionModal,
+    onClose: onCloseChooseOptionModal,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenTicketNumberInputModal,
+    onOpen: onOpenTicketNumberInputModal,
+    onClose: onCloseTicketNumberInputModal,
+  } = useDisclosure({
+    defaultIsOpen: true, // この行を追加して初期値をtrueに設定
+  });
+
+  const seatQuery = useSeatQuery();
+  const productQuery = useProductQuery();
+  const orderMutate = usePostOrderMutation();
+
+  const categories = useMemo(() => {
+    if (productQuery.data == null) {
+      return [];
+    }
+    const categoriesMap: Map<string, CategoryWithProducts> = new Map();
+    for (const product of productQuery.data.products) {
+      const category = product.productCategory!;
+      if (!categoriesMap.has(category.id)) {
+        categoriesMap.set(category.id, {
+          id: category.id,
+          name: category.name,
+          products: [],
+        });
+      }
+
+      categoriesMap.get(category.id)?.products.push(product);
+    }
+    return Array.from(categoriesMap.values());
+  }, [productQuery.data]);
+  const orderItems = useMemo(() => Array.from(items.values()), [items]);
+
+  const onAddItem = (product: Product, coffeeBrew?: CoffeeBrew) => {
+    let key = product.productId;
+    if (product.productType === ProductType.COFFEE) {
+      key = `${product.productId}${coffeeBrew?.id}`;
+    }
+
+    if (items.has(key)) {
+      items.get(key)!.quantity += 1;
+      setItems(rebuildMap(items));
+      return;
+    }
+
+    setItems((prev) => {
+      return rebuildMap(
+        prev.set(key, {
+          productId: product.productId,
+          quantity: 1,
+          amount: Number(product.productType === ProductType.COFFEE ? coffeeBrew!.amount : product.amount),
+          coffeeBrewId: coffeeBrew?.id,
+        })
+      );
+    });
+  };
+  const onChangeQuantity = (product: Product, newQuantity: number, coffeeBrew?: CoffeeBrew) => {
+    let key = product.productId;
+    if (product.productType === ProductType.COFFEE) {
+      key = `${product.productId}${coffeeBrew?.id}`;
+    }
+    if (items.has(key)) {
+      setItems((prev) => {
+        if (newQuantity === 0) {
+          prev.delete(key);
+        } else {
+          prev.get(key)!.quantity = newQuantity;
+        }
+        return rebuildMap(prev);
+      });
+    }
+  };
+  const getQuantity = (product: Product, coffeeBrew?: CoffeeBrew) => {
+    if (product.productType === ProductType.COFFEE && coffeeBrew == null) {
+      return Array.from(items!.values())
+        .filter((v) => v.productId === product.productId)
+        .reduce((prev, item) => prev + item.quantity, 0);
+    }
+
+    let key = product.productId;
+    if (product.productType === ProductType.COFFEE && coffeeBrew != null) {
+      key = `${product.productId}${coffeeBrew?.id}`;
+    }
+    return items.get(key)?.quantity;
+  };
+  const getProductInfoWrapper = (productId: string, coffeeBrewId?: string) => {
+    return getProductInfo(productQuery.data?.products || [], productId, coffeeBrewId);
+  };
+  const backToOrderEntry = () => {
+    setState(0);
+  };
+  const toOrderCheck = () => {
+    setState(1);
+  };
+  const onPostOrder = () => {
+    if (orderItems.length === 0) {
+      onErrorModalOpen('注文が空です', '商品を追加してください');
+      return;
+    }
+
+    orderMutate.mutateAsync(
+      {
+        order: {
+          items: orderItems.map((item) => ({
+            productId: item.productId,
+            quantity: item.quantity,
+            amount: BigInt(item.amount),
+            coffeeBrewId: item.coffeeBrewId,
+          })),
+          orderType: OrderType.TakeOut,
+          orderAt: new Date().toISOString(),
+          clientId: clientId ?? ''
+        },
+      },
+      {
+        onSuccess: (res) => {
+          router.push(`/orderComplete?isSendSuccess=true&callNumber=${res.callNumber}`);
+        },
+        onSettled: () => {
+          setIsOrderSending(false);
+        },
+        onError: (error) => {
+          onErrorModalOpen('注文送信エラー', error.message);
+        },
+      }
+    );
+  };
+
+  return {
+    isOpenChooseOptionModal,
+    onOpenChooseOptionModal,
+    onCloseChooseOptionModal,
+    isOpenTicketNumberInputModal,
+    onOpenTicketNumberInputModal,
+    onCloseTicketNumberInputModal,
+    categories,
+    onAddItem,
+    onChangeQuantity,
+    getQuantity,
+    state,
+    backToOrderEntry,
+    toOrderCheck,
+    onPostOrder,
+    orderItems,
+    getProductInfo: getProductInfoWrapper,
+    isOrderSending,
+  };
+}

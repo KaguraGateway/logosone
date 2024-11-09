@@ -63,6 +63,22 @@ services:
       - ./logoregi-handy:/usr/src/app/logos
     depends_on:
       - logoregi-backend
+  logoregi-togo:
+    build:
+      context: ./logoregi-togo
+      args:
+        - NEXT_PUBLIC_POS_GRPC=http://localhost:8080
+    stdin_open: true
+    tty: true
+    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
+    ports:
+      - '3003:3003'
+    environment:
+      - PORT=3003
+    volumes:
+      - ./logoregi-togo:/usr/src/app/logos
+    depends_on:
+      - logoregi-backend
   ticket-backend:
     build:
       context: ./ticket-backend

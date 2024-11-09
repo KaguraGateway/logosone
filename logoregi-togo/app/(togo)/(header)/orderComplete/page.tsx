@@ -2,13 +2,10 @@
 import {Alert, AlertIcon, Box, Button, Flex, Text, useDisclosure} from '@chakra-ui/react';
 import {BiCoffeeTogo, BiLogOut} from 'react-icons/bi';
 
-import {useSeatQuery} from '@/query/getSeats';
-
 import TakeConfirmModal from './_components/TakeConfirmModal';
 
 export default function OrderComplete({searchParams}: { searchParams: { [key: string]: string | string[] | undefined } }) {
     const {isOpen: isOpenTakeConfirmModal, onOpen: onOpenTakeConfirmModal, onClose: onCloseTakeConfirmModal} = useDisclosure();
-    const seatQuery = useSeatQuery(); // 座席情報を取得
 
     return (
         <>

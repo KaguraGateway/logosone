@@ -6,7 +6,6 @@ import { useMemo, useState } from 'react';
 import { useClientId } from '@/jotai/clientId';
 import { useErrorModal } from '@/jotai/errorModal';
 import { useProductQuery } from '@/query/getProducts';
-import { useSeatQuery } from '@/query/getSeats';
 import { usePostOrderMutation } from '@/query/postOrder';
 
 import { getProductInfo } from './utils/productUtils';
@@ -48,8 +47,6 @@ export function useOrderEntryUseCase() {
   } = useDisclosure({
     defaultIsOpen: true, // この行を追加して初期値をtrueに設定
   });
-
-  const seatQuery = useSeatQuery();
   const productQuery = useProductQuery();
   const orderMutate = usePostOrderMutation();
 

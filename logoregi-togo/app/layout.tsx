@@ -6,13 +6,13 @@ import { Providers } from './providers';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | LogoREGI Handy',
-    default: 'LogoREGI Handy',
+    template: '%s | LogoREGI ToGo',
+    default: 'LogoREGI ToGo',
   },
-  description: 'LogoREGI Handy powered by LOGOS Systems',
-  applicationName: 'Handy',
+  description: 'LogoREGI Togo powered by LOGOS Systems',
+  applicationName: 'ToGo',
   appleWebApp: {
-    title: 'Handy',
+    title: 'ToGo',
     statusBarStyle: 'black-translucent',
   },
 };

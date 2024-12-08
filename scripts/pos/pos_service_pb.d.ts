@@ -1513,6 +1513,11 @@ export declare enum Payment_PaymentType {
    * @generated from enum value: CASH = 0;
    */
   CASH = 0,
+
+  /**
+   * @generated from enum value: EXTERNAL = 1;
+   */
+  EXTERNAL = 1,
 }
 
 /**

@@ -2159,10 +2159,16 @@ export enum Payment_PaymentType {
    * @generated from enum value: CASH = 0;
    */
   CASH = 0,
+
+  /**
+   * @generated from enum value: EXTERNAL = 1;
+   */
+  EXTERNAL = 1,
 }
 // Retrieve enum metadata with: proto3.getEnumType(Payment_PaymentType)
 proto3.util.setEnumType(Payment_PaymentType, "cafelogos.pos.Payment.PaymentType", [
   { no: 0, name: "CASH" },
+  { no: 1, name: "EXTERNAL" },
 ]);
 
 /**

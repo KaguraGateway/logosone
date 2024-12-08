@@ -1,5 +1,7 @@
 # cafelogos-grpc
+
 ### Init
+
 ```
 # git clone
 
@@ -15,6 +17,7 @@ pnpm install
 
 # Make
 # Go & Swift & TypeScript
+export PATH="$PATH:$(go env GOPATH)/bin"
 pnpm buf generate
 # Rust
 cargo build

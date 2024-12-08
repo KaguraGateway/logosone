@@ -964,6 +964,7 @@ public struct Cafelogos_Pos_Payment: Sendable {
   public enum PaymentType: SwiftProtobuf.Enum, Swift.CaseIterable {
     public typealias RawValue = Int
     case cash // = 0
+    case external // = 1
     case UNRECOGNIZED(Int)
 
     public init() {
@@ -973,6 +974,7 @@ public struct Cafelogos_Pos_Payment: Sendable {
     public init?(rawValue: Int) {
       switch rawValue {
       case 0: self = .cash
+      case 1: self = .external
       default: self = .UNRECOGNIZED(rawValue)
       }
     }
@@ -980,6 +982,7 @@ public struct Cafelogos_Pos_Payment: Sendable {
     public var rawValue: Int {
       switch self {
       case .cash: return 0
+      case .external: return 1
       case .UNRECOGNIZED(let i): return i
       }
     }
@@ -987,6 +990,7 @@ public struct Cafelogos_Pos_Payment: Sendable {
     // The compiler won't synthesize support with the UNRECOGNIZED case.
     public static let allCases: [Cafelogos_Pos_Payment.PaymentType] = [
       .cash,
+      .external,
     ]
 
   }
@@ -2995,6 +2999,7 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 extension Cafelogos_Pos_Payment.PaymentType: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "CASH"),
+    1: .same(proto: "EXTERNAL"),
   ]
 }
 

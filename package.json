@@ -1,6 +1,6 @@
 {
     "name": "@kaguragateway/cafelogos-grpc",
-    "version": "1.0.24",
+    "version": "1.1.0",
     "description": "",
     "main": "",
     "files": [
@@ -31,5 +31,6 @@
         "@connectrpc/connect": "^1.4.0",
         "@connectrpc/connect-query": "^1.4.0",
         "@connectrpc/connect-web": "^1.4.0"
-    }
+    },
+    "packageManager": "pnpm@9.9.0+sha1.3edbe440f4e570aa8f049adbd06b9483d55cc2d2"
 }

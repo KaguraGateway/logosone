@@ -306,6 +306,7 @@ message Payment {
 
     enum PaymentType {
         CASH = 0;
+        EXTERNAL = 1;
     }
 }
 

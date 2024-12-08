@@ -562,6 +562,7 @@ export const Payment_PaymentType = /*@__PURE__*/ proto3.makeEnum(
   "cafelogos.pos.Payment.PaymentType",
   [
     {no: 0, name: "CASH"},
+    {no: 1, name: "EXTERNAL"},
   ],
 );
 

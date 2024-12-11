@@ -338,12 +338,17 @@ message PaymentParam {
 message PaymentCashParam {}
 message PaymentExternalParam {
     string payment_type = 1;
+    string external_device_id = 2;
 }
 message PaymentExternal {
     string id = 1;
     string payment_id = 2;
     string payment_type = 3;
     string status = 4;
+    string external_service_id = 5;
+    string external_device_id = 6;
+    string created_at = 7;
+    string updated_at = 8;
 }
 
 message Seat {

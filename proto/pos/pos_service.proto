@@ -330,9 +330,12 @@ message PaymentParam {
     uint64 payment_amount = 4;
     uint64 change_amount = 5;
 
+    string payment_at = 6;
+    string updated_at = 7;
+
     oneof method {
-        PaymentCashParam cash = 6;
-        PaymentExternalParam external = 7;
+        PaymentCashParam cash = 8;
+        PaymentExternalParam external = 9;
     }
 }
 message PaymentCashParam {}

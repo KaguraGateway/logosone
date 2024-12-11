@@ -15,6 +15,7 @@ service PosService {
 
     rpc PostPayment(PostPaymentRequest) returns (PaymentResponse) {}
     rpc UpdatePayment(UpdatePaymentRequest) returns (PaymentResponse) {}
+    rpc GetExternalPayment(GetExternalPaymentRequest) returns (GetExternalPaymentResponse) {}
 
     rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
 
@@ -64,6 +65,10 @@ message GetUnpaidOrdersBySeatIdRequest {
 
 message PostOrderRequest {
     OrderParam order = 1;
+    PostOrderOption option = 2;
+}
+message PostOrderOption {
+    bool is_post_orderlink = 1;
 }
 message PostOrderResponse {
     Code code = 1;
@@ -78,15 +83,29 @@ message PostOrderResponse {
     }
 }
 message PostPaymentRequest {
-    Payment payment = 1;
+    PaymentParam payment = 1;
+
+    repeated OrderParam post_orders = 2;
+    repeated string order_ids = 3;
+
+    PostPaymentRequestOption option = 4;
+}
+message PostPaymentRequestOption {
+    bool is_post_orderlink = 1;
 }
 message UpdatePaymentRequest {
-    Payment payment = 1;
+    PaymentParam payment = 1;
 }
 message PaymentResponse {
-    bool is_ok = 1;
+    int32 status = 1;
     Payment payment = 2;
     repeated PostOrderResponse order_responses = 3;
+}
+message GetExternalPaymentRequest {
+    string payment_id = 1;
+}
+message GetExternalPaymentResponse {
+    PaymentExternal external_payment = 1;
 }
 message DeleteOrderRequest {
     string order_id = 1;
@@ -295,19 +314,36 @@ message Discount {
 
 message Payment {
     string id = 1;
-    PaymentType type = 2;
+    int32 type = 2;
+
     uint64 receive_amount = 3;
     uint64 payment_amount = 4;
     uint64 change_amount = 5;
     string payment_at = 6;
     string updated_at = 7;
-    repeated OrderParam post_orders = 8;
-    repeated string order_ids = 9;
+}
+message PaymentParam {
+    string id = 1;
+    int32 type = 2;
 
-    enum PaymentType {
-        CASH = 0;
-        EXTERNAL = 1;
+    uint64 receive_amount = 3;
+    uint64 payment_amount = 4;
+    uint64 change_amount = 5;
+
+    oneof method {
+        PaymentCashParam cash = 6;
+        PaymentExternalParam external = 7;
     }
+}
+message PaymentCashParam {}
+message PaymentExternalParam {
+    string payment_type = 1;
+}
+message PaymentExternal {
+    string id = 1;
+    string payment_id = 2;
+    string payment_type = 3;
+    string status = 4;
 }
 
 message Seat {

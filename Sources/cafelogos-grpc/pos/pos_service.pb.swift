@@ -1102,6 +1102,8 @@ public struct Cafelogos_Pos_PaymentExternalParam: Sendable {
 
   public var paymentType: String = String()
 
+  public var externalDeviceID: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1119,6 +1121,14 @@ public struct Cafelogos_Pos_PaymentExternal: Sendable {
   public var paymentType: String = String()
 
   public var status: String = String()
+
+  public var externalServiceID: String = String()
+
+  public var externalDeviceID: String = String()
+
+  public var createdAt: String = String()
+
+  public var updatedAt: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -3390,6 +3400,7 @@ extension Cafelogos_Pos_PaymentExternalParam: SwiftProtobuf.Message, SwiftProtob
   public static let protoMessageName: String = _protobuf_package + ".PaymentExternalParam"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "payment_type"),
+    2: .standard(proto: "external_device_id"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3399,6 +3410,7 @@ extension Cafelogos_Pos_PaymentExternalParam: SwiftProtobuf.Message, SwiftProtob
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.paymentType) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.externalDeviceID) }()
       default: break
       }
     }
@@ -3408,11 +3420,15 @@ extension Cafelogos_Pos_PaymentExternalParam: SwiftProtobuf.Message, SwiftProtob
     if !self.paymentType.isEmpty {
       try visitor.visitSingularStringField(value: self.paymentType, fieldNumber: 1)
     }
+    if !self.externalDeviceID.isEmpty {
+      try visitor.visitSingularStringField(value: self.externalDeviceID, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Cafelogos_Pos_PaymentExternalParam, rhs: Cafelogos_Pos_PaymentExternalParam) -> Bool {
     if lhs.paymentType != rhs.paymentType {return false}
+    if lhs.externalDeviceID != rhs.externalDeviceID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3425,6 +3441,10 @@ extension Cafelogos_Pos_PaymentExternal: SwiftProtobuf.Message, SwiftProtobuf._M
     2: .standard(proto: "payment_id"),
     3: .standard(proto: "payment_type"),
     4: .same(proto: "status"),
+    5: .standard(proto: "external_service_id"),
+    6: .standard(proto: "external_device_id"),
+    7: .standard(proto: "created_at"),
+    8: .standard(proto: "updated_at"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3437,6 +3457,10 @@ extension Cafelogos_Pos_PaymentExternal: SwiftProtobuf.Message, SwiftProtobuf._M
       case 2: try { try decoder.decodeSingularStringField(value: &self.paymentID) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.paymentType) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.status) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.externalServiceID) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.externalDeviceID) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.createdAt) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.updatedAt) }()
       default: break
       }
     }
@@ -3455,6 +3479,18 @@ extension Cafelogos_Pos_PaymentExternal: SwiftProtobuf.Message, SwiftProtobuf._M
     if !self.status.isEmpty {
       try visitor.visitSingularStringField(value: self.status, fieldNumber: 4)
     }
+    if !self.externalServiceID.isEmpty {
+      try visitor.visitSingularStringField(value: self.externalServiceID, fieldNumber: 5)
+    }
+    if !self.externalDeviceID.isEmpty {
+      try visitor.visitSingularStringField(value: self.externalDeviceID, fieldNumber: 6)
+    }
+    if !self.createdAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.createdAt, fieldNumber: 7)
+    }
+    if !self.updatedAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.updatedAt, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3463,6 +3499,10 @@ extension Cafelogos_Pos_PaymentExternal: SwiftProtobuf.Message, SwiftProtobuf._M
     if lhs.paymentID != rhs.paymentID {return false}
     if lhs.paymentType != rhs.paymentType {return false}
     if lhs.status != rhs.status {return false}
+    if lhs.externalServiceID != rhs.externalServiceID {return false}
+    if lhs.externalDeviceID != rhs.externalDeviceID {return false}
+    if lhs.createdAt != rhs.createdAt {return false}
+    if lhs.updatedAt != rhs.updatedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

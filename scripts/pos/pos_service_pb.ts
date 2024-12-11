@@ -2431,6 +2431,11 @@ export class PaymentExternalParam extends Message<PaymentExternalParam> {
    */
   paymentType = "";
 
+  /**
+   * @generated from field: string external_device_id = 2;
+   */
+  externalDeviceId = "";
+
   constructor(data?: PartialMessage<PaymentExternalParam>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2440,6 +2445,7 @@ export class PaymentExternalParam extends Message<PaymentExternalParam> {
   static readonly typeName = "cafelogos.pos.PaymentExternalParam";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "payment_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "external_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentExternalParam {
@@ -2483,6 +2489,26 @@ export class PaymentExternal extends Message<PaymentExternal> {
    */
   status = "";
 
+  /**
+   * @generated from field: string external_service_id = 5;
+   */
+  externalServiceId = "";
+
+  /**
+   * @generated from field: string external_device_id = 6;
+   */
+  externalDeviceId = "";
+
+  /**
+   * @generated from field: string created_at = 7;
+   */
+  createdAt = "";
+
+  /**
+   * @generated from field: string updated_at = 8;
+   */
+  updatedAt = "";
+
   constructor(data?: PartialMessage<PaymentExternal>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2495,6 +2521,10 @@ export class PaymentExternal extends Message<PaymentExternal> {
     { no: 2, name: "payment_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "payment_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "external_service_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "external_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentExternal {

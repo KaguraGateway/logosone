@@ -1700,6 +1700,11 @@ export declare class PaymentExternalParam extends Message<PaymentExternalParam> 
    */
   paymentType: string;
 
+  /**
+   * @generated from field: string external_device_id = 2;
+   */
+  externalDeviceId: string;
+
   constructor(data?: PartialMessage<PaymentExternalParam>);
 
   static readonly runtime: typeof proto3;
@@ -1738,6 +1743,26 @@ export declare class PaymentExternal extends Message<PaymentExternal> {
    * @generated from field: string status = 4;
    */
   status: string;
+
+  /**
+   * @generated from field: string external_service_id = 5;
+   */
+  externalServiceId: string;
+
+  /**
+   * @generated from field: string external_device_id = 6;
+   */
+  externalDeviceId: string;
+
+  /**
+   * @generated from field: string created_at = 7;
+   */
+  createdAt: string;
+
+  /**
+   * @generated from field: string updated_at = 8;
+   */
+  updatedAt: string;
 
   constructor(data?: PartialMessage<PaymentExternal>);
 

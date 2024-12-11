@@ -628,6 +628,7 @@ export const PaymentExternalParam = /*@__PURE__*/ proto3.makeMessageType(
   "cafelogos.pos.PaymentExternalParam",
   () => [
     { no: 1, name: "payment_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "external_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 
@@ -641,6 +642,10 @@ export const PaymentExternal = /*@__PURE__*/ proto3.makeMessageType(
     { no: 2, name: "payment_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "payment_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 4, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 5, name: "external_service_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 6, name: "external_device_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "created_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 

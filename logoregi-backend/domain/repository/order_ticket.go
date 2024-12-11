@@ -8,4 +8,5 @@ import (
 
 type OrderTicketRepository interface {
 	Create(ctx context.Context, orderId string) (*model.OrderTicket, error)
+	FindByOrderId(ctx context.Context, orderId string) (*model.OrderTicket, error)
 }

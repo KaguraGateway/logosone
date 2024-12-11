@@ -139,3 +139,11 @@ func (i *orderQueryServiceDb) FindAllBySeatId(ctx context.Context, seatId string
 		return toOrder(&daoOrder)
 	}), nil
 }
+
+func (i *orderQueryServiceDb) FindByPaymentId(ctx context.Context, paymentId string) (*model.Order, error) {
+	daoOrder := new(dao.Order)
+	if err := orderRelationQuery(i.db.NewSelect().Model(daoOrder).Column("order.*").Where("order_payment.payment_id = ?", paymentId)).Scan(ctx); err != nil {
+		return nil, err
+	}
+	return toOrder(daoOrder), nil
+}

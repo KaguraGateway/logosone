@@ -37,4 +37,11 @@ type PaymentParam struct {
 	ChangeAmount  uint64
 	PaymentAt     synchro.Time[tz.UTC]
 	UpdatedAt     synchro.Time[tz.UTC]
+
+	PaymentExternalParam *PaymentExternalParam
+}
+
+type PaymentExternalParam struct {
+	PaymentType      string
+	ExternalDeviceId string
 }

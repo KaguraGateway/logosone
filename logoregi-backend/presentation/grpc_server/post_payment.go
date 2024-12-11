@@ -13,7 +13,7 @@ import (
 
 func (s *GrpcServer) PostPayment(ctx context.Context, req *connect.Request[pos.PostPaymentRequest]) (*connect.Response[pos.PaymentResponse], error) {
 	usecase := do.MustInvoke[application.SavePayment](s.i)
-	param, err := ToPaymentParam(req.Msg.Payment)
+	param, err := ToPaymentParam(req.Msg.Payment, req.Msg.PostOrders, req.Msg.OrderIds)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
@@ -23,7 +23,7 @@ func (s *GrpcServer) PostPayment(ctx context.Context, req *connect.Request[pos.P
 	}
 
 	return connect.NewResponse(&pos.PaymentResponse{
-		IsOk:    true,
+		Status:  int32(payment.GetPaymentStatus()),
 		Payment: ToProtoPayment(payment),
 		OrderResponses: lo.Map(postOrderTickets, func(item *model.OrderTicket, index int) *pos.PostOrderResponse {
 			return &pos.PostOrderResponse{

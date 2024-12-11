@@ -109,8 +109,7 @@ func ToProtoPayment(payment *model.Payment) *pos.Payment {
 	}
 	return &pos.Payment{
 		Id:            payment.GetId(),
-		Type:          pos.Payment_PaymentType(payment.GetPaymentType()),
-		OrderIds:      payment.GetOrderIds(),
+		Type:          int32(payment.GetPaymentType()),
 		ReceiveAmount: payment.ReceiveAmount,
 		PaymentAmount: payment.PaymentAmount,
 		ChangeAmount:  payment.GetChangeAmount(),
@@ -187,14 +186,15 @@ func ToOrderParam(reqOrder *pos.OrderParam) (*application.PostOrderParam, error)
 				DiscountPrice: orderDiscount.DiscountPrice,
 			}
 		}),
-		OrderType: model.OrderType(reqOrder.OrderType),
-		OrderAt:   orderAt,
-		ClientId:  reqOrder.ClientId,
-		SeatId:    reqOrder.SeatId,
+		OrderType:       model.OrderType(reqOrder.OrderType),
+		OrderAt:         orderAt,
+		ClientId:        reqOrder.ClientId,
+		SeatId:          reqOrder.SeatId,
+		IsPostOrderLink: true,
 	}, nil
 }
 
-func ToPaymentParam(payment *pos.Payment) (*application.PaymentParam, error) {
+func ToPaymentParam(payment *pos.PaymentParam, reqPostOrders []*pos.OrderParam, reqOrderIds []string) (*application.PaymentParam, error) {
 	if payment == nil {
 		return nil, nil
 	}
@@ -207,24 +207,53 @@ func ToPaymentParam(payment *pos.Payment) (*application.PaymentParam, error) {
 		return nil, err
 	}
 	postOrders := make([]application.PostOrderParam, 0)
-	for _, postOrder := range payment.PostOrders {
+	for _, postOrder := range reqPostOrders {
 		if orderParam, err := ToOrderParam(postOrder); err != nil {
 			return nil, err
 		} else {
 			postOrders = append(postOrders, *orderParam)
 		}
 	}
+	var paymentExternalParam *application.PaymentExternalParam
+	if payment.GetExternal() != nil {
+		paymentExternalParam = ToPaymentExternalParam(payment.GetExternal())
+	}
+
 	return &application.PaymentParam{
-		Id:            payment.Id,
-		PaymentType:   model.PaymentType(payment.Type),
-		ReceiveAmount: payment.ReceiveAmount,
-		PaymentAmount: payment.PaymentAmount,
-		ChangeAmount:  payment.ChangeAmount,
-		PaymentAt:     paymentAt,
-		UpdatedAt:     updatedAt,
-		OrderIds:      payment.OrderIds,
-		PostOrders:    postOrders,
+		Id:                   payment.Id,
+		PaymentType:          model.PaymentType(payment.Type),
+		ReceiveAmount:        payment.ReceiveAmount,
+		PaymentAmount:        payment.PaymentAmount,
+		ChangeAmount:         payment.ChangeAmount,
+		PaymentAt:            paymentAt,
+		UpdatedAt:            updatedAt,
+		OrderIds:             reqOrderIds,
+		PostOrders:           postOrders,
+		PaymentExternalParam: paymentExternalParam,
 	}, nil
+}
+
+func ToProtoPaymentExternal(payment *model.PaymentExternal) *pos.PaymentExternal {
+	if payment == nil {
+		return nil
+	}
+	return &pos.PaymentExternal{
+		Id:                payment.GetId(),
+		PaymentId:         payment.GetPaymentId(),
+		PaymentType:       payment.GetPaymentType(),
+		ExternalServiceId: payment.GetExternalServiceId(),
+		ExternalDeviceId:  payment.GetExternalDeviceId(),
+		Status:            payment.GetStatus(),
+		CreatedAt:         ToISO8601(payment.GetCreatedAt()),
+		UpdatedAt:         ToISO8601(payment.GetUpdatedAt()),
+	}
+}
+
+func ToPaymentExternalParam(param *pos.PaymentExternalParam) *application.PaymentExternalParam {
+	return &application.PaymentExternalParam{
+		PaymentType:      param.PaymentType,
+		ExternalDeviceId: param.ExternalDeviceId,
+	}
 }
 
 func ToISO8601(t synchro.Time[tz.UTC]) string {

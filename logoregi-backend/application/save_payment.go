@@ -2,7 +2,6 @@ package application
 
 import (
 	"context"
-
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/domain_service"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
@@ -14,16 +13,18 @@ type SavePayment interface {
 }
 
 type savePaymentUseCase struct {
-	orderQS          OrderQueryService
-	paymentRepo      repository.PaymentRepository
-	postOrderUseCase PostOrder
+	orderQS                OrderQueryService
+	paymentRepo            repository.PaymentRepository
+	paymentExternalService PaymentExternalService
+	postOrderUseCase       PostOrder
 }
 
 func NewSavePaymentUseCase(i *do.Injector) (SavePayment, error) {
 	return &savePaymentUseCase{
-		orderQS:          do.MustInvoke[OrderQueryService](i),
-		paymentRepo:      do.MustInvoke[repository.PaymentRepository](i),
-		postOrderUseCase: do.MustInvoke[PostOrder](i),
+		orderQS:                do.MustInvoke[OrderQueryService](i),
+		paymentRepo:            do.MustInvoke[repository.PaymentRepository](i),
+		paymentExternalService: do.MustInvoke[PaymentExternalService](i),
+		postOrderUseCase:       do.MustInvoke[PostOrder](i),
 	}, nil
 }
 
@@ -41,6 +42,11 @@ func (uc *savePaymentUseCase) Execute(ctx context.Context, param PaymentParam) (
 	if len(param.PostOrders) > 0 {
 		orderIds = make([]string, 0)
 		for _, orderParam := range param.PostOrders {
+			// FIXME: Hack実装
+			if param.PaymentType == model.External {
+				// NOTE: 外部決済の場合、まだこの時点では決済完了していないので、決済完了時点でOrderLinkに通知するためにIsPostOrderLinkをfalseにする
+				orderParam.IsPostOrderLink = false
+			}
 			order, orderTicket, err := uc.postOrderUseCase.Execute(ctx, orderParam)
 			if err != nil {
 				return nil, nil, err
@@ -62,18 +68,27 @@ func (uc *savePaymentUseCase) Execute(ctx context.Context, param PaymentParam) (
 
 	payment := model.ReconstructPayment(param.Id, orderIds, param.PaymentType, param.ReceiveAmount, param.PaymentAmount, param.PaymentAt, param.UpdatedAt)
 	// 支払いチェック
-	if !domain_service.IsEnoughAmount(payment, orders) {
+	// NOTE: 外部決済以外はチェック
+	if payment.GetPaymentType() != model.External && !domain_service.IsEnoughAmount(payment, orders) {
 		return nil, nil, ErrPaymentNotEnough
+	}
+	if payment.GetPaymentType() != model.External && param.ChangeAmount != payment.GetChangeAmount() {
+		return nil, nil, ErrPaymentChangeAmountDiff
 	}
 	if param.PaymentAmount != domain_service.GetTotalAmount(orders) {
 		return nil, nil, ErrPaymentAmountDiff
 	}
-	if param.ChangeAmount != payment.GetChangeAmount() {
-		return nil, nil, ErrPaymentChangeAmountDiff
-	}
 
 	if err := uc.paymentRepo.Save(ctx, payment); err != nil {
 		return nil, nil, err
+	}
+
+	// 外部決済
+	if payment.GetPaymentType() == model.External {
+		paymentExternal := model.NewPaymentExternal(payment.GetId(), param.PaymentExternalParam.PaymentType, param.PaymentExternalParam.ExternalDeviceId)
+		if err := uc.paymentExternalService.Create(ctx, payment, paymentExternal); err != nil {
+			return nil, nil, err
+		}
 	}
 
 	return payment, postOrderTickets, nil

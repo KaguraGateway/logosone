@@ -7,6 +7,11 @@ import (
 	"database/sql"
 	"flag"
 	"fmt"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/domain_event"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/logoregi-backend/infra/square"
+	"github.com/KaguraGateway/logosone/logoregi-backend/presentation/http_server"
 	"github.com/joho/godotenv"
 	"log"
 	"net"
@@ -37,18 +42,19 @@ var (
 )
 
 func main() {
-	// Load .env
-	if _, ok := os.LookupEnv("DATABASE_URL"); !ok {
-		if err := godotenv.Load(); err != nil {
-			log.Print(err)
-			log.Fatal("DATABASE_URL is not set")
-		}
-	}
-
 	// 開発環境であるか、そうでないかを判定する
 	var isDev = false
 	if _, ok := os.LookupEnv("DEV_MODE"); ok {
 		isDev = true
+
+		// Load .env
+		if err := godotenv.Load(); err != nil {
+			log.Print(err)
+		}
+	}
+
+	if _, ok := os.LookupEnv("DATABASE_URL"); !ok {
+		log.Fatal("DATABASE_URL is not set")
 	}
 
 	// Start DB
@@ -88,10 +94,20 @@ func main() {
 	// Start DI
 	i := buildInjector(db, ticketClient, orderLinkClient)
 
+	// FIXME: 一旦ドメインイベント周りのコードを書く
+	registerDomainEventHandler(context.Background(), i)
+	squarePolling := do.MustInvoke[application.PaymentExternalService](i)
+	err := squarePolling.Polling(context.Background())
+	if err != nil {
+		return
+	}
+
 	// Start gRPC server
 	mux := http.NewServeMux()
 	path, handler := posconnect.NewPosServiceHandler(grpc_server.NewGrpcServer(db, i))
 	mux.Handle(path, handler)
+	squareWebhooks := http_server.NewSquareTerminalWebhooks(i)
+	mux.Handle("/api/v1/webhooks/square/terminal", http.HandlerFunc(squareWebhooks.Handle))
 	corsHandler := withCORS(mux)
 	if err := http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), corsHandler); err != nil {
 		panic(err)
@@ -106,6 +122,64 @@ func withCORS(h http.Handler) http.Handler {
 		ExposedHeaders: connectcors.ExposedHeaders(),
 	})
 	return corsMiddleware.Handler(h)
+}
+
+type onPaymentSuccessEventHandler struct {
+	ctx             context.Context
+	orderHookRepo   repository.OrderHookRepository
+	orderService    application.OrderQueryService
+	orderTicketRepo repository.OrderTicketRepository
+	paymentRepo     repository.PaymentRepository
+}
+
+func (handler *onPaymentSuccessEventHandler) Handle(event domain_event.DomainEvent) {
+	paymentSuccessEvent := event.(*domain_event.PaymentSuccessEvent)
+	log.Printf("PaymentSuccessEvent: %v", paymentSuccessEvent)
+
+	order, err := handler.orderService.FindByPaymentId(handler.ctx, paymentSuccessEvent.PaymentId())
+	if err != nil {
+		log.Printf("failed to find order by payment id: %v", err)
+		return
+	}
+
+	payment, err := handler.paymentRepo.FindById(handler.ctx, paymentSuccessEvent.PaymentId())
+	if err != nil {
+		log.Printf("failed to find payment by payment id: %v", err)
+		return
+	}
+	if payment.GetPaymentType() == model.External {
+		payment.ReceiveAmount = payment.PaymentAmount
+	}
+	if err := handler.paymentRepo.Save(handler.ctx, payment); err != nil {
+		log.Printf("failed to save payment: %v", err)
+		return
+	}
+
+	// テイクアウトの場合のみOrderLinkに通知するため、イートインの場合はここで通知しない
+	if order.GetOrderType() != model.TakeOut {
+		return
+	}
+
+	orderTicket, err := handler.orderTicketRepo.FindByOrderId(handler.ctx, order.GetId())
+	if err != nil {
+		log.Printf("failed to find order ticket by order id: %v", err)
+		return
+	}
+
+	// FIXME: OrderLinkに通知しているが、この状態だとテイクアウトとイートインの区別で問題になるので、OrderLinkに通知するタイミングを変更する必要がある
+	if err := handler.orderHookRepo.PostOrder(handler.ctx, order, orderTicket); err != nil {
+		log.Printf("failed to post order: %v", err)
+	}
+}
+
+func registerDomainEventHandler(ctx context.Context, i *do.Injector) {
+	domain_event.DomainEventDispatcher.Subscribe(domain_event.PaymentSuccessEventName, &onPaymentSuccessEventHandler{
+		ctx:             ctx,
+		orderHookRepo:   do.MustInvoke[repository.OrderHookRepository](i),
+		orderService:    do.MustInvoke[application.OrderQueryService](i),
+		orderTicketRepo: do.MustInvoke[repository.OrderTicketRepository](i),
+		paymentRepo:     do.MustInvoke[repository.PaymentRepository](i),
+	})
 }
 
 func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, orderLinkClient orderlinkconnect.OrderLinkServiceClient) *do.Injector {
@@ -134,6 +208,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	do.Provide(i, bundb.NewOrderDiscountDb)
 	do.Provide(i, bundb.NewOrderItemDb)
 	do.Provide(i, bundb.NewPaymentDb)
+	do.Provide(i, bundb.NewPaymentExternalDb)
 	do.Provide(i, bundb.NewTxRepositoryDb)
 	// gRPC Repository
 	do.Provide(i, ticket_server.NewOrderTicketServer)
@@ -141,6 +216,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	// Register QueryService
 	do.Provide(i, bundb.NewProductQueryServiceDb)
 	do.Provide(i, bundb.NewOrderQueryServiceDb)
+	do.Provide(i, square.NewSquarePaymentExternalService)
 	// Register usecase
 	do.Provide(i, application.NewDeleteProductUseCase)
 	do.Provide(i, application.NewGetCoffeeBeansUseCase)
@@ -163,6 +239,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	do.Provide(i, application.NewGetDiscountsUseCase)
 	do.Provide(i, application.NewPostDiscountUseCase)
 	do.Provide(i, application.NewPostClientUseCase)
+	do.Provide(i, application.NewGetExternalPaymentUseCase)
 
 	return i
 }

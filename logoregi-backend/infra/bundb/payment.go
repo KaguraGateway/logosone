@@ -39,7 +39,7 @@ func toPayment(daoPayment *dao.Payment) *model.Payment {
 func paymentRelationQuery(q *bun.SelectQuery) *bun.SelectQuery {
 	return q.
 		Relation("OrderPayments").
-		Relation("Order")
+		Relation("OrderPayments.Order")
 }
 
 func (i *paymentDb) FindById(ctx context.Context, id string) (*model.Payment, error) {

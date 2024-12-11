@@ -2341,17 +2341,27 @@ export class PaymentParam extends Message<PaymentParam> {
   changeAmount = protoInt64.zero;
 
   /**
+   * @generated from field: string payment_at = 6;
+   */
+  paymentAt = "";
+
+  /**
+   * @generated from field: string updated_at = 7;
+   */
+  updatedAt = "";
+
+  /**
    * @generated from oneof cafelogos.pos.PaymentParam.method
    */
   method: {
     /**
-     * @generated from field: cafelogos.pos.PaymentCashParam cash = 6;
+     * @generated from field: cafelogos.pos.PaymentCashParam cash = 8;
      */
     value: PaymentCashParam;
     case: "cash";
   } | {
     /**
-     * @generated from field: cafelogos.pos.PaymentExternalParam external = 7;
+     * @generated from field: cafelogos.pos.PaymentExternalParam external = 9;
      */
     value: PaymentExternalParam;
     case: "external";
@@ -2370,8 +2380,10 @@ export class PaymentParam extends Message<PaymentParam> {
     { no: 3, name: "receive_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "payment_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 5, name: "change_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-    { no: 6, name: "cash", kind: "message", T: PaymentCashParam, oneof: "method" },
-    { no: 7, name: "external", kind: "message", T: PaymentExternalParam, oneof: "method" },
+    { no: 6, name: "payment_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "cash", kind: "message", T: PaymentCashParam, oneof: "method" },
+    { no: 9, name: "external", kind: "message", T: PaymentExternalParam, oneof: "method" },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentParam {

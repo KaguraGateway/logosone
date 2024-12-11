@@ -608,8 +608,10 @@ export const PaymentParam = /*@__PURE__*/ proto3.makeMessageType(
     { no: 3, name: "receive_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "payment_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 5, name: "change_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-    { no: 6, name: "cash", kind: "message", T: PaymentCashParam, oneof: "method" },
-    { no: 7, name: "external", kind: "message", T: PaymentExternalParam, oneof: "method" },
+    { no: 6, name: "payment_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 7, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "cash", kind: "message", T: PaymentCashParam, oneof: "method" },
+    { no: 9, name: "external", kind: "message", T: PaymentExternalParam, oneof: "method" },
   ],
 );
 

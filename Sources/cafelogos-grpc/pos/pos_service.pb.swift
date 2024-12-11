@@ -1056,6 +1056,10 @@ public struct Cafelogos_Pos_PaymentParam: Sendable {
 
   public var changeAmount: UInt64 = 0
 
+  public var paymentAt: String = String()
+
+  public var updatedAt: String = String()
+
   public var method: Cafelogos_Pos_PaymentParam.OneOf_Method? = nil
 
   public var cash: Cafelogos_Pos_PaymentCashParam {
@@ -3285,8 +3289,10 @@ extension Cafelogos_Pos_PaymentParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
     3: .standard(proto: "receive_amount"),
     4: .standard(proto: "payment_amount"),
     5: .standard(proto: "change_amount"),
-    6: .same(proto: "cash"),
-    7: .same(proto: "external"),
+    6: .standard(proto: "payment_at"),
+    7: .standard(proto: "updated_at"),
+    8: .same(proto: "cash"),
+    9: .same(proto: "external"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3300,7 +3306,9 @@ extension Cafelogos_Pos_PaymentParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
       case 3: try { try decoder.decodeSingularUInt64Field(value: &self.receiveAmount) }()
       case 4: try { try decoder.decodeSingularUInt64Field(value: &self.paymentAmount) }()
       case 5: try { try decoder.decodeSingularUInt64Field(value: &self.changeAmount) }()
-      case 6: try {
+      case 6: try { try decoder.decodeSingularStringField(value: &self.paymentAt) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.updatedAt) }()
+      case 8: try {
         var v: Cafelogos_Pos_PaymentCashParam?
         var hadOneofValue = false
         if let current = self.method {
@@ -3313,7 +3321,7 @@ extension Cafelogos_Pos_PaymentParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
           self.method = .cash(v)
         }
       }()
-      case 7: try {
+      case 9: try {
         var v: Cafelogos_Pos_PaymentExternalParam?
         var hadOneofValue = false
         if let current = self.method {
@@ -3351,14 +3359,20 @@ extension Cafelogos_Pos_PaymentParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.changeAmount != 0 {
       try visitor.visitSingularUInt64Field(value: self.changeAmount, fieldNumber: 5)
     }
+    if !self.paymentAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.paymentAt, fieldNumber: 6)
+    }
+    if !self.updatedAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.updatedAt, fieldNumber: 7)
+    }
     switch self.method {
     case .cash?: try {
       guard case .cash(let v)? = self.method else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
     }()
     case .external?: try {
       guard case .external(let v)? = self.method else { preconditionFailure() }
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 9)
     }()
     case nil: break
     }
@@ -3371,6 +3385,8 @@ extension Cafelogos_Pos_PaymentParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if lhs.receiveAmount != rhs.receiveAmount {return false}
     if lhs.paymentAmount != rhs.paymentAmount {return false}
     if lhs.changeAmount != rhs.changeAmount {return false}
+    if lhs.paymentAt != rhs.paymentAt {return false}
+    if lhs.updatedAt != rhs.updatedAt {return false}
     if lhs.method != rhs.method {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

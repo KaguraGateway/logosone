@@ -1641,17 +1641,27 @@ export declare class PaymentParam extends Message<PaymentParam> {
   changeAmount: bigint;
 
   /**
+   * @generated from field: string payment_at = 6;
+   */
+  paymentAt: string;
+
+  /**
+   * @generated from field: string updated_at = 7;
+   */
+  updatedAt: string;
+
+  /**
    * @generated from oneof cafelogos.pos.PaymentParam.method
    */
   method: {
     /**
-     * @generated from field: cafelogos.pos.PaymentCashParam cash = 6;
+     * @generated from field: cafelogos.pos.PaymentCashParam cash = 8;
      */
     value: PaymentCashParam;
     case: "cash";
   } | {
     /**
-     * @generated from field: cafelogos.pos.PaymentExternalParam external = 7;
+     * @generated from field: cafelogos.pos.PaymentExternalParam external = 9;
      */
     value: PaymentExternalParam;
     case: "external";

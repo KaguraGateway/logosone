@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -74,6 +74,18 @@ export const updatePayment: {
       readonly name: "UpdatePayment",
       readonly I: typeof UpdatePaymentRequest,
       readonly O: typeof PaymentResponse,
+      readonly kind: MethodKind.Unary,
+  readonly service: {
+    readonly typeName: "cafelogos.pos.PosService"
+  }
+};
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetExternalPayment
+ */
+export const getExternalPayment: {
+      readonly name: "GetExternalPayment",
+      readonly I: typeof GetExternalPaymentRequest,
+      readonly O: typeof GetExternalPaymentResponse,
       readonly kind: MethodKind.Unary,
   readonly service: {
     readonly typeName: "cafelogos.pos.PosService"

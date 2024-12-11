@@ -151,6 +151,11 @@ export declare class PostOrderRequest extends Message<PostOrderRequest> {
    */
   order?: OrderParam;
 
+  /**
+   * @generated from field: cafelogos.pos.PostOrderOption option = 2;
+   */
+  option?: PostOrderOption;
+
   constructor(data?: PartialMessage<PostOrderRequest>);
 
   static readonly runtime: typeof proto3;
@@ -164,6 +169,30 @@ export declare class PostOrderRequest extends Message<PostOrderRequest> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostOrderRequest;
 
   static equals(a: PostOrderRequest | PlainMessage<PostOrderRequest> | undefined, b: PostOrderRequest | PlainMessage<PostOrderRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PostOrderOption
+ */
+export declare class PostOrderOption extends Message<PostOrderOption> {
+  /**
+   * @generated from field: bool is_post_orderlink = 1;
+   */
+  isPostOrderlink: boolean;
+
+  constructor(data?: PartialMessage<PostOrderOption>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostOrderOption";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderOption;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostOrderOption;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostOrderOption;
+
+  static equals(a: PostOrderOption | PlainMessage<PostOrderOption> | undefined, b: PostOrderOption | PlainMessage<PostOrderOption> | undefined): boolean;
 }
 
 /**
@@ -230,9 +259,24 @@ export declare enum PostOrderResponse_Code {
  */
 export declare class PostPaymentRequest extends Message<PostPaymentRequest> {
   /**
-   * @generated from field: cafelogos.pos.Payment payment = 1;
+   * @generated from field: cafelogos.pos.PaymentParam payment = 1;
    */
-  payment?: Payment;
+  payment?: PaymentParam;
+
+  /**
+   * @generated from field: repeated cafelogos.pos.OrderParam post_orders = 2;
+   */
+  postOrders: OrderParam[];
+
+  /**
+   * @generated from field: repeated string order_ids = 3;
+   */
+  orderIds: string[];
+
+  /**
+   * @generated from field: cafelogos.pos.PostPaymentRequestOption option = 4;
+   */
+  option?: PostPaymentRequestOption;
 
   constructor(data?: PartialMessage<PostPaymentRequest>);
 
@@ -250,13 +294,37 @@ export declare class PostPaymentRequest extends Message<PostPaymentRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.PostPaymentRequestOption
+ */
+export declare class PostPaymentRequestOption extends Message<PostPaymentRequestOption> {
+  /**
+   * @generated from field: bool is_post_orderlink = 1;
+   */
+  isPostOrderlink: boolean;
+
+  constructor(data?: PartialMessage<PostPaymentRequestOption>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PostPaymentRequestOption";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostPaymentRequestOption;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostPaymentRequestOption;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostPaymentRequestOption;
+
+  static equals(a: PostPaymentRequestOption | PlainMessage<PostPaymentRequestOption> | undefined, b: PostPaymentRequestOption | PlainMessage<PostPaymentRequestOption> | undefined): boolean;
+}
+
+/**
  * @generated from message cafelogos.pos.UpdatePaymentRequest
  */
 export declare class UpdatePaymentRequest extends Message<UpdatePaymentRequest> {
   /**
-   * @generated from field: cafelogos.pos.Payment payment = 1;
+   * @generated from field: cafelogos.pos.PaymentParam payment = 1;
    */
-  payment?: Payment;
+  payment?: PaymentParam;
 
   constructor(data?: PartialMessage<UpdatePaymentRequest>);
 
@@ -278,9 +346,9 @@ export declare class UpdatePaymentRequest extends Message<UpdatePaymentRequest> 
  */
 export declare class PaymentResponse extends Message<PaymentResponse> {
   /**
-   * @generated from field: bool is_ok = 1;
+   * @generated from field: int32 status = 1;
    */
-  isOk: boolean;
+  status: number;
 
   /**
    * @generated from field: cafelogos.pos.Payment payment = 2;
@@ -305,6 +373,54 @@ export declare class PaymentResponse extends Message<PaymentResponse> {
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentResponse;
 
   static equals(a: PaymentResponse | PlainMessage<PaymentResponse> | undefined, b: PaymentResponse | PlainMessage<PaymentResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetExternalPaymentRequest
+ */
+export declare class GetExternalPaymentRequest extends Message<GetExternalPaymentRequest> {
+  /**
+   * @generated from field: string payment_id = 1;
+   */
+  paymentId: string;
+
+  constructor(data?: PartialMessage<GetExternalPaymentRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetExternalPaymentRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetExternalPaymentRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetExternalPaymentRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetExternalPaymentRequest;
+
+  static equals(a: GetExternalPaymentRequest | PlainMessage<GetExternalPaymentRequest> | undefined, b: GetExternalPaymentRequest | PlainMessage<GetExternalPaymentRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetExternalPaymentResponse
+ */
+export declare class GetExternalPaymentResponse extends Message<GetExternalPaymentResponse> {
+  /**
+   * @generated from field: cafelogos.pos.PaymentExternal external_payment = 1;
+   */
+  externalPayment?: PaymentExternal;
+
+  constructor(data?: PartialMessage<GetExternalPaymentResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetExternalPaymentResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetExternalPaymentResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetExternalPaymentResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetExternalPaymentResponse;
+
+  static equals(a: GetExternalPaymentResponse | PlainMessage<GetExternalPaymentResponse> | undefined, b: GetExternalPaymentResponse | PlainMessage<GetExternalPaymentResponse> | undefined): boolean;
 }
 
 /**
@@ -1451,9 +1567,9 @@ export declare class Payment extends Message<Payment> {
   id: string;
 
   /**
-   * @generated from field: cafelogos.pos.Payment.PaymentType type = 2;
+   * @generated from field: int32 type = 2;
    */
-  type: Payment_PaymentType;
+  type: number;
 
   /**
    * @generated from field: uint64 receive_amount = 3;
@@ -1480,16 +1596,6 @@ export declare class Payment extends Message<Payment> {
    */
   updatedAt: string;
 
-  /**
-   * @generated from field: repeated cafelogos.pos.OrderParam post_orders = 8;
-   */
-  postOrders: OrderParam[];
-
-  /**
-   * @generated from field: repeated string order_ids = 9;
-   */
-  orderIds: string[];
-
   constructor(data?: PartialMessage<Payment>);
 
   static readonly runtime: typeof proto3;
@@ -1506,18 +1612,146 @@ export declare class Payment extends Message<Payment> {
 }
 
 /**
- * @generated from enum cafelogos.pos.Payment.PaymentType
+ * @generated from message cafelogos.pos.PaymentParam
  */
-export declare enum Payment_PaymentType {
+export declare class PaymentParam extends Message<PaymentParam> {
   /**
-   * @generated from enum value: CASH = 0;
+   * @generated from field: string id = 1;
    */
-  CASH = 0,
+  id: string;
 
   /**
-   * @generated from enum value: EXTERNAL = 1;
+   * @generated from field: int32 type = 2;
    */
-  EXTERNAL = 1,
+  type: number;
+
+  /**
+   * @generated from field: uint64 receive_amount = 3;
+   */
+  receiveAmount: bigint;
+
+  /**
+   * @generated from field: uint64 payment_amount = 4;
+   */
+  paymentAmount: bigint;
+
+  /**
+   * @generated from field: uint64 change_amount = 5;
+   */
+  changeAmount: bigint;
+
+  /**
+   * @generated from oneof cafelogos.pos.PaymentParam.method
+   */
+  method: {
+    /**
+     * @generated from field: cafelogos.pos.PaymentCashParam cash = 6;
+     */
+    value: PaymentCashParam;
+    case: "cash";
+  } | {
+    /**
+     * @generated from field: cafelogos.pos.PaymentExternalParam external = 7;
+     */
+    value: PaymentExternalParam;
+    case: "external";
+  } | { case: undefined; value?: undefined };
+
+  constructor(data?: PartialMessage<PaymentParam>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PaymentParam";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentParam;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentParam;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentParam;
+
+  static equals(a: PaymentParam | PlainMessage<PaymentParam> | undefined, b: PaymentParam | PlainMessage<PaymentParam> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PaymentCashParam
+ */
+export declare class PaymentCashParam extends Message<PaymentCashParam> {
+  constructor(data?: PartialMessage<PaymentCashParam>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PaymentCashParam";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentCashParam;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentCashParam;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentCashParam;
+
+  static equals(a: PaymentCashParam | PlainMessage<PaymentCashParam> | undefined, b: PaymentCashParam | PlainMessage<PaymentCashParam> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PaymentExternalParam
+ */
+export declare class PaymentExternalParam extends Message<PaymentExternalParam> {
+  /**
+   * @generated from field: string payment_type = 1;
+   */
+  paymentType: string;
+
+  constructor(data?: PartialMessage<PaymentExternalParam>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PaymentExternalParam";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentExternalParam;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentExternalParam;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentExternalParam;
+
+  static equals(a: PaymentExternalParam | PlainMessage<PaymentExternalParam> | undefined, b: PaymentExternalParam | PlainMessage<PaymentExternalParam> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PaymentExternal
+ */
+export declare class PaymentExternal extends Message<PaymentExternal> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string payment_id = 2;
+   */
+  paymentId: string;
+
+  /**
+   * @generated from field: string payment_type = 3;
+   */
+  paymentType: string;
+
+  /**
+   * @generated from field: string status = 4;
+   */
+  status: string;
+
+  constructor(data?: PartialMessage<PaymentExternal>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PaymentExternal";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentExternal;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentExternal;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentExternal;
+
+  static equals(a: PaymentExternal | PlainMessage<PaymentExternal> | undefined, b: PaymentExternal | PlainMessage<PaymentExternal> | undefined): boolean;
 }
 
 /**

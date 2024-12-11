@@ -216,6 +216,11 @@ export class PostOrderRequest extends Message<PostOrderRequest> {
    */
   order?: OrderParam;
 
+  /**
+   * @generated from field: cafelogos.pos.PostOrderOption option = 2;
+   */
+  option?: PostOrderOption;
+
   constructor(data?: PartialMessage<PostOrderRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -225,6 +230,7 @@ export class PostOrderRequest extends Message<PostOrderRequest> {
   static readonly typeName = "cafelogos.pos.PostOrderRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "order", kind: "message", T: OrderParam },
+    { no: 2, name: "option", kind: "message", T: PostOrderOption },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderRequest {
@@ -241,6 +247,43 @@ export class PostOrderRequest extends Message<PostOrderRequest> {
 
   static equals(a: PostOrderRequest | PlainMessage<PostOrderRequest> | undefined, b: PostOrderRequest | PlainMessage<PostOrderRequest> | undefined): boolean {
     return proto3.util.equals(PostOrderRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.PostOrderOption
+ */
+export class PostOrderOption extends Message<PostOrderOption> {
+  /**
+   * @generated from field: bool is_post_orderlink = 1;
+   */
+  isPostOrderlink = false;
+
+  constructor(data?: PartialMessage<PostOrderOption>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.PostOrderOption";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "is_post_orderlink", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostOrderOption {
+    return new PostOrderOption().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostOrderOption {
+    return new PostOrderOption().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostOrderOption {
+    return new PostOrderOption().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PostOrderOption | PlainMessage<PostOrderOption> | undefined, b: PostOrderOption | PlainMessage<PostOrderOption> | undefined): boolean {
+    return proto3.util.equals(PostOrderOption, a, b);
   }
 }
 
@@ -330,9 +373,24 @@ proto3.util.setEnumType(PostOrderResponse_Code, "cafelogos.pos.PostOrderResponse
  */
 export class PostPaymentRequest extends Message<PostPaymentRequest> {
   /**
-   * @generated from field: cafelogos.pos.Payment payment = 1;
+   * @generated from field: cafelogos.pos.PaymentParam payment = 1;
    */
-  payment?: Payment;
+  payment?: PaymentParam;
+
+  /**
+   * @generated from field: repeated cafelogos.pos.OrderParam post_orders = 2;
+   */
+  postOrders: OrderParam[] = [];
+
+  /**
+   * @generated from field: repeated string order_ids = 3;
+   */
+  orderIds: string[] = [];
+
+  /**
+   * @generated from field: cafelogos.pos.PostPaymentRequestOption option = 4;
+   */
+  option?: PostPaymentRequestOption;
 
   constructor(data?: PartialMessage<PostPaymentRequest>) {
     super();
@@ -342,7 +400,10 @@ export class PostPaymentRequest extends Message<PostPaymentRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "cafelogos.pos.PostPaymentRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "payment", kind: "message", T: Payment },
+    { no: 1, name: "payment", kind: "message", T: PaymentParam },
+    { no: 2, name: "post_orders", kind: "message", T: OrderParam, repeated: true },
+    { no: 3, name: "order_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
+    { no: 4, name: "option", kind: "message", T: PostPaymentRequestOption },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostPaymentRequest {
@@ -363,13 +424,50 @@ export class PostPaymentRequest extends Message<PostPaymentRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.PostPaymentRequestOption
+ */
+export class PostPaymentRequestOption extends Message<PostPaymentRequestOption> {
+  /**
+   * @generated from field: bool is_post_orderlink = 1;
+   */
+  isPostOrderlink = false;
+
+  constructor(data?: PartialMessage<PostPaymentRequestOption>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.PostPaymentRequestOption";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "is_post_orderlink", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PostPaymentRequestOption {
+    return new PostPaymentRequestOption().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PostPaymentRequestOption {
+    return new PostPaymentRequestOption().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PostPaymentRequestOption {
+    return new PostPaymentRequestOption().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PostPaymentRequestOption | PlainMessage<PostPaymentRequestOption> | undefined, b: PostPaymentRequestOption | PlainMessage<PostPaymentRequestOption> | undefined): boolean {
+    return proto3.util.equals(PostPaymentRequestOption, a, b);
+  }
+}
+
+/**
  * @generated from message cafelogos.pos.UpdatePaymentRequest
  */
 export class UpdatePaymentRequest extends Message<UpdatePaymentRequest> {
   /**
-   * @generated from field: cafelogos.pos.Payment payment = 1;
+   * @generated from field: cafelogos.pos.PaymentParam payment = 1;
    */
-  payment?: Payment;
+  payment?: PaymentParam;
 
   constructor(data?: PartialMessage<UpdatePaymentRequest>) {
     super();
@@ -379,7 +477,7 @@ export class UpdatePaymentRequest extends Message<UpdatePaymentRequest> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "cafelogos.pos.UpdatePaymentRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "payment", kind: "message", T: Payment },
+    { no: 1, name: "payment", kind: "message", T: PaymentParam },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdatePaymentRequest {
@@ -404,9 +502,9 @@ export class UpdatePaymentRequest extends Message<UpdatePaymentRequest> {
  */
 export class PaymentResponse extends Message<PaymentResponse> {
   /**
-   * @generated from field: bool is_ok = 1;
+   * @generated from field: int32 status = 1;
    */
-  isOk = false;
+  status = 0;
 
   /**
    * @generated from field: cafelogos.pos.Payment payment = 2;
@@ -426,7 +524,7 @@ export class PaymentResponse extends Message<PaymentResponse> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "cafelogos.pos.PaymentResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "is_ok", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
+    { no: 1, name: "status", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 2, name: "payment", kind: "message", T: Payment },
     { no: 3, name: "order_responses", kind: "message", T: PostOrderResponse, repeated: true },
   ]);
@@ -445,6 +543,80 @@ export class PaymentResponse extends Message<PaymentResponse> {
 
   static equals(a: PaymentResponse | PlainMessage<PaymentResponse> | undefined, b: PaymentResponse | PlainMessage<PaymentResponse> | undefined): boolean {
     return proto3.util.equals(PaymentResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.GetExternalPaymentRequest
+ */
+export class GetExternalPaymentRequest extends Message<GetExternalPaymentRequest> {
+  /**
+   * @generated from field: string payment_id = 1;
+   */
+  paymentId = "";
+
+  constructor(data?: PartialMessage<GetExternalPaymentRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetExternalPaymentRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "payment_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetExternalPaymentRequest {
+    return new GetExternalPaymentRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetExternalPaymentRequest {
+    return new GetExternalPaymentRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetExternalPaymentRequest {
+    return new GetExternalPaymentRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetExternalPaymentRequest | PlainMessage<GetExternalPaymentRequest> | undefined, b: GetExternalPaymentRequest | PlainMessage<GetExternalPaymentRequest> | undefined): boolean {
+    return proto3.util.equals(GetExternalPaymentRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.GetExternalPaymentResponse
+ */
+export class GetExternalPaymentResponse extends Message<GetExternalPaymentResponse> {
+  /**
+   * @generated from field: cafelogos.pos.PaymentExternal external_payment = 1;
+   */
+  externalPayment?: PaymentExternal;
+
+  constructor(data?: PartialMessage<GetExternalPaymentResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetExternalPaymentResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "external_payment", kind: "message", T: PaymentExternal },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetExternalPaymentResponse {
+    return new GetExternalPaymentResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetExternalPaymentResponse {
+    return new GetExternalPaymentResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetExternalPaymentResponse {
+    return new GetExternalPaymentResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetExternalPaymentResponse | PlainMessage<GetExternalPaymentResponse> | undefined, b: GetExternalPaymentResponse | PlainMessage<GetExternalPaymentResponse> | undefined): boolean {
+    return proto3.util.equals(GetExternalPaymentResponse, a, b);
   }
 }
 
@@ -2076,9 +2248,9 @@ export class Payment extends Message<Payment> {
   id = "";
 
   /**
-   * @generated from field: cafelogos.pos.Payment.PaymentType type = 2;
+   * @generated from field: int32 type = 2;
    */
-  type = Payment_PaymentType.CASH;
+  type = 0;
 
   /**
    * @generated from field: uint64 receive_amount = 3;
@@ -2105,16 +2277,6 @@ export class Payment extends Message<Payment> {
    */
   updatedAt = "";
 
-  /**
-   * @generated from field: repeated cafelogos.pos.OrderParam post_orders = 8;
-   */
-  postOrders: OrderParam[] = [];
-
-  /**
-   * @generated from field: repeated string order_ids = 9;
-   */
-  orderIds: string[] = [];
-
   constructor(data?: PartialMessage<Payment>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2124,14 +2286,12 @@ export class Payment extends Message<Payment> {
   static readonly typeName = "cafelogos.pos.Payment";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "type", kind: "enum", T: proto3.getEnumType(Payment_PaymentType) },
+    { no: 2, name: "type", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
     { no: 3, name: "receive_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "payment_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 5, name: "change_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 6, name: "payment_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "updated_at", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 8, name: "post_orders", kind: "message", T: OrderParam, repeated: true },
-    { no: 9, name: "order_ids", kind: "scalar", T: 9 /* ScalarType.STRING */, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): Payment {
@@ -2152,24 +2312,207 @@ export class Payment extends Message<Payment> {
 }
 
 /**
- * @generated from enum cafelogos.pos.Payment.PaymentType
+ * @generated from message cafelogos.pos.PaymentParam
  */
-export enum Payment_PaymentType {
+export class PaymentParam extends Message<PaymentParam> {
   /**
-   * @generated from enum value: CASH = 0;
+   * @generated from field: string id = 1;
    */
-  CASH = 0,
+  id = "";
 
   /**
-   * @generated from enum value: EXTERNAL = 1;
+   * @generated from field: int32 type = 2;
    */
-  EXTERNAL = 1,
+  type = 0;
+
+  /**
+   * @generated from field: uint64 receive_amount = 3;
+   */
+  receiveAmount = protoInt64.zero;
+
+  /**
+   * @generated from field: uint64 payment_amount = 4;
+   */
+  paymentAmount = protoInt64.zero;
+
+  /**
+   * @generated from field: uint64 change_amount = 5;
+   */
+  changeAmount = protoInt64.zero;
+
+  /**
+   * @generated from oneof cafelogos.pos.PaymentParam.method
+   */
+  method: {
+    /**
+     * @generated from field: cafelogos.pos.PaymentCashParam cash = 6;
+     */
+    value: PaymentCashParam;
+    case: "cash";
+  } | {
+    /**
+     * @generated from field: cafelogos.pos.PaymentExternalParam external = 7;
+     */
+    value: PaymentExternalParam;
+    case: "external";
+  } | { case: undefined; value?: undefined } = { case: undefined };
+
+  constructor(data?: PartialMessage<PaymentParam>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.PaymentParam";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "type", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "receive_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 4, name: "payment_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 5, name: "change_amount", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 6, name: "cash", kind: "message", T: PaymentCashParam, oneof: "method" },
+    { no: 7, name: "external", kind: "message", T: PaymentExternalParam, oneof: "method" },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentParam {
+    return new PaymentParam().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentParam {
+    return new PaymentParam().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentParam {
+    return new PaymentParam().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PaymentParam | PlainMessage<PaymentParam> | undefined, b: PaymentParam | PlainMessage<PaymentParam> | undefined): boolean {
+    return proto3.util.equals(PaymentParam, a, b);
+  }
 }
-// Retrieve enum metadata with: proto3.getEnumType(Payment_PaymentType)
-proto3.util.setEnumType(Payment_PaymentType, "cafelogos.pos.Payment.PaymentType", [
-  { no: 0, name: "CASH" },
-  { no: 1, name: "EXTERNAL" },
-]);
+
+/**
+ * @generated from message cafelogos.pos.PaymentCashParam
+ */
+export class PaymentCashParam extends Message<PaymentCashParam> {
+  constructor(data?: PartialMessage<PaymentCashParam>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.PaymentCashParam";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentCashParam {
+    return new PaymentCashParam().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentCashParam {
+    return new PaymentCashParam().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentCashParam {
+    return new PaymentCashParam().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PaymentCashParam | PlainMessage<PaymentCashParam> | undefined, b: PaymentCashParam | PlainMessage<PaymentCashParam> | undefined): boolean {
+    return proto3.util.equals(PaymentCashParam, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.PaymentExternalParam
+ */
+export class PaymentExternalParam extends Message<PaymentExternalParam> {
+  /**
+   * @generated from field: string payment_type = 1;
+   */
+  paymentType = "";
+
+  constructor(data?: PartialMessage<PaymentExternalParam>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.PaymentExternalParam";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "payment_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentExternalParam {
+    return new PaymentExternalParam().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentExternalParam {
+    return new PaymentExternalParam().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentExternalParam {
+    return new PaymentExternalParam().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PaymentExternalParam | PlainMessage<PaymentExternalParam> | undefined, b: PaymentExternalParam | PlainMessage<PaymentExternalParam> | undefined): boolean {
+    return proto3.util.equals(PaymentExternalParam, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.PaymentExternal
+ */
+export class PaymentExternal extends Message<PaymentExternal> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string payment_id = 2;
+   */
+  paymentId = "";
+
+  /**
+   * @generated from field: string payment_type = 3;
+   */
+  paymentType = "";
+
+  /**
+   * @generated from field: string status = 4;
+   */
+  status = "";
+
+  constructor(data?: PartialMessage<PaymentExternal>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.PaymentExternal";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "payment_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "payment_type", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 4, name: "status", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentExternal {
+    return new PaymentExternal().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentExternal {
+    return new PaymentExternal().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentExternal {
+    return new PaymentExternal().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PaymentExternal | PlainMessage<PaymentExternal> | undefined, b: PaymentExternal | PlainMessage<PaymentExternal> | undefined): boolean {
+    return proto3.util.equals(PaymentExternal, a, b);
+  }
+}
 
 /**
  * @generated from message cafelogos.pos.Seat

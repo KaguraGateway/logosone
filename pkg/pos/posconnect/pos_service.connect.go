@@ -48,6 +48,9 @@ const (
 	// PosServiceUpdatePaymentProcedure is the fully-qualified name of the PosService's UpdatePayment
 	// RPC.
 	PosServiceUpdatePaymentProcedure = "/cafelogos.pos.PosService/UpdatePayment"
+	// PosServiceGetExternalPaymentProcedure is the fully-qualified name of the PosService's
+	// GetExternalPayment RPC.
+	PosServiceGetExternalPaymentProcedure = "/cafelogos.pos.PosService/GetExternalPayment"
 	// PosServiceGetProductsProcedure is the fully-qualified name of the PosService's GetProducts RPC.
 	PosServiceGetProductsProcedure = "/cafelogos.pos.PosService/GetProducts"
 	// PosServicePostNewClientProcedure is the fully-qualified name of the PosService's PostNewClient
@@ -109,6 +112,7 @@ var (
 	posServiceDeleteOrderMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("DeleteOrder")
 	posServicePostPaymentMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("PostPayment")
 	posServiceUpdatePaymentMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("UpdatePayment")
+	posServiceGetExternalPaymentMethodDescriptor      = posServiceServiceDescriptor.Methods().ByName("GetExternalPayment")
 	posServiceGetProductsMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("GetProducts")
 	posServicePostNewClientMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("PostNewClient")
 	posServiceUpdateClientMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("UpdateClient")
@@ -139,6 +143,7 @@ type PosServiceClient interface {
 	DeleteOrder(context.Context, *connect.Request[pos.DeleteOrderRequest]) (*connect.Response[common.Empty], error)
 	PostPayment(context.Context, *connect.Request[pos.PostPaymentRequest]) (*connect.Response[pos.PaymentResponse], error)
 	UpdatePayment(context.Context, *connect.Request[pos.UpdatePaymentRequest]) (*connect.Response[pos.PaymentResponse], error)
+	GetExternalPayment(context.Context, *connect.Request[pos.GetExternalPaymentRequest]) (*connect.Response[pos.GetExternalPaymentResponse], error)
 	GetProducts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductsResponse], error)
 	PostNewClient(context.Context, *connect.Request[pos.PostNewClientRequest]) (*connect.Response[pos.PostNewClientResponse], error)
 	UpdateClient(context.Context, *connect.Request[pos.UpdateClientRequest]) (*connect.Response[common.Empty], error)
@@ -206,6 +211,12 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			httpClient,
 			baseURL+PosServiceUpdatePaymentProcedure,
 			connect.WithSchema(posServiceUpdatePaymentMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getExternalPayment: connect.NewClient[pos.GetExternalPaymentRequest, pos.GetExternalPaymentResponse](
+			httpClient,
+			baseURL+PosServiceGetExternalPaymentProcedure,
+			connect.WithSchema(posServiceGetExternalPaymentMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 		getProducts: connect.NewClient[common.Empty, pos.GetProductsResponse](
@@ -339,6 +350,7 @@ type posServiceClient struct {
 	deleteOrder             *connect.Client[pos.DeleteOrderRequest, common.Empty]
 	postPayment             *connect.Client[pos.PostPaymentRequest, pos.PaymentResponse]
 	updatePayment           *connect.Client[pos.UpdatePaymentRequest, pos.PaymentResponse]
+	getExternalPayment      *connect.Client[pos.GetExternalPaymentRequest, pos.GetExternalPaymentResponse]
 	getProducts             *connect.Client[common.Empty, pos.GetProductsResponse]
 	postNewClient           *connect.Client[pos.PostNewClientRequest, pos.PostNewClientResponse]
 	updateClient            *connect.Client[pos.UpdateClientRequest, common.Empty]
@@ -389,6 +401,11 @@ func (c *posServiceClient) PostPayment(ctx context.Context, req *connect.Request
 // UpdatePayment calls cafelogos.pos.PosService.UpdatePayment.
 func (c *posServiceClient) UpdatePayment(ctx context.Context, req *connect.Request[pos.UpdatePaymentRequest]) (*connect.Response[pos.PaymentResponse], error) {
 	return c.updatePayment.CallUnary(ctx, req)
+}
+
+// GetExternalPayment calls cafelogos.pos.PosService.GetExternalPayment.
+func (c *posServiceClient) GetExternalPayment(ctx context.Context, req *connect.Request[pos.GetExternalPaymentRequest]) (*connect.Response[pos.GetExternalPaymentResponse], error) {
+	return c.getExternalPayment.CallUnary(ctx, req)
 }
 
 // GetProducts calls cafelogos.pos.PosService.GetProducts.
@@ -499,6 +516,7 @@ type PosServiceHandler interface {
 	DeleteOrder(context.Context, *connect.Request[pos.DeleteOrderRequest]) (*connect.Response[common.Empty], error)
 	PostPayment(context.Context, *connect.Request[pos.PostPaymentRequest]) (*connect.Response[pos.PaymentResponse], error)
 	UpdatePayment(context.Context, *connect.Request[pos.UpdatePaymentRequest]) (*connect.Response[pos.PaymentResponse], error)
+	GetExternalPayment(context.Context, *connect.Request[pos.GetExternalPaymentRequest]) (*connect.Response[pos.GetExternalPaymentResponse], error)
 	GetProducts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductsResponse], error)
 	PostNewClient(context.Context, *connect.Request[pos.PostNewClientRequest]) (*connect.Response[pos.PostNewClientResponse], error)
 	UpdateClient(context.Context, *connect.Request[pos.UpdateClientRequest]) (*connect.Response[common.Empty], error)
@@ -562,6 +580,12 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		PosServiceUpdatePaymentProcedure,
 		svc.UpdatePayment,
 		connect.WithSchema(posServiceUpdatePaymentMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	posServiceGetExternalPaymentHandler := connect.NewUnaryHandler(
+		PosServiceGetExternalPaymentProcedure,
+		svc.GetExternalPayment,
+		connect.WithSchema(posServiceGetExternalPaymentMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	posServiceGetProductsHandler := connect.NewUnaryHandler(
@@ -698,6 +722,8 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServicePostPaymentHandler.ServeHTTP(w, r)
 		case PosServiceUpdatePaymentProcedure:
 			posServiceUpdatePaymentHandler.ServeHTTP(w, r)
+		case PosServiceGetExternalPaymentProcedure:
+			posServiceGetExternalPaymentHandler.ServeHTTP(w, r)
 		case PosServiceGetProductsProcedure:
 			posServiceGetProductsHandler.ServeHTTP(w, r)
 		case PosServicePostNewClientProcedure:
@@ -769,6 +795,10 @@ func (UnimplementedPosServiceHandler) PostPayment(context.Context, *connect.Requ
 
 func (UnimplementedPosServiceHandler) UpdatePayment(context.Context, *connect.Request[pos.UpdatePaymentRequest]) (*connect.Response[pos.PaymentResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.UpdatePayment is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) GetExternalPayment(context.Context, *connect.Request[pos.GetExternalPaymentRequest]) (*connect.Response[pos.GetExternalPaymentResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetExternalPayment is not implemented"))
 }
 
 func (UnimplementedPosServiceHandler) GetProducts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductsResponse], error) {

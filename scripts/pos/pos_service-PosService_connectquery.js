@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { Empty } from "../common/common_pb.js";
 
 /**
@@ -86,6 +86,20 @@ export const updatePayment = {
   kind: MethodKind.Unary,
   I: UpdatePaymentRequest,
   O: PaymentResponse,
+  service: {
+    typeName: "cafelogos.pos.PosService"
+  }
+};
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetExternalPayment
+ */
+export const getExternalPayment = {
+  localName: "getExternalPayment",
+  name: "GetExternalPayment",
+  kind: MethodKind.Unary,
+  I: GetExternalPaymentRequest,
+  O: GetExternalPaymentResponse,
   service: {
     typeName: "cafelogos.pos.PosService"
   }

@@ -26,13 +26,14 @@ type OrderDiscountParam struct {
 }
 
 type PostOrderParam struct {
-	Id             string
-	OrderItems     []*OrderItemParam
-	OrderDiscounts []*OrderDiscountParam
-	OrderType      model.OrderType
-	OrderAt        synchro.Time[tz.UTC]
-	ClientId       string
-	SeatId         string
+	Id              string
+	OrderItems      []*OrderItemParam
+	OrderDiscounts  []*OrderDiscountParam
+	OrderType       model.OrderType
+	OrderAt         synchro.Time[tz.UTC]
+	ClientId        string
+	SeatId          string
+	IsPostOrderLink bool
 }
 
 type PostOrder interface {
@@ -180,8 +181,10 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		}
 		ticket = t
 		// Hook
-		if err := uc.orderHookRepo.PostOrder(ctx, order, t); err != nil {
-			log.Printf("failed to post order: %v", err)
+		if param.IsPostOrderLink {
+			if err := uc.orderHookRepo.PostOrder(ctx, order, t); err != nil {
+				log.Printf("failed to post order: %v", err)
+			}
 		}
 
 		return nil

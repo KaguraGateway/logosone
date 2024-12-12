@@ -64,6 +64,13 @@ func (payment *Payment) IsEnoughAmount() bool {
 	return payment.ReceiveAmount >= payment.PaymentAmount
 }
 
+func (payment *Payment) GetPaymentStatus() PaymentStatus {
+	if payment.IsEnoughAmount() {
+		return PaymentStatusSuccess
+	}
+	return PaymentStatusPending
+}
+
 func (payment *Payment) GetPaymentAt() synchro.Time[tz.UTC] {
 	return payment.paymentAt
 }

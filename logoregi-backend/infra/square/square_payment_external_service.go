@@ -151,7 +151,7 @@ func (s squarePaymentExternalService) Polling(ctx context.Context) error {
 			if err := s.pollingInternal(ctx); err != nil {
 				log.Printf("failed to polling: %v", err)
 			}
-			time.Sleep(1 * time.Second)
+			time.Sleep(3 * time.Second)
 		}
 	}()
 	return nil

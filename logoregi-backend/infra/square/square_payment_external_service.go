@@ -48,7 +48,7 @@ func (s squarePaymentExternalService) Create(ctx context.Context, payment *model
 			},
 			PaymentType: squarePaymentType(paymentExternal.GetPaymentType()),
 			ReferenceId: paymentExternal.GetId(),
-			Note:        "",
+			Note:        "コーヒー",
 			DeviceOptions: squareDeviceOptions{
 				SkipReceiptScreen: false,
 				DeviceId:          paymentExternal.GetExternalDeviceId(),
@@ -72,6 +72,7 @@ func (s squarePaymentExternalService) Create(ctx context.Context, payment *model
 	client := &http.Client{}
 	res, err := client.Do(req)
 	if err != nil {
+		log.Printf("failed to create checkout: %v", err)
 		return err
 	}
 	defer res.Body.Close()
@@ -80,6 +81,7 @@ func (s squarePaymentExternalService) Create(ctx context.Context, payment *model
 	if err := json.NewDecoder(res.Body).Decode(&response); err != nil {
 		return err
 	}
+	log.Printf("response: %v", response)
 
 	paymentExternal.SetExternalServiceId(response.Checkout.Id)
 	paymentExternal.SetStatus(response.Checkout.Status)

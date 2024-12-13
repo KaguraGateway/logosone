@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/samber/do"
+	"log"
 	"net/http"
 	"time"
 )
@@ -63,6 +64,7 @@ func (s *SquareTerminalWebhooks) Handle(w http.ResponseWriter, r *http.Request) 
 	}
 
 	if body.Type != "terminal.checkout.updated" {
+		log.Printf("invalid type: %s", body.Type)
 		w.WriteHeader(http.StatusNoContent)
 		return
 	}
@@ -70,16 +72,18 @@ func (s *SquareTerminalWebhooks) Handle(w http.ResponseWriter, r *http.Request) 
 	// FIXME: 完全にユースケースに移すべき
 	paymentExternal, err := s.paymentExternalRepo.FindById(r.Context(), body.Data.Object.Checkout.ReferenceId)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Printf("failed to find payment external by id: %v", err)
+		w.WriteHeader(http.StatusNoContent)
 		return
 	}
 
 	paymentExternal.SetStatus(body.Data.Object.Checkout.Status)
 
 	if err := s.paymentExternalRepo.Save(r.Context(), paymentExternal); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		log.Printf("failed to find payment external by id: %v", err)
+		w.WriteHeader(http.StatusNoContent)
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	w.WriteHeader(http.StatusCreated)
 }

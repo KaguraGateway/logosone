@@ -63,22 +63,6 @@ services:
       - ./logoregi-handy:/usr/src/app/logos
     depends_on:
       - logoregi-backend
-  logoregi-togo:
-    build:
-      context: ./logoregi-togo
-      args:
-        - NEXT_PUBLIC_POS_GRPC=http://localhost:8080
-    stdin_open: true
-    tty: true
-    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
-    ports:
-      - '3003:3003'
-    environment:
-      - PORT=3003
-    volumes:
-      - ./logoregi-togo:/usr/src/app/logos
-    depends_on:
-      - logoregi-backend
   ticket-backend:
     build:
       context: ./ticket-backend
@@ -119,23 +103,6 @@ services:
       - PORT=3001
     volumes:
       - ./orderlink-frontend:/usr/src/app/logos
-    depends_on:
-      - orderlink-backend
-  orderlink-webcall:
-    build:
-      context: ./orderlink-webcall
-      args:
-        - VITE_WEBSOCKET_API=ws://localhost:8082/
-    stdin_open: true
-    tty: true
-    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
-    ports:
-      - '3004:3004'
-    environment:
-      - PORT=3004
-      - VITE_WEBSOCKET_API=ws://localhost:8082/
-    volumes:
-      - ./orderlink-webcall:/usr/src/app/logos
     depends_on:
       - orderlink-backend
 

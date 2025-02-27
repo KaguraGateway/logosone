@@ -15,7 +15,7 @@ func init() {
 			if _, err := tx.NewRaw("UPDATE products SET is_managing_order = TRUE").Exec(ctx); err != nil {
 				return err
 			}
-			if _, err := tx.NewRaw("ALTER TABLE products ALTER COLUMN IF NOT EXISTS is_managing_order SET NOT NULL").Exec(ctx); err != nil {
+			if _, err := tx.NewRaw("ALTER TABLE products ALTER COLUMN IF NOT EXISTS is_managing_order ADD NOT NULL").Exec(ctx); err != nil {
 				return err
 			}
 
@@ -25,7 +25,7 @@ func init() {
 			if _, err := tx.NewRaw("UPDATE products SET is_ol_use_kitchen = TRUE").Exec(ctx); err != nil {
 				return err
 			}
-			if _, err := tx.NewRaw("ALTER TABLE products ALTER COLUMN IF NOT EXISTS is_ol_use_kitchen SET NOT NULL").Exec(ctx); err != nil {
+			if _, err := tx.NewRaw("ALTER TABLE products ALTER COLUMN IF NOT EXISTS is_ol_use_kitchen ADD NOT NULL").Exec(ctx); err != nil {
 				return err
 			}
 			return nil

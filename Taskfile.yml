@@ -1,0 +1,104 @@
+version: '3'
+
+env:
+  SENTRY_DSN: example
+  DEV_MODE: 1
+
+tasks:
+  dev:
+    deps:
+      - task: dev:docker
+      - task: dev:logoregi-backend
+      - task: dev:orderlink-backend
+      - task: dev:orderlink-frontend
+      - task: dev:logoregi-handy
+      - task: dev:logoregi-admin
+
+  dev:docker:
+    cmd: docker compose up db redis ticket-backend
+
+  dev:logoregi-backend:
+    dir: ./logoregi-backend
+    cmd: aqua exec air
+
+  dev:orderlink-backend:
+    dir: ./orderlink-backend
+    cmd: aqua exec air
+
+  dev:orderlink-frontend:
+    dir: ./orderlink-frontend
+    deps:
+      - task: dev:orderlink-frontend:install
+    cmd: bun dev
+    env:
+      PORT: 3001
+      NEXT_PUBLIC_WEBSOCKET_API: ws://localhost:8082/
+      NEXT_PUBLIC_GRPC_HOST: http://localhost:8080
+
+  dev:orderlink-frontend:install:
+    dir: ./orderlink-frontend
+    cmd: bun install --frozen-lockfile
+
+  dev:logoregi-handy:
+    dir: ./logoregi-handy
+    deps:
+      - task: dev:logoregi-handy:install
+    cmd: bun dev
+    env:
+      PORT: 3002
+      NEXT_PUBLIC_POS_GRPC: http://localhost:8080
+
+  dev:logoregi-handy:install:
+    dir: ./logoregi-handy
+    cmd: bun install --frozen-lockfile
+
+  dev:logoregi-admin:
+    dir: ./logoregi-admin
+    deps:
+      - task: dev:logoregi-admin:install
+    cmd: bun dev
+    env:
+      PORT: 3000
+      NEXT_PUBLIC_GRPC_HOST: http://localhost:8080
+
+  dev:logoregi-admin:install:
+    dir: ./logoregi-admin
+    cmd: bun install --frozen-lockfile
+
+  init:
+    deps:
+      - task: init:logoregi
+      - task: init:orderlink
+
+  init:logoregi:
+    dir: ./logoregi-backend
+    cmd: aqua exec go run ./cmd/bin/main.go db init
+    env:
+      DATABASE_URL: postgres://postgres:password@localhost/pos?sslmode=disable
+
+  init:orderlink:
+    dir: ./orderlink-backend
+    cmd: aqua exec go run ./cmd/bin/main.go db init
+    env:
+      DATABASE_URL: postgres://postgres:password@localhost/orderlink?sslmode=disable
+
+  migrate:
+    deps:
+      - task: migrate:logoregi
+      - task: migrate:orderlink
+
+  migrate:logoregi:
+    dir: ./logoregi-backend
+    cmd: aqua exec go run ./cmd/bin/main.go db migrate
+    env:
+      DATABASE_URL: postgres://postgres:password@localhost/pos?sslmode=disable
+
+  migrate:orderlink:
+    dir: ./orderlink-backend
+    cmd: aqua exec go run ./cmd/bin/main.go db migrate
+    env:
+      DATABASE_URL: postgres://postgres:password@localhost/orderlink?sslmode=disable
+
+  psql:
+    cmd: docker compose run --rm db psql -U postgres -h db
+

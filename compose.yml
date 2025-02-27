@@ -14,55 +14,6 @@ services:
       - '6379:6379'
     volumes:
       - redis-data:/data
-  logoregi-backend:
-    build:
-      context: ./logoregi-backend
-    ports:
-      - '8080:8080'
-    command: go run .
-    environment:
-      - DATABASE_URL=postgres://postgres:password@db/pos?sslmode=disable
-      - PORT=8080
-      - TICKET_GRPC=http://ticket-backend:8081
-      - ORDERLINK_GRPC=http://orderlink-backend:8082
-      - DEV_MODE=1
-    volumes:
-      - ./logoregi-backend:/app
-    depends_on:
-      - db
-      - ticket-backend
-  logoregi-admin:
-    build:
-      context: ./logoregi-admin
-      args:
-        - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080
-    stdin_open: true
-    tty: true
-    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
-    ports:
-      - '3000:3000'
-    environment:
-      - PORT=3000
-    volumes:
-      - ./logoregi-admin:/usr/src/app/logos
-    depends_on:
-      - logoregi-backend
-  logoregi-handy:
-    build:
-      context: ./logoregi-handy
-      args:
-        - NEXT_PUBLIC_POS_GRPC=http://localhost:8080
-    stdin_open: true
-    tty: true
-    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
-    ports:
-      - '3002:3002'
-    environment:
-      - PORT=3002
-    volumes:
-      - ./logoregi-handy:/usr/src/app/logos
-    depends_on:
-      - logoregi-backend
   ticket-backend:
     build:
       context: ./ticket-backend
@@ -71,40 +22,6 @@ services:
     environment:
       - DATABASE_URL=postgres://postgres:password@db/ticket?sslmode=disable
       - PORT=8081
-  orderlink-backend:
-    build:
-      context: ./orderlink-backend
-    ports:
-      - '8082:8082'
-    command: go run .
-    environment:
-      - DATABASE_URL=postgres://postgres:password@db/orderlink?sslmode=disable
-      - SENTRY_DSN=example
-      - PORT=8082
-      - REDIS_URL=redis:6379
-      - DEV_MODE=1
-    volumes:
-      - ./orderlink-backend:/app
-    depends_on:
-      - db
-      - redis
-  orderlink-frontend:
-    build:
-      context: ./orderlink-frontend
-      args:
-        - NEXT_PUBLIC_WEBSOCKET_API=ws://localhost:8082/
-        - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080
-    stdin_open: true
-    tty: true
-    command: /bin/sh -c 'bun install --frozen-lockfile && bun run dev'
-    ports:
-      - '3001:3001'
-    environment:
-      - PORT=3001
-    volumes:
-      - ./orderlink-frontend:/usr/src/app/logos
-    depends_on:
-      - orderlink-backend
 
 volumes:
   db-data:

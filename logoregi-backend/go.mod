@@ -1,6 +1,6 @@
 module github.com/KaguraGateway/logosone/logoregi-backend
 
-go 1.23
+go 1.24.0
 
 require (
 	connectrpc.com/connect v1.17.0
@@ -8,6 +8,7 @@ require (
 	github.com/cockroachdb/errors v1.11.3
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/rs/cors v1.11.1
+	github.com/stretchr/testify v1.8.4
 	github.com/uptrace/bun/extra/bundebug v1.2.3
 	golang.org/x/net v0.30.0
 )

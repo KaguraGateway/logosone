@@ -603,3 +603,176 @@ TypeScriptでのコーディングにおける一般的なベストプラクテ�
   3. 最後に準備（テスト環境のセットアップ）を定義
 - **テスト名は「状況→操作→結果」の形式で記述**: 例:
   「有効なトークンの場合にユーザー情報を取得すると成功すること」
+
+# コンポーネントと関数群の設計・実装特徴
+
+## バックエンド (Go)
+
+### 1. ドメイン駆動設計 (DDD) の採用
+
+バックエンドは明確にドメイン駆動設計の原則に従って構造化されています：
+
+```mermaid
+graph TD
+    A[Presentation Layer] --> B[Application Layer]
+    B --> C[Domain Layer]
+    B --> D[Infrastructure Layer]
+    D --> C
+```
+
+#### ドメインレイヤー
+- **値オブジェクト**：不変で自己検証機能を持つ
+  - 例: `ProductName`, `ProductCategory` などの型が独自の検証ロジックを持つ
+- **エンティティ**：IDによる同一性を持ち、ライフサイクルを管理
+  - 例: `Product` エンティティは `productId` で識別され、自身の状態を管理
+- **ファクトリメソッド**：複雑なオブジェクト生成を抽象化
+  - 例: `NewProductCoffee()`, `NewProductOther()` などのファクトリメソッド
+- **リポジトリインターフェース**：永続化の詳細を隠蔽
+  - 例: `ProductRepository` インターフェースが定義され、実装の詳細を隠蔽
+
+```go
+// 例: リポジトリインターフェース
+type ProductRepository interface {
+    Save(ctx context.Context, product *model.Product) error
+    Delete(ctx context.Context, id string) error
+}
+```
+
+#### アプリケーションレイヤー
+- **ユースケース**：ビジネスロジックを実装
+  - 例: `NewPostProductUseCase`, `NewDeleteProductUseCase` などのユースケース
+- **CQRS**：コマンド（書き込み）とクエリ（読み取り）の責務を分離
+  - 例: `ProductRepository` (書き込み) と `ProductQueryService` (読み取り) の分離
+
+#### インフラストラクチャレイヤー
+- **リポジトリ実装**：データベースやAPIとの実際のやり取りを担当
+  - 例: `productDb` 構造体が `ProductRepository` インターフェースを実装
+
+### 2. 依存性注入パターン
+
+- `samber/do` ライブラリを使用した依存性注入
+- コンポーネント間の結合度を低く保ち、テスト容易性を向上
+
+```go
+// 例: 依存性注入
+func NewProductDb(i *do.Injector) (repository.ProductRepository, error) {
+    return &productDb{db: do.MustInvoke[*bun.DB](i)}, nil
+}
+```
+
+### 3. データアクセスパターン
+
+- **リポジトリパターン**：データアクセスを抽象化
+- **ORM (uptrace/bun)**：SQLクエリの生成と実行を簡略化
+- **DAOパターン**：データベースエンティティとドメインモデルの分離
+
+```go
+// 例: ORM使用
+if err := i.db.NewSelect().Model(&daoProducts).Column("product.*").Relation("Category").Relation("CoffeeBean").Relation("Stock").Relation("CoffeeBrews").Order("id ASC").Scan(ctx); err != nil {
+    return nil, err
+}
+```
+
+### 4. エラーハンドリング
+
+- 明示的なエラー型とエラー伝播
+- コンテキスト（context）の利用による処理のキャンセルと期限設定
+
+### 5. 時間処理
+
+- `synchro` ライブラリを使用したタイムゾーン対応の時間処理
+- UTC固定の時間型を使用してタイムゾーンの問題を回避
+
+```go
+createdAt: synchro.Now[tz.UTC](),
+```
+
+## フロントエンド (React/Next.js)
+
+### 1. コンポーネント設計
+
+- **原子デザイン**の影響が見られる階層的なコンポーネント構造
+  - 例: `Input`、`Button` などの基本UIコンポーネント
+- **関数コンポーネント**と**TypeScript**による型安全性の確保
+
+```tsx
+// 例: シンプルで再利用可能なコンポーネント
+export function Input(props: Props) {
+  return (
+    <Stack {...props.root}>
+      <label className={css({ color: 'gray.500' })}>{props.label}</label>
+      <input className={input()} value={props.value} onChange={props.onChange} placeholder={props.placeholder} />
+    </Stack>
+  );
+}
+```
+
+### 2. データフェッチパターン
+
+- **connect-query**を使用したバックエンドとの通信
+- **カスタムフック**によるAPIロジックの抽象化
+
+```tsx
+// 例: データフェッチングカスタムフック
+export function useQueryProducts() {
+  return useQuery(getProducts, undefined, { throwOnError: false });
+}
+```
+
+### 3. 状態管理
+
+- **jotai**を使用した状態管理（logoregi-handyとlogoregi-togoで使用）
+- **ローカルコンポーネント状態**と**グローバル状態**の使い分け
+
+### 4. スタイリング戦略
+
+- **PandaCSS**を使用した型安全なスタイリング（logoregi-admin）
+- **ChakraUI**を使用したコンポーネントベースのスタイリング（他のフロントエンド）
+
+```tsx
+// 例: PandaCSSの使用
+<label className={css({ color: 'gray.500' })}>{props.label}</label>
+<input className={input()} value={props.value} onChange={props.onChange} />
+```
+
+## マイクロサービス間連携
+
+### 1. 通信メカニズム
+
+- **gRPC/Connect-Go**によるサービス間通信
+- **WebSocket**によるリアルタイム通知
+- **Redis Pub/Sub**による非同期メッセージング
+
+### 2. イベント駆動アーキテクチャ
+
+- **ドメインイベント**による疎結合な連携
+- **イベントハンドラー**によるイベント処理
+
+```go
+// 例: ドメインイベントとハンドラー
+domain_event.DomainEventDispatcher.Subscribe(domain_event.PaymentSuccessEventName, &onPaymentSuccessEventHandler{
+    // ...
+})
+```
+
+## 共通設計原則
+
+### 1. 単一責任の原則
+
+- 各コンポーネントが明確に定義された責任を持つ
+- クラス/構造体/関数が単一の目的を達成するように設計
+
+### 2. インターフェース分離の原則
+
+- クライアント固有のインターフェースを定義
+- 依存するコンポーネントが必要な機能のみに依存するようにする
+
+### 3. 依存関係逆転の原則
+
+- 高レベルモジュールが低レベルモジュールに依存しない
+- 両方が抽象に依存する設計
+
+### 4. 明示的なエラー処理
+
+- エラーの伝播と処理を明示的に行う
+- エラー状態を適切に処理し、ユーザーに伝える

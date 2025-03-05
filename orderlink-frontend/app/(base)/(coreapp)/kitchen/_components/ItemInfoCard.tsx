@@ -40,7 +40,7 @@ export function ItemInfoCard({
     setIsSubmittable(true);
   }, [cookingStatus, setIsSubmittable]);
 
-  const isNextStateButtonDisabled = cookingStatus === 'done' || !isSubmittable;
+  const isTransitionToNextStateDisabled = cookingStatus === 'done' || !isSubmittable;
 
   return (
     <Flex
@@ -73,7 +73,7 @@ export function ItemInfoCard({
         flex="1"
         border="none"
         outline="0"
-        disabled={isNextStateButtonDisabled}
+        disabled={isTransitionToNextStateDisabled}
         onClick={() => {
           setIsSubmittable(false);
           onNextState?.(itemId);

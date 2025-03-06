@@ -1,5 +1,5 @@
 import { Box, Button, Checkbox, Flex, HStack, Text, VStack } from '@chakra-ui/react';
-import { Dispatch, SetStateAction, useMemo, useState } from 'react';
+import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
 import { IconContext } from 'react-icons';
 import { AiFillBell } from 'react-icons/ai';
 import { HiCheckCircle, HiXCircle } from 'react-icons/hi';
@@ -52,14 +52,24 @@ function ProductItem(props: ProductItemProps) {
                     <HiXCircle />
                   </IconContext.Provider>
                 )}
-                <Text fontSize="xl" fontWeight="semibold" color={props.productColor} ml="1">
+                <Text
+                  fontSize={{ base: 'lg', md: 'xl' }}
+                  fontWeight="semibold"
+                  color={props.productColor}
+                  ml="1"
+                >
                   {props.productName}
                 </Text>
               </Flex>
             </Checkbox>
           ))}
         </Flex>
-        <Text alignSelf="flex-end" fontSize="xl" fontWeight="semibold" color="gray.600">
+        <Text
+          alignSelf="flex-end"
+          fontSize={{ base: 'lg', md: 'xl' }}
+          fontWeight="semibold"
+          color="gray.600"
+        >
           x{props.items.length}
         </Text>
       </Flex>
@@ -105,7 +115,9 @@ export function ItemCard(props: ItemCardProps) {
     return Array.from(map.values());
   }, [props.items]);
   const [checkedItems, setCheckedItems] = useState<Map<string, boolean>>(
-    new Map<string, boolean>(products.flatMap((product) => product.items.map((item) => [item.itemId, false])))
+    new Map<string, boolean>(
+      products.flatMap((product) => product.items.map((item) => [item.itemId, false]))
+    )
   );
   const isAllChecked = Array.from(checkedItems.values()).every((value) => value);
   const isCalled = props.status === 'calling';
@@ -118,17 +130,26 @@ export function ItemCard(props: ItemCardProps) {
   }
 
   return (
-    <Box w="364px" px="3" py="4" bg={bgColor} borderRadius="md" boxShadow="base">
+    <Box
+      w={{ base: 'calc(100% - 16px)', md: '364px' }}
+      px="3"
+      py="4"
+      bg={bgColor}
+      borderRadius="md"
+      boxShadow="base"
+      mx={{ base: '8px', md: '0' }}
+      mb={{ base: '16px', md: '0' }}
+    >
       <Flex justifyContent="space-between" alignItems="center">
-        <Text fontSize="3xl" fontWeight="semibold" color="gray.700">
+        <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="semibold" color="gray.700">
           {props.callNumber}
         </Text>
         <HStack>
-          <Text fontSize="md" fontWeight="semibold" color="gray.600" mr="2">
+          <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight="semibold" color="gray.600" mr="2">
             {props.seatNumber}
           </Text>
           <Flex flexDirection="column" alignItems="center">
-            <Text fontSize="sm" fontWeight="medium" color="gray.600" mb="0.5">
+            <Text fontSize={{ base: 'xs', md: 'sm' }} fontWeight="medium" color="gray.600" mb="0.5">
               {props.waitingTime}待ち
             </Text>
             <OrderBadge type={props.type} />
@@ -148,19 +169,33 @@ export function ItemCard(props: ItemCardProps) {
         ))}
       </VStack>
       <Flex alignItems="center" justifyContent="space-between" pt="4">
-        <Text fontSize="xl" fontWeight="semibold" color="gray.600">
+        <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="semibold" color="gray.600">
           合計点数
         </Text>
-        <Text fontSize="xl" fontWeight="semibold" color="gray.600">
+        <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="semibold" color="gray.600">
           x{props.items.length}
         </Text>
       </Flex>
       <Box mt="4" style={{ display: isAllChecked ? '' : 'none' }}>
         <Flex style={{ display: props.type === 'takeout' && isCalled ? '' : 'none' }}>
-          <Button colorScheme="red" bg="red.500" mr="2" leftIcon={<MdOutlineClear />} onClick={props.onCancelCall}>
+          <Button
+            colorScheme="red"
+            bg="red.500"
+            mr="2"
+            leftIcon={<MdOutlineClear />}
+            onClick={props.onCancelCall}
+            fontSize={{ base: 'sm', md: 'md' }}
+          >
             取り消し
           </Button>
-          <Button colorScheme="blue" bg="blue.500" flex={1} leftIcon={<MdOutlineDone />} onClick={props.onProvided}>
+          <Button
+            colorScheme="blue"
+            bg="blue.500"
+            flex={1}
+            leftIcon={<MdOutlineDone />}
+            onClick={props.onProvided}
+            fontSize={{ base: 'sm', md: 'md' }}
+          >
             提供完了
           </Button>
         </Flex>
@@ -171,6 +206,7 @@ export function ItemCard(props: ItemCardProps) {
           leftIcon={<AiFillBell />}
           style={{ display: props.type === 'takeout' && !isCalled ? '' : 'none' }}
           onClick={props.onCall}
+          fontSize={{ base: 'sm', md: 'md' }}
         >
           呼び出し
         </Button>
@@ -181,6 +217,7 @@ export function ItemCard(props: ItemCardProps) {
           leftIcon={<MdOutlineDone />}
           style={{ display: props.type === 'eat-in' ? '' : 'none' }}
           onClick={props.onProvided}
+          fontSize={{ base: 'sm', md: 'md' }}
         >
           提供完了
         </Button>

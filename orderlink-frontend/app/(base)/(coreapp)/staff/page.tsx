@@ -10,8 +10,8 @@ import { useProduct } from '@/jotai/product';
 import { ElapsedMinTime } from '@/ui/ElapsedMinTime';
 import { HeaderBase } from '@/ui/HeaderBase';
 import { MainBox } from '@/ui/MainBox';
-import { OrderItemStatus, OrderItemStatusEnum } from '@/zod/order_items';
-import { OrderStatus, OrderStatusEnum, OrderType, OrderTypeEnum } from '@/zod/orders';
+import { type OrderItemStatus, OrderItemStatusEnum } from '@/zod/order_items';
+import { type OrderStatus, OrderStatusEnum, type OrderType, OrderTypeEnum } from '@/zod/orders';
 
 import { FilterModal } from './_components/FilterModal';
 import { ItemCard } from './_components/ItemCard';
@@ -69,55 +69,59 @@ export default function StaffPage() {
   return (
     <>
       <HeaderBase name="スタッフ">
-        <HStack>
+        <HStack spacing={{ base: '1', md: '2' }}>
           <Button
-            size="lg"
+            size={{ base: 'md', md: 'lg' }}
             colorScheme="gray"
             bg="gray.400"
             color="white"
             leftIcon={<FiCheckSquare />}
-            fontSize="sm"
+            fontSize={{ base: 'xs', md: 'sm' }}
             textAlign="left"
             onClick={onAllProvidedOnly}
+            px={{ base: '2', md: '4' }}
           >
             提供済
             <br />
             表示
           </Button>
           <Button
-            size="lg"
+            size={{ base: 'md', md: 'lg' }}
             colorScheme="orange"
             bg="orange.500"
             leftIcon={<BiCoffeeTogo />}
-            fontSize="sm"
+            fontSize={{ base: 'xs', md: 'sm' }}
             textAlign="left"
             onClick={onAllTakeoutOnly}
+            px={{ base: '2', md: '4' }}
           >
             テイクアウト
             <br />
             全件表示
           </Button>
           <Button
-            size="lg"
+            size={{ base: 'md', md: 'lg' }}
             colorScheme="teal"
             bg="teal.500"
             leftIcon={<FiCoffee />}
-            fontSize="sm"
+            fontSize={{ base: 'xs', md: 'sm' }}
             textAlign="left"
             onClick={onAllEatInOnly}
+            px={{ base: '2', md: '4' }}
           >
             イートイン
             <br />
             全件表示
           </Button>
           <Button
-            size="lg"
+            size={{ base: 'md', md: 'lg' }}
             colorScheme="blue"
             bg="blue.500"
             leftIcon={<FiCheckSquare />}
-            fontSize="sm"
+            fontSize={{ base: 'xs', md: 'sm' }}
             textAlign="left"
             onClick={onOpenFilterModal}
+            px={{ base: '2', md: '4' }}
           >
             高度な
             <br />
@@ -126,18 +130,40 @@ export default function StaffPage() {
         </HStack>
       </HeaderBase>
       <MainBox>
-        <Flex py="16px" alignItems="center" justifyContent="center">
-          <Text fontSize="3xl" fontWeight="semibold" color="blue.500" mr="8">
+        <Flex
+          py={{ base: '12px', md: '16px' }}
+          alignItems="center"
+          justifyContent="center"
+          flexWrap={{ base: 'wrap', md: 'nowrap' }}
+        >
+          <Text
+            fontSize={{ base: '2xl', md: '3xl' }}
+            fontWeight="semibold"
+            color="blue.500"
+            mr={{ base: '4', md: '8' }}
+            mb={{ base: '2', md: '0' }}
+          >
             提供可能: {cookedOrdersLen}
           </Text>
-          <Text fontSize="3xl" fontWeight="semibold" color="orange.700" mr="8">
+          <Text
+            fontSize={{ base: '2xl', md: '3xl' }}
+            fontWeight="semibold"
+            color="orange.700"
+            mr={{ base: '4', md: '8' }}
+            mb={{ base: '2', md: '0' }}
+          >
             調理中: {cookingOrdersLen}
           </Text>
-          <Text fontSize="3xl" fontWeight="semibold" color="gray.600">
+          <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="semibold" color="gray.600">
             未調理: {notYetOrdersLen}
           </Text>
         </Flex>
-        <Flex alignItems="flex-start" flexWrap="wrap">
+        <Flex
+          alignItems="flex-start"
+          flexWrap="wrap"
+          justifyContent={{ base: 'center', md: 'flex-start' }}
+          mx={{ base: '-8px', md: '0' }}
+        >
           {filteredOrders.map((order) => (
             <ItemCard
               key={order.OrderId}

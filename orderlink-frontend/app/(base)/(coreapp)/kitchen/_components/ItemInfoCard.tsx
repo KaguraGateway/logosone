@@ -5,7 +5,7 @@ import { Badge, Button, Flex, Text, VStack } from '@chakra-ui/react';
 import { CancelButton } from '@/ui/CancelButton';
 
 import { CookingDoneBox, CookingStartBox, CookingTakingBox } from './CookingStatusButton';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 export type ItemInfoCardProps = {
   itemId: string;
@@ -40,6 +40,8 @@ export function ItemInfoCard({
     setIsSubmittable(true);
   }, [cookingStatus, setIsSubmittable]);
 
+  const isTransitionToNextStateDisabled = cookingStatus === 'done' || !isSubmittable;
+
   return (
     <Flex
       alignItems="center"
@@ -71,7 +73,7 @@ export function ItemInfoCard({
         flex="1"
         border="none"
         outline="0"
-        disabled={!isSubmittable}
+        disabled={isTransitionToNextStateDisabled}
         onClick={() => {
           setIsSubmittable(false);
           onNextState?.(itemId);

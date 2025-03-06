@@ -1,8 +1,5 @@
 import { ChangeEvent } from 'react';
-
-import { css } from '@/panda/css';
-import { Stack } from '@/panda/jsx';
-import { input } from '@/panda/recipes';
+import { FormControl, FormLabel, Input as ChakraInput, Stack } from '@chakra-ui/react';
 
 type Props = {
   label: string;
@@ -14,9 +11,9 @@ type Props = {
 
 export function Input(props: Props) {
   return (
-    <Stack {...props.root}>
-      <label className={css({ color: 'gray.500' })}>{props.label}</label>
-      <input className={input()} value={props.value} onChange={props.onChange} placeholder={props.placeholder} />
-    </Stack>
+    <FormControl as={Stack} {...props.root}>
+      <FormLabel color="gray.500">{props.label}</FormLabel>
+      <ChakraInput value={props.value} onChange={props.onChange} placeholder={props.placeholder} />
+    </FormControl>
   );
 }

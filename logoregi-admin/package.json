@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare": "panda codegen",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -12,15 +11,19 @@
   },
   "dependencies": {
     "@ark-ui/react": "^0.14.0",
+    "@chakra-ui/react": "3",
     "@connectrpc/connect": "^1.4.0",
     "@connectrpc/connect-query": "^1.4.0",
     "@connectrpc/connect-web": "^1.4.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@kaguragateway/cafelogos-grpc": "https://github.com/KaguraGateway/cafelogos-grpc/archive/refs/tags/v1.0.24.tar.gz",
     "@tanstack/react-query": "^5.59.13",
     "@types/node": "22.7.5",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.4.10",
     "next": "14.2.15",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -28,7 +31,6 @@
     "typescript": "5.6.3"
   },
   "devDependencies": {
-    "@pandacss/dev": "^0.14.0",
     "@typescript-eslint/eslint-plugin": "^8.8.1",
     "@typescript-eslint/parser": "^8.8.1",
     "prettier": "^3.3.3"

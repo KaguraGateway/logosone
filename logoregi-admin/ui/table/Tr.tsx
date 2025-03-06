@@ -1,17 +1,5 @@
-import clsx from 'clsx';
+import { Tr as ChakraTr } from '@chakra-ui/react';
 
-import { css } from '@/panda/css';
-
-export function Tr(props: React.ComponentProps<'div'>) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        css({
-          display: 'flex',
-        }),
-        props.className
-      )}
-    />
-  );
+export function Tr(props: React.ComponentProps<typeof ChakraTr>) {
+  return <ChakraTr {...props} />;
 }

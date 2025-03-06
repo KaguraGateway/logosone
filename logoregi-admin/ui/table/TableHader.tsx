@@ -1,21 +1,13 @@
-import clsx from 'clsx';
+import { Flex, FlexProps } from '@chakra-ui/react';
 
-import { css } from '@/panda/css';
-
-export function TableHeader(props: React.ComponentProps<'div'>) {
+export function TableHeader(props: FlexProps) {
   return (
-    <div
+    <Flex
       {...props}
-      className={clsx(
-        css({
-          display: 'flex',
-          borderBottomWidth: '1px',
-          borderColor: 'gray.300',
-          pb: '2',
-          mb: '2',
-        }),
-        props.className
-      )}
+      borderBottomWidth="1px"
+      borderColor="gray.300"
+      pb={2}
+      mb={2}
     />
   );
 }

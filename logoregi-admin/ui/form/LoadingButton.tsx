@@ -1,30 +1,39 @@
+import { Button, ButtonProps, keyframes, Spinner } from '@chakra-ui/react';
 import { IconContext } from 'react-icons';
 import { FaApple } from 'react-icons/fa';
 
-import { css } from '@/panda/css';
-
-import { Button } from './Button';
-
-type Props = React.ComponentProps<typeof Button> & {
+type Props = ButtonProps & {
   isLoading: boolean;
 };
 
+const spinAnimation = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
+
+const gamingAnimation = keyframes`
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+`;
+
 export function LoadingButton(props: Props) {
-  const { isLoading, ...buttonProps } = props;
+  const { isLoading, children, ...rest } = props;
+  
   return (
     <Button
-      {...buttonProps}
+      {...rest}
+      disabled={isLoading}
       style={{
         background: isLoading ? 'linear-gradient(to right, Magenta, yellow, Cyan, Magenta) 0% center/200%' : undefined,
       }}
-      animation={props.isLoading ? 'gaming 2s linear infinite' : undefined}
+      animation={isLoading ? `${gamingAnimation} 2s linear infinite` : undefined}
     >
-      {props.isLoading && (
-        <IconContext.Provider value={{ className: css({ animation: 'spin 1s linear infinite' }) }}>
-          <FaApple />
+      {isLoading && (
+        <IconContext.Provider value={{ style: { animation: `${spinAnimation} 1s linear infinite` } }}>
+          <FaApple style={{ marginRight: '8px' }} />
         </IconContext.Provider>
       )}
-      {props.children}
+      {children}
     </Button>
   );
 }

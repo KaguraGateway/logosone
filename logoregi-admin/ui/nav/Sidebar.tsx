@@ -1,9 +1,8 @@
+import { List } from '@chakra-ui/react';
 import { AiOutlineHistory, AiOutlineHome } from 'react-icons/ai';
 import { FaChartPie, FaJava, FaReact } from 'react-icons/fa';
 import { GiTable } from 'react-icons/gi';
 import { TbShoppingBagDiscount } from 'react-icons/tb';
-
-import { styled } from '@/panda/jsx';
 
 import { Navigation, NavItem } from './NavItem';
 
@@ -47,10 +46,17 @@ const navigations: Array<Navigation> = [
 
 export default function Sidebar() {
   return (
-    <styled.ul display="flex" flexDir="column" textStyle="xl" fontWeight="medium" listStyle="none">
+    <List 
+      display="flex" 
+      flexDirection="column" 
+      fontSize="xl" 
+      fontWeight="medium" 
+      styleType="none"
+      p={0}
+    >
       {navigations.map((link) => (
         <NavItem key={link.label} {...link} />
       ))}
-    </styled.ul>
+    </List>
   );
 }

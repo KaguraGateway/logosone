@@ -1,3 +1,5 @@
-export function Tbody(props: React.ComponentProps<'div'>) {
-  return <div {...props} />;
+import { Tbody as ChakraTbody } from '@chakra-ui/react';
+
+export function Tbody(props: React.ComponentProps<typeof ChakraTbody>) {
+  return <ChakraTbody {...props} />;
 }

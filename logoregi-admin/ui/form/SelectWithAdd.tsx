@@ -1,18 +1,17 @@
-import {
-  Portal,
-  Select,
-  SelectContent,
-  SelectLabel,
-  SelectOption,
-  SelectPositioner,
-  SelectTrigger,
-} from '@ark-ui/react';
+import { 
+  Box, 
+  Button, 
+  Flex, 
+  FormControl, 
+  FormLabel, 
+  Menu, 
+  MenuButton, 
+  MenuItem, 
+  MenuList, 
+  Text 
+} from '@chakra-ui/react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { FaPlus } from 'react-icons/fa';
-
-import { css } from '@/panda/css';
-import { Box } from '@/panda/jsx';
-import { select } from '@/panda/recipes';
 
 export type Option = {
   label: string;
@@ -37,42 +36,31 @@ export function SelectWithAdd(props: Props) {
   };
 
   return (
-    <Box>
-      <Select onChange={onChange} selectedOption={props.selectedOption}>
-        {({ selectedOption }) => (
-          <>
-            <SelectLabel className={select()}>{props.label}</SelectLabel>
-            <SelectTrigger className={select()}>
-              <span>{selectedOption?.label ?? '選択してください'}</span>
-              <AiFillCaretDown />
-            </SelectTrigger>
-            <Portal>
-              <SelectPositioner className={select()}>
-                <SelectContent>
-                  {props.items.map((item) => (
-                    <SelectOption
-                      key={item.value}
-                      value={item.value}
-                      label={item.label}
-                      className={css({ display: 'flex', alignItems: 'center', gap: '2' })}
-                    >
-                      {item.label}
-                    </SelectOption>
-                  ))}
-                  <SelectOption
-                    value="add"
-                    label="add"
-                    className={css({ display: 'flex', alignItems: 'center', gap: '2' })}
-                  >
-                    <FaPlus />
-                    <span>追加</span>
-                  </SelectOption>
-                </SelectContent>
-              </SelectPositioner>
-            </Portal>
-          </>
-        )}
-      </Select>
-    </Box>
+    <FormControl>
+      <FormLabel>{props.label}</FormLabel>
+      <Menu>
+        <MenuButton as={Button} rightIcon={<AiFillCaretDown />} width="100%" textAlign="left">
+          {props.selectedOption?.label ?? '選択してください'}
+        </MenuButton>
+        <MenuList>
+          {props.items.map((item) => (
+            <MenuItem 
+              key={item.value} 
+              onClick={() => onChange({ value: item.value, label: item.label })}
+            >
+              {item.label}
+            </MenuItem>
+          ))}
+          <MenuItem 
+            onClick={() => onChange({ value: 'add', label: 'add' })}
+          >
+            <Flex alignItems="center" gap={2}>
+              <FaPlus />
+              <Text>追加</Text>
+            </Flex>
+          </MenuItem>
+        </MenuList>
+      </Menu>
+    </FormControl>
   );
 }

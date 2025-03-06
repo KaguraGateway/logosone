@@ -1,27 +1,22 @@
-import clsx from 'clsx';
+import { Td as ChakraTd } from '@chakra-ui/react';
 
-import { css } from '@/panda/css';
-import { Shorthand } from '@/panda/types/prop-type';
-
-type Props = React.ComponentProps<'div'> & {
-  grow?: Shorthand<'minWidth'>;
+type Props = React.ComponentProps<typeof ChakraTd> & {
+  grow?: string | number;
 };
 
 export function Td(props: Props) {
+  const { grow, ...rest } = props;
+  
   return (
-    <div
-      {...props}
-      className={clsx(
-        css({
-          display: 'flex',
-          alignItems: 'center',
-          flex: `1 0 100px`,
-          overflow: 'hidden',
-          minWidth: props.grow ?? '100px',
-        }),
-        props.className
-      )}
-      style={{ flex: props.grow !== undefined ? `0 0 ${props.grow}` : undefined }}
+    <ChakraTd 
+      {...rest}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        flex: grow !== undefined ? `0 0 ${grow}` : '1 0 100px',
+        overflow: 'hidden',
+        minWidth: grow ?? '100px',
+      }}
     />
   );
 }

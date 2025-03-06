@@ -1,3 +1,5 @@
+'use client';
+
 import { List } from '@chakra-ui/react';
 import { AiOutlineHistory, AiOutlineHome } from 'react-icons/ai';
 import { FaChartPie, FaJava, FaReact } from 'react-icons/fa';

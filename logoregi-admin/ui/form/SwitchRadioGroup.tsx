@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, Flex, FormLabel, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
 
 type Props = {

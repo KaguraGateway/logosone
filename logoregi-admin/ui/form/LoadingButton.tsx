@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, ButtonProps, keyframes, Spinner } from '@chakra-ui/react';
 import { IconContext } from 'react-icons';
 import { FaApple } from 'react-icons/fa';

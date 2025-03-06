@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangeEvent } from 'react';
 import { FormControl, FormLabel, Input as ChakraInput, Stack } from '@chakra-ui/react';
 

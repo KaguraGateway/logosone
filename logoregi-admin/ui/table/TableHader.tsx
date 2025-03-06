@@ -1,3 +1,5 @@
+'use client';
+
 import { Flex, FlexProps } from '@chakra-ui/react';
 
 export function TableHeader(props: FlexProps) {

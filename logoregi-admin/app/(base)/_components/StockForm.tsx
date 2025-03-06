@@ -1,10 +1,17 @@
 'use client';
-import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
+
+import {
+  Box,
+  HStack,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+} from '@chakra-ui/react';
 import React, { ChangeEvent, useState } from 'react';
 
-import { css } from '@/panda/css';
-import { HStack, Stack } from '@/panda/jsx';
-import { dialog } from '@/panda/recipes';
 import { useMutationAddStock } from '@/query/addStock';
 import { Button } from '@/ui/form/Button';
 import { Input } from '@/ui/form/Input';
@@ -47,20 +54,20 @@ export function StockForm(props: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <Stack gap="6">
+      <Stack spacing={6}>
         <Input
           label="在庫名"
           placeholder="パン"
           onChange={onChangeName}
           value={name}
-          root={{ className: css({ w: '1/2' }) }}
+          root={{ width: '50%' }}
         />
         <Input
           label="残り個数"
           placeholder="100"
           onChange={onChangeQuantity}
           value={quantity.toString()}
-          root={{ className: css({ w: '1/2' }) }}
+          root={{ width: '50%' }}
         />
         <HStack width="full">
           <Button type="button" width="full" onClick={() => props.onCancel()}>
@@ -82,18 +89,14 @@ type DialogProps = {
 
 export function StockFormDialog(props: DialogProps) {
   return (
-    <Dialog open={props.isOpen} onClose={props.onClose}>
-      <Portal>
-        <DialogBackdrop className={dialog()} />
-        <DialogContainer className={dialog({ size: 'md' })}>
-          <DialogContent className={css({ minW: 'xl' })}>
-            <Stack gap="4" p="4">
-              <DialogTitle>在庫を追加 / 編集</DialogTitle>
-              <StockForm onCancel={() => props.onClose()} />
-            </Stack>
-          </DialogContent>
-        </DialogContainer>
-      </Portal>
-    </Dialog>
+    <Modal isOpen={props.isOpen} onClose={props.onClose}>
+      <ModalOverlay />
+      <ModalContent minW="xl">
+        <ModalHeader>在庫を追加 / 編集</ModalHeader>
+        <ModalBody pb={4}>
+          <StockForm onCancel={() => props.onClose()} />
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 }

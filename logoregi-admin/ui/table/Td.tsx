@@ -1,3 +1,5 @@
+'use client';
+
 import { Td as ChakraTd } from '@chakra-ui/react';
 
 type Props = React.ComponentProps<typeof ChakraTd> & {

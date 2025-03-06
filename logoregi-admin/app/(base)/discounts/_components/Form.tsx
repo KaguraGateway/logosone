@@ -1,11 +1,16 @@
 'use client';
-import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
+import {
+  HStack,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+} from '@chakra-ui/react';
 import { DiscountType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-import { css } from '@/panda/css';
-import { HStack, Stack } from '@/panda/jsx';
-import { dialog } from '@/panda/recipes';
 import { useMutationAddDiscount } from '@/query/addDiscount';
 import { Button } from '@/ui/form/Button';
 import { Input } from '@/ui/form/Input';
@@ -50,7 +55,7 @@ export function DiscountForm(props: { onCancel: () => void }) {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <Stack gap="6">
+        <Stack spacing={6}>
           <Input label="名前" placeholder="アツアツ割" onChange={onChangeName} value={name} />
           <Input label="割引価格" placeholder="100" onChange={onChangeDiscountPrice} value={discountPrice.toString()} />
           <HStack width="full">
@@ -74,18 +79,16 @@ type DialogProps = {
 
 export function DiscountNewDailog(props: DialogProps) {
   return (
-    <Dialog open={props.isOpen} onClose={props.onClose}>
-      <Portal>
-        <DialogBackdrop className={dialog()} />
-        <DialogContainer className={dialog()}>
-          <DialogContent className={css({ minW: '2xl' })}>
-            <Stack gap="4" p="4">
-              <DialogTitle>割引を追加</DialogTitle>
-              <DiscountForm onCancel={props.onClose} />
-            </Stack>
-          </DialogContent>
-        </DialogContainer>
-      </Portal>
-    </Dialog>
+    <Modal isOpen={props.isOpen} onClose={props.onClose}>
+      <ModalOverlay />
+      <ModalContent minW="2xl">
+        <ModalHeader>割引を追加</ModalHeader>
+        <ModalBody pb={4}>
+          <Stack spacing={4}>
+            <DiscountForm onCancel={props.onClose} />
+          </Stack>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
   );
 }

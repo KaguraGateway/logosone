@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, BoxProps } from '@chakra-ui/react';
 
 export function TCollectionItem(props: BoxProps) {

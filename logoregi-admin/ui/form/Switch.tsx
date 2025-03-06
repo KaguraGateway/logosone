@@ -1,3 +1,5 @@
+'use client';
+
 import { FormControl, FormLabel, Switch as ChakraSwitch } from '@chakra-ui/react';
 
 type Props = {

@@ -33,11 +33,8 @@ const theme = extendTheme({
       sizes: {
         xl: {
           control: {
-            w: '1.75rem',
-            h: '1.75rem',
-          },
-          icon: {
-            fontSize: '1.25rem',
+            w: '1.5rem',
+            h: '1.5rem',
           },
         },
       },

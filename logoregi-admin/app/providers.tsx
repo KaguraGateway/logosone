@@ -1,6 +1,6 @@
 'use client';
 
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import { TransportProvider } from '@connectrpc/connect-query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { createTransport } from './transport';
 
 // PandaCSSのテーマ設定をChakraUIのテーマに変換
-const theme = extendTheme({
+const theme = {
   styles: {
     global: {
       body: {
@@ -42,7 +42,7 @@ const theme = extendTheme({
       },
     },
   },
-});
+};
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());

@@ -30,7 +30,7 @@ function ProductItem(props: ProductItemProps) {
         <Flex flexDirection="column" flex="1">
           {props.items.map((item) => (
             <Checkbox
-              size="lg"
+              size="xl"
               key={item.itemId}
               isDisabled={item.status === 'notyet' ? true : false}
               isChecked={props.checkedItems.get(item.itemId)}

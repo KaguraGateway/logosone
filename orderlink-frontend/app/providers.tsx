@@ -29,6 +29,19 @@ const theme = extendTheme({
         },
       },
     },
+    Checkbox: {
+      sizes: {
+        xl: {
+          control: {
+            w: '1.75rem',
+            h: '1.75rem',
+          },
+          icon: {
+            fontSize: '1.25rem',
+          },
+        },
+      },
+    },
   },
 });
 

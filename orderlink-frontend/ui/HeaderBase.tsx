@@ -1,6 +1,6 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
-import React from 'react';
+import type React from 'react';
 import { IconContext } from 'react-icons';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 
@@ -17,7 +17,7 @@ export function HeaderBase(props: Props) {
       left="0"
       right="0"
       h="80px"
-      px="12px"
+      px={{ base: '8px', md: '12px' }}
       bg="white"
       boxShadow="lg"
       justifyContent="space-between"
@@ -25,12 +25,12 @@ export function HeaderBase(props: Props) {
       zIndex={100}
     >
       <Flex alignItems="center">
-        <Button as={Link} href="/" variant="link" color="gray.800" mr="12px">
+        <Button as={Link} href="/" variant="link" color="gray.800" mr={{ base: '8px', md: '12px' }}>
           <IconContext.Provider value={{ size: '24px' }}>
             <MdOutlineArrowBackIos />
           </IconContext.Provider>
         </Button>
-        <Text fontSize="3xl" fontWeight="semibold" color="gray.700">
+        <Text fontSize={{ base: '2xl', md: '3xl' }} fontWeight="semibold" color="gray.700">
           {props.name}
         </Text>
       </Flex>

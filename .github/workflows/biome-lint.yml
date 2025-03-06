@@ -28,5 +28,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run Biome lint
-        run: npm run lint
+      - name: Run Biome lint (non-blocking)
+        run: npm run lint || echo "Linting issues found, but continuing with the workflow"

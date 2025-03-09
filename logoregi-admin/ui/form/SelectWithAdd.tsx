@@ -1,18 +1,14 @@
-import {
-  Portal,
-  Select,
-  SelectContent,
-  SelectLabel,
-  SelectOption,
-  SelectPositioner,
-  SelectTrigger,
-} from '@ark-ui/react';
+'use client';
+
+import { 
+  Box, 
+  Button, 
+  Flex, 
+  Stack,
+  Text 
+} from '@chakra-ui/react';
 import { AiFillCaretDown } from 'react-icons/ai';
 import { FaPlus } from 'react-icons/fa';
-
-import { css } from '@/panda/css';
-import { Box } from '@/panda/jsx';
-import { select } from '@/panda/recipes';
 
 export type Option = {
   label: string;
@@ -37,42 +33,68 @@ export function SelectWithAdd(props: Props) {
   };
 
   return (
-    <Box>
-      <Select onChange={onChange} selectedOption={props.selectedOption}>
-        {({ selectedOption }) => (
-          <>
-            <SelectLabel className={select()}>{props.label}</SelectLabel>
-            <SelectTrigger className={select()}>
-              <span>{selectedOption?.label ?? '選択してください'}</span>
-              <AiFillCaretDown />
-            </SelectTrigger>
-            <Portal>
-              <SelectPositioner className={select()}>
-                <SelectContent>
-                  {props.items.map((item) => (
-                    <SelectOption
-                      key={item.value}
-                      value={item.value}
-                      label={item.label}
-                      className={css({ display: 'flex', alignItems: 'center', gap: '2' })}
-                    >
-                      {item.label}
-                    </SelectOption>
-                  ))}
-                  <SelectOption
-                    value="add"
-                    label="add"
-                    className={css({ display: 'flex', alignItems: 'center', gap: '2' })}
-                  >
-                    <FaPlus />
-                    <span>追加</span>
-                  </SelectOption>
-                </SelectContent>
-              </SelectPositioner>
-            </Portal>
-          </>
-        )}
-      </Select>
-    </Box>
+    <Stack>
+      <Text color="gray.500">{props.label}</Text>
+      <Box position="relative">
+        <Button 
+          width="100%" 
+          textAlign="left"
+          onClick={() => {
+            const dropdown = document.getElementById('dropdown-' + props.label);
+            if (dropdown) {
+              dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            }
+          }}
+        >
+          <Flex justifyContent="space-between" alignItems="center" width="100%">
+            <Text>{props.selectedOption?.label ?? '選択してください'}</Text>
+            <AiFillCaretDown />
+          </Flex>
+        </Button>
+        <Box 
+          id={'dropdown-' + props.label}
+          position="absolute"
+          top="100%"
+          left={0}
+          width="100%"
+          zIndex={10}
+          bg="white"
+          boxShadow="md"
+          borderRadius="md"
+          display="none"
+        >
+          <Stack>
+            {props.items.map((item) => (
+              <Button 
+                key={item.value} 
+                variant="ghost"
+                justifyContent="flex-start"
+                onClick={() => {
+                  onChange({ value: item.value, label: item.label });
+                  const dropdown = document.getElementById('dropdown-' + props.label);
+                  if (dropdown) dropdown.style.display = 'none';
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+            <Button 
+              variant="ghost"
+              justifyContent="flex-start"
+              onClick={() => {
+                onChange({ value: 'add', label: 'add' });
+                const dropdown = document.getElementById('dropdown-' + props.label);
+                if (dropdown) dropdown.style.display = 'none';
+              }}
+            >
+              <Flex alignItems="center" gap={2}>
+                <FaPlus />
+                <Text>追加</Text>
+              </Flex>
+            </Button>
+          </Stack>
+        </Box>
+      </Box>
+    </Stack>
   );
 }

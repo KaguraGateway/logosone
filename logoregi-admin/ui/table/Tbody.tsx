@@ -1,3 +1,5 @@
-export function Tbody(props: React.ComponentProps<'div'>) {
-  return <div {...props} />;
+'use client';
+
+export function Tbody(props: React.ComponentProps<'tbody'>) {
+  return <tbody {...props} />;
 }

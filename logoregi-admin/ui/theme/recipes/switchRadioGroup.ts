@@ -1,25 +1,2 @@
-import { radioGroupAnatomy } from '@ark-ui/react';
-import { defineParts, defineRecipe } from '@pandacss/dev';
-
-const parts = defineParts(radioGroupAnatomy.build());
-
-export const switchRadioGroup = defineRecipe({
-  className: 'radio-group',
-  base: parts({
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    label: {
-      color: 'gray.500',
-    },
-    radio: {
-      display: 'inline-flex',
-      px: '2',
-      borderRadius: 'md',
-      _checked: {
-        background: 'blue.300',
-      },
-    },
-  }),
-});
+// This file is no longer used as we've migrated to ChakraUI v3
+// The switchRadioGroup component is now implemented directly using ChakraUI components

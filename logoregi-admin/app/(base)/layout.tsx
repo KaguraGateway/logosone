@@ -1,12 +1,14 @@
+'use client';
+
+import { Box, Container, Grid, GridItem, Stack } from '@chakra-ui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Box, Container, Grid, GridItem, Stack } from '@/panda/jsx';
 import Sidebar from '@/ui/nav/Sidebar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <Grid gridTemplateRows="76px 1fr" gridTemplateColumns="15rem 1fr" minH="100vh">
+    <Grid templateRows="76px 1fr" templateColumns="15rem 1fr" minH="100vh">
       <GridItem gridRow="1" gridColumn="1 / span 2">
         <Box boxShadow="md">
           <Container>

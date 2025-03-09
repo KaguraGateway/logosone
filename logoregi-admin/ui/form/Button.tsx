@@ -1,10 +1,14 @@
-import clsx from 'clsx';
+'use client';
 
-import { styled } from '@/panda/jsx';
-import { button, type ButtonVariantProps } from '@/panda/recipes';
+import { Button as ChakraButton } from '@chakra-ui/react';
 
-export function Button(props: React.ComponentProps<typeof styled.button> & ButtonVariantProps) {
-  return (
-    <styled.button {...props} className={clsx(button({ size: props.size, variant: props.variant }), props.className)} />
-  );
+type ButtonVariantProps = {
+  variant?: 'outline' | 'solid' | 'subtle' | 'surface' | 'ghost' | 'plain';
+  colorScheme?: string;
+  size?: 'md';
+};
+
+export function Button(props: React.ComponentProps<typeof ChakraButton> & ButtonVariantProps) {
+  const { variant = 'solid', colorScheme = 'gray', size = 'md', ...rest } = props;
+  return <ChakraButton variant={variant} colorScheme={colorScheme} size={size} {...rest} />;
 }

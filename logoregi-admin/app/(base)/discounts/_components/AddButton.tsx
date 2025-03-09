@@ -1,9 +1,8 @@
 'use client';
 
+import { Button } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
-
-import { css } from '@/panda/css';
 
 import { DiscountNewDailog } from './Form';
 
@@ -12,21 +11,19 @@ export function AddButton() {
 
   return (
     <>
-      <button
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          gap: '2',
-          border: '1px solid',
-          borderColor: 'gray.400',
-          px: '4',
-          py: '2',
-        })}
+      <Button
+        display="flex"
+        alignItems="center"
+        gap={2}
+        border="1px solid"
+        borderColor="gray.400"
+        px={4}
+        py={2}
         onClick={() => setIsOpen(true)}
       >
         <FaPlus />
         <span>割引を追加</span>
-      </button>
+      </Button>
       <DiscountNewDailog isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );

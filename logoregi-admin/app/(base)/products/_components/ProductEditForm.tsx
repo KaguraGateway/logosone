@@ -6,11 +6,6 @@ import {
   Flex,
   HStack,
   Input as ChakraInput,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Stack,
   VStack,
 } from '@chakra-ui/react';
@@ -159,8 +154,8 @@ export function ProductEditForm(props: Props) {
   const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
-  const onChangeType = (details: { value: string }) => {
-    setType(details.value);
+  const onChangeType = (value: string) => {
+    setType(value);
   };
   const onChangeAmount = (event: ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
@@ -238,7 +233,7 @@ export function ProductEditForm(props: Props) {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <Stack spacing={6}>
+        <Stack gap={6}>
           <HStack>
             <Input
               label="商品名"
@@ -401,7 +396,7 @@ export function ProductEditForm(props: Props) {
             <Button type="button" width="full" onClick={() => props.onCancel()}>
               キャンセル
             </Button>
-            <LoadingButton type="submit" width="full" variant="success" isLoading={isLoading}>
+            <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
               作成
             </LoadingButton>
           </HStack>
@@ -421,15 +416,39 @@ type DialogProps = {
 };
 
 export function ProductEditFormDialog(props: DialogProps) {
+  if (!props.isOpen) return null;
+  
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose} size="xl">
-      <ModalOverlay />
-      <ModalContent minW="2xl">
-        <ModalHeader>商品を追加 / 編集</ModalHeader>
-        <ModalBody pb={4}>
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      bg="rgba(0, 0, 0, 0.4)"
+      zIndex={1000}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      onClick={props.onClose}
+    >
+      <Box
+        bg="white"
+        borderRadius="md"
+        width="auto"
+        minW="2xl"
+        maxW="90%"
+        maxH="90%"
+        overflow="auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+          商品を追加 / 編集
+        </Box>
+        <Box p={4}>
           <ProductEditForm product={props.product} onCancel={() => props.onClose()} />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Box>
+      </Box>
+    </Box>
   );
 }

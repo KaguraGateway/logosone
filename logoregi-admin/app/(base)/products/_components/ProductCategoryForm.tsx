@@ -2,11 +2,7 @@
 
 import {
   HStack,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
+  Box,
   Stack,
 } from '@chakra-ui/react';
 import { getProductCategories } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
@@ -50,7 +46,7 @@ export function ProductCategoryForm(props: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <Stack spacing={6}>
+      <Stack gap={6}>
         <Input
           label="カテゴリ名"
           placeholder="ソフトドリンク"
@@ -62,7 +58,7 @@ export function ProductCategoryForm(props: Props) {
           <Button type="button" width="full" onClick={() => props.onCancel()}>
             キャンセル
           </Button>
-          <LoadingButton type="submit" width="full" variant="success" isLoading={isLoading}>
+          <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
             作成
           </LoadingButton>
         </HStack>
@@ -77,15 +73,39 @@ type DialogProps = {
 };
 
 export function ProductCategoryFormDialog(props: DialogProps) {
+  if (!props.isOpen) return null;
+  
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose}>
-      <ModalOverlay />
-      <ModalContent minW="xl">
-        <ModalHeader>商品カテゴリを追加 / 編集</ModalHeader>
-        <ModalBody pb={4}>
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      bg="rgba(0, 0, 0, 0.4)"
+      zIndex={1000}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      onClick={props.onClose}
+    >
+      <Box
+        bg="white"
+        borderRadius="md"
+        width="auto"
+        minW="xl"
+        maxW="90%"
+        maxH="90%"
+        overflow="auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+          商品カテゴリを追加 / 編集
+        </Box>
+        <Box p={4}>
           <ProductCategoryForm onCancel={() => props.onClose()} />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Box>
+      </Box>
+    </Box>
   );
 }

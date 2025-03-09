@@ -1,11 +1,7 @@
 'use client';
 import {
+  Box,
   HStack,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Stack,
 } from '@chakra-ui/react';
 import { DiscountType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
@@ -55,14 +51,14 @@ export function DiscountForm(props: { onCancel: () => void }) {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <Stack spacing={6}>
+        <Stack gap={6}>
           <Input label="名前" placeholder="アツアツ割" onChange={onChangeName} value={name} />
           <Input label="割引価格" placeholder="100" onChange={onChangeDiscountPrice} value={discountPrice.toString()} />
           <HStack width="full">
             <Button type="button" width="full" onClick={() => props.onCancel()}>
               キャンセル
             </Button>
-            <LoadingButton type="submit" width="full" variant="success" isLoading={isLoading}>
+            <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
               作成
             </LoadingButton>
           </HStack>
@@ -78,17 +74,39 @@ type DialogProps = {
 };
 
 export function DiscountNewDailog(props: DialogProps) {
+  if (!props.isOpen) return null;
+  
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose}>
-      <ModalOverlay />
-      <ModalContent minW="2xl">
-        <ModalHeader>割引を追加</ModalHeader>
-        <ModalBody pb={4}>
-          <Stack spacing={4}>
-            <DiscountForm onCancel={props.onClose} />
-          </Stack>
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      bg="rgba(0, 0, 0, 0.4)"
+      zIndex={1000}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      onClick={props.onClose}
+    >
+      <Box
+        bg="white"
+        borderRadius="md"
+        width="auto"
+        minW="2xl"
+        maxW="90%"
+        maxH="90%"
+        overflow="auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+          割引を追加
+        </Box>
+        <Box p={4}>
+          <DiscountForm onCancel={props.onClose} />
+        </Box>
+      </Box>
+    </Box>
   );
 }

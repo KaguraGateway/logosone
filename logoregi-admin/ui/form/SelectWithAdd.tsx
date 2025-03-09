@@ -4,12 +4,7 @@ import {
   Box, 
   Button, 
   Flex, 
-  FormControl, 
-  FormLabel, 
-  Menu, 
-  MenuButton, 
-  MenuItem, 
-  MenuList, 
+  Stack,
   Text 
 } from '@chakra-ui/react';
 import { AiFillCaretDown } from 'react-icons/ai';
@@ -38,31 +33,68 @@ export function SelectWithAdd(props: Props) {
   };
 
   return (
-    <FormControl>
-      <FormLabel>{props.label}</FormLabel>
-      <Menu>
-        <MenuButton as={Button} rightIcon={<AiFillCaretDown />} width="100%" textAlign="left">
-          {props.selectedOption?.label ?? '選択してください'}
-        </MenuButton>
-        <MenuList>
-          {props.items.map((item) => (
-            <MenuItem 
-              key={item.value} 
-              onClick={() => onChange({ value: item.value, label: item.label })}
+    <Stack>
+      <Text color="gray.500">{props.label}</Text>
+      <Box position="relative">
+        <Button 
+          width="100%" 
+          textAlign="left"
+          onClick={() => {
+            const dropdown = document.getElementById('dropdown-' + props.label);
+            if (dropdown) {
+              dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            }
+          }}
+        >
+          <Flex justifyContent="space-between" alignItems="center" width="100%">
+            <Text>{props.selectedOption?.label ?? '選択してください'}</Text>
+            <AiFillCaretDown />
+          </Flex>
+        </Button>
+        <Box 
+          id={'dropdown-' + props.label}
+          position="absolute"
+          top="100%"
+          left={0}
+          width="100%"
+          zIndex={10}
+          bg="white"
+          boxShadow="md"
+          borderRadius="md"
+          display="none"
+        >
+          <Stack>
+            {props.items.map((item) => (
+              <Button 
+                key={item.value} 
+                variant="ghost"
+                justifyContent="flex-start"
+                onClick={() => {
+                  onChange({ value: item.value, label: item.label });
+                  const dropdown = document.getElementById('dropdown-' + props.label);
+                  if (dropdown) dropdown.style.display = 'none';
+                }}
+              >
+                {item.label}
+              </Button>
+            ))}
+            <Button 
+              variant="ghost"
+              justifyContent="flex-start"
+              onClick={() => {
+                onChange({ value: 'add', label: 'add' });
+                const dropdown = document.getElementById('dropdown-' + props.label);
+                if (dropdown) dropdown.style.display = 'none';
+              }}
             >
-              {item.label}
-            </MenuItem>
-          ))}
-          <MenuItem 
-            onClick={() => onChange({ value: 'add', label: 'add' })}
-          >
-            <Flex alignItems="center" gap={2}>
-              <FaPlus />
-              <Text>追加</Text>
-            </Flex>
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    </FormControl>
+              <Flex alignItems="center" gap={2}>
+                <FaPlus />
+                <Text>追加</Text>
+              </Flex>
+            </Button>
+          </Stack>
+        </Box>
+      </Box>
+    </Stack>
   );
 }

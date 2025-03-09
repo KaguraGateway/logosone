@@ -1,11 +1,13 @@
 'use client';
 
-import { Table as ChakraTable, TableContainer, TableProps } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
+
+type TableProps = React.ComponentProps<'table'>;
 
 export function Table(props: TableProps) {
   return (
-    <TableContainer>
-      <ChakraTable {...props} />
-    </TableContainer>
+    <Box overflowX="auto">
+      <table {...props} style={{ width: '100%', borderCollapse: 'collapse' }} />
+    </Box>
   );
 }

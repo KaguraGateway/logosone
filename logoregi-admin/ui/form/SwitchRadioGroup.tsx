@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex, FormLabel, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
+import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 
 type Props = {
   label: string;
@@ -16,12 +16,8 @@ type Props = {
 export function SwitchRadioGroup(props: Props) {
   return (
     <Box>
-      <FormLabel>{props.label}</FormLabel>
-      <RadioGroup 
-        value={props.value}
-        defaultValue={props.defaultValue}
-        onChange={props.onChange}
-      >
+      <Text color="gray.500">{props.label}</Text>
+      <Box>
         <Flex 
           display="inline-flex" 
           width="max-content" 
@@ -29,25 +25,35 @@ export function SwitchRadioGroup(props: Props) {
           borderRadius="md" 
           p={1}
         >
-          <Stack direction="row" spacing={0}>
+          <Flex direction="row" gap={0}>
             {props.options.map((option) => (
-              <Radio 
+              <Box 
                 key={option.value} 
-                value={option.value}
-                sx={{
-                  '.chakra-radio__control': {
-                    display: 'none',
-                  }
-                }}
+                as="label"
+                position="relative"
               >
-                <Box px={3} py={1} borderRadius="sm" _checked={{ bg: 'white' }}>
+                <input
+                  type="radio"
+                  name="switchRadio"
+                  value={option.value}
+                  checked={props.value === option.value}
+                  onChange={(e) => props.onChange?.(e.target.value)}
+                  style={{ position: 'absolute', opacity: 0 }}
+                />
+                <Box 
+                  px={3} 
+                  py={1} 
+                  borderRadius="sm" 
+                  bg={props.value === option.value ? 'white' : 'transparent'}
+                  cursor="pointer"
+                >
                   {option.label}
                 </Box>
-              </Radio>
+              </Box>
             ))}
-          </Stack>
+          </Flex>
         </Flex>
-      </RadioGroup>
+      </Box>
     </Box>
   );
 }

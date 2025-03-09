@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent } from 'react';
-import { FormControl, FormLabel, Input as ChakraInput, Stack } from '@chakra-ui/react';
+import { Box, Input as ChakraInput, Stack, Text } from '@chakra-ui/react';
 
 type Props = {
   label: string;
@@ -13,9 +13,9 @@ type Props = {
 
 export function Input(props: Props) {
   return (
-    <FormControl as={Stack} {...props.root}>
-      <FormLabel color="gray.500">{props.label}</FormLabel>
+    <Stack {...props.root}>
+      <Text color="gray.500">{props.label}</Text>
       <ChakraInput value={props.value} onChange={props.onChange} placeholder={props.placeholder} />
-    </FormControl>
+    </Stack>
   );
 }

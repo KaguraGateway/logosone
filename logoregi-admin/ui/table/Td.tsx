@@ -1,8 +1,8 @@
 'use client';
 
-import { Td as ChakraTd } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
-type Props = React.ComponentProps<typeof ChakraTd> & {
+type Props = React.ComponentProps<'td'> & {
   grow?: string | number;
 };
 
@@ -10,14 +10,15 @@ export function Td(props: Props) {
   const { grow, ...rest } = props;
   
   return (
-    <ChakraTd 
+    <td 
       {...rest}
-      sx={{
+      style={{
         display: 'flex',
         alignItems: 'center',
         flex: grow !== undefined ? `0 0 ${grow}` : '1 0 100px',
         overflow: 'hidden',
-        minWidth: grow ?? '100px',
+        minWidth: grow ? `${grow}px` : '100px',
+        padding: '0.5rem'
       }}
     />
   );

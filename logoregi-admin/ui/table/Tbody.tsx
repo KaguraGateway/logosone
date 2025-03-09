@@ -1,7 +1,5 @@
 'use client';
 
-import { Tbody as ChakraTbody } from '@chakra-ui/react';
-
-export function Tbody(props: React.ComponentProps<typeof ChakraTbody>) {
-  return <ChakraTbody {...props} />;
+export function Tbody(props: React.ComponentProps<'tbody'>) {
+  return <tbody {...props} />;
 }

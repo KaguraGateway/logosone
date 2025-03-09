@@ -3,11 +3,12 @@
 import { Button as ChakraButton } from '@chakra-ui/react';
 
 type ButtonVariantProps = {
-  variant?: 'secondary' | 'success' | 'error';
+  variant?: 'outline' | 'solid' | 'subtle' | 'surface' | 'ghost' | 'plain';
+  colorScheme?: string;
   size?: 'md';
 };
 
 export function Button(props: React.ComponentProps<typeof ChakraButton> & ButtonVariantProps) {
-  const { variant = 'secondary', size = 'md', ...rest } = props;
-  return <ChakraButton variant={variant} size={size} {...rest} />;
+  const { variant = 'solid', colorScheme = 'gray', size = 'md', ...rest } = props;
+  return <ChakraButton variant={variant} colorScheme={colorScheme} size={size} {...rest} />;
 }

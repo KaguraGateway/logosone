@@ -1,6 +1,7 @@
 'use client';
 
-import { FormControl, FormLabel, Switch as ChakraSwitch } from '@chakra-ui/react';
+import { Flex, Text } from '@chakra-ui/react';
+import { ChangeEvent } from 'react';
 
 type Props = {
   label: string;
@@ -9,10 +10,21 @@ type Props = {
 }
 
 export function Switch(props: Props) {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    props.onChange(e.target.checked);
+  };
+
   return (
-    <FormControl display="flex" alignItems="center">
-      <FormLabel mb="0">{props.label}</FormLabel>
-      <ChakraSwitch isChecked={props.checked} onChange={(e) => props.onChange(e.target.checked)} />
-    </FormControl>
+    <Flex display="flex" alignItems="center">
+      <Text mb="0" mr={2}>{props.label}</Text>
+      <label className="switch">
+        <input 
+          type="checkbox" 
+          checked={props.checked} 
+          onChange={handleChange} 
+        />
+        <span className="slider round"></span>
+      </label>
+    </Flex>
   );
 }

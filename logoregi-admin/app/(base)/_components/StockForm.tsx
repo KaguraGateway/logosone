@@ -3,11 +3,6 @@
 import {
   Box,
   HStack,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
   Stack,
 } from '@chakra-ui/react';
 import React, { ChangeEvent, useState } from 'react';
@@ -54,7 +49,7 @@ export function StockForm(props: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <Stack spacing={6}>
+      <Stack gap={6}>
         <Input
           label="在庫名"
           placeholder="パン"
@@ -73,7 +68,7 @@ export function StockForm(props: Props) {
           <Button type="button" width="full" onClick={() => props.onCancel()}>
             キャンセル
           </Button>
-          <LoadingButton type="submit" width="full" variant="success" isLoading={isLoading}>
+          <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
             作成
           </LoadingButton>
         </HStack>
@@ -88,15 +83,39 @@ type DialogProps = {
 };
 
 export function StockFormDialog(props: DialogProps) {
+  if (!props.isOpen) return null;
+  
   return (
-    <Modal isOpen={props.isOpen} onClose={props.onClose}>
-      <ModalOverlay />
-      <ModalContent minW="xl">
-        <ModalHeader>在庫を追加 / 編集</ModalHeader>
-        <ModalBody pb={4}>
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      bg="rgba(0, 0, 0, 0.4)"
+      zIndex={1000}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      onClick={props.onClose}
+    >
+      <Box
+        bg="white"
+        borderRadius="md"
+        width="auto"
+        minW="xl"
+        maxW="90%"
+        maxH="90%"
+        overflow="auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+          在庫を追加 / 編集
+        </Box>
+        <Box p={4}>
           <StockForm onCancel={() => props.onClose()} />
-        </ModalBody>
-      </ModalContent>
-    </Modal>
+        </Box>
+      </Box>
+    </Box>
   );
 }

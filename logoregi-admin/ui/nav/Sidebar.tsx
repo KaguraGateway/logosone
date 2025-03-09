@@ -1,6 +1,6 @@
 'use client';
 
-import { List } from '@chakra-ui/react';
+import { Flex, List } from '@chakra-ui/react';
 import { AiOutlineHistory, AiOutlineHome } from 'react-icons/ai';
 import { FaChartPie, FaJava, FaReact } from 'react-icons/fa';
 import { GiTable } from 'react-icons/gi';
@@ -48,17 +48,24 @@ const navigations: Array<Navigation> = [
 
 export default function Sidebar() {
   return (
-    <List 
+    <Flex 
       display="flex" 
       flexDirection="column" 
       fontSize="xl" 
-      fontWeight="medium" 
-      styleType="none"
-      p={0}
+      fontWeight="medium"
     >
-      {navigations.map((link) => (
-        <NavItem key={link.label} {...link} />
-      ))}
-    </List>
+      <List.Root 
+        as="ul"
+        listStyleType="none"
+        p={0}
+        w="100%"
+      >
+        {navigations.map((link) => (
+          <List.Item key={link.label}>
+            <NavItem {...link} />
+          </List.Item>
+        ))}
+      </List.Root>
+    </Flex>
   );
 }

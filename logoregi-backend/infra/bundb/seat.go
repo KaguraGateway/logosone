@@ -58,3 +58,10 @@ func (s seatDb) Save(ctx context.Context, seat *model.Seat) error {
 	}
 	return nil
 }
+
+func (s seatDb) Delete(ctx context.Context, id string) error {
+	if _, err := s.db.NewDelete().Model((*dao.Seat)(nil)).Where("id = ?", id).Exec(ctx); err != nil {
+		return err
+	}
+	return nil
+}

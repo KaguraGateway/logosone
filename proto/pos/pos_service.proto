@@ -40,6 +40,7 @@ service PosService {
 
     rpc PostSeat(PostSeatRequest) returns (common.Empty) {}
     rpc UpdateSeat(UpdateSeatRequest) returns (common.Empty) {}
+    rpc DeleteSeat(DeleteSeatRequest) returns (common.Empty) {}
     rpc GetSeats(common.Empty) returns (GetSeatsResponse) {}
 
     rpc GetDiscounts(common.Empty) returns (GetDiscountsResponse) {}
@@ -152,6 +153,9 @@ message PostSeatRequest {
 }
 message UpdateSeatRequest {
     Seat seat = 1;
+}
+message DeleteSeatRequest {
+    string seat_id = 1;
 }
 message GetSeatsResponse {
     repeated Seat seats = 1;

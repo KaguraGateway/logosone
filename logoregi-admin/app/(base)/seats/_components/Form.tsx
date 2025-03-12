@@ -45,10 +45,10 @@ export function SeatForm(props: { onCancel: () => void }) {
         <Stack gap={6}>
           <Input label="名前" placeholder="テーブル1" onChange={onChangeName} value={name} />
           <HStack width="full">
-            <Button type="button" width="full" onClick={() => props.onCancel()}>
+            <Button type="button" onClick={() => props.onCancel()}>
               キャンセル
             </Button>
-            <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
+            <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
               作成
             </LoadingButton>
           </HStack>

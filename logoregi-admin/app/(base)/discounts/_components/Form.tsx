@@ -55,10 +55,10 @@ export function DiscountForm(props: { onCancel: () => void }) {
           <Input label="名前" placeholder="アツアツ割" onChange={onChangeName} value={name} />
           <Input label="割引価格" placeholder="100" onChange={onChangeDiscountPrice} value={discountPrice.toString()} />
           <HStack width="full">
-            <Button type="button" width="full" onClick={() => props.onCancel()}>
+            <Button type="button" onClick={() => props.onCancel()}>
               キャンセル
             </Button>
-            <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
+            <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
               作成
             </LoadingButton>
           </HStack>
@@ -73,7 +73,7 @@ type DialogProps = {
   onClose: () => void;
 };
 
-export function DiscountNewDailog(props: DialogProps) {
+export function DiscountNewDialog(props: DialogProps) {
   if (!props.isOpen) return null;
   
   return (

@@ -4,7 +4,7 @@ import { Button } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
-import { DiscountNewDailog } from './Form';
+import { DiscountNewDialog } from './Form';
 
 export function AddButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +24,7 @@ export function AddButton() {
         <FaPlus />
         <span>割引を追加</span>
       </Button>
-      <DiscountNewDailog isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <DiscountNewDialog isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }

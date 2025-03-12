@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/gcp"
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/goredis"
 	"github.com/getsentry/sentry-go"
 	"log"
 	"net/http"
@@ -11,7 +13,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/KaguraGateway/logosone/orderlink-backend/infra/goredis"
 	"github.com/labstack/echo/v4"
 
 	"github.com/joho/godotenv"
@@ -176,10 +177,11 @@ func buildInjector(isDev bool, db *bun.DB, wsClients []*websocket.OrderLinkWSCli
 	do.Provide(i, bundb.NewTxRepositoryDb)
 	do.Provide(i, websocket.NewServerToClientPubSubWS)
 	// Register S2S PubSub
-	//if !isDev {
-	//	do.Provide(i, gcp.NewServerToServerPubSubCloudPubSub)
-	//}
-	do.Provide(i, goredis.NewServerToServerPubSubRedis)
+	if !isDev {
+		do.Provide(i, gcp.NewServerToServerPubSubCloudPubSub)
+	} else {
+		do.Provide(i, goredis.NewServerToServerPubSubRedis)
+	}
 	// Register QueryService
 	do.Provide(i, bundb.NewOrderQueryServiceDb)
 	// Register UseCase

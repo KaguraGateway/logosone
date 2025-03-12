@@ -8,11 +8,15 @@ tasks:
   dev:
     deps:
       - task: dev:docker
+      - task: dev:bun:install
       - task: dev:logoregi-backend
       - task: dev:orderlink-backend
       - task: dev:orderlink-frontend
       - task: dev:logoregi-handy
       - task: dev:logoregi-admin
+
+  dev:bun:install:
+    cmd: bun install
 
   dev:docker:
     cmd: docker compose up db redis ticket-backend
@@ -27,30 +31,18 @@ tasks:
 
   dev:orderlink-frontend:
     dir: ./orderlink-frontend
-    deps:
-      - task: dev:orderlink-frontend:install
     cmd: bun dev
     env:
       PORT: 3001
       NEXT_PUBLIC_WEBSOCKET_API: ws://localhost:8082/
       NEXT_PUBLIC_GRPC_HOST: http://localhost:8080
 
-  dev:orderlink-frontend:install:
-    dir: ./orderlink-frontend
-    cmd: bun install
-
   dev:logoregi-handy:
     dir: ./logoregi-handy
-    deps:
-      - task: dev:logoregi-handy:install
     cmd: bun dev
     env:
       PORT: 3002
       NEXT_PUBLIC_POS_GRPC: http://localhost:8080
-
-  dev:logoregi-handy:install:
-    dir: ./logoregi-handy
-    cmd: bun install
 
   dev:logoregi-admin:
     dir: ./logoregi-admin
@@ -58,10 +50,6 @@ tasks:
     env:
       PORT: 3000
       NEXT_PUBLIC_GRPC_HOST: http://localhost:8080
-
-  dev:logoregi-admin:install:
-    dir: ./logoregi-admin
-    cmd: bun install
 
   init:
     deps:

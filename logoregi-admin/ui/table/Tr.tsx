@@ -1,5 +1,7 @@
 'use client';
 
+import { Flex } from "@chakra-ui/react";
+
 export function Tr(props: React.ComponentProps<'tr'>) {
-  return <tr {...props} />;
+  return <Flex {...props} />;
 }

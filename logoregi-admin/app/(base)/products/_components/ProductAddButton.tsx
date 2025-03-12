@@ -18,6 +18,7 @@ export function ProductAddButton() {
         px={4}
         py={2}
         onClick={() => setIsOpen(true)}
+        variant='outline'
       >
         <FaPlus />
         <span>商品を追加</span>

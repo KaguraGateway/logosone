@@ -2,8 +2,7 @@
 
 import {
   Box,
-  Button as ChakraButton,
-  Flex,
+  Button as ChakraButton, createListCollection,
   HStack,
   Input as ChakraInput,
   Stack,
@@ -98,35 +97,35 @@ export function ProductEditForm(props: Props) {
   const [name, setName] = useState(props.product?.name ?? '');
   const [isNowOnSale, setIsNowOnSale] = useState(props.product?.isNowSales ?? true);
   const [type, setType] = useState(props.product?.type ?? 'coffee');
-  const [category, setCategory] = useState<Option | null>(
+  const [category, setCategory] = useState<Option | undefined>(
     props.product != null
       ? toOptionFromCategory({ id: props.product.categoryId, name: props.product.categoryName })
-      : null
+      : undefined
   );
   const [isManagingOrder, setIsManagingOrder] = useState(props.product?.isManagingOrder ?? true);
   const [isOlUseKitchen, setIsOlUseKitchen] = useState(props.product?.isOlUseKitchen ?? true);
 
   // Coffee
-  const [coffeeBean, setCoffeeBean] = useState<Option | null>(
+  const [coffeeBean, setCoffeeBean] = useState<Option | undefined>(
     props.product?.coffeeBeanId != null
       ? toOptionFromCoffeeBean({
           id: props.product.coffeeBeanId,
           name: props.product.coffeeBeanName ?? '',
           gramQuantity: props.product.coffeeBeanGramQuantity ?? 0,
         })
-      : null
+      : undefined
   );
   const [brews, setBrews] = useState<Array<CoffeeBrew>>(props.product?.coffeeBrews ?? []);
   // Other
   const [amount, setAmount] = useState(props.product?.amount ?? 0);
-  const [stock, setStock] = useState<Option | null>(
+  const [stock, setStock] = useState<Option | undefined>(
     props.product?.stockId != null && props.product.stockName != null && props.product.stockQuantity
       ? toOptionFromStock({
           id: props.product.stockId,
           name: props.product.stockName,
           quantity: props.product.stockQuantity,
         })
-      : null
+      : undefined
   );
 
   // Dialog
@@ -260,7 +259,7 @@ export function ProductEditForm(props: Props) {
             />
             <SelectWithAdd
               label="商品カテゴリ"
-              items={categories}
+              items={createListCollection({items: categories})}
               onAdd={onAddCategory}
               selectedOption={category}
               onChange={(details) => setCategory(details)}
@@ -270,7 +269,7 @@ export function ProductEditForm(props: Props) {
             <>
               <SelectWithAdd
                 label="豆の種類"
-                items={coffeeBeans}
+                items={createListCollection({items: coffeeBeans})}
                 onAdd={onAddCoffeeBean}
                 selectedOption={coffeeBean}
                 onChange={(details) => setCoffeeBean(details)}
@@ -373,7 +372,7 @@ export function ProductEditForm(props: Props) {
               />
               <SelectWithAdd
                 label="在庫"
-                items={stocks}
+                items={createListCollection({items: stocks})}
                 onAdd={onAddStock}
                 selectedOption={stock}
                 onChange={(details) => setStock(details)}
@@ -392,11 +391,11 @@ export function ProductEditForm(props: Props) {
               checked={isOlUseKitchen}
             />
           </VStack>
-          <HStack width="full">
-            <Button type="button" width="full" onClick={() => props.onCancel()}>
+          <HStack width='full'>
+            <Button type="button" variant='outline' onClick={() => props.onCancel()}>
               キャンセル
             </Button>
-            <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
+            <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
               作成
             </LoadingButton>
           </HStack>
@@ -434,6 +433,7 @@ export function ProductEditFormDialog(props: DialogProps) {
     >
       <Box
         bg="white"
+        color='black'
         borderRadius="md"
         width="auto"
         minW="2xl"

@@ -1,8 +1,9 @@
 'use client';
 
 import { Box } from '@chakra-ui/react';
+import { ComponentProps } from "react";
 
-type Props = React.ComponentProps<'td'> & {
+type Props = ComponentProps<typeof Box> & {
   grow?: string | number;
 };
 
@@ -10,7 +11,7 @@ export function Td(props: Props) {
   const { grow, ...rest } = props;
   
   return (
-    <td 
+    <Box
       {...rest}
       style={{
         display: 'flex',

@@ -1,5 +1,3 @@
-@layer reset,
-base,
-tokens,
-recipes,
-utilities;
+html, body {
+    background-color: #F1F0F0;
+}

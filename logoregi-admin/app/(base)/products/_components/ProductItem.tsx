@@ -32,9 +32,8 @@ export function ProductItem({ product }: { product: Product }) {
       <Tr>
         <Td>{product.name}</Td>
         <Td>
-          {product.amount != null
-            ? product.amount.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
-            : 'N/A'}
+          {product.amount != null && product.type !== 'coffee'
+            && product.amount.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })}
         </Td>
         <Td>{product.type === 'coffee' ? 'コーヒー' : 'その他'}</Td>
         <Td>{product.categoryName}</Td>

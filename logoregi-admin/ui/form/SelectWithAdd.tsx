@@ -1,14 +1,14 @@
 'use client';
 
-import { 
-  Box, 
-  Button, 
-  Flex, 
-  Stack,
-  Text 
+import {
+  Box,
+  Button,
+  ListCollection, Separator, useDisclosure
 } from '@chakra-ui/react';
-import { AiFillCaretDown } from 'react-icons/ai';
 import { FaPlus } from 'react-icons/fa';
+
+import { SelectContent, SelectItem, SelectLabel, SelectRoot, SelectTrigger, SelectValueText } from '@/components/ui/select'
+import { ValueChangeDetails } from "@zag-js/select";
 
 export type Option = {
   label: string;
@@ -17,84 +17,48 @@ export type Option = {
 
 type Props = {
   label: string;
-  items: Array<Option>;
+  items: ListCollection<Option>;
   onAdd: () => void;
-  onChange: (details: Option | null) => void;
+  onChange: (details: Option | undefined) => void;
   selectedOption?: Option | null;
 };
 
 export function SelectWithAdd(props: Props) {
-  const onChange = (details: Option | null) => {
-    if (details?.value === 'add') {
-      props.onAdd();
-    } else {
-      props.onChange(details);
-    }
-  };
+  const { open, onOpen, onClose } = useDisclosure()
+
+  const onClickAdd = () => {
+    onClose()
+    props.onAdd()
+  }
+
+  const value = props.selectedOption != null ? [props.selectedOption?.value] : []
+  const onValueChange = (details: ValueChangeDetails<Option>) => {
+    props.onChange(props.items.items.find(v => details.value.includes(v.value)))
+  }
 
   return (
-    <Stack>
-      <Text color="gray.500">{props.label}</Text>
-      <Box position="relative">
-        <Button 
-          width="100%" 
-          textAlign="left"
-          onClick={() => {
-            const dropdown = document.getElementById('dropdown-' + props.label);
-            if (dropdown) {
-              dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-            }
-          }}
-        >
-          <Flex justifyContent="space-between" alignItems="center" width="100%">
-            <Text>{props.selectedOption?.label ?? '選択してください'}</Text>
-            <AiFillCaretDown />
-          </Flex>
-        </Button>
-        <Box 
-          id={'dropdown-' + props.label}
-          position="absolute"
-          top="100%"
-          left={0}
-          width="100%"
-          zIndex={10}
-          bg="white"
-          boxShadow="md"
-          borderRadius="md"
-          display="none"
-        >
-          <Stack>
-            {props.items.map((item) => (
-              <Button 
-                key={item.value} 
-                variant="ghost"
-                justifyContent="flex-start"
-                onClick={() => {
-                  onChange({ value: item.value, label: item.label });
-                  const dropdown = document.getElementById('dropdown-' + props.label);
-                  if (dropdown) dropdown.style.display = 'none';
-                }}
-              >
-                {item.label}
-              </Button>
-            ))}
-            <Button 
-              variant="ghost"
-              justifyContent="flex-start"
-              onClick={() => {
-                onChange({ value: 'add', label: 'add' });
-                const dropdown = document.getElementById('dropdown-' + props.label);
-                if (dropdown) dropdown.style.display = 'none';
-              }}
-            >
-              <Flex alignItems="center" gap={2}>
-                <FaPlus />
-                <Text>追加</Text>
-              </Flex>
-            </Button>
-          </Stack>
+    <SelectRoot collection={props.items} open={open} value={value} onValueChange={onValueChange} onOpenChange={(details) => details.open ? onOpen() : onClose()}>
+      <SelectLabel>{props.label}</SelectLabel>
+      <SelectTrigger clearable>
+        <SelectValueText placeholder='選択してください' />
+      </SelectTrigger>
+      <SelectContent>
+        {props.items.items.map((item) => (
+          <SelectItem
+            key={item.value}
+            item={item}
+          >
+            {item.label}
+          </SelectItem>
+        ))}
+        <Box>
+          <Separator my={1} />
+          <Button onClick={onClickAdd} variant='ghost' fontSize={14} width='full' justifyContent='flex-start'>
+            <FaPlus />
+            追加する
+          </Button>
         </Box>
-      </Box>
-    </Stack>
+      </SelectContent>
+    </SelectRoot>
   );
 }

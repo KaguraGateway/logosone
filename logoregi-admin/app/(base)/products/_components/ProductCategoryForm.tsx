@@ -55,10 +55,10 @@ export function ProductCategoryForm(props: Props) {
           root={{ width: '50%' }}
         />
         <HStack width="full">
-          <Button type="button" width="full" onClick={() => props.onCancel()}>
+          <Button type="button" onClick={() => props.onCancel()}>
             キャンセル
           </Button>
-          <LoadingButton type="submit" width="full" colorScheme="green" isLoading={isLoading}>
+          <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
             作成
           </LoadingButton>
         </HStack>

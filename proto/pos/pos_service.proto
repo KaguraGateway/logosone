@@ -48,6 +48,10 @@ service PosService {
 
     rpc GetDailySales(GetDailySalesRequest) returns (GetDailySalesResponse) {}
     rpc GetProductSales(GetProductSalesRequest) returns (GetProductSalesResponse) {}
+    
+    // 売上分析用のメソッド
+    rpc GetSalesByTimeSlot(GetSalesByTimeSlotRequest) returns (GetSalesByTimeSlotResponse) {}
+    rpc GetSalesByPaymentType(GetSalesByPaymentTypeRequest) returns (GetSalesByPaymentTypeResponse) {}
 }
 
 /**
@@ -192,25 +196,40 @@ message GetDailySalesResponse {
     repeated DailySale daily_sales = 1;
 }
 
-// 売上分析用のリクエスト
 message GetProductSalesRequest {
     string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
     string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
-    
-    // 売上分析のフィルタリングオプション
-    SalesFilterType filter_type = 3; // フィルタリングの種類
-    string date = 4; // 特定の日付（時間帯別分析用）ISO8601形式 (YYYY-MM-DD)
-    int32 payment_type = 5; // 支払い方法（0: Cash, 1: External）
-    bool coffee_only = 6; // コーヒー商品のみを対象とするか
 }
 
-// 売上分析のフィルタータイプ
-enum SalesFilterType {
-    ALL = 0; // すべての商品
-    TODAY = 1; // 今日の売上
-    TIME_SLOT = 2; // 時間帯別
-    PAYMENT_TYPE = 3; // 支払い方法別
-    COFFEE_BREW = 4; // コーヒー淹れ方別
+// 時間帯別売上取得用
+message GetSalesByTimeSlotRequest {
+    string date = 1; // ISO8601形式 (YYYY-MM-DD), デフォルトは今日
+}
+
+message GetSalesByTimeSlotResponse {
+    repeated TimeSlotSale time_slot_sales = 1;
+}
+
+message TimeSlotSale {
+    string time_slot = 1; // 例: "10:00-10:30"
+    uint64 total_sales = 2; // 総売上
+    uint64 total_quantity = 3; // 総数量
+}
+
+// 支払い方法別売上取得用
+message GetSalesByPaymentTypeRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
+message GetSalesByPaymentTypeResponse {
+    repeated PaymentTypeSale payment_type_sales = 1;
+}
+
+message PaymentTypeSale {
+    int32 payment_type = 1; // 0: Cash, 1: External
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
 }
 
 message GetProductSalesResponse {
@@ -401,9 +420,7 @@ message ProductSale {
     uint64 total_sales = 3; // 総売上
     uint64 total_quantity = 4; // 総数量
     
-    // 売上分析用の追加フィールド
-    string time_slot = 5; // 時間帯（例: "10:00-10:30"）
-    int32 payment_type = 6; // 支払い方法（0: Cash, 1: External）
+    // コーヒー淹れ方用のフィールド
     string coffee_brew_id = 7; // コーヒー淹れ方ID
     string coffee_brew_name = 8; // コーヒー淹れ方名
 }

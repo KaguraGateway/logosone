@@ -6,15 +6,16 @@ export type Order = {
   orderAt: string;
   orderType: 'EatIn' | 'TakeOut';
   items: OrderItem[];
-  totalPrice: number;
+  totalAmount: number;
 };
 
 export type OrderItem = {
   productId: string;
   productName: string;
   quantity: number;
-  price: number;
+  amount: number;
   coffeeBrewId: string;
+  coffeeBrewName: string;
 };
 
 export function toOrderFromProto(order: ProtoOrder, products: Product[]): Order {
@@ -31,19 +32,20 @@ export function toOrderFromProto(order: ProtoOrder, products: Product[]): Order 
       productId: item.productId,
       productName: product?.name || '不明な商品',
       quantity: item.quantity,
-      price: Number(item.amount),
+      amount: Number(item.amount),
       coffeeBrewId: item.coffeeBrewId,
+      coffeeBrewName: product?.coffeeBrews?.find(coffeeBrew => coffeeBrew.id === item.coffeeBrewId)?.name ?? ''
     };
   });
 
   // 合計金額を計算
-  const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const totalAmount = items.reduce((sum, item) => sum + (item.amount * item.quantity), 0);
 
   return {
     id: order.id,
     orderAt: order.orderAt,
     orderType: order.orderType === OrderType.EatIn ? 'EatIn' : 'TakeOut',
     items: items,
-    totalPrice: totalPrice,
+    totalAmount: totalAmount,
   };
 }

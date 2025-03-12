@@ -12,6 +12,7 @@ import { TCollectionItem } from '@/ui/table/TCollectionItem';
 import { Td } from '@/ui/table/Td';
 import { Th } from '@/ui/table/Th';
 import { Tr } from '@/ui/table/Tr';
+import { toProductFromProto } from "@/types/Product";
 
 export default function Orders() {
   const { data: ordersData, isLoading: isOrdersLoading } = useQueryOrders();
@@ -28,12 +29,7 @@ export default function Orders() {
   }
 
   const orders = ordersData?.orders?.map((order) => {
-    return toOrderFromProto(order, productsData?.products?.map((product) => {
-      return {
-        id: product.productId,
-        name: product.productName,
-      };
-    }) || []);
+    return toOrderFromProto(order, productsData?.products?.map((product) => toProductFromProto(product)) || []);
   }) || [];
 
   return (
@@ -57,13 +53,13 @@ export default function Orders() {
                   <ul>
                     {order.items.map((item, index) => (
                       <li key={index}>
-                        {item.productName} × {item.quantity} ({item.price}円)
-                        {item.coffeeBrewId && ` (淹れ方: ${item.coffeeBrewId})`}
+                        {item.productName} × {item.quantity} ({item.amount}円)
+                        {item.coffeeBrewId && ` (淹れ方: ${item.coffeeBrewName})`}
                       </li>
                     ))}
                   </ul>
                 </Td>
-                <Td>{order.totalPrice}円</Td>
+                <Td>{order.totalAmount}円</Td>
               </Tr>
             </TCollectionItem>
           ))}

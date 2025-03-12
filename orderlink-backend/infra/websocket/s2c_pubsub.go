@@ -47,7 +47,7 @@ func fromEvent(event *model.Event) *eventOutput {
 
 func (r *serverToClientPubSubWS) Publish(ctx context.Context, event model.Event) error {
 	outputEvent := fromEvent(&event)
-	if event.GetTopic() == "TimeSignal" {
+	if event.GetTopic() != "TimeSignal" {
 		log.Printf("[Client Publish][%s]: %v, clients: %v", event.GetTopic(), event.GetMessage(), r.clients)
 	}
 

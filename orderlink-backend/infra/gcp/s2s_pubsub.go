@@ -32,7 +32,7 @@ func (r *serverToServerPubSubCloudPubSub) Publish(ctx context.Context, event mod
 }
 
 func (r *serverToServerPubSubCloudPubSub) Subscribe(ctx context.Context, channel string, callback func(context.Context, model.Event)) error {
-	sub := r.client.Subscription(fmt.Sprintf("sub-%s", channel))
+	sub := r.client.Subscription(fmt.Sprintf("%s-sub", channel))
 	err := sub.Receive(ctx, func(ctx context.Context, msg *pubsub.Message) {
 		log.Printf("S2S Received message: [%s] %q\n", channel, string(msg.Data))
 		callback(ctx, *model.RebuildEvent(channel, string(msg.Data)))

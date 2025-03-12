@@ -89,6 +89,8 @@ const (
 	PosServicePostSeatProcedure = "/cafelogos.pos.PosService/PostSeat"
 	// PosServiceUpdateSeatProcedure is the fully-qualified name of the PosService's UpdateSeat RPC.
 	PosServiceUpdateSeatProcedure = "/cafelogos.pos.PosService/UpdateSeat"
+	// PosServiceDeleteSeatProcedure is the fully-qualified name of the PosService's DeleteSeat RPC.
+	PosServiceDeleteSeatProcedure = "/cafelogos.pos.PosService/DeleteSeat"
 	// PosServiceGetSeatsProcedure is the fully-qualified name of the PosService's GetSeats RPC.
 	PosServiceGetSeatsProcedure = "/cafelogos.pos.PosService/GetSeats"
 	// PosServiceGetDiscountsProcedure is the fully-qualified name of the PosService's GetDiscounts RPC.
@@ -101,6 +103,12 @@ const (
 	// PosServiceGetProductSalesProcedure is the fully-qualified name of the PosService's
 	// GetProductSales RPC.
 	PosServiceGetProductSalesProcedure = "/cafelogos.pos.PosService/GetProductSales"
+	// PosServiceGetSalesByTimeSlotProcedure is the fully-qualified name of the PosService's
+	// GetSalesByTimeSlot RPC.
+	PosServiceGetSalesByTimeSlotProcedure = "/cafelogos.pos.PosService/GetSalesByTimeSlot"
+	// PosServiceGetSalesByPaymentTypeProcedure is the fully-qualified name of the PosService's
+	// GetSalesByPaymentType RPC.
+	PosServiceGetSalesByPaymentTypeProcedure = "/cafelogos.pos.PosService/GetSalesByPaymentType"
 )
 
 // These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
@@ -128,11 +136,14 @@ var (
 	posServiceDeleteAllOrdersMethodDescriptor         = posServiceServiceDescriptor.Methods().ByName("DeleteAllOrders")
 	posServicePostSeatMethodDescriptor                = posServiceServiceDescriptor.Methods().ByName("PostSeat")
 	posServiceUpdateSeatMethodDescriptor              = posServiceServiceDescriptor.Methods().ByName("UpdateSeat")
+	posServiceDeleteSeatMethodDescriptor              = posServiceServiceDescriptor.Methods().ByName("DeleteSeat")
 	posServiceGetSeatsMethodDescriptor                = posServiceServiceDescriptor.Methods().ByName("GetSeats")
 	posServiceGetDiscountsMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("GetDiscounts")
 	posServicePostDiscountMethodDescriptor            = posServiceServiceDescriptor.Methods().ByName("PostDiscount")
 	posServiceGetDailySalesMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("GetDailySales")
 	posServiceGetProductSalesMethodDescriptor         = posServiceServiceDescriptor.Methods().ByName("GetProductSales")
+	posServiceGetSalesByTimeSlotMethodDescriptor      = posServiceServiceDescriptor.Methods().ByName("GetSalesByTimeSlot")
+	posServiceGetSalesByPaymentTypeMethodDescriptor   = posServiceServiceDescriptor.Methods().ByName("GetSalesByPaymentType")
 )
 
 // PosServiceClient is a client for the cafelogos.pos.PosService service.
@@ -160,11 +171,15 @@ type PosServiceClient interface {
 	DeleteAllOrders(context.Context, *connect.Request[common.Empty]) (*connect.Response[common.Empty], error)
 	PostSeat(context.Context, *connect.Request[pos.PostSeatRequest]) (*connect.Response[common.Empty], error)
 	UpdateSeat(context.Context, *connect.Request[pos.UpdateSeatRequest]) (*connect.Response[common.Empty], error)
+	DeleteSeat(context.Context, *connect.Request[pos.DeleteSeatRequest]) (*connect.Response[common.Empty], error)
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
 	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
 	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
-	GetDailySales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error)
-	GetProductSales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error)
+	GetDailySales(context.Context, *connect.Request[pos.GetDailySalesRequest]) (*connect.Response[pos.GetDailySalesResponse], error)
+	GetProductSales(context.Context, *connect.Request[pos.GetProductSalesRequest]) (*connect.Response[pos.GetProductSalesResponse], error)
+	// 売上分析用のメソッド
+	GetSalesByTimeSlot(context.Context, *connect.Request[pos.GetSalesByTimeSlotRequest]) (*connect.Response[pos.GetSalesByTimeSlotResponse], error)
+	GetSalesByPaymentType(context.Context, *connect.Request[pos.GetSalesByPaymentTypeRequest]) (*connect.Response[pos.GetSalesByPaymentTypeResponse], error)
 }
 
 // NewPosServiceClient constructs a client for the cafelogos.pos.PosService service. By default, it
@@ -309,6 +324,12 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			connect.WithSchema(posServiceUpdateSeatMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		deleteSeat: connect.NewClient[pos.DeleteSeatRequest, common.Empty](
+			httpClient,
+			baseURL+PosServiceDeleteSeatProcedure,
+			connect.WithSchema(posServiceDeleteSeatMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 		getSeats: connect.NewClient[common.Empty, pos.GetSeatsResponse](
 			httpClient,
 			baseURL+PosServiceGetSeatsProcedure,
@@ -327,16 +348,28 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			connect.WithSchema(posServicePostDiscountMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getDailySales: connect.NewClient[common.Empty, pos.GetDailySalesResponse](
+		getDailySales: connect.NewClient[pos.GetDailySalesRequest, pos.GetDailySalesResponse](
 			httpClient,
 			baseURL+PosServiceGetDailySalesProcedure,
 			connect.WithSchema(posServiceGetDailySalesMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
-		getProductSales: connect.NewClient[common.Empty, pos.GetProductSalesResponse](
+		getProductSales: connect.NewClient[pos.GetProductSalesRequest, pos.GetProductSalesResponse](
 			httpClient,
 			baseURL+PosServiceGetProductSalesProcedure,
 			connect.WithSchema(posServiceGetProductSalesMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getSalesByTimeSlot: connect.NewClient[pos.GetSalesByTimeSlotRequest, pos.GetSalesByTimeSlotResponse](
+			httpClient,
+			baseURL+PosServiceGetSalesByTimeSlotProcedure,
+			connect.WithSchema(posServiceGetSalesByTimeSlotMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
+		getSalesByPaymentType: connect.NewClient[pos.GetSalesByPaymentTypeRequest, pos.GetSalesByPaymentTypeResponse](
+			httpClient,
+			baseURL+PosServiceGetSalesByPaymentTypeProcedure,
+			connect.WithSchema(posServiceGetSalesByPaymentTypeMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -366,11 +399,14 @@ type posServiceClient struct {
 	deleteAllOrders         *connect.Client[common.Empty, common.Empty]
 	postSeat                *connect.Client[pos.PostSeatRequest, common.Empty]
 	updateSeat              *connect.Client[pos.UpdateSeatRequest, common.Empty]
+	deleteSeat              *connect.Client[pos.DeleteSeatRequest, common.Empty]
 	getSeats                *connect.Client[common.Empty, pos.GetSeatsResponse]
 	getDiscounts            *connect.Client[common.Empty, pos.GetDiscountsResponse]
 	postDiscount            *connect.Client[pos.PostDiscountRequest, common.Empty]
-	getDailySales           *connect.Client[common.Empty, pos.GetDailySalesResponse]
-	getProductSales         *connect.Client[common.Empty, pos.GetProductSalesResponse]
+	getDailySales           *connect.Client[pos.GetDailySalesRequest, pos.GetDailySalesResponse]
+	getProductSales         *connect.Client[pos.GetProductSalesRequest, pos.GetProductSalesResponse]
+	getSalesByTimeSlot      *connect.Client[pos.GetSalesByTimeSlotRequest, pos.GetSalesByTimeSlotResponse]
+	getSalesByPaymentType   *connect.Client[pos.GetSalesByPaymentTypeRequest, pos.GetSalesByPaymentTypeResponse]
 }
 
 // GetOrders calls cafelogos.pos.PosService.GetOrders.
@@ -483,6 +519,11 @@ func (c *posServiceClient) UpdateSeat(ctx context.Context, req *connect.Request[
 	return c.updateSeat.CallUnary(ctx, req)
 }
 
+// DeleteSeat calls cafelogos.pos.PosService.DeleteSeat.
+func (c *posServiceClient) DeleteSeat(ctx context.Context, req *connect.Request[pos.DeleteSeatRequest]) (*connect.Response[common.Empty], error) {
+	return c.deleteSeat.CallUnary(ctx, req)
+}
+
 // GetSeats calls cafelogos.pos.PosService.GetSeats.
 func (c *posServiceClient) GetSeats(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error) {
 	return c.getSeats.CallUnary(ctx, req)
@@ -499,13 +540,23 @@ func (c *posServiceClient) PostDiscount(ctx context.Context, req *connect.Reques
 }
 
 // GetDailySales calls cafelogos.pos.PosService.GetDailySales.
-func (c *posServiceClient) GetDailySales(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error) {
+func (c *posServiceClient) GetDailySales(ctx context.Context, req *connect.Request[pos.GetDailySalesRequest]) (*connect.Response[pos.GetDailySalesResponse], error) {
 	return c.getDailySales.CallUnary(ctx, req)
 }
 
 // GetProductSales calls cafelogos.pos.PosService.GetProductSales.
-func (c *posServiceClient) GetProductSales(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error) {
+func (c *posServiceClient) GetProductSales(ctx context.Context, req *connect.Request[pos.GetProductSalesRequest]) (*connect.Response[pos.GetProductSalesResponse], error) {
 	return c.getProductSales.CallUnary(ctx, req)
+}
+
+// GetSalesByTimeSlot calls cafelogos.pos.PosService.GetSalesByTimeSlot.
+func (c *posServiceClient) GetSalesByTimeSlot(ctx context.Context, req *connect.Request[pos.GetSalesByTimeSlotRequest]) (*connect.Response[pos.GetSalesByTimeSlotResponse], error) {
+	return c.getSalesByTimeSlot.CallUnary(ctx, req)
+}
+
+// GetSalesByPaymentType calls cafelogos.pos.PosService.GetSalesByPaymentType.
+func (c *posServiceClient) GetSalesByPaymentType(ctx context.Context, req *connect.Request[pos.GetSalesByPaymentTypeRequest]) (*connect.Response[pos.GetSalesByPaymentTypeResponse], error) {
+	return c.getSalesByPaymentType.CallUnary(ctx, req)
 }
 
 // PosServiceHandler is an implementation of the cafelogos.pos.PosService service.
@@ -533,11 +584,15 @@ type PosServiceHandler interface {
 	DeleteAllOrders(context.Context, *connect.Request[common.Empty]) (*connect.Response[common.Empty], error)
 	PostSeat(context.Context, *connect.Request[pos.PostSeatRequest]) (*connect.Response[common.Empty], error)
 	UpdateSeat(context.Context, *connect.Request[pos.UpdateSeatRequest]) (*connect.Response[common.Empty], error)
+	DeleteSeat(context.Context, *connect.Request[pos.DeleteSeatRequest]) (*connect.Response[common.Empty], error)
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
 	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
 	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
-	GetDailySales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error)
-	GetProductSales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error)
+	GetDailySales(context.Context, *connect.Request[pos.GetDailySalesRequest]) (*connect.Response[pos.GetDailySalesResponse], error)
+	GetProductSales(context.Context, *connect.Request[pos.GetProductSalesRequest]) (*connect.Response[pos.GetProductSalesResponse], error)
+	// 売上分析用のメソッド
+	GetSalesByTimeSlot(context.Context, *connect.Request[pos.GetSalesByTimeSlotRequest]) (*connect.Response[pos.GetSalesByTimeSlotResponse], error)
+	GetSalesByPaymentType(context.Context, *connect.Request[pos.GetSalesByPaymentTypeRequest]) (*connect.Response[pos.GetSalesByPaymentTypeResponse], error)
 }
 
 // NewPosServiceHandler builds an HTTP handler from the service implementation. It returns the path
@@ -678,6 +733,12 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		connect.WithSchema(posServiceUpdateSeatMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	posServiceDeleteSeatHandler := connect.NewUnaryHandler(
+		PosServiceDeleteSeatProcedure,
+		svc.DeleteSeat,
+		connect.WithSchema(posServiceDeleteSeatMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	posServiceGetSeatsHandler := connect.NewUnaryHandler(
 		PosServiceGetSeatsProcedure,
 		svc.GetSeats,
@@ -706,6 +767,18 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		PosServiceGetProductSalesProcedure,
 		svc.GetProductSales,
 		connect.WithSchema(posServiceGetProductSalesMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	posServiceGetSalesByTimeSlotHandler := connect.NewUnaryHandler(
+		PosServiceGetSalesByTimeSlotProcedure,
+		svc.GetSalesByTimeSlot,
+		connect.WithSchema(posServiceGetSalesByTimeSlotMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
+	posServiceGetSalesByPaymentTypeHandler := connect.NewUnaryHandler(
+		PosServiceGetSalesByPaymentTypeProcedure,
+		svc.GetSalesByPaymentType,
+		connect.WithSchema(posServiceGetSalesByPaymentTypeMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/cafelogos.pos.PosService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -754,6 +827,8 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServicePostSeatHandler.ServeHTTP(w, r)
 		case PosServiceUpdateSeatProcedure:
 			posServiceUpdateSeatHandler.ServeHTTP(w, r)
+		case PosServiceDeleteSeatProcedure:
+			posServiceDeleteSeatHandler.ServeHTTP(w, r)
 		case PosServiceGetSeatsProcedure:
 			posServiceGetSeatsHandler.ServeHTTP(w, r)
 		case PosServiceGetDiscountsProcedure:
@@ -764,6 +839,10 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServiceGetDailySalesHandler.ServeHTTP(w, r)
 		case PosServiceGetProductSalesProcedure:
 			posServiceGetProductSalesHandler.ServeHTTP(w, r)
+		case PosServiceGetSalesByTimeSlotProcedure:
+			posServiceGetSalesByTimeSlotHandler.ServeHTTP(w, r)
+		case PosServiceGetSalesByPaymentTypeProcedure:
+			posServiceGetSalesByPaymentTypeHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -861,6 +940,10 @@ func (UnimplementedPosServiceHandler) UpdateSeat(context.Context, *connect.Reque
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.UpdateSeat is not implemented"))
 }
 
+func (UnimplementedPosServiceHandler) DeleteSeat(context.Context, *connect.Request[pos.DeleteSeatRequest]) (*connect.Response[common.Empty], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.DeleteSeat is not implemented"))
+}
+
 func (UnimplementedPosServiceHandler) GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetSeats is not implemented"))
 }
@@ -873,10 +956,18 @@ func (UnimplementedPosServiceHandler) PostDiscount(context.Context, *connect.Req
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.PostDiscount is not implemented"))
 }
 
-func (UnimplementedPosServiceHandler) GetDailySales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDailySalesResponse], error) {
+func (UnimplementedPosServiceHandler) GetDailySales(context.Context, *connect.Request[pos.GetDailySalesRequest]) (*connect.Response[pos.GetDailySalesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetDailySales is not implemented"))
 }
 
-func (UnimplementedPosServiceHandler) GetProductSales(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetProductSalesResponse], error) {
+func (UnimplementedPosServiceHandler) GetProductSales(context.Context, *connect.Request[pos.GetProductSalesRequest]) (*connect.Response[pos.GetProductSalesResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetProductSales is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) GetSalesByTimeSlot(context.Context, *connect.Request[pos.GetSalesByTimeSlotRequest]) (*connect.Response[pos.GetSalesByTimeSlotResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetSalesByTimeSlot is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) GetSalesByPaymentType(context.Context, *connect.Request[pos.GetSalesByPaymentTypeRequest]) (*connect.Response[pos.GetSalesByPaymentTypeResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetSalesByPaymentType is not implemented"))
 }

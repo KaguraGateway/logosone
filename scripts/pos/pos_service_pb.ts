@@ -1120,6 +1120,43 @@ export class UpdateSeatRequest extends Message<UpdateSeatRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.DeleteSeatRequest
+ */
+export class DeleteSeatRequest extends Message<DeleteSeatRequest> {
+  /**
+   * @generated from field: string seat_id = 1;
+   */
+  seatId = "";
+
+  constructor(data?: PartialMessage<DeleteSeatRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.DeleteSeatRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteSeatRequest {
+    return new DeleteSeatRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteSeatRequest {
+    return new DeleteSeatRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteSeatRequest {
+    return new DeleteSeatRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: DeleteSeatRequest | PlainMessage<DeleteSeatRequest> | undefined, b: DeleteSeatRequest | PlainMessage<DeleteSeatRequest> | undefined): boolean {
+    return proto3.util.equals(DeleteSeatRequest, a, b);
+  }
+}
+
+/**
  * @generated from message cafelogos.pos.GetSeatsResponse
  */
 export class GetSeatsResponse extends Message<GetSeatsResponse> {
@@ -1366,6 +1403,53 @@ export class PostDiscountRequest extends Message<PostDiscountRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.GetDailySalesRequest
+ */
+export class GetDailySalesRequest extends Message<GetDailySalesRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string start_date = 1;
+   */
+  startDate = "";
+
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate = "";
+
+  constructor(data?: PartialMessage<GetDailySalesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetDailySalesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDailySalesRequest {
+    return new GetDailySalesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDailySalesRequest {
+    return new GetDailySalesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDailySalesRequest {
+    return new GetDailySalesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetDailySalesRequest | PlainMessage<GetDailySalesRequest> | undefined, b: GetDailySalesRequest | PlainMessage<GetDailySalesRequest> | undefined): boolean {
+    return proto3.util.equals(GetDailySalesRequest, a, b);
+  }
+}
+
+/**
  * @generated from message cafelogos.pos.GetDailySalesResponse
  */
 export class GetDailySalesResponse extends Message<GetDailySalesResponse> {
@@ -1399,6 +1483,327 @@ export class GetDailySalesResponse extends Message<GetDailySalesResponse> {
 
   static equals(a: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined, b: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined): boolean {
     return proto3.util.equals(GetDailySalesResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.GetProductSalesRequest
+ */
+export class GetProductSalesRequest extends Message<GetProductSalesRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string start_date = 1;
+   */
+  startDate = "";
+
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate = "";
+
+  constructor(data?: PartialMessage<GetProductSalesRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetProductSalesRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetProductSalesRequest {
+    return new GetProductSalesRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetProductSalesRequest {
+    return new GetProductSalesRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetProductSalesRequest {
+    return new GetProductSalesRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetProductSalesRequest | PlainMessage<GetProductSalesRequest> | undefined, b: GetProductSalesRequest | PlainMessage<GetProductSalesRequest> | undefined): boolean {
+    return proto3.util.equals(GetProductSalesRequest, a, b);
+  }
+}
+
+/**
+ * 時間帯別売上取得用
+ *
+ * @generated from message cafelogos.pos.GetSalesByTimeSlotRequest
+ */
+export class GetSalesByTimeSlotRequest extends Message<GetSalesByTimeSlotRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD), デフォルトは今日
+   *
+   * @generated from field: string date = 1;
+   */
+  date = "";
+
+  constructor(data?: PartialMessage<GetSalesByTimeSlotRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByTimeSlotRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByTimeSlotRequest {
+    return new GetSalesByTimeSlotRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotRequest {
+    return new GetSalesByTimeSlotRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotRequest {
+    return new GetSalesByTimeSlotRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetSalesByTimeSlotRequest | PlainMessage<GetSalesByTimeSlotRequest> | undefined, b: GetSalesByTimeSlotRequest | PlainMessage<GetSalesByTimeSlotRequest> | undefined): boolean {
+    return proto3.util.equals(GetSalesByTimeSlotRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.GetSalesByTimeSlotResponse
+ */
+export class GetSalesByTimeSlotResponse extends Message<GetSalesByTimeSlotResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.TimeSlotSale time_slot_sales = 1;
+   */
+  timeSlotSales: TimeSlotSale[] = [];
+
+  constructor(data?: PartialMessage<GetSalesByTimeSlotResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByTimeSlotResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "time_slot_sales", kind: "message", T: TimeSlotSale, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByTimeSlotResponse {
+    return new GetSalesByTimeSlotResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotResponse {
+    return new GetSalesByTimeSlotResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotResponse {
+    return new GetSalesByTimeSlotResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetSalesByTimeSlotResponse | PlainMessage<GetSalesByTimeSlotResponse> | undefined, b: GetSalesByTimeSlotResponse | PlainMessage<GetSalesByTimeSlotResponse> | undefined): boolean {
+    return proto3.util.equals(GetSalesByTimeSlotResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.TimeSlotSale
+ */
+export class TimeSlotSale extends Message<TimeSlotSale> {
+  /**
+   * 例: "10:00-10:30"
+   *
+   * @generated from field: string time_slot = 1;
+   */
+  timeSlot = "";
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 2;
+   */
+  totalSales = protoInt64.zero;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 3;
+   */
+  totalQuantity = protoInt64.zero;
+
+  constructor(data?: PartialMessage<TimeSlotSale>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.TimeSlotSale";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "time_slot", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 3, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TimeSlotSale {
+    return new TimeSlotSale().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TimeSlotSale {
+    return new TimeSlotSale().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TimeSlotSale {
+    return new TimeSlotSale().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: TimeSlotSale | PlainMessage<TimeSlotSale> | undefined, b: TimeSlotSale | PlainMessage<TimeSlotSale> | undefined): boolean {
+    return proto3.util.equals(TimeSlotSale, a, b);
+  }
+}
+
+/**
+ * 支払い方法別売上取得用
+ *
+ * @generated from message cafelogos.pos.GetSalesByPaymentTypeRequest
+ */
+export class GetSalesByPaymentTypeRequest extends Message<GetSalesByPaymentTypeRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string start_date = 1;
+   */
+  startDate = "";
+
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate = "";
+
+  constructor(data?: PartialMessage<GetSalesByPaymentTypeRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByPaymentTypeRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByPaymentTypeRequest {
+    return new GetSalesByPaymentTypeRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeRequest {
+    return new GetSalesByPaymentTypeRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeRequest {
+    return new GetSalesByPaymentTypeRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetSalesByPaymentTypeRequest | PlainMessage<GetSalesByPaymentTypeRequest> | undefined, b: GetSalesByPaymentTypeRequest | PlainMessage<GetSalesByPaymentTypeRequest> | undefined): boolean {
+    return proto3.util.equals(GetSalesByPaymentTypeRequest, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.GetSalesByPaymentTypeResponse
+ */
+export class GetSalesByPaymentTypeResponse extends Message<GetSalesByPaymentTypeResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.PaymentTypeSale payment_type_sales = 1;
+   */
+  paymentTypeSales: PaymentTypeSale[] = [];
+
+  constructor(data?: PartialMessage<GetSalesByPaymentTypeResponse>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByPaymentTypeResponse";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "payment_type_sales", kind: "message", T: PaymentTypeSale, repeated: true },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByPaymentTypeResponse {
+    return new GetSalesByPaymentTypeResponse().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeResponse {
+    return new GetSalesByPaymentTypeResponse().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeResponse {
+    return new GetSalesByPaymentTypeResponse().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: GetSalesByPaymentTypeResponse | PlainMessage<GetSalesByPaymentTypeResponse> | undefined, b: GetSalesByPaymentTypeResponse | PlainMessage<GetSalesByPaymentTypeResponse> | undefined): boolean {
+    return proto3.util.equals(GetSalesByPaymentTypeResponse, a, b);
+  }
+}
+
+/**
+ * @generated from message cafelogos.pos.PaymentTypeSale
+ */
+export class PaymentTypeSale extends Message<PaymentTypeSale> {
+  /**
+   * 0: Cash, 1: External
+   *
+   * @generated from field: int32 payment_type = 1;
+   */
+  paymentType = 0;
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 3;
+   */
+  totalSales = protoInt64.zero;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 4;
+   */
+  totalQuantity = protoInt64.zero;
+
+  constructor(data?: PartialMessage<PaymentTypeSale>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.PaymentTypeSale";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "payment_type", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentTypeSale {
+    return new PaymentTypeSale().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentTypeSale {
+    return new PaymentTypeSale().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentTypeSale {
+    return new PaymentTypeSale().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: PaymentTypeSale | PlainMessage<PaymentTypeSale> | undefined, b: PaymentTypeSale | PlainMessage<PaymentTypeSale> | undefined): boolean {
+    return proto3.util.equals(PaymentTypeSale, a, b);
   }
 }
 
@@ -2604,6 +3009,8 @@ export class Seat extends Message<Seat> {
  */
 export class DailySale extends Message<DailySale> {
   /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
    * @generated from field: string date = 1;
    */
   date = "";
@@ -2680,6 +3087,22 @@ export class ProductSale extends Message<ProductSale> {
    */
   totalQuantity = protoInt64.zero;
 
+  /**
+   * コーヒー淹れ方用のフィールド
+   *
+   * コーヒー淹れ方ID
+   *
+   * @generated from field: string coffee_brew_id = 7;
+   */
+  coffeeBrewId = "";
+
+  /**
+   * コーヒー淹れ方名
+   *
+   * @generated from field: string coffee_brew_name = 8;
+   */
+  coffeeBrewName = "";
+
   constructor(data?: PartialMessage<ProductSale>) {
     super();
     proto3.util.initPartial(data, this);
@@ -2692,6 +3115,8 @@ export class ProductSale extends Message<ProductSale> {
     { no: 2, name: "product_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 7, name: "coffee_brew_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "coffee_brew_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ProductSale {

@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, DeleteSeatRequest, GetCoffeeBeansResponse, GetDailySalesRequest, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesRequest, GetProductSalesResponse, GetProductsResponse, GetSalesByPaymentTypeRequest, GetSalesByPaymentTypeResponse, GetSalesByTimeSlotRequest, GetSalesByTimeSlotResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 import { Empty } from "../common/common_pb.js";
 
@@ -214,6 +214,15 @@ export const PosService = {
       kind: MethodKind.Unary,
     },
     /**
+     * @generated from rpc cafelogos.pos.PosService.DeleteSeat
+     */
+    deleteSeat: {
+      name: "DeleteSeat",
+      I: DeleteSeatRequest,
+      O: Empty,
+      kind: MethodKind.Unary,
+    },
+    /**
      * @generated from rpc cafelogos.pos.PosService.GetSeats
      */
     getSeats: {
@@ -245,7 +254,7 @@ export const PosService = {
      */
     getDailySales: {
       name: "GetDailySales",
-      I: Empty,
+      I: GetDailySalesRequest,
       O: GetDailySalesResponse,
       kind: MethodKind.Unary,
     },
@@ -254,8 +263,28 @@ export const PosService = {
      */
     getProductSales: {
       name: "GetProductSales",
-      I: Empty,
+      I: GetProductSalesRequest,
       O: GetProductSalesResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * 売上分析用のメソッド
+     *
+     * @generated from rpc cafelogos.pos.PosService.GetSalesByTimeSlot
+     */
+    getSalesByTimeSlot: {
+      name: "GetSalesByTimeSlot",
+      I: GetSalesByTimeSlotRequest,
+      O: GetSalesByTimeSlotResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc cafelogos.pos.PosService.GetSalesByPaymentType
+     */
+    getSalesByPaymentType: {
+      name: "GetSalesByPaymentType",
+      I: GetSalesByPaymentTypeRequest,
+      O: GetSalesByPaymentTypeResponse,
       kind: MethodKind.Unary,
     },
   }

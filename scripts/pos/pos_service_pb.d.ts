@@ -751,6 +751,30 @@ export declare class UpdateSeatRequest extends Message<UpdateSeatRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.DeleteSeatRequest
+ */
+export declare class DeleteSeatRequest extends Message<DeleteSeatRequest> {
+  /**
+   * @generated from field: string seat_id = 1;
+   */
+  seatId: string;
+
+  constructor(data?: PartialMessage<DeleteSeatRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.DeleteSeatRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): DeleteSeatRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): DeleteSeatRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): DeleteSeatRequest;
+
+  static equals(a: DeleteSeatRequest | PlainMessage<DeleteSeatRequest> | undefined, b: DeleteSeatRequest | PlainMessage<DeleteSeatRequest> | undefined): boolean;
+}
+
+/**
  * @generated from message cafelogos.pos.GetSeatsResponse
  */
 export declare class GetSeatsResponse extends Message<GetSeatsResponse> {
@@ -915,6 +939,39 @@ export declare class PostDiscountRequest extends Message<PostDiscountRequest> {
 }
 
 /**
+ * @generated from message cafelogos.pos.GetDailySalesRequest
+ */
+export declare class GetDailySalesRequest extends Message<GetDailySalesRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string start_date = 1;
+   */
+  startDate: string;
+
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate: string;
+
+  constructor(data?: PartialMessage<GetDailySalesRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetDailySalesRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetDailySalesRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetDailySalesRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDailySalesRequest;
+
+  static equals(a: GetDailySalesRequest | PlainMessage<GetDailySalesRequest> | undefined, b: GetDailySalesRequest | PlainMessage<GetDailySalesRequest> | undefined): boolean;
+}
+
+/**
  * @generated from message cafelogos.pos.GetDailySalesResponse
  */
 export declare class GetDailySalesResponse extends Message<GetDailySalesResponse> {
@@ -936,6 +993,230 @@ export declare class GetDailySalesResponse extends Message<GetDailySalesResponse
   static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetDailySalesResponse;
 
   static equals(a: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined, b: GetDailySalesResponse | PlainMessage<GetDailySalesResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetProductSalesRequest
+ */
+export declare class GetProductSalesRequest extends Message<GetProductSalesRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string start_date = 1;
+   */
+  startDate: string;
+
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate: string;
+
+  constructor(data?: PartialMessage<GetProductSalesRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetProductSalesRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetProductSalesRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetProductSalesRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetProductSalesRequest;
+
+  static equals(a: GetProductSalesRequest | PlainMessage<GetProductSalesRequest> | undefined, b: GetProductSalesRequest | PlainMessage<GetProductSalesRequest> | undefined): boolean;
+}
+
+/**
+ * 時間帯別売上取得用
+ *
+ * @generated from message cafelogos.pos.GetSalesByTimeSlotRequest
+ */
+export declare class GetSalesByTimeSlotRequest extends Message<GetSalesByTimeSlotRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD), デフォルトは今日
+   *
+   * @generated from field: string date = 1;
+   */
+  date: string;
+
+  constructor(data?: PartialMessage<GetSalesByTimeSlotRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByTimeSlotRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByTimeSlotRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotRequest;
+
+  static equals(a: GetSalesByTimeSlotRequest | PlainMessage<GetSalesByTimeSlotRequest> | undefined, b: GetSalesByTimeSlotRequest | PlainMessage<GetSalesByTimeSlotRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetSalesByTimeSlotResponse
+ */
+export declare class GetSalesByTimeSlotResponse extends Message<GetSalesByTimeSlotResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.TimeSlotSale time_slot_sales = 1;
+   */
+  timeSlotSales: TimeSlotSale[];
+
+  constructor(data?: PartialMessage<GetSalesByTimeSlotResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByTimeSlotResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByTimeSlotResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByTimeSlotResponse;
+
+  static equals(a: GetSalesByTimeSlotResponse | PlainMessage<GetSalesByTimeSlotResponse> | undefined, b: GetSalesByTimeSlotResponse | PlainMessage<GetSalesByTimeSlotResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.TimeSlotSale
+ */
+export declare class TimeSlotSale extends Message<TimeSlotSale> {
+  /**
+   * 例: "10:00-10:30"
+   *
+   * @generated from field: string time_slot = 1;
+   */
+  timeSlot: string;
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 2;
+   */
+  totalSales: bigint;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 3;
+   */
+  totalQuantity: bigint;
+
+  constructor(data?: PartialMessage<TimeSlotSale>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.TimeSlotSale";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TimeSlotSale;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): TimeSlotSale;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): TimeSlotSale;
+
+  static equals(a: TimeSlotSale | PlainMessage<TimeSlotSale> | undefined, b: TimeSlotSale | PlainMessage<TimeSlotSale> | undefined): boolean;
+}
+
+/**
+ * 支払い方法別売上取得用
+ *
+ * @generated from message cafelogos.pos.GetSalesByPaymentTypeRequest
+ */
+export declare class GetSalesByPaymentTypeRequest extends Message<GetSalesByPaymentTypeRequest> {
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string start_date = 1;
+   */
+  startDate: string;
+
+  /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate: string;
+
+  constructor(data?: PartialMessage<GetSalesByPaymentTypeRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByPaymentTypeRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByPaymentTypeRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeRequest;
+
+  static equals(a: GetSalesByPaymentTypeRequest | PlainMessage<GetSalesByPaymentTypeRequest> | undefined, b: GetSalesByPaymentTypeRequest | PlainMessage<GetSalesByPaymentTypeRequest> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.GetSalesByPaymentTypeResponse
+ */
+export declare class GetSalesByPaymentTypeResponse extends Message<GetSalesByPaymentTypeResponse> {
+  /**
+   * @generated from field: repeated cafelogos.pos.PaymentTypeSale payment_type_sales = 1;
+   */
+  paymentTypeSales: PaymentTypeSale[];
+
+  constructor(data?: PartialMessage<GetSalesByPaymentTypeResponse>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.GetSalesByPaymentTypeResponse";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetSalesByPaymentTypeResponse;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeResponse;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): GetSalesByPaymentTypeResponse;
+
+  static equals(a: GetSalesByPaymentTypeResponse | PlainMessage<GetSalesByPaymentTypeResponse> | undefined, b: GetSalesByPaymentTypeResponse | PlainMessage<GetSalesByPaymentTypeResponse> | undefined): boolean;
+}
+
+/**
+ * @generated from message cafelogos.pos.PaymentTypeSale
+ */
+export declare class PaymentTypeSale extends Message<PaymentTypeSale> {
+  /**
+   * 0: Cash, 1: External
+   *
+   * @generated from field: int32 payment_type = 1;
+   */
+  paymentType: number;
+
+  /**
+   * 総売上
+   *
+   * @generated from field: uint64 total_sales = 3;
+   */
+  totalSales: bigint;
+
+  /**
+   * 総数量
+   *
+   * @generated from field: uint64 total_quantity = 4;
+   */
+  totalQuantity: bigint;
+
+  constructor(data?: PartialMessage<PaymentTypeSale>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.PaymentTypeSale";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): PaymentTypeSale;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): PaymentTypeSale;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): PaymentTypeSale;
+
+  static equals(a: PaymentTypeSale | PlainMessage<PaymentTypeSale> | undefined, b: PaymentTypeSale | PlainMessage<PaymentTypeSale> | undefined): boolean;
 }
 
 /**
@@ -1823,6 +2104,8 @@ export declare class Seat extends Message<Seat> {
  */
 export declare class DailySale extends Message<DailySale> {
   /**
+   * ISO8601形式 (YYYY-MM-DD)
+   *
    * @generated from field: string date = 1;
    */
   date: string;
@@ -1883,6 +2166,22 @@ export declare class ProductSale extends Message<ProductSale> {
    * @generated from field: uint64 total_quantity = 4;
    */
   totalQuantity: bigint;
+
+  /**
+   * コーヒー淹れ方用のフィールド
+   *
+   * コーヒー淹れ方ID
+   *
+   * @generated from field: string coffee_brew_id = 7;
+   */
+  coffeeBrewId: string;
+
+  /**
+   * コーヒー淹れ方名
+   *
+   * @generated from field: string coffee_brew_name = 8;
+   */
+  coffeeBrewName: string;
 
   constructor(data?: PartialMessage<ProductSale>);
 

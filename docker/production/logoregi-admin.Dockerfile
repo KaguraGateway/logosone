@@ -4,7 +4,7 @@ WORKDIR /usr/src/app/logos
 
 # 全部コピーしてこないとworkspaceの都合でbun installがコケる
 # 本当はpackage.jsonのみだけでいけるはず
-COPY .. ./
+COPY . ./
 
 WORKDIR /usr/src/app/logos/logoregi-admin
 ARG NEXT_PUBLIC_GRPC_HOST

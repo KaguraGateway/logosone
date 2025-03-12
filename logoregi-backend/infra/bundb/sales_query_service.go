@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
+	"github.com/KaguraGateway/logosone/logoregi-backend/application/dto"
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
 )
@@ -20,7 +20,7 @@ func NewSalesQueryServiceDb(i *do.Injector) (application.SalesQueryService, erro
 }
 
 // 日別売上を取得
-func (i *salesQueryServiceDb) FindDailySales(ctx context.Context, startDate, endDate time.Time) ([]*pos.DailySale, error) {
+func (i *salesQueryServiceDb) FindDailySales(ctx context.Context, startDate, endDate time.Time) ([]*dto.DailySaleDto, error) {
 	var results []struct {
 		Date          time.Time `bun:"date"`
 		TotalSales    uint64    `bun:"total_sales"`
@@ -50,9 +50,9 @@ func (i *salesQueryServiceDb) FindDailySales(ctx context.Context, startDate, end
 		return nil, err
 	}
 
-	dailySales := make([]*pos.DailySale, 0, len(results))
+	dailySales := make([]*dto.DailySaleDto, 0, len(results))
 	for _, result := range results {
-		dailySales = append(dailySales, &pos.DailySale{
+		dailySales = append(dailySales, &dto.DailySaleDto{
 			Date:          result.Date.Format("2006-01-02"),
 			TotalSales:    result.TotalSales,
 			TotalQuantity: result.TotalQuantity,
@@ -63,7 +63,7 @@ func (i *salesQueryServiceDb) FindDailySales(ctx context.Context, startDate, end
 }
 
 // 商品別売上を取得
-func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, endDate time.Time) ([]*pos.ProductSale, error) {
+func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, endDate time.Time) ([]*dto.ProductSaleDto, error) {
 	var results []struct {
 		ProductId      string  `bun:"product_id"`
 		ProductName    string  `bun:"product_name"`
@@ -105,9 +105,9 @@ func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, e
 		return nil, err
 	}
 
-	productSales := make([]*pos.ProductSale, 0, len(results))
+	productSales := make([]*dto.ProductSaleDto, 0, len(results))
 	for _, result := range results {
-		productSale := &pos.ProductSale{
+		productSale := &dto.ProductSaleDto{
 			ProductId:     result.ProductId,
 			ProductName:   result.ProductName,
 			TotalSales:    result.TotalSales,
@@ -128,7 +128,7 @@ func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, e
 }
 
 // 時間帯別売上を取得
-func (i *salesQueryServiceDb) FindSalesByTimeSlot(ctx context.Context, date time.Time) ([]*pos.TimeSlotSale, error) {
+func (i *salesQueryServiceDb) FindSalesByTimeSlot(ctx context.Context, date time.Time) ([]*dto.TimeSlotSaleDto, error) {
 	var results []struct {
 		Hour          int    `bun:"hour"`
 		Minute        int    `bun:"minute"`
@@ -160,13 +160,13 @@ func (i *salesQueryServiceDb) FindSalesByTimeSlot(ctx context.Context, date time
 		return nil, err
 	}
 
-	timeSlotSales := make([]*pos.TimeSlotSale, 0, len(results))
+	timeSlotSales := make([]*dto.TimeSlotSaleDto, 0, len(results))
 	for _, result := range results {
 		timeSlot := fmt.Sprintf("%02d:%02d-%02d:%02d", 
 			result.Hour, result.Minute, 
 			result.Hour + (result.Minute+30)/60, (result.Minute+30)%60)
 		
-		timeSlotSales = append(timeSlotSales, &pos.TimeSlotSale{
+		timeSlotSales = append(timeSlotSales, &dto.TimeSlotSaleDto{
 			TimeSlot:      timeSlot,
 			TotalSales:    result.TotalSales,
 			TotalQuantity: result.TotalQuantity,
@@ -177,7 +177,7 @@ func (i *salesQueryServiceDb) FindSalesByTimeSlot(ctx context.Context, date time
 }
 
 // 支払い方法別売上を取得
-func (i *salesQueryServiceDb) FindSalesByPaymentType(ctx context.Context, startDate, endDate time.Time) ([]*pos.PaymentTypeSale, error) {
+func (i *salesQueryServiceDb) FindSalesByPaymentType(ctx context.Context, startDate, endDate time.Time) ([]*dto.PaymentTypeSaleDto, error) {
 	var results []struct {
 		PaymentType   int    `bun:"payment_type"`
 		TotalSales    uint64 `bun:"total_sales"`
@@ -207,10 +207,10 @@ func (i *salesQueryServiceDb) FindSalesByPaymentType(ctx context.Context, startD
 		return nil, err
 	}
 
-	paymentTypeSales := make([]*pos.PaymentTypeSale, 0, len(results))
+	paymentTypeSales := make([]*dto.PaymentTypeSaleDto, 0, len(results))
 	for _, result := range results {
-		paymentTypeSales = append(paymentTypeSales, &pos.PaymentTypeSale{
-			PaymentType:   int32(result.PaymentType),
+		paymentTypeSales = append(paymentTypeSales, &dto.PaymentTypeSaleDto{
+			PaymentType:   result.PaymentType,
 			TotalSales:    result.TotalSales,
 			TotalQuantity: result.TotalQuantity,
 		})

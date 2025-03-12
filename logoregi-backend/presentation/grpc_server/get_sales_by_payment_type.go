@@ -8,7 +8,9 @@ import (
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
+	"github.com/KaguraGateway/logosone/logoregi-backend/application/dto"
 	"github.com/samber/do"
+	"github.com/samber/lo"
 )
 
 func (s *GrpcServer) GetSalesByPaymentType(ctx context.Context, req *connect.Request[pos.GetSalesByPaymentTypeRequest]) (*connect.Response[pos.GetSalesByPaymentTypeResponse], error) {
@@ -30,6 +32,8 @@ func (s *GrpcServer) GetSalesByPaymentType(ctx context.Context, req *connect.Req
 	}
 	
 	return connect.NewResponse(&pos.GetSalesByPaymentTypeResponse{
-		PaymentTypeSales: paymentTypeSales,
+		PaymentTypeSales: lo.Map(paymentTypeSales, func(sale *dto.PaymentTypeSaleDto, _ int) *pos.PaymentTypeSale {
+			return ToPaymentTypeSaleProto(sale)
+		}),
 	}), nil
 }

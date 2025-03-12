@@ -5,7 +5,7 @@ import (
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
+	"github.com/KaguraGateway/logosone/logoregi-backend/application/dto"
 	"github.com/samber/do"
 )
 
@@ -19,6 +19,6 @@ func NewGetProductSales(i *do.Injector) (*GetProductSales, error) {
 	}, nil
 }
 
-func (u *GetProductSales) Execute(ctx context.Context, startDate, endDate synchro.Time[tz.UTC]) ([]*pos.ProductSale, error) {
+func (u *GetProductSales) Execute(ctx context.Context, startDate, endDate synchro.Time[tz.UTC]) ([]*dto.ProductSaleDto, error) {
 	return u.salesQueryService.FindProductSales(ctx, startDate.StdTime(), endDate.StdTime())
 }

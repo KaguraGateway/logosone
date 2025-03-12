@@ -5,7 +5,7 @@ import (
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
+	"github.com/KaguraGateway/logosone/logoregi-backend/application/dto"
 	"github.com/samber/do"
 )
 
@@ -19,6 +19,6 @@ func NewGetDailySales(i *do.Injector) (*GetDailySales, error) {
 	}, nil
 }
 
-func (u *GetDailySales) Execute(ctx context.Context, startDate, endDate synchro.Time[tz.UTC]) ([]*pos.DailySale, error) {
+func (u *GetDailySales) Execute(ctx context.Context, startDate, endDate synchro.Time[tz.UTC]) ([]*dto.DailySaleDto, error) {
 	return u.salesQueryService.FindDailySales(ctx, startDate.StdTime(), endDate.StdTime())
 }

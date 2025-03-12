@@ -46,8 +46,14 @@ service PosService {
     rpc GetDiscounts(common.Empty) returns (GetDiscountsResponse) {}
     rpc PostDiscount(PostDiscountRequest) returns (common.Empty) {}
 
-    rpc GetDailySales(common.Empty) returns (GetDailySalesResponse) {}
-    rpc GetProductSales(common.Empty) returns (GetProductSalesResponse) {}
+    rpc GetDailySales(GetDailySalesRequest) returns (GetDailySalesResponse) {}
+    rpc GetProductSales(GetProductSalesRequest) returns (GetProductSalesResponse) {}
+    
+    // 売上分析用のメソッド
+    rpc GetTodaySales(GetTodaySalesRequest) returns (GetTodaySalesResponse) {}
+    rpc GetSalesByTimeSlot(GetSalesByTimeSlotRequest) returns (GetSalesByTimeSlotResponse) {}
+    rpc GetSalesByPaymentType(GetSalesByPaymentTypeRequest) returns (GetSalesByPaymentTypeResponse) {}
+    rpc GetCoffeeBrewSales(GetCoffeeBrewSalesRequest) returns (GetCoffeeBrewSalesResponse) {}
 }
 
 /**
@@ -183,12 +189,80 @@ message PostDiscountRequest {
     uint64 discount_price = 3;
 }
 
+message GetDailySalesRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
 message GetDailySalesResponse {
     repeated DailySale daily_sales = 1;
 }
 
+message GetProductSalesRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
 message GetProductSalesResponse {
     repeated ProductSale product_sales = 1;
+}
+
+// 今日の売上取得用
+message GetTodaySalesRequest {}
+
+message GetTodaySalesResponse {
+    uint64 total_sales = 1; // 総売上
+    uint64 total_quantity = 2; // 総数量
+    string date = 3; // ISO8601形式 (YYYY-MM-DD)
+}
+
+// 時間帯別売上取得用
+message GetSalesByTimeSlotRequest {
+    string date = 1; // ISO8601形式 (YYYY-MM-DD), デフォルトは今日
+}
+
+message GetSalesByTimeSlotResponse {
+    repeated TimeSlotSale time_slot_sales = 1;
+}
+
+message TimeSlotSale {
+    string time_slot = 1; // 例: "10:00-10:30"
+    uint64 total_sales = 2; // 総売上
+    uint64 total_quantity = 3; // 総数量
+}
+
+// 支払い方法別売上取得用
+message GetSalesByPaymentTypeRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
+message GetSalesByPaymentTypeResponse {
+    repeated PaymentTypeSale payment_type_sales = 1;
+}
+
+message PaymentTypeSale {
+    int32 payment_type = 1; // 0: Cash, 1: External
+    string payment_type_name = 2; // "現金", "電子決済" など
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
+}
+
+// コーヒー淹れ方別売上取得用
+message GetCoffeeBrewSalesRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
+message GetCoffeeBrewSalesResponse {
+    repeated CoffeeBrewSale coffee_brew_sales = 1;
+}
+
+message CoffeeBrewSale {
+    string coffee_brew_id = 1;
+    string coffee_brew_name = 2;
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
 }
 
 /**
@@ -364,7 +438,7 @@ message Seat {
 }
 
 message DailySale {
-    string date = 1;
+    string date = 1; // ISO8601形式 (YYYY-MM-DD)
     uint64 total_sales = 2; // 総売上
     uint64 total_quantity = 3; // 総数量
 }

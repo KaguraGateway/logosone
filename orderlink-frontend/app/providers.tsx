@@ -29,6 +29,16 @@ const theme = extendTheme({
         },
       },
     },
+    Checkbox: {
+      sizes: {
+        xl: {
+          control: {
+            w: '1.5rem',
+            h: '1.5rem',
+          },
+        },
+      },
+    },
   },
 });
 

@@ -1,9 +1,10 @@
+'use client';
+
+import { Box, Flex, List } from '@chakra-ui/react';
 import { AiOutlineHistory, AiOutlineHome } from 'react-icons/ai';
 import { FaChartPie, FaJava, FaReact } from 'react-icons/fa';
 import { GiTable } from 'react-icons/gi';
 import { TbShoppingBagDiscount } from 'react-icons/tb';
-
-import { styled } from '@/panda/jsx';
 
 import { Navigation, NavItem } from './NavItem';
 
@@ -47,10 +48,19 @@ const navigations: Array<Navigation> = [
 
 export default function Sidebar() {
   return (
-    <styled.ul display="flex" flexDir="column" textStyle="xl" fontWeight="medium" listStyle="none">
+    <Box
+      display='flex'
+      flexDirection="column"
+      as="ul"
+      p={6}
+      m={0}
+      borderRadius='24px'
+      backgroundColor='white'
+      gap="2px"
+    >
       {navigations.map((link) => (
         <NavItem key={link.label} {...link} />
       ))}
-    </styled.ul>
+    </Box>
   );
 }

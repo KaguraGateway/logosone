@@ -1,13 +1,12 @@
-import { Radio, RadioControl, RadioGroup, RadioGroupLabel, RadioLabel } from '@ark-ui/react';
+'use client';
 
-import { Box } from '@/panda/jsx';
-import { switchRadioGroup } from '@/panda/recipes';
+import { Box, Flex, Stack, Text } from '@chakra-ui/react';
 
 type Props = {
   label: string;
   value: string;
   defaultValue?: string;
-  onChange?: (details: { value: string }) => void;
+  onChange?: (value: string) => void;
   options: Array<{
     label: string;
     value: string;
@@ -16,21 +15,45 @@ type Props = {
 
 export function SwitchRadioGroup(props: Props) {
   return (
-    <RadioGroup
-      className={switchRadioGroup()}
-      onChange={props.onChange}
-      value={props.value}
-      defaultValue={props.defaultValue}
-    >
-      <RadioGroupLabel>{props.label}</RadioGroupLabel>
-      <Box display="inline-flex" w="max-content" background="gray.200" borderRadius="md" p="1" flexBasis={0}>
-        {props.options.map((option) => (
-          <Radio key={option.value} value={option.value}>
-            <RadioLabel>{option.label}</RadioLabel>
-            <RadioControl />
-          </Radio>
-        ))}
+    <Box>
+      <Text color="gray.500">{props.label}</Text>
+      <Box>
+        <Flex 
+          display="inline-flex" 
+          width="max-content" 
+          bg="gray.200" 
+          borderRadius="md" 
+          p={1}
+        >
+          <Flex direction="row" gap={0}>
+            {props.options.map((option) => (
+              <Box 
+                key={option.value} 
+                as="label"
+                position="relative"
+              >
+                <input
+                  type="radio"
+                  name="switchRadio"
+                  value={option.value}
+                  checked={props.value === option.value}
+                  onChange={(e) => props.onChange?.(e.target.value)}
+                  style={{ position: 'absolute', opacity: 0 }}
+                />
+                <Box 
+                  px={3} 
+                  py={1} 
+                  borderRadius="sm" 
+                  bg={props.value === option.value ? 'white' : 'transparent'}
+                  cursor="pointer"
+                >
+                  {option.label}
+                </Box>
+              </Box>
+            ))}
+          </Flex>
+        </Flex>
       </Box>
-    </RadioGroup>
+    </Box>
   );
 }

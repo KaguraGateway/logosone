@@ -1,30 +1,35 @@
+'use client';
+
+import { Button, ButtonProps } from '@chakra-ui/react';
 import { IconContext } from 'react-icons';
 import { FaApple } from 'react-icons/fa';
 
-import { css } from '@/panda/css';
-
-import { Button } from './Button';
-
-type Props = React.ComponentProps<typeof Button> & {
+type Props = ButtonProps & {
   isLoading: boolean;
 };
 
 export function LoadingButton(props: Props) {
-  const { isLoading, ...buttonProps } = props;
+  const { isLoading, children, ...rest } = props;
+  
   return (
     <Button
-      {...buttonProps}
+      {...rest}
+      disabled={isLoading}
       style={{
         background: isLoading ? 'linear-gradient(to right, Magenta, yellow, Cyan, Magenta) 0% center/200%' : undefined,
       }}
-      animation={props.isLoading ? 'gaming 2s linear infinite' : undefined}
     >
-      {props.isLoading && (
-        <IconContext.Provider value={{ className: css({ animation: 'spin 1s linear infinite' }) }}>
+      {isLoading && (
+        <IconContext.Provider value={{ 
+          style: { 
+            animation: 'spin 1s linear infinite',
+            marginRight: '8px'
+          } 
+        }}>
           <FaApple />
         </IconContext.Provider>
       )}
-      {props.children}
+      {children}
     </Button>
   );
 }

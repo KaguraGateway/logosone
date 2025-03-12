@@ -1,12 +1,14 @@
 'use client';
-import { Dialog, DialogBackdrop, DialogContainer, DialogContent, DialogTitle, Portal } from '@ark-ui/react';
+
+import {
+  Box,
+  HStack,
+  Stack,
+} from '@chakra-ui/react';
 import { getCoffeeBeans } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { ChangeEvent, useState } from 'react';
 
-import { css } from '@/panda/css';
-import { HStack, Stack } from '@/panda/jsx';
-import { dialog } from '@/panda/recipes';
 import { useMutationAddCoffeeBean } from '@/query/addCoffeeBean';
 import { Button } from '@/ui/form/Button';
 import { Input } from '@/ui/form/Input';
@@ -39,8 +41,6 @@ export function CoffeeBeanForm(props: Props) {
       { name: name, gramQuantity: quantity },
       {
         onSuccess: () => {
-          // TODO: ここでキャッシュを更新する
-          //client.invalidateQueries(getCoffeeBeans.getQueryKey());
           props.onCancel();
         },
         onSettled: () => {
@@ -52,26 +52,26 @@ export function CoffeeBeanForm(props: Props) {
 
   return (
     <form onSubmit={onSubmit}>
-      <Stack gap="6">
+      <Stack gap={6}>
         <Input
           label="コーヒー豆名"
           placeholder="ブラジル"
           onChange={onChangeName}
           value={name}
-          root={{ className: css({ w: '1/2' }) }}
+          root={{ width: '50%' }}
         />
         <Input
           label="残りグラム数"
           placeholder="1000"
           onChange={onChangeQuantity}
           value={quantity.toString()}
-          root={{ className: css({ w: '1/2' }) }}
+          root={{ width: '50%' }}
         />
         <HStack width="full">
-          <Button type="button" width="full" onClick={() => props.onCancel()}>
+          <Button type="button" onClick={() => props.onCancel()}>
             キャンセル
           </Button>
-          <LoadingButton type="submit" width="full" variant="success" isLoading={isLoading}>
+          <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
             作成
           </LoadingButton>
         </HStack>
@@ -86,19 +86,39 @@ type DialogProps = {
 };
 
 export function CoffeeBeanFormDialog(props: DialogProps) {
+  if (!props.isOpen) return null;
+  
   return (
-    <Dialog open={props.isOpen} onClose={props.onClose}>
-      <Portal>
-        <DialogBackdrop className={dialog()} />
-        <DialogContainer className={dialog({ size: 'md' })}>
-          <DialogContent className={css({ minW: 'xl' })}>
-            <Stack gap="4" p="4">
-              <DialogTitle>コーヒー豆を追加 / 編集</DialogTitle>
-              <CoffeeBeanForm onCancel={() => props.onClose()} />
-            </Stack>
-          </DialogContent>
-        </DialogContainer>
-      </Portal>
-    </Dialog>
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      bg="rgba(0, 0, 0, 0.4)"
+      zIndex={1000}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      onClick={props.onClose}
+    >
+      <Box
+        bg="white"
+        borderRadius="md"
+        width="auto"
+        minW="xl"
+        maxW="90%"
+        maxH="90%"
+        overflow="auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+          コーヒー豆を追加 / 編集
+        </Box>
+        <Box p={4}>
+          <CoffeeBeanForm onCancel={() => props.onClose()} />
+        </Box>
+      </Box>
+    </Box>
   );
 }

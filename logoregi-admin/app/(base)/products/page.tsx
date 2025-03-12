@@ -9,15 +9,24 @@ import { Th } from '@/ui/table/Th';
 import { ProductAddButton } from './_components/ProductAddButton';
 import { ProductItem } from './_components/ProductItem';
 import {useQueryProducts} from "@/query/getProducts";
+import { Center, Spinner } from "@chakra-ui/react";
 
 export default function Products() {
-  const { data } = useQueryProducts();
+  const { data, isLoading } = useQueryProducts();
   const products = data?.products?.map((product) => {
     return toProductFromProto(product);
   }) ?? [];
 
+  if (isLoading) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    )
+  }
+
   return (
-    <div>
+    <>
       <Table>
         <TableHeader>
           <Th>商品名</Th>
@@ -28,13 +37,13 @@ export default function Products() {
           <Th>必要な豆g</Th>
           <Th>編集 / 削除</Th>
         </TableHeader>
-        <Tbody>
+        <Tbody color='black'>
           {products.map((product) => (
             <ProductItem key={product.name} product={product} />
           ))}
         </Tbody>
       </Table>
       <ProductAddButton />
-    </div>
+    </>
   );
 }

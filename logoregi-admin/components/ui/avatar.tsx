@@ -3,6 +3,7 @@ import {
   AvatarGroup as ChakraAvatarGroup,
 } from "@chakra-ui/react"
 import * as React from "react"
+import { ReactNode } from "react";
 
 type ImageProps = React.ImgHTMLAttributes<HTMLImageElement>
 
@@ -12,7 +13,7 @@ export interface AvatarProps extends ChakraAvatar.RootProps {
   srcSet?: string
   loading?: ImageProps["loading"]
   icon?: React.ReactElement
-  fallback?: React.ReactNode
+  fallback?: ReactNode
 }
 
 export const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(

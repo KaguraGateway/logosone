@@ -5,8 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import Sidebar from '@/ui/nav/Sidebar';
+import { ReactNode } from "react";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     <Grid templateRows="80px 1fr" templateColumns="16rem 1fr" minH="100vh">
       <GridItem gridRow="1" gridColumn="1 / span 2">

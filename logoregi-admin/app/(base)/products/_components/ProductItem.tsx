@@ -1,11 +1,10 @@
 'use client';
+import { Box, Flex } from '@chakra-ui/react';
 import { DeleteProductRequest } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 import { useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { FaInternetExplorer, FaRegEyeSlash, FaRegTrashAlt } from 'react-icons/fa';
 
-import { css } from '@/panda/css';
-import { Box, Flex } from '@/panda/jsx';
 import { useMutationDeleteProduct } from '@/query/deleteProduct';
 import { Product } from '@/types/Product';
 import { DeleteConfirmDialog } from '@/ui/dialog/DeleteConfirmDialog';
@@ -33,13 +32,12 @@ export function ProductItem({ product }: { product: Product }) {
       <Tr>
         <Td>{product.name}</Td>
         <Td>
-          {product.amount != null
-            ? product.amount.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
-            : 'N/A'}
+          {product.amount != null && product.type !== 'coffee'
+            && product.amount.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })}
         </Td>
         <Td>{product.type === 'coffee' ? 'コーヒー' : 'その他'}</Td>
         <Td>{product.categoryName}</Td>
-        <Td className={css({ color: product.isNowSales ? 'green.600' : undefined })}>
+        <Td color={product.isNowSales ? 'green.600' : undefined}>
           {product.isNowSales ? (
             <>
               <FaInternetExplorer />
@@ -54,19 +52,19 @@ export function ProductItem({ product }: { product: Product }) {
         </Td>
         <Td></Td>
         <Td>
-          <Flex gap="2">
-            <button onClick={() => setIsOpenEdit(true)}>
+          <Flex gap={2}>
+            <Box as="button" onClick={() => setIsOpenEdit(true)}>
               <AiOutlineEdit />
-            </button>
+            </Box>
             <span>/</span>
-            <button className={css({ color: 'red.500' })} onClick={() => setIsOpenDelete(true)}>
+            <Box as="button" color="red.500" onClick={() => setIsOpenDelete(true)}>
               <FaRegTrashAlt />
-            </button>
+            </Box>
           </Flex>
         </Td>
       </Tr>
       {product.coffeeBrews && (
-        <Box pt="2">
+        <Box pt={2}>
           <CoffeeBrewsTable coffeeBrews={product.coffeeBrews} />
         </Box>
       )}

@@ -1,12 +1,13 @@
 'use client';
+
 import {
-  Dialog,
-  DialogBackdrop,
-  DialogContainer,
-  DialogContent,
-  DialogTitle,
-  Portal
-} from '@ark-ui/react';
+  Box,
+  Button as ChakraButton, createListCollection,
+  HStack,
+  Input as ChakraInput,
+  Stack,
+  VStack,
+} from '@chakra-ui/react';
 import {
   CoffeeBrew as ProtoCoffeeBrew,
   ProductParam,
@@ -17,10 +18,6 @@ import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { FaRegTrashCan } from 'react-icons/fa6';
 
-import { css } from '@/panda/css';
-import {styled, VStack} from '@/panda/jsx';
-import { HStack, Stack } from '@/panda/jsx';
-import { dialog } from '@/panda/recipes';
 import { useMutationAddProduct } from '@/query/addProduct';
 import { useQueryCategories } from '@/query/getCategories';
 import { useQueryCoffeeBeans } from '@/query/getCoffeeBeans';
@@ -35,6 +32,7 @@ import { Button } from '@/ui/form/Button';
 import { Input } from '@/ui/form/Input';
 import { LoadingButton } from '@/ui/form/LoadingButton';
 import { Option, SelectWithAdd } from '@/ui/form/SelectWithAdd';
+import { Switch } from '@/ui/form/Switch';
 import { SwitchRadioGroup } from '@/ui/form/SwitchRadioGroup';
 import { Table } from '@/ui/table/Table';
 import { TableHeader } from '@/ui/table/TableHader';
@@ -47,7 +45,6 @@ import { Tr } from '@/ui/table/Tr';
 import { StockFormDialog } from '../../_components/StockForm';
 import { CoffeeBeanFormDialog } from './CoffeeBeanForm';
 import { ProductCategoryFormDialog } from './ProductCategoryForm';
-import {Switch} from "@/ui/form/Switch";
 
 const ProductTypeOptions = [
   {
@@ -100,35 +97,35 @@ export function ProductEditForm(props: Props) {
   const [name, setName] = useState(props.product?.name ?? '');
   const [isNowOnSale, setIsNowOnSale] = useState(props.product?.isNowSales ?? true);
   const [type, setType] = useState(props.product?.type ?? 'coffee');
-  const [category, setCategory] = useState<Option | null>(
+  const [category, setCategory] = useState<Option | undefined>(
     props.product != null
       ? toOptionFromCategory({ id: props.product.categoryId, name: props.product.categoryName })
-      : null
+      : undefined
   );
   const [isManagingOrder, setIsManagingOrder] = useState(props.product?.isManagingOrder ?? true);
   const [isOlUseKitchen, setIsOlUseKitchen] = useState(props.product?.isOlUseKitchen ?? true);
 
   // Coffee
-  const [coffeeBean, setCoffeeBean] = useState<Option | null>(
+  const [coffeeBean, setCoffeeBean] = useState<Option | undefined>(
     props.product?.coffeeBeanId != null
       ? toOptionFromCoffeeBean({
           id: props.product.coffeeBeanId,
           name: props.product.coffeeBeanName ?? '',
           gramQuantity: props.product.coffeeBeanGramQuantity ?? 0,
         })
-      : null
+      : undefined
   );
   const [brews, setBrews] = useState<Array<CoffeeBrew>>(props.product?.coffeeBrews ?? []);
   // Other
   const [amount, setAmount] = useState(props.product?.amount ?? 0);
-  const [stock, setStock] = useState<Option | null>(
+  const [stock, setStock] = useState<Option | undefined>(
     props.product?.stockId != null && props.product.stockName != null && props.product.stockQuantity
       ? toOptionFromStock({
           id: props.product.stockId,
           name: props.product.stockName,
           quantity: props.product.stockQuantity,
         })
-      : null
+      : undefined
   );
 
   // Dialog
@@ -156,8 +153,8 @@ export function ProductEditForm(props: Props) {
   const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
-  const onChangeType = (details: { value: string }) => {
-    setType(details.value);
+  const onChangeType = (value: string) => {
+    setType(value);
   };
   const onChangeAmount = (event: ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
@@ -235,14 +232,14 @@ export function ProductEditForm(props: Props) {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <Stack gap="6">
+        <Stack gap={6}>
           <HStack>
             <Input
               label="商品名"
               placeholder="コーヒ"
               onChange={onChangeName}
               value={name}
-              root={{ className: css({ w: '1/2' }) }}
+              root={{ width: '50%' }}
             />
             <SwitchRadioGroup
               label="販売中"
@@ -262,7 +259,7 @@ export function ProductEditForm(props: Props) {
             />
             <SelectWithAdd
               label="商品カテゴリ"
-              items={categories}
+              items={createListCollection({items: categories})}
               onAdd={onAddCategory}
               selectedOption={category}
               onChange={(details) => setCategory(details)}
@@ -272,7 +269,7 @@ export function ProductEditForm(props: Props) {
             <>
               <SelectWithAdd
                 label="豆の種類"
-                items={coffeeBeans}
+                items={createListCollection({items: coffeeBeans})}
                 onAdd={onAddCoffeeBean}
                 selectedOption={coffeeBean}
                 onChange={(details) => setCoffeeBean(details)}
@@ -289,7 +286,7 @@ export function ProductEditForm(props: Props) {
                     <TCollectionItem key={index}>
                       <Tr>
                         <Td>
-                          <styled.input
+                          <ChakraInput
                             display="flex"
                             outline="0"
                             placeholder="ネル"
@@ -303,7 +300,7 @@ export function ProductEditForm(props: Props) {
                           />
                         </Td>
                         <Td>
-                          <styled.input
+                          <ChakraInput
                             display="flex"
                             outline="0"
                             placeholder="40"
@@ -317,7 +314,7 @@ export function ProductEditForm(props: Props) {
                           />
                         </Td>
                         <Td>
-                          <styled.input
+                          <ChakraInput
                             display="flex"
                             outline="0"
                             placeholder="500"
@@ -331,13 +328,14 @@ export function ProductEditForm(props: Props) {
                           />
                         </Td>
                         <Td grow="64px">
-                          <button
+                          <ChakraButton
                             type="button"
-                            className={css({ color: 'read.500' })}
+                            color="red.500"
+                            variant="ghost"
                             onClick={() => onRemoveBrew(index)}
                           >
                             <FaRegTrashCan />
-                          </button>
+                          </ChakraButton>
                         </Td>
                       </Tr>
                     </TCollectionItem>
@@ -345,17 +343,18 @@ export function ProductEditForm(props: Props) {
                   <TCollectionItem>
                     <Tr>
                       <Td>
-                        <styled.button
+                        <ChakraButton
                           type="button"
                           onClick={onClickAddBrew}
                           display="flex"
                           alignItems="center"
-                          gap="2"
+                          gap={2}
                           color="gray.500"
+                          variant="ghost"
                         >
                           <FaPlus />
                           <span>淹れ方を追加</span>
-                        </styled.button>
+                        </ChakraButton>
                       </Td>
                     </Tr>
                   </TCollectionItem>
@@ -369,18 +368,18 @@ export function ProductEditForm(props: Props) {
                 label="価格（円）"
                 onChange={onChangeAmount}
                 value={amount.toString()}
-                root={{ className: css({ w: '1/3' }) }}
+                root={{ width: '33.33%' }}
               />
               <SelectWithAdd
                 label="在庫"
-                items={stocks}
+                items={createListCollection({items: stocks})}
                 onAdd={onAddStock}
                 selectedOption={stock}
                 onChange={(details) => setStock(details)}
               />
             </HStack>
           )}
-          <VStack alignItems="baseline">
+          <VStack alignItems="flex-start">
             <Switch
               label="OrderLinkでの注文管理を利用するか"
               onChange={(v) => setIsManagingOrder(v)}
@@ -392,11 +391,11 @@ export function ProductEditForm(props: Props) {
               checked={isOlUseKitchen}
             />
           </VStack>
-          <HStack width="full">
-            <Button type="button" width="full" onClick={() => props.onCancel()}>
+          <HStack width='full'>
+            <Button type="button" variant='outline' onClick={() => props.onCancel()}>
               キャンセル
             </Button>
-            <LoadingButton type="submit" width="full" variant="success" isLoading={isLoading}>
+            <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
               作成
             </LoadingButton>
           </HStack>
@@ -416,19 +415,40 @@ type DialogProps = {
 };
 
 export function ProductEditFormDialog(props: DialogProps) {
+  if (!props.isOpen) return null;
+  
   return (
-    <Dialog open={props.isOpen} onClose={props.onClose}>
-      <Portal>
-        <DialogBackdrop className={dialog()} />
-        <DialogContainer className={dialog()}>
-          <DialogContent className={css({ minW: '2xl' })}>
-            <Stack gap="4" p="4">
-              <DialogTitle>商品を追加 / 編集</DialogTitle>
-              <ProductEditForm product={props.product} onCancel={() => props.onClose()} />
-            </Stack>
-          </DialogContent>
-        </DialogContainer>
-      </Portal>
-    </Dialog>
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      bg="rgba(0, 0, 0, 0.4)"
+      zIndex={1000}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      onClick={props.onClose}
+    >
+      <Box
+        bg="white"
+        color='black'
+        borderRadius="md"
+        width="auto"
+        minW="2xl"
+        maxW="90%"
+        maxH="90%"
+        overflow="auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+          商品を追加 / 編集
+        </Box>
+        <Box p={4}>
+          <ProductEditForm product={props.product} onCancel={() => props.onClose()} />
+        </Box>
+      </Box>
+    </Box>
   );
 }

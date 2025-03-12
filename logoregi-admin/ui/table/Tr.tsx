@@ -1,17 +1,7 @@
-import clsx from 'clsx';
+'use client';
 
-import { css } from '@/panda/css';
+import { Flex } from "@chakra-ui/react";
 
-export function Tr(props: React.ComponentProps<'div'>) {
-  return (
-    <div
-      {...props}
-      className={clsx(
-        css({
-          display: 'flex',
-        }),
-        props.className
-      )}
-    />
-  );
+export function Tr(props: React.ComponentProps<'tr'>) {
+  return <Flex {...props} />;
 }

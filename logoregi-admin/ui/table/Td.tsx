@@ -1,27 +1,26 @@
-import clsx from 'clsx';
+'use client';
 
-import { css } from '@/panda/css';
-import { Shorthand } from '@/panda/types/prop-type';
+import { Box } from '@chakra-ui/react';
+import { ComponentProps } from "react";
 
-type Props = React.ComponentProps<'div'> & {
-  grow?: Shorthand<'minWidth'>;
+type Props = ComponentProps<typeof Box> & {
+  grow?: string | number;
 };
 
 export function Td(props: Props) {
+  const { grow, ...rest } = props;
+  
   return (
-    <div
-      {...props}
-      className={clsx(
-        css({
-          display: 'flex',
-          alignItems: 'center',
-          flex: `1 0 100px`,
-          overflow: 'hidden',
-          minWidth: props.grow ?? '100px',
-        }),
-        props.className
-      )}
-      style={{ flex: props.grow !== undefined ? `0 0 ${props.grow}` : undefined }}
+    <Box
+      {...rest}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        flex: grow !== undefined ? `0 0 ${grow}` : '1 0 100px',
+        overflow: 'hidden',
+        minWidth: grow ? `${grow}px` : '100px',
+        padding: '0.5rem'
+      }}
     />
   );
 }

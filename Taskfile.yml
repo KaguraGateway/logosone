@@ -37,7 +37,7 @@ tasks:
 
   dev:orderlink-frontend:install:
     dir: ./orderlink-frontend
-    cmd: bun install --frozen-lockfile
+    cmd: bun install
 
   dev:logoregi-handy:
     dir: ./logoregi-handy
@@ -50,12 +50,10 @@ tasks:
 
   dev:logoregi-handy:install:
     dir: ./logoregi-handy
-    cmd: bun install --frozen-lockfile
+    cmd: bun install
 
   dev:logoregi-admin:
     dir: ./logoregi-admin
-    deps:
-      - task: dev:logoregi-admin:install
     cmd: bun dev
     env:
       PORT: 3000
@@ -63,7 +61,7 @@ tasks:
 
   dev:logoregi-admin:install:
     dir: ./logoregi-admin
-    cmd: bun install --frozen-lockfile
+    cmd: bun install
 
   init:
     deps:

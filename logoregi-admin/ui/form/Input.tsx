@@ -1,8 +1,7 @@
-import { ChangeEvent } from 'react';
+'use client';
 
-import { css } from '@/panda/css';
-import { Stack } from '@/panda/jsx';
-import { input } from '@/panda/recipes';
+import { ChangeEvent } from 'react';
+import { Box, Input as ChakraInput, Stack, Text } from '@chakra-ui/react';
 
 type Props = {
   label: string;
@@ -15,8 +14,8 @@ type Props = {
 export function Input(props: Props) {
   return (
     <Stack {...props.root}>
-      <label className={css({ color: 'gray.500' })}>{props.label}</label>
-      <input className={input()} value={props.value} onChange={props.onChange} placeholder={props.placeholder} />
+      <Text color="gray.500">{props.label}</Text>
+      <ChakraInput value={props.value} onChange={props.onChange} placeholder={props.placeholder} />
     </Stack>
   );
 }

@@ -1,7 +1,6 @@
 'use client';
-import {cache, useEffect, useState} from 'react';
 
-import {Discount, toDiscountFromProto} from '@/types/Discount';
+import {toDiscountFromProto} from '@/types/Discount';
 import { Table } from '@/ui/table/Table';
 import { TableHeader } from '@/ui/table/TableHader';
 import { Tbody } from '@/ui/table/Tbody';
@@ -20,7 +19,7 @@ export default function Discounts() {
   }) ?? [];
 
   return (
-    <div>
+    <>
       <Table>
         <TableHeader>
           <Th>ID</Th>
@@ -40,6 +39,6 @@ export default function Discounts() {
         </Tbody>
       </Table>
       <AddButton />
-    </div>
+    </>
   );
 }

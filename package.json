@@ -1,0 +1,17 @@
+{
+  "name": "logosone",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KaguraGateway/logosone.git"
+  },
+  "description": "",
+  "private": true,
+  "workspaces": [
+    "logoregi-admin",
+    "logoregi-handy",
+    "logoregi-togo",
+    "orderlink-frontend",
+    "orderlink-webcall"
+  ]
+}

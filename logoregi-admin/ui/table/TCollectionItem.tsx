@@ -1,22 +1,15 @@
-import clsx from 'clsx';
+'use client';
 
-import { css } from '@/panda/css';
+import { Box, BoxProps } from '@chakra-ui/react';
 
-type Props = React.ComponentProps<'div'>;
-
-export function TCollectionItem(props: Props) {
+export function TCollectionItem(props: BoxProps) {
   return (
-    <div
+    <Box
       {...props}
-      className={clsx(
-        css({
-          borderBottomWidth: '1px',
-          borderColor: 'gray.300',
-          pb: '2',
-          mb: '2',
-        }),
-        props.className
-      )}
+      borderBottomWidth="1px"
+      borderColor="gray.300"
+      pb={2}
+      mb={2}
     />
   );
 }

@@ -20,7 +20,7 @@
     "@connectrpc/connect-web": "1.4.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@kaguragateway/cafelogos-grpc": "https://github.com/KaguraGateway/cafelogos-grpc/archive/refs/tags/v1.0.24.tar.gz",
+    "@kaguragateway/cafelogos-grpc": "git+https://github.com/KaguraGateway/cafelogos-grpc.git",
     "@tanstack/react-query": "^5.59.13",
     "@types/node": "22.7.5",
     "@types/react": "18.3.11",

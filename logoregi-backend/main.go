@@ -231,6 +231,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	do.Provide(i, application.NewGetSeatsUseCase)
 	do.Provide(i, application.NewPostSeatUseCase)
 	do.Provide(i, application.NewUpdateSeatUseCase)
+	do.Provide(i, application.NewDeleteSeatUseCase)
 	do.Provide(i, application.NewGetOrdersUseCase)
 	do.Provide(i, application.NewGetUnpaidOrdersBySeatIdUseCase)
 	do.Provide(i, application.NewPostOrderUseCase)

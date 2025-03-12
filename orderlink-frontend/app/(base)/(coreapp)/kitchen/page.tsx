@@ -60,24 +60,7 @@ function FilteredItems({ filteredOrders, onCancelState, onNextState }: FilteredI
           onNextState: onNextState,
         };
       })
-    )
-    .sort((a, b) => {
-      if (
-        (a.cookingStatus === 'notyet' && b.cookingStatus === 'cooking') ||
-        (a.cookingStatus === 'cooking' && b.cookingStatus === 'done') ||
-        (a.cookingStatus === 'notyet' && b.cookingStatus === 'done')
-      ) {
-        return 1;
-      }
-      if (
-        (a.cookingStatus === 'cooking' && b.cookingStatus === 'notyet') ||
-        (a.cookingStatus === 'done' && b.cookingStatus === 'cooking') ||
-        (a.cookingStatus === 'done' && b.cookingStatus === 'notyet')
-      ) {
-        return -1;
-      }
-      return 0;
-    });
+    );
 
   return items.map((item) => <ItemInfoCard key={item.itemId} {...item} />);
 }

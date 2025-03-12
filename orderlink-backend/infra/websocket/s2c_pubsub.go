@@ -18,8 +18,10 @@ type OrderLinkWSClient struct {
 }
 
 func (c *OrderLinkWSClient) SafeWriteJSON(v interface{}) error {
+	log.Printf("before lock: %v\n", v)
 	c.mu.Lock()
 	defer c.mu.Unlock()
+	log.Printf("WriteJSON: %v\n", v)
 	return c.WriteJSON(v)
 }
 

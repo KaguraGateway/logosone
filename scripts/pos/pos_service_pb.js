@@ -325,6 +325,16 @@ export const UpdateSeatRequest = /*@__PURE__*/ proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.DeleteSeatRequest
+ */
+export const DeleteSeatRequest = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.DeleteSeatRequest",
+  () => [
+    { no: 1, name: "seat_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
  * @generated from message cafelogos.pos.GetSeatsResponse
  */
 export const GetSeatsResponse = /*@__PURE__*/ proto3.makeMessageType(
@@ -389,12 +399,103 @@ export const PostDiscountRequest = /*@__PURE__*/ proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.GetDailySalesRequest
+ */
+export const GetDailySalesRequest = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetDailySalesRequest",
+  () => [
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
  * @generated from message cafelogos.pos.GetDailySalesResponse
  */
 export const GetDailySalesResponse = /*@__PURE__*/ proto3.makeMessageType(
   "cafelogos.pos.GetDailySalesResponse",
   () => [
     { no: 1, name: "daily_sales", kind: "message", T: DailySale, repeated: true },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.GetProductSalesRequest
+ */
+export const GetProductSalesRequest = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetProductSalesRequest",
+  () => [
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * 時間帯別売上取得用
+ *
+ * @generated from message cafelogos.pos.GetSalesByTimeSlotRequest
+ */
+export const GetSalesByTimeSlotRequest = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetSalesByTimeSlotRequest",
+  () => [
+    { no: 1, name: "date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.GetSalesByTimeSlotResponse
+ */
+export const GetSalesByTimeSlotResponse = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetSalesByTimeSlotResponse",
+  () => [
+    { no: 1, name: "time_slot_sales", kind: "message", T: TimeSlotSale, repeated: true },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.TimeSlotSale
+ */
+export const TimeSlotSale = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.TimeSlotSale",
+  () => [
+    { no: 1, name: "time_slot", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 3, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+  ],
+);
+
+/**
+ * 支払い方法別売上取得用
+ *
+ * @generated from message cafelogos.pos.GetSalesByPaymentTypeRequest
+ */
+export const GetSalesByPaymentTypeRequest = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetSalesByPaymentTypeRequest",
+  () => [
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.GetSalesByPaymentTypeResponse
+ */
+export const GetSalesByPaymentTypeResponse = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.GetSalesByPaymentTypeResponse",
+  () => [
+    { no: 1, name: "payment_type_sales", kind: "message", T: PaymentTypeSale, repeated: true },
+  ],
+);
+
+/**
+ * @generated from message cafelogos.pos.PaymentTypeSale
+ */
+export const PaymentTypeSale = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.PaymentTypeSale",
+  () => [
+    { no: 1, name: "payment_type", kind: "scalar", T: 5 /* ScalarType.INT32 */ },
+    { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 
@@ -684,6 +785,8 @@ export const ProductSale = /*@__PURE__*/ proto3.makeMessageType(
     { no: 2, name: "product_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
     { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 7, name: "coffee_brew_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 8, name: "coffee_brew_name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ],
 );
 

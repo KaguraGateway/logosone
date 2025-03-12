@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { DeleteOrderRequest, DeleteProductRequest, GetCoffeeBeansResponse, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesResponse, GetProductsResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, DeleteSeatRequest, GetCoffeeBeansResponse, GetDailySalesRequest, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesRequest, GetProductSalesResponse, GetProductsResponse, GetSalesByPaymentTypeRequest, GetSalesByPaymentTypeResponse, GetSalesByTimeSlotRequest, GetSalesByTimeSlotResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
 import { Empty } from "../common/common_pb.js";
 
 /**
@@ -318,6 +318,20 @@ export const updateSeat = {
 };
 
 /**
+ * @generated from rpc cafelogos.pos.PosService.DeleteSeat
+ */
+export const deleteSeat = {
+  localName: "deleteSeat",
+  name: "DeleteSeat",
+  kind: MethodKind.Unary,
+  I: DeleteSeatRequest,
+  O: Empty,
+  service: {
+    typeName: "cafelogos.pos.PosService"
+  }
+};
+
+/**
  * @generated from rpc cafelogos.pos.PosService.GetSeats
  */
 export const getSeats = {
@@ -366,7 +380,7 @@ export const getDailySales = {
   localName: "getDailySales",
   name: "GetDailySales",
   kind: MethodKind.Unary,
-  I: Empty,
+  I: GetDailySalesRequest,
   O: GetDailySalesResponse,
   service: {
     typeName: "cafelogos.pos.PosService"
@@ -380,8 +394,38 @@ export const getProductSales = {
   localName: "getProductSales",
   name: "GetProductSales",
   kind: MethodKind.Unary,
-  I: Empty,
+  I: GetProductSalesRequest,
   O: GetProductSalesResponse,
+  service: {
+    typeName: "cafelogos.pos.PosService"
+  }
+};
+
+/**
+ * 売上分析用のメソッド
+ *
+ * @generated from rpc cafelogos.pos.PosService.GetSalesByTimeSlot
+ */
+export const getSalesByTimeSlot = {
+  localName: "getSalesByTimeSlot",
+  name: "GetSalesByTimeSlot",
+  kind: MethodKind.Unary,
+  I: GetSalesByTimeSlotRequest,
+  O: GetSalesByTimeSlotResponse,
+  service: {
+    typeName: "cafelogos.pos.PosService"
+  }
+};
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.GetSalesByPaymentType
+ */
+export const getSalesByPaymentType = {
+  localName: "getSalesByPaymentType",
+  name: "GetSalesByPaymentType",
+  kind: MethodKind.Unary,
+  I: GetSalesByPaymentTypeRequest,
+  O: GetSalesByPaymentTypeResponse,
   service: {
     typeName: "cafelogos.pos.PosService"
   }

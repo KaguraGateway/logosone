@@ -4,7 +4,7 @@ WORKDIR /usr/src/app/logos
 
 COPY . ./
 
-RUN bun install --frozen-lockfile
+RUN bun install --production
 
 ARG VITE_WEBSOCKET_API
 ENV VITE_WEBSOCKET_API=${VITE_WEBSOCKET_API}

@@ -4,7 +4,7 @@ WORKDIR /usr/src/app/logos
 
 COPY . ./
 
-RUN bun install --frozen-lockfile
+RUN bun install --production
 
 ARG NEXT_PUBLIC_WEBSOCKET_API
 ENV NEXT_PUBLIC_WEBSOCKET_API=${NEXT_PUBLIC_WEBSOCKET_API}

@@ -4,7 +4,7 @@ WORKDIR /usr/src/app/logos
 
 COPY . ./
 
-RUN bun install --frozen-lockfile
+RUN bun install --production
 ARG NEXT_PUBLIC_GRPC_HOST
 ENV NEXT_PUBLIC_GRPC_HOST=${NEXT_PUBLIC_GRPC_HOST}
 RUN bun run build

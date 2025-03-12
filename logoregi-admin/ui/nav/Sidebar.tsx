@@ -25,7 +25,7 @@ const navigations: Array<Navigation> = [
     icon: <FaReact />,
   },
   {
-    label: '取引履歴',
+    label: '注文履歴',
     href: '/orders',
     icon: <AiOutlineHistory />,
   },

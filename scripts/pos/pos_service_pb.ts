@@ -1616,23 +1616,30 @@ export class GetSalesByTimeSlotResponse extends Message<GetSalesByTimeSlotRespon
  */
 export class TimeSlotSale extends Message<TimeSlotSale> {
   /**
-   * 例: "10:00-10:30"
+   * ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の開始時刻
    *
-   * @generated from field: string time_slot = 1;
+   * @generated from field: string start_date = 1;
    */
-  timeSlot = "";
+  startDate = "";
+
+  /**
+   * ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の終了時刻
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate = "";
 
   /**
    * 総売上
    *
-   * @generated from field: uint64 total_sales = 2;
+   * @generated from field: uint64 total_sales = 3;
    */
   totalSales = protoInt64.zero;
 
   /**
    * 総数量
    *
-   * @generated from field: uint64 total_quantity = 3;
+   * @generated from field: uint64 total_quantity = 4;
    */
   totalQuantity = protoInt64.zero;
 
@@ -1644,9 +1651,10 @@ export class TimeSlotSale extends Message<TimeSlotSale> {
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "cafelogos.pos.TimeSlotSale";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 1, name: "time_slot", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-    { no: 3, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): TimeSlotSale {

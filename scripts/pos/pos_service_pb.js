@@ -458,9 +458,10 @@ export const GetSalesByTimeSlotResponse = /*@__PURE__*/ proto3.makeMessageType(
 export const TimeSlotSale = /*@__PURE__*/ proto3.makeMessageType(
   "cafelogos.pos.TimeSlotSale",
   () => [
-    { no: 1, name: "time_slot", kind: "scalar", T: 9 /* ScalarType.STRING */ },
-    { no: 2, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
-    { no: 3, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 1, name: "start_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "end_date", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "total_sales", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
+    { no: 4, name: "total_quantity", kind: "scalar", T: 4 /* ScalarType.UINT64 */ },
   ],
 );
 

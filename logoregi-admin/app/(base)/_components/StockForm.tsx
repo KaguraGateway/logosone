@@ -8,19 +8,23 @@ import {
 import React, { ChangeEvent, useState } from 'react';
 
 import { useMutationAddStock } from '@/query/addStock';
+import { useMutationUpdateStock } from '@/query/updateStock';
+import { Stock } from '@/types/Stock';
 import { Button } from '@/ui/form/Button';
 import { Input } from '@/ui/form/Input';
 import { LoadingButton } from '@/ui/form/LoadingButton';
 
 type Props = {
+  stock?: Stock;
   onCancel: () => void;
 };
 
 export function StockForm(props: Props) {
-  const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState(0);
+  const [name, setName] = useState(props.stock?.name ?? '');
+  const [quantity, setQuantity] = useState(props.stock?.quantity ?? 0);
   const [isLoading, setIsLoading] = useState(false);
   const addStock = useMutationAddStock();
+  const updateStock = useMutationUpdateStock();
 
   const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -34,17 +38,33 @@ export function StockForm(props: Props) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    addStock.mutateAsync(
-      { name: name, quantity: quantity },
-      {
-        onSuccess: () => {
-          props.onCancel();
-        },
-        onSettled: () => {
-          setIsLoading(false);
-        },
-      }
-    );
+
+    const onSuccess = () => {
+      props.onCancel();
+    };
+    const onSettled = () => {
+      setIsLoading(false);
+    };
+
+    if (props.stock) {
+      // 編集の場合
+      updateStock.mutateAsync(
+        { id: props.stock.id, name: name, quantity: quantity },
+        {
+          onSuccess,
+          onSettled,
+        }
+      );
+    } else {
+      // 新規作成の場合
+      addStock.mutateAsync(
+        { name: name, quantity: quantity },
+        {
+          onSuccess,
+          onSettled,
+        }
+      );
+    }
   };
 
   return (
@@ -69,7 +89,7 @@ export function StockForm(props: Props) {
             キャンセル
           </Button>
           <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
-            作成
+            {props.stock ? '更新' : '作成'}
           </LoadingButton>
         </HStack>
       </Stack>
@@ -80,6 +100,7 @@ export function StockForm(props: Props) {
 type DialogProps = {
   isOpen: boolean;
   onClose: () => void;
+  stock?: Stock;
 };
 
 export function StockFormDialog(props: DialogProps) {
@@ -110,10 +131,10 @@ export function StockFormDialog(props: DialogProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <Box p={4} fontWeight="bold" borderBottomWidth="1px">
-          在庫を追加 / 編集
+          在庫を{props.stock ? '編集' : '追加'}
         </Box>
         <Box p={4}>
-          <StockForm onCancel={() => props.onClose()} />
+          <StockForm stock={props.stock} onCancel={() => props.onClose()} />
         </Box>
       </Box>
     </Box>

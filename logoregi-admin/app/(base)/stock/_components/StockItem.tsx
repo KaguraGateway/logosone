@@ -47,7 +47,7 @@ export function StockItem({ stock }: { stock: Stock }) {
         onDelete={onDelete}
         onClose={onCloseDelete}
       />
-      <StockFormDialog isOpen={isOpenEdit} onClose={onCloseEdit} />
+      <StockFormDialog stock={stock} isOpen={isOpenEdit} onClose={onCloseEdit} />
     </TCollectionItem>
   );
 }

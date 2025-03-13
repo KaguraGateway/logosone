@@ -4,7 +4,7 @@
 // @ts-nocheck
 
 import { MethodKind } from "@bufbuild/protobuf";
-import { DeleteOrderRequest, DeleteProductRequest, DeleteSeatRequest, GetCoffeeBeansResponse, GetDailySalesRequest, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesRequest, GetProductSalesResponse, GetProductsResponse, GetSalesByPaymentTypeRequest, GetSalesByPaymentTypeResponse, GetSalesByTimeSlotRequest, GetSalesByTimeSlotResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest } from "./pos_service_pb.js";
+import { DeleteOrderRequest, DeleteProductRequest, DeleteSeatRequest, GetCoffeeBeansResponse, GetDailySalesRequest, GetDailySalesResponse, GetDiscountsResponse, GetExternalPaymentRequest, GetExternalPaymentResponse, GetOrdersRequest, GetOrdersResponse, GetProductCategoriesResponse, GetProductSalesRequest, GetProductSalesResponse, GetProductsResponse, GetSalesByPaymentTypeRequest, GetSalesByPaymentTypeResponse, GetSalesByTimeSlotRequest, GetSalesByTimeSlotResponse, GetSeatsResponse, GetStocksResponse, GetUnpaidOrdersBySeatIdRequest, PaymentResponse, PostCoffeeBeanRequest, PostDiscountRequest, PostNewClientRequest, PostNewClientResponse, PostOrderRequest, PostOrderResponse, PostPaymentRequest, PostProductCategoryRequest, PostProductRequest, PostSeatRequest, PostStockRequest, UpdateClientRequest, UpdatePaymentRequest, UpdateProductRequest, UpdateSeatRequest, UpdateStockRequest } from "./pos_service_pb.js";
 import { Empty } from "../common/common_pb.js";
 
 /**
@@ -242,6 +242,20 @@ export const getStocks = {
   kind: MethodKind.Unary,
   I: Empty,
   O: GetStocksResponse,
+  service: {
+    typeName: "cafelogos.pos.PosService"
+  }
+} as const;
+
+/**
+ * @generated from rpc cafelogos.pos.PosService.UpdateStock
+ */
+export const updateStock = {
+  localName: "updateStock",
+  name: "UpdateStock",
+  kind: MethodKind.Unary,
+  I: UpdateStockRequest,
+  O: Empty,
   service: {
     typeName: "cafelogos.pos.PosService"
   }

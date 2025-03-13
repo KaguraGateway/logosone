@@ -966,6 +966,55 @@ export class GetStocksResponse extends Message<GetStocksResponse> {
 }
 
 /**
+ * @generated from message cafelogos.pos.UpdateStockRequest
+ */
+export class UpdateStockRequest extends Message<UpdateStockRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id = "";
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name = "";
+
+  /**
+   * @generated from field: uint32 quantity = 3;
+   */
+  quantity = 0;
+
+  constructor(data?: PartialMessage<UpdateStockRequest>) {
+    super();
+    proto3.util.initPartial(data, this);
+  }
+
+  static readonly runtime: typeof proto3 = proto3;
+  static readonly typeName = "cafelogos.pos.UpdateStockRequest";
+  static readonly fields: FieldList = proto3.util.newFieldList(() => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "quantity", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+  ]);
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateStockRequest {
+    return new UpdateStockRequest().fromBinary(bytes, options);
+  }
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateStockRequest {
+    return new UpdateStockRequest().fromJson(jsonValue, options);
+  }
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateStockRequest {
+    return new UpdateStockRequest().fromJsonString(jsonString, options);
+  }
+
+  static equals(a: UpdateStockRequest | PlainMessage<UpdateStockRequest> | undefined, b: UpdateStockRequest | PlainMessage<UpdateStockRequest> | undefined): boolean {
+    return proto3.util.equals(UpdateStockRequest, a, b);
+  }
+}
+
+/**
  * @generated from message cafelogos.pos.PostCoffeeBeanRequest
  */
 export class PostCoffeeBeanRequest extends Message<PostCoffeeBeanRequest> {

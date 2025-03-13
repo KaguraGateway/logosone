@@ -284,6 +284,18 @@ export const GetStocksResponse = /*@__PURE__*/ proto3.makeMessageType(
 );
 
 /**
+ * @generated from message cafelogos.pos.UpdateStockRequest
+ */
+export const UpdateStockRequest = /*@__PURE__*/ proto3.makeMessageType(
+  "cafelogos.pos.UpdateStockRequest",
+  () => [
+    { no: 1, name: "id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 2, name: "name", kind: "scalar", T: 9 /* ScalarType.STRING */ },
+    { no: 3, name: "quantity", kind: "scalar", T: 13 /* ScalarType.UINT32 */ },
+  ],
+);
+
+/**
  * @generated from message cafelogos.pos.PostCoffeeBeanRequest
  */
 export const PostCoffeeBeanRequest = /*@__PURE__*/ proto3.makeMessageType(

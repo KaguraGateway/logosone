@@ -76,6 +76,8 @@ const (
 	PosServicePostStockProcedure = "/cafelogos.pos.PosService/PostStock"
 	// PosServiceGetStocksProcedure is the fully-qualified name of the PosService's GetStocks RPC.
 	PosServiceGetStocksProcedure = "/cafelogos.pos.PosService/GetStocks"
+	// PosServiceUpdateStockProcedure is the fully-qualified name of the PosService's UpdateStock RPC.
+	PosServiceUpdateStockProcedure = "/cafelogos.pos.PosService/UpdateStock"
 	// PosServicePostCoffeeBeanProcedure is the fully-qualified name of the PosService's PostCoffeeBean
 	// RPC.
 	PosServicePostCoffeeBeanProcedure = "/cafelogos.pos.PosService/PostCoffeeBean"
@@ -131,6 +133,7 @@ var (
 	posServiceDeleteProductMethodDescriptor           = posServiceServiceDescriptor.Methods().ByName("DeleteProduct")
 	posServicePostStockMethodDescriptor               = posServiceServiceDescriptor.Methods().ByName("PostStock")
 	posServiceGetStocksMethodDescriptor               = posServiceServiceDescriptor.Methods().ByName("GetStocks")
+	posServiceUpdateStockMethodDescriptor             = posServiceServiceDescriptor.Methods().ByName("UpdateStock")
 	posServicePostCoffeeBeanMethodDescriptor          = posServiceServiceDescriptor.Methods().ByName("PostCoffeeBean")
 	posServiceGetCoffeeBeansMethodDescriptor          = posServiceServiceDescriptor.Methods().ByName("GetCoffeeBeans")
 	posServiceDeleteAllOrdersMethodDescriptor         = posServiceServiceDescriptor.Methods().ByName("DeleteAllOrders")
@@ -166,6 +169,7 @@ type PosServiceClient interface {
 	DeleteProduct(context.Context, *connect.Request[pos.DeleteProductRequest]) (*connect.Response[common.Empty], error)
 	PostStock(context.Context, *connect.Request[pos.PostStockRequest]) (*connect.Response[common.Empty], error)
 	GetStocks(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetStocksResponse], error)
+	UpdateStock(context.Context, *connect.Request[pos.UpdateStockRequest]) (*connect.Response[common.Empty], error)
 	PostCoffeeBean(context.Context, *connect.Request[pos.PostCoffeeBeanRequest]) (*connect.Response[common.Empty], error)
 	GetCoffeeBeans(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetCoffeeBeansResponse], error)
 	DeleteAllOrders(context.Context, *connect.Request[common.Empty]) (*connect.Response[common.Empty], error)
@@ -294,6 +298,12 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			connect.WithSchema(posServiceGetStocksMethodDescriptor),
 			connect.WithClientOptions(opts...),
 		),
+		updateStock: connect.NewClient[pos.UpdateStockRequest, common.Empty](
+			httpClient,
+			baseURL+PosServiceUpdateStockProcedure,
+			connect.WithSchema(posServiceUpdateStockMethodDescriptor),
+			connect.WithClientOptions(opts...),
+		),
 		postCoffeeBean: connect.NewClient[pos.PostCoffeeBeanRequest, common.Empty](
 			httpClient,
 			baseURL+PosServicePostCoffeeBeanProcedure,
@@ -394,6 +404,7 @@ type posServiceClient struct {
 	deleteProduct           *connect.Client[pos.DeleteProductRequest, common.Empty]
 	postStock               *connect.Client[pos.PostStockRequest, common.Empty]
 	getStocks               *connect.Client[common.Empty, pos.GetStocksResponse]
+	updateStock             *connect.Client[pos.UpdateStockRequest, common.Empty]
 	postCoffeeBean          *connect.Client[pos.PostCoffeeBeanRequest, common.Empty]
 	getCoffeeBeans          *connect.Client[common.Empty, pos.GetCoffeeBeansResponse]
 	deleteAllOrders         *connect.Client[common.Empty, common.Empty]
@@ -494,6 +505,11 @@ func (c *posServiceClient) GetStocks(ctx context.Context, req *connect.Request[c
 	return c.getStocks.CallUnary(ctx, req)
 }
 
+// UpdateStock calls cafelogos.pos.PosService.UpdateStock.
+func (c *posServiceClient) UpdateStock(ctx context.Context, req *connect.Request[pos.UpdateStockRequest]) (*connect.Response[common.Empty], error) {
+	return c.updateStock.CallUnary(ctx, req)
+}
+
 // PostCoffeeBean calls cafelogos.pos.PosService.PostCoffeeBean.
 func (c *posServiceClient) PostCoffeeBean(ctx context.Context, req *connect.Request[pos.PostCoffeeBeanRequest]) (*connect.Response[common.Empty], error) {
 	return c.postCoffeeBean.CallUnary(ctx, req)
@@ -579,6 +595,7 @@ type PosServiceHandler interface {
 	DeleteProduct(context.Context, *connect.Request[pos.DeleteProductRequest]) (*connect.Response[common.Empty], error)
 	PostStock(context.Context, *connect.Request[pos.PostStockRequest]) (*connect.Response[common.Empty], error)
 	GetStocks(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetStocksResponse], error)
+	UpdateStock(context.Context, *connect.Request[pos.UpdateStockRequest]) (*connect.Response[common.Empty], error)
 	PostCoffeeBean(context.Context, *connect.Request[pos.PostCoffeeBeanRequest]) (*connect.Response[common.Empty], error)
 	GetCoffeeBeans(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetCoffeeBeansResponse], error)
 	DeleteAllOrders(context.Context, *connect.Request[common.Empty]) (*connect.Response[common.Empty], error)
@@ -703,6 +720,12 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		connect.WithSchema(posServiceGetStocksMethodDescriptor),
 		connect.WithHandlerOptions(opts...),
 	)
+	posServiceUpdateStockHandler := connect.NewUnaryHandler(
+		PosServiceUpdateStockProcedure,
+		svc.UpdateStock,
+		connect.WithSchema(posServiceUpdateStockMethodDescriptor),
+		connect.WithHandlerOptions(opts...),
+	)
 	posServicePostCoffeeBeanHandler := connect.NewUnaryHandler(
 		PosServicePostCoffeeBeanProcedure,
 		svc.PostCoffeeBean,
@@ -817,6 +840,8 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServicePostStockHandler.ServeHTTP(w, r)
 		case PosServiceGetStocksProcedure:
 			posServiceGetStocksHandler.ServeHTTP(w, r)
+		case PosServiceUpdateStockProcedure:
+			posServiceUpdateStockHandler.ServeHTTP(w, r)
 		case PosServicePostCoffeeBeanProcedure:
 			posServicePostCoffeeBeanHandler.ServeHTTP(w, r)
 		case PosServiceGetCoffeeBeansProcedure:
@@ -918,6 +943,10 @@ func (UnimplementedPosServiceHandler) PostStock(context.Context, *connect.Reques
 
 func (UnimplementedPosServiceHandler) GetStocks(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetStocksResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetStocks is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) UpdateStock(context.Context, *connect.Request[pos.UpdateStockRequest]) (*connect.Response[common.Empty], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.UpdateStock is not implemented"))
 }
 
 func (UnimplementedPosServiceHandler) PostCoffeeBean(context.Context, *connect.Request[pos.PostCoffeeBeanRequest]) (*connect.Response[common.Empty], error) {

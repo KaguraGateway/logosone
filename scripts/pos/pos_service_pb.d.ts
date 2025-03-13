@@ -650,6 +650,40 @@ export declare class GetStocksResponse extends Message<GetStocksResponse> {
 }
 
 /**
+ * @generated from message cafelogos.pos.UpdateStockRequest
+ */
+export declare class UpdateStockRequest extends Message<UpdateStockRequest> {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string name = 2;
+   */
+  name: string;
+
+  /**
+   * @generated from field: uint32 quantity = 3;
+   */
+  quantity: number;
+
+  constructor(data?: PartialMessage<UpdateStockRequest>);
+
+  static readonly runtime: typeof proto3;
+  static readonly typeName = "cafelogos.pos.UpdateStockRequest";
+  static readonly fields: FieldList;
+
+  static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): UpdateStockRequest;
+
+  static fromJson(jsonValue: JsonValue, options?: Partial<JsonReadOptions>): UpdateStockRequest;
+
+  static fromJsonString(jsonString: string, options?: Partial<JsonReadOptions>): UpdateStockRequest;
+
+  static equals(a: UpdateStockRequest | PlainMessage<UpdateStockRequest> | undefined, b: UpdateStockRequest | PlainMessage<UpdateStockRequest> | undefined): boolean;
+}
+
+/**
  * @generated from message cafelogos.pos.PostCoffeeBeanRequest
  */
 export declare class PostCoffeeBeanRequest extends Message<PostCoffeeBeanRequest> {

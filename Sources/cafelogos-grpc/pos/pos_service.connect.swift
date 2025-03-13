@@ -114,6 +114,12 @@ public protocol Cafelogos_Pos_PosServiceClientInterface: Sendable {
     func `getStocks`(request: Cafelogos_Common_Empty, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Pos_GetStocksResponse>
 
     @discardableResult
+    func `updateStock`(request: Cafelogos_Pos_UpdateStockRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable
+
+    @available(iOS 13, *)
+    func `updateStock`(request: Cafelogos_Pos_UpdateStockRequest, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Common_Empty>
+
+    @discardableResult
     func `postCoffeeBean`(request: Cafelogos_Pos_PostCoffeeBeanRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
@@ -373,6 +379,16 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
     }
 
     @discardableResult
+    public func `updateStock`(request: Cafelogos_Pos_UpdateStockRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
+        return self.client.unary(path: "/cafelogos.pos.PosService/UpdateStock", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
+    }
+
+    @available(iOS 13, *)
+    public func `updateStock`(request: Cafelogos_Pos_UpdateStockRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
+        return await self.client.unary(path: "/cafelogos.pos.PosService/UpdateStock", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @discardableResult
     public func `postCoffeeBean`(request: Cafelogos_Pos_PostCoffeeBeanRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
         return self.client.unary(path: "/cafelogos.pos.PosService/PostCoffeeBean", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
@@ -521,6 +537,7 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
             public static let deleteProduct = Connect.MethodSpec(name: "DeleteProduct", service: "cafelogos.pos.PosService", type: .unary)
             public static let postStock = Connect.MethodSpec(name: "PostStock", service: "cafelogos.pos.PosService", type: .unary)
             public static let getStocks = Connect.MethodSpec(name: "GetStocks", service: "cafelogos.pos.PosService", type: .unary)
+            public static let updateStock = Connect.MethodSpec(name: "UpdateStock", service: "cafelogos.pos.PosService", type: .unary)
             public static let postCoffeeBean = Connect.MethodSpec(name: "PostCoffeeBean", service: "cafelogos.pos.PosService", type: .unary)
             public static let getCoffeeBeans = Connect.MethodSpec(name: "GetCoffeeBeans", service: "cafelogos.pos.PosService", type: .unary)
             public static let deleteAllOrders = Connect.MethodSpec(name: "DeleteAllOrders", service: "cafelogos.pos.PosService", type: .unary)

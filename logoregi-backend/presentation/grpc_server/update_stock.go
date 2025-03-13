@@ -2,6 +2,7 @@ package grpc_server
 
 import (
 	"context"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 
 	"connectrpc.com/connect"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/common"
@@ -9,11 +10,7 @@ import (
 	"github.com/samber/do"
 )
 
-func (s *GrpcServer) UpdateStock(ctx context.Context, req *connect.Request[struct {
-	Id       string `json:"id" protobuf:"1"`
-	Name     string `json:"name" protobuf:"2"`
-	Quantity uint32 `json:"quantity" protobuf:"3"`
-}]) (*connect.Response[common.Empty], error) {
+func (s *GrpcServer) UpdateStock(ctx context.Context, req *connect.Request[pos.UpdateStockRequest]) (*connect.Response[common.Empty], error) {
 	usecase := do.MustInvoke[application.UpdateStock](s.i)
 	param := &application.UpdateStockParam{
 		Id:       req.Msg.Id,

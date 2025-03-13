@@ -47,7 +47,7 @@ export function CancelButton(props: Props) {
         <IconContext.Provider value={{ size: '2rem' }}>
           <BiUndo />
         </IconContext.Provider>
-        取消
+        戻す
       </Button>
       <Modal isOpen={isModalOpen} onClose={onClose}>
         <ModalOverlay />

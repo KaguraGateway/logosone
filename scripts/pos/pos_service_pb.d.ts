@@ -1085,23 +1085,30 @@ export declare class GetSalesByTimeSlotResponse extends Message<GetSalesByTimeSl
  */
 export declare class TimeSlotSale extends Message<TimeSlotSale> {
   /**
-   * 例: "10:00-10:30"
+   * ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の開始時刻
    *
-   * @generated from field: string time_slot = 1;
+   * @generated from field: string start_date = 1;
    */
-  timeSlot: string;
+  startDate: string;
+
+  /**
+   * ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の終了時刻
+   *
+   * @generated from field: string end_date = 2;
+   */
+  endDate: string;
 
   /**
    * 総売上
    *
-   * @generated from field: uint64 total_sales = 2;
+   * @generated from field: uint64 total_sales = 3;
    */
   totalSales: bigint;
 
   /**
    * 総数量
    *
-   * @generated from field: uint64 total_quantity = 3;
+   * @generated from field: uint64 total_quantity = 4;
    */
   totalQuantity: bigint;
 

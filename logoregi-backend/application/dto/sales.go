@@ -1,17 +1,13 @@
 package dto
 
-import (
-	"time"
-)
-
-// 日別売上DTO
+// DailySaleDto 日別売上DTO
 type DailySaleDto struct {
 	Date          string
 	TotalSales    uint64
 	TotalQuantity uint64
 }
 
-// 商品別売上DTO
+// ProductSaleDto 商品別売上DTO
 type ProductSaleDto struct {
 	ProductId      string
 	ProductName    string
@@ -21,14 +17,15 @@ type ProductSaleDto struct {
 	CoffeeBrewName string
 }
 
-// 時間帯別売上DTO
+// TimeSlotSaleDto 時間帯別売上DTO
 type TimeSlotSaleDto struct {
-	TimeSlot      string
+	StartDate     string
+	EndDate       string
 	TotalSales    uint64
 	TotalQuantity uint64
 }
 
-// 支払い方法別売上DTO
+// PaymentTypeSaleDto 支払い方法別売上DTO
 type PaymentTypeSaleDto struct {
 	PaymentType   int
 	TotalSales    uint64

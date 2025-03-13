@@ -66,7 +66,7 @@ func (i *salesQueryServiceDb) FindDailySales(ctx context.Context, startDate, end
 func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, endDate time.Time) ([]*dto.ProductSaleDto, error) {
 	var results []struct {
 		ProductId      string  `bun:"product_id"`
-		ProductName    string  `bun:"product_name"`
+		ProductName    string  `bun:"name"`
 		TotalSales     uint64  `bun:"total_sales"`
 		TotalQuantity  uint64  `bun:"total_quantity"`
 		CoffeeBrewId   *string `bun:"coffee_brew_id"`
@@ -76,7 +76,7 @@ func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, e
 	err := i.db.NewRaw(`
 		SELECT 
 			p.id as product_id,
-			p.product_name,
+			p.name,
 			SUM(oi.amount * oi.quantity) as total_sales,
 			SUM(oi.quantity) as total_quantity,
 			pcb.id as coffee_brew_id,
@@ -96,7 +96,7 @@ func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, e
 		WHERE 
 			DATE(pay.payment_at) BETWEEN ? AND ?
 		GROUP BY 
-			p.id, p.product_name, pcb.id, pcb.name
+			p.id, p.name, pcb.id, pcb.name
 		ORDER BY 
 			total_sales DESC
 	`, startDate.Format("2006-01-02"), endDate.Format("2006-01-02")).Scan(ctx, &results)
@@ -113,14 +113,14 @@ func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, e
 			TotalSales:    result.TotalSales,
 			TotalQuantity: result.TotalQuantity,
 		}
-		
+
 		if result.CoffeeBrewId != nil {
 			productSale.CoffeeBrewId = *result.CoffeeBrewId
 		}
 		if result.CoffeeBrewName != nil {
 			productSale.CoffeeBrewName = *result.CoffeeBrewName
 		}
-		
+
 		productSales = append(productSales, productSale)
 	}
 
@@ -162,12 +162,10 @@ func (i *salesQueryServiceDb) FindSalesByTimeSlot(ctx context.Context, date time
 
 	timeSlotSales := make([]*dto.TimeSlotSaleDto, 0, len(results))
 	for _, result := range results {
-		timeSlot := fmt.Sprintf("%02d:%02d-%02d:%02d", 
-			result.Hour, result.Minute, 
-			result.Hour + (result.Minute+30)/60, (result.Minute+30)%60)
-		
+		// FIXME: 日付変わるタイミングでバグりそう
 		timeSlotSales = append(timeSlotSales, &dto.TimeSlotSaleDto{
-			TimeSlot:      timeSlot,
+			StartDate:     fmt.Sprintf("%04d-%02d-%02dT%02d:%02d:00Z", date.Year(), date.Month(), date.Day(), result.Hour, result.Minute),
+			EndDate:       fmt.Sprintf("%04d-%02d-%02dT%02d:%02d:00Z", date.Year(), date.Month(), date.Day(), result.Hour+(result.Minute+30)/60, (result.Minute+30)%60),
 			TotalSales:    result.TotalSales,
 			TotalQuantity: result.TotalQuantity,
 		})

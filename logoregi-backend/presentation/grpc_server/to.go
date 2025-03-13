@@ -294,7 +294,8 @@ func ToTimeSlotSaleProto(sale *dto.TimeSlotSaleDto) *pos.TimeSlotSale {
 		return nil
 	}
 	return &pos.TimeSlotSale{
-		TimeSlot:      sale.TimeSlot,
+		StartDate:     sale.StartDate,
+		EndDate:       sale.EndDate,
 		TotalSales:    sale.TotalSales,
 		TotalQuantity: sale.TotalQuantity,
 	}

@@ -1,17 +1,15 @@
 'use client';
 
 import { Box, Flex, Heading, Skeleton, Text, VStack } from '@chakra-ui/react';
-import { useQuery } from '@connectrpc/connect-query';
 import { useEffect, useState } from 'react';
+import { PaymentTypeSale } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb";
+import { useGetSalesByPaymentType } from "@/query/sales/getSalesByPaymentType";
 
-import { getSalesByPaymentType, useGetSalesByPaymentType } from '@/query/sales/getSalesByPaymentType';
-import { PaymentTypeSale } from '@/gen/proto/pos/pos_service_pb';
 
 export function PaymentTypeSalesSection() {
   const [paymentTypeSales, setPaymentTypeSales] = useState<PaymentTypeSale[]>([]);
-  const { request } = useGetSalesByPaymentType();
-  
-  const { data, isLoading, error } = useQuery(getSalesByPaymentType, request);
+  const today = new Date()
+  const { data, isLoading, error } = useGetSalesByPaymentType(today, today)
   
   useEffect(() => {
     if (data && data.paymentTypeSales) {
@@ -47,7 +45,7 @@ export function PaymentTypeSalesSection() {
       ) : paymentTypeSales.length === 0 ? (
         <Text>支払い方法別の売上データがありません</Text>
       ) : (
-        <VStack spacing={3} align="stretch">
+        <VStack gap={3} align="stretch">
           {paymentTypeSales.map((payment, index) => (
             <Flex key={index} justify="space-between" p={2} borderBottom="1px" borderColor="gray.200">
               <Text fontWeight="medium">{getPaymentTypeName(payment.paymentType)}</Text>

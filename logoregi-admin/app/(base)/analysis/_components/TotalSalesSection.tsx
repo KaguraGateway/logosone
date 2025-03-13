@@ -4,13 +4,11 @@ import { Box, Flex, Grid, GridItem, Heading, Skeleton, Text } from '@chakra-ui/r
 import { useQuery } from '@connectrpc/connect-query';
 import { useEffect, useState } from 'react';
 
-import { getDailySales, useGetTotalSales } from '@/query/sales/getDailySales';
+import { useGetTotalSales } from '@/query/sales/getDailySales';
 
 export function TotalSalesSection() {
   const [totalSales, setTotalSales] = useState(0);
-  const { request } = useGetTotalSales();
-  
-  const { data, isLoading, error } = useQuery(getDailySales, request);
+  const { data, isLoading, error } = useGetTotalSales()
   
   useEffect(() => {
     if (data && data.dailySales) {

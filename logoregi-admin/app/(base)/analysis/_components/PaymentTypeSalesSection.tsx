@@ -1,21 +1,12 @@
 'use client';
 
 import { Box, Flex, Heading, Skeleton, Text, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { PaymentTypeSale } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb";
 import { useGetSalesByPaymentType } from "@/query/sales/getSalesByPaymentType";
 
 
 export function PaymentTypeSalesSection() {
-  const [paymentTypeSales, setPaymentTypeSales] = useState<PaymentTypeSale[]>([]);
   const today = new Date()
   const { data, isLoading, error } = useGetSalesByPaymentType(today, today)
-  
-  useEffect(() => {
-    if (data && data.paymentTypeSales) {
-      setPaymentTypeSales(data.paymentTypeSales);
-    }
-  }, [data]);
 
   // 金額をフォーマット（3桁ごとにカンマ区切り）
   const formatCurrency = (amount: number | bigint) => {
@@ -38,15 +29,15 @@ export function PaymentTypeSalesSection() {
     <Box bg="gray.50" p={4} borderRadius="md" boxShadow="sm">
       <Heading as="h3" size="md" mb={4}>支払い方法別売上</Heading>
       
-      {isLoading ? (
+      {isLoading || !data ? (
         <Skeleton height="10rem" />
       ) : error ? (
         <Text color="red.500">データの取得に失敗しました</Text>
-      ) : paymentTypeSales.length === 0 ? (
+      ) : data.paymentTypeSales.length === 0 ? (
         <Text>支払い方法別の売上データがありません</Text>
       ) : (
         <VStack gap={3} align="stretch">
-          {paymentTypeSales.map((payment, index) => (
+          {data.paymentTypeSales.map((payment, index) => (
             <Flex key={index} justify="space-between" p={2} borderBottom="1px" borderColor="gray.200">
               <Text fontWeight="medium">{getPaymentTypeName(payment.paymentType)}</Text>
               <Flex direction="column" align="flex-end">

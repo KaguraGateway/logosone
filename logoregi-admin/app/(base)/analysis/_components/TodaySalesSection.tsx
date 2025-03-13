@@ -23,8 +23,8 @@ export function TodaySalesSection() {
         <Text color="red.500">データの取得に失敗しました</Text>
       ) : (
         <Flex direction="column">
-          <Text fontSize="2xl" fontWeight="bold">¥{formatCurrency(data.dailySales[0].totalSales)}</Text>
-          <Text fontSize="sm" color="gray.600">{formatCurrency(data.dailySales[0].totalQuantity)} 点</Text>
+          <Text fontSize="2xl" fontWeight="bold">¥{formatCurrency(data.dailySales[0]?.totalSales || BigInt(0))}</Text>
+          <Text fontSize="sm" color="gray.600">{formatCurrency(data.dailySales[0]?.totalQuantity || BigInt(0))} 点</Text>
         </Flex>
       )}
     </Box>

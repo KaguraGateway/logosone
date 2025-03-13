@@ -32,6 +32,7 @@ service PosService {
 
     rpc PostStock(PostStockRequest) returns (common.Empty) {}
     rpc GetStocks(common.Empty) returns (GetStocksResponse) {}
+    rpc UpdateStock(UpdateStockRequest) returns (common.Empty) {}
 
     rpc PostCoffeeBean(PostCoffeeBeanRequest) returns (common.Empty) {}
     rpc GetCoffeeBeans(common.Empty) returns (GetCoffeeBeansResponse) {}
@@ -143,6 +144,11 @@ message PostStockRequest {
 }
 message GetStocksResponse {
     repeated Stock stocks = 1;
+}
+message UpdateStockRequest {
+    string id = 1;
+    string name = 2;
+    uint32 quantity = 3;
 }
 message PostCoffeeBeanRequest {
     string name = 1;

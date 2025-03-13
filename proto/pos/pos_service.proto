@@ -211,9 +211,10 @@ message GetSalesByTimeSlotResponse {
 }
 
 message TimeSlotSale {
-    string time_slot = 1; // 例: "10:00-10:30"
-    uint64 total_sales = 2; // 総売上
-    uint64 total_quantity = 3; // 総数量
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の開始時刻
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の終了時刻
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
 }
 
 // 支払い方法別売上取得用

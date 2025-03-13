@@ -216,6 +216,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	// Register QueryService
 	do.Provide(i, bundb.NewProductQueryServiceDb)
 	do.Provide(i, bundb.NewOrderQueryServiceDb)
+	do.Provide(i, bundb.NewSalesQueryServiceDb)
 	do.Provide(i, square.NewSquarePaymentExternalService)
 	// Register usecase
 	do.Provide(i, application.NewDeleteProductUseCase)
@@ -240,6 +241,11 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	do.Provide(i, application.NewPostDiscountUseCase)
 	do.Provide(i, application.NewPostClientUseCase)
 	do.Provide(i, application.NewGetExternalPaymentUseCase)
+	// 売上分析用のユースケース
+	do.Provide(i, application.NewGetDailySales)
+	do.Provide(i, application.NewGetProductSales)
+	do.Provide(i, application.NewGetSalesByTimeSlot)
+	do.Provide(i, application.NewGetSalesByPaymentType)
 
 	return i
 }

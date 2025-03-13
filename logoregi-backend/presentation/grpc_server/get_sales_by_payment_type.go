@@ -13,8 +13,8 @@ import (
 	"github.com/samber/lo"
 )
 
-func (s *GrpcServer) GetProductSales(ctx context.Context, req *connect.Request[pos.GetProductSalesRequest]) (*connect.Response[pos.GetProductSalesResponse], error) {
-	usecase := do.MustInvoke[*application.GetProductSales](s.i)
+func (s *GrpcServer) GetSalesByPaymentType(ctx context.Context, req *connect.Request[pos.GetSalesByPaymentTypeRequest]) (*connect.Response[pos.GetSalesByPaymentTypeResponse], error) {
+	usecase := do.MustInvoke[*application.GetSalesByPaymentType](s.i)
 	
 	startDate, err := synchro.ParseISO[tz.UTC](req.Msg.StartDate)
 	if err != nil {
@@ -26,14 +26,14 @@ func (s *GrpcServer) GetProductSales(ctx context.Context, req *connect.Request[p
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 	
-	productSales, err := usecase.Execute(ctx, startDate, endDate)
+	paymentTypeSales, err := usecase.Execute(ctx, startDate, endDate)
 	if err != nil {
 		return nil, connect.NewError(connect.CodeInternal, err)
 	}
 	
-	return connect.NewResponse(&pos.GetProductSalesResponse{
-		ProductSales: lo.Map(productSales, func(sale *dto.ProductSaleDto, _ int) *pos.ProductSale {
-			return ToProductSaleProto(sale)
+	return connect.NewResponse(&pos.GetSalesByPaymentTypeResponse{
+		PaymentTypeSales: lo.Map(paymentTypeSales, func(sale *dto.PaymentTypeSaleDto, _ int) *pos.PaymentTypeSale {
+			return ToPaymentTypeSaleProto(sale)
 		}),
 	}), nil
 }

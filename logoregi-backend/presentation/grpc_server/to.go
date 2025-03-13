@@ -6,6 +6,7 @@ import (
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
+	"github.com/KaguraGateway/logosone/logoregi-backend/application/dto"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/samber/lo"
 )
@@ -258,4 +259,56 @@ func ToPaymentExternalParam(param *pos.PaymentExternalParam) *application.Paymen
 
 func ToISO8601(t synchro.Time[tz.UTC]) string {
 	return t.Format("2006-01-02T15:04:05Z")
+}
+
+// Convert DailySaleDto to proto DailySale
+func ToDailySaleProto(sale *dto.DailySaleDto) *pos.DailySale {
+	if sale == nil {
+		return nil
+	}
+	return &pos.DailySale{
+		Date:          sale.Date,
+		TotalSales:    sale.TotalSales,
+		TotalQuantity: sale.TotalQuantity,
+	}
+}
+
+// Convert ProductSaleDto to proto ProductSale
+func ToProductSaleProto(sale *dto.ProductSaleDto) *pos.ProductSale {
+	if sale == nil {
+		return nil
+	}
+	return &pos.ProductSale{
+		ProductId:      sale.ProductId,
+		ProductName:    sale.ProductName,
+		TotalSales:     sale.TotalSales,
+		TotalQuantity:  sale.TotalQuantity,
+		CoffeeBrewId:   sale.CoffeeBrewId,
+		CoffeeBrewName: sale.CoffeeBrewName,
+	}
+}
+
+// Convert TimeSlotSaleDto to proto TimeSlotSale
+func ToTimeSlotSaleProto(sale *dto.TimeSlotSaleDto) *pos.TimeSlotSale {
+	if sale == nil {
+		return nil
+	}
+	return &pos.TimeSlotSale{
+		StartDate:     sale.StartDate,
+		EndDate:       sale.EndDate,
+		TotalSales:    sale.TotalSales,
+		TotalQuantity: sale.TotalQuantity,
+	}
+}
+
+// Convert PaymentTypeSaleDto to proto PaymentTypeSale
+func ToPaymentTypeSaleProto(sale *dto.PaymentTypeSaleDto) *pos.PaymentTypeSale {
+	if sale == nil {
+		return nil
+	}
+	return &pos.PaymentTypeSale{
+		PaymentType:   int32(sale.PaymentType),
+		TotalSales:    sale.TotalSales,
+		TotalQuantity: sale.TotalQuantity,
+	}
 }

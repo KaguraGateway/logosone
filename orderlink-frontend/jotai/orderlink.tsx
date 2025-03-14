@@ -17,7 +17,9 @@ const ordersAtom = atom<Array<Order>>([]);
 export function useOrderLink() {
   const { client } = useContext(WebSocketContext);
   const [orders, setOrders] = useAtom(ordersAtom);
-  const [play] = useSound('/orderlink_sound.mp3');
+  const [play] = useSound('/orderlink_sound.mp3', {
+    interrupt: true
+  });
 
   // Ordersまわりの処理
   useEffect(() => {

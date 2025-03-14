@@ -1,6 +1,6 @@
-import { GetSalesByTimeSlotRequest } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb";
+import { GetSalesByTimeSlotRequest } from "proto/scripts/pos/pos_service_pb";
 import { useQuery } from "@connectrpc/connect-query";
-import { getSalesByTimeSlot } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery";
+import { getSalesByTimeSlot } from "proto/scripts/pos/pos_service-PosService_connectquery";
 import { formatDate } from "@/query/sales/formatDate";
 
 export function useGetSalesByTimeSlot(date: Date) {

@@ -1,6 +1,6 @@
 'use client';
 import { Box, Flex } from '@chakra-ui/react';
-import { DeleteProductRequest } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { DeleteProductRequest } from 'proto/scripts/pos/pos_service_pb';
 import { useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { FaInternetExplorer, FaRegEyeSlash, FaRegTrashAlt } from 'react-icons/fa';

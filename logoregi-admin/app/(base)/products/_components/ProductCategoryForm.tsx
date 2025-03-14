@@ -5,7 +5,7 @@ import {
   Box,
   Stack,
 } from '@chakra-ui/react';
-import { getProductCategories } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { getProductCategories } from 'proto/scripts/pos/pos_service-PosService_connectquery';
 import { useQueryClient } from '@tanstack/react-query';
 import { ChangeEvent, useState } from 'react';
 

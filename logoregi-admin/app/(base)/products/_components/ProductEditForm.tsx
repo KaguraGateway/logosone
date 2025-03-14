@@ -12,7 +12,7 @@ import {
   CoffeeBrew as ProtoCoffeeBrew,
   ProductParam,
   ProductType,
-} from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+} from 'proto/scripts/pos/pos_service_pb';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';

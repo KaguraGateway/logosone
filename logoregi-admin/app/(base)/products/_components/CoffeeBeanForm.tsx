@@ -5,7 +5,7 @@ import {
   HStack,
   Stack,
 } from '@chakra-ui/react';
-import { getCoffeeBeans } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { getCoffeeBeans } from 'proto/scripts/pos/pos_service-PosService_connectquery';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { ChangeEvent, useState } from 'react';
 

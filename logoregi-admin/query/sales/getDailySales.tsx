@@ -1,7 +1,8 @@
 import { useQuery } from "@connectrpc/connect-query";
+import { create } from "@bufbuild/protobuf";
 
-import { GetDailySalesRequest } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
-import { getDailySales } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { GetDailySalesRequestSchema } from 'proto/scripts/pos/pos_service_pb';
+import { getDailySales } from 'proto/scripts/pos/pos_service-PosService_connectquery';
 import { formatDate } from "@/query/sales/formatDate";
 
 export function useGetTotalSales() {
@@ -14,10 +15,10 @@ export function useGetTotalSales() {
 }
 
 export function useGetDailySales(startDate: Date, endDate: Date) {
-  const request = new GetDailySalesRequest({
+  const request = create(GetDailySalesRequestSchema, {
     startDate: formatDate(startDate),
     endDate: formatDate(endDate),
-  });
+  })
 
   return useQuery(getDailySales, request, { throwOnError: false });
 }

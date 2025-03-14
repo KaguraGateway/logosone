@@ -1,7 +1,7 @@
-import { GetSalesByPaymentTypeRequest } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb";
+import { GetSalesByPaymentTypeRequest } from "proto/scripts/pos/pos_service_pb";
 import { formatDate } from "@/query/sales/formatDate";
 import { useQuery } from "@connectrpc/connect-query";
-import { getSalesByPaymentType } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery";
+import { getSalesByPaymentType } from "proto/scripts/pos/pos_service-PosService_connectquery";
 
 export function useGetSalesByPaymentType(startDate: Date, endDate: Date) {
   const request = new GetSalesByPaymentTypeRequest({

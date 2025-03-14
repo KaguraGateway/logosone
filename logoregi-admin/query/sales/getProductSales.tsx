@@ -1,7 +1,7 @@
-import { GetProductSalesRequest } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb";
+import { GetProductSalesRequest } from "proto/scripts/pos/pos_service_pb";
 import { formatDate } from "@/query/sales/formatDate";
 import { useQuery } from "@connectrpc/connect-query";
-import { getProductSales } from "@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery";
+import { getProductSales } from "proto/scripts/pos/pos_service-PosService_connectquery";
 
 export function useGetProductSales(startDate: Date, endDate: Date) {
   const request = new GetProductSalesRequest({

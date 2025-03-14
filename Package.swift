@@ -21,14 +21,11 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "cafelogos-grpc",
-            path: "./proto/Sources/cafelogos-grpc",
             dependencies: [
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "Connect", package: "connect-swift")
-            ]
-        ),
-        .testTarget(
-            name: "cafelogos-grpcTests",
-            dependencies: ["cafelogos-grpc"]),
+            ],
+            path: "./proto"
+        )
     ]
 )

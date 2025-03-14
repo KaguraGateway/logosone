@@ -13,8 +13,8 @@ let package = Package(
             targets: ["cafelogos-grpc"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.6.0"),
-        .package(url: "https://github.com/connectrpc/connect-swift.git", from: "0.8.0"),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.29.0"),
+        .package(url: "https://github.com/connectrpc/connect-swift.git", from: "1.0.2"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

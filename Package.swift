@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "cafelogos-grpc",
+    name: "logosone",
     platforms: [.iOS(.v13), .macOS(.v10_15)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -21,6 +21,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "cafelogos-grpc",
+            path: "./proto",
             dependencies: [
                 .product(name: "SwiftProtobuf", package: "swift-protobuf"),
                 .product(name: "Connect", package: "connect-swift")

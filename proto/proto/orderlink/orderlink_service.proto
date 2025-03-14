@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package cafelogos.orderlink;
+
+import "common/common.proto";
+
+option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;orderlink";
+
+service OrderLinkService {
+    rpc PostOrder(PostOrderInput) returns (common.Empty) {}
+}
+
+message PostOrderItemInput {
+    string product_id = 1;
+    string coffee_brew_id = 2;
+    uint32 quantity = 3;
+
+    bool is_managing_order = 20; // 注文管理を行うかどうか
+    bool is_ol_kitchen = 21; // OrderLinkでキッチン機能を使うかどうか
+}
+
+message PostOrderInput {
+    string order_id = 1;
+    string order_at = 2;
+    repeated PostOrderItemInput items = 3;
+    OrderType type = 4;
+    string ticket_id = 5;
+    string ticket_addr = 6;
+    string seat_name = 7;
+
+    enum OrderType {
+        EAT_IN = 0;
+        TAKE_OUT = 1;
+    }
+}

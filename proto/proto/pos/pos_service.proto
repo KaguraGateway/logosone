@@ -1,0 +1,433 @@
+syntax = "proto3";
+
+package cafelogos.pos;
+
+import "common/common.proto";
+
+option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/pos;pos";
+
+
+service PosService {
+    rpc GetOrders(GetOrdersRequest) returns (GetOrdersResponse) {}
+    rpc GetUnpaidOrdersBySeatId(GetUnpaidOrdersBySeatIdRequest) returns (GetOrdersResponse) {}
+    rpc PostOrder(PostOrderRequest) returns (PostOrderResponse) {}
+    rpc DeleteOrder(DeleteOrderRequest) returns (common.Empty) {}
+
+    rpc PostPayment(PostPaymentRequest) returns (PaymentResponse) {}
+    rpc UpdatePayment(UpdatePaymentRequest) returns (PaymentResponse) {}
+    rpc GetExternalPayment(GetExternalPaymentRequest) returns (GetExternalPaymentResponse) {}
+
+    rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
+
+    rpc PostNewClient(PostNewClientRequest) returns (PostNewClientResponse) {}
+    rpc UpdateClient(UpdateClientRequest) returns (common.Empty) {}
+
+    // Only Admin
+    rpc GetProductCategories(common.Empty) returns (GetProductCategoriesResponse) {}
+    rpc PostProductCategory(PostProductCategoryRequest) returns (common.Empty) {}
+
+    rpc PostProduct(PostProductRequest) returns (common.Empty) {}
+    rpc UpdateProduct(UpdateProductRequest) returns (common.Empty) {}
+    rpc DeleteProduct(DeleteProductRequest) returns (common.Empty) {}
+
+    rpc PostStock(PostStockRequest) returns (common.Empty) {}
+    rpc GetStocks(common.Empty) returns (GetStocksResponse) {}
+    rpc UpdateStock(UpdateStockRequest) returns (common.Empty) {}
+
+    rpc PostCoffeeBean(PostCoffeeBeanRequest) returns (common.Empty) {}
+    rpc GetCoffeeBeans(common.Empty) returns (GetCoffeeBeansResponse) {}
+
+    rpc DeleteAllOrders(common.Empty) returns (common.Empty) {}
+
+    rpc PostSeat(PostSeatRequest) returns (common.Empty) {}
+    rpc UpdateSeat(UpdateSeatRequest) returns (common.Empty) {}
+    rpc DeleteSeat(DeleteSeatRequest) returns (common.Empty) {}
+    rpc GetSeats(common.Empty) returns (GetSeatsResponse) {}
+
+    rpc GetDiscounts(common.Empty) returns (GetDiscountsResponse) {}
+    rpc PostDiscount(PostDiscountRequest) returns (common.Empty) {}
+
+    rpc GetDailySales(GetDailySalesRequest) returns (GetDailySalesResponse) {}
+    rpc GetProductSales(GetProductSalesRequest) returns (GetProductSalesResponse) {}
+    
+    // 売上分析用のメソッド
+    rpc GetSalesByTimeSlot(GetSalesByTimeSlotRequest) returns (GetSalesByTimeSlotResponse) {}
+    rpc GetSalesByPaymentType(GetSalesByPaymentTypeRequest) returns (GetSalesByPaymentTypeResponse) {}
+}
+
+/**
+ * Request/Response
+ */
+message GetOrdersRequest {}
+message GetOrdersResponse {
+    repeated Order orders = 1;
+}
+message GetOrderResponse {
+    Order order = 1;
+}
+message GetUnpaidOrdersBySeatIdRequest {
+    string seat_id = 1;
+}
+
+message PostOrderRequest {
+    OrderParam order = 1;
+    PostOrderOption option = 2;
+}
+message PostOrderOption {
+    bool is_post_orderlink = 1;
+}
+message PostOrderResponse {
+    Code code = 1;
+    string error_message = 2;
+    string call_number = 3;
+
+    enum Code {
+        OK = 0;
+        SOLD_OUT_PRODUCT = 1;
+        NOT_SOLD_PRODUCT = 2;
+        OTHER = 3;
+    }
+}
+message PostPaymentRequest {
+    PaymentParam payment = 1;
+
+    repeated OrderParam post_orders = 2;
+    repeated string order_ids = 3;
+
+    PostPaymentRequestOption option = 4;
+}
+message PostPaymentRequestOption {
+    bool is_post_orderlink = 1;
+}
+message UpdatePaymentRequest {
+    PaymentParam payment = 1;
+}
+message PaymentResponse {
+    int32 status = 1;
+    Payment payment = 2;
+    repeated PostOrderResponse order_responses = 3;
+}
+message GetExternalPaymentRequest {
+    string payment_id = 1;
+}
+message GetExternalPaymentResponse {
+    PaymentExternal external_payment = 1;
+}
+message DeleteOrderRequest {
+    string order_id = 1;
+}
+
+
+message GetProductsResponse {
+    repeated Product products = 1;
+}
+
+message GetProductCategoriesResponse {
+    repeated ProductCategory product_categories = 1;
+}
+message PostProductCategoryRequest {
+    string name = 1;
+}
+message PostProductRequest {
+    ProductParam product = 1;
+}
+message UpdateProductRequest {
+    string product_id = 1;
+    ProductParam product = 2;
+}
+message DeleteProductRequest {
+    string product_id = 1;
+}
+message PostStockRequest {
+    string name = 1;
+    uint32 quantity = 2;
+}
+message GetStocksResponse {
+    repeated Stock stocks = 1;
+}
+message UpdateStockRequest {
+    string id = 1;
+    string name = 2;
+    uint32 quantity = 3;
+}
+message PostCoffeeBeanRequest {
+    string name = 1;
+    int32 gram_quantity = 2;
+}
+message GetCoffeeBeansResponse {
+    repeated CoffeeBean coffee_beans = 1;
+}
+
+message PostSeatRequest {
+    string name = 1;
+}
+message UpdateSeatRequest {
+    Seat seat = 1;
+}
+message DeleteSeatRequest {
+    string seat_id = 1;
+}
+message GetSeatsResponse {
+    repeated Seat seats = 1;
+}
+
+message PostNewClientRequest {
+    string name = 1;
+}
+message PostNewClientResponse {
+    string id = 1;
+    string name = 2;
+}
+message UpdateClientRequest {
+    string id = 1;
+    string name = 2;
+}
+
+message GetDiscountsResponse {
+    repeated Discount discounts = 1;
+}
+
+message PostDiscountRequest {
+    string name = 1;
+    DiscountType type = 2;
+    uint64 discount_price = 3;
+}
+
+message GetDailySalesRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
+message GetDailySalesResponse {
+    repeated DailySale daily_sales = 1;
+}
+
+message GetProductSalesRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
+// 時間帯別売上取得用
+message GetSalesByTimeSlotRequest {
+    string date = 1; // ISO8601形式 (YYYY-MM-DD), デフォルトは今日
+}
+
+message GetSalesByTimeSlotResponse {
+    repeated TimeSlotSale time_slot_sales = 1;
+}
+
+message TimeSlotSale {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の開始時刻
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DDTHH:MM:SS), 時間帯の終了時刻
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
+}
+
+// 支払い方法別売上取得用
+message GetSalesByPaymentTypeRequest {
+    string start_date = 1; // ISO8601形式 (YYYY-MM-DD)
+    string end_date = 2; // ISO8601形式 (YYYY-MM-DD)
+}
+
+message GetSalesByPaymentTypeResponse {
+    repeated PaymentTypeSale payment_type_sales = 1;
+}
+
+message PaymentTypeSale {
+    int32 payment_type = 1; // 0: Cash, 1: External
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
+}
+
+message GetProductSalesResponse {
+    repeated ProductSale product_sales = 1;
+}
+
+/**
+ * Types
+ */
+/** Product */
+message Product {
+    string product_id = 1;
+    string product_name = 2;
+    ProductCategory product_category = 3;
+    ProductType product_type = 4;
+    string product_color = 5;
+    bool is_now_sales = 6;
+    string created_at = 7;
+    string updated_at = 8;
+    // Only Coffee
+    CoffeeBean coffee_bean = 9;
+    repeated CoffeeBrew coffee_brews = 10;
+    // Only Other
+    uint64 amount = 11;
+    Stock stock = 12;
+
+    // Only Admin
+    bool is_managing_order = 20; // 注文管理を行うかどうか
+    bool is_ol_kitchen = 21; // OrderLinkでキッチン機能を使うかどうか
+}
+message ProductParam {
+    string product_name = 1;
+    string product_category_id = 2;
+    ProductType product_type = 3;
+    bool is_now_sales = 4;
+    string product_color = 5;
+    // Only Coffee
+    string coffee_bean_id = 6;
+    repeated CoffeeBrew coffee_brews = 7;
+    // Only Other
+    uint64 amount = 8;
+    string stock_id = 9;
+
+    // Only Admin
+    bool is_managing_order = 20; // 注文管理を行うかどうか
+    bool is_ol_use_kitchen = 21; // OrderLinkでキッチン機能を使うかどうか
+}
+message ProductCategory {
+    string id = 1;
+    string name = 2;
+    string created_at = 3;
+    string updated_at = 4;
+}
+enum ProductType {
+    COFFEE = 0;
+    OTHER = 1;
+}
+message CoffeeBean {
+    string id = 1;
+    string name = 2;
+    int32 gram_quantity = 3;
+    string created_at = 4;
+    string updated_at = 5;
+}
+message CoffeeBrew {
+    string id = 1;
+    string name = 2;
+    uint32 bean_quantity_grams = 3;
+    uint64 amount = 4;
+    string created_at = 5;
+    string updated_at = 6;
+}
+message Stock {
+    string id = 1;
+    string name = 2;
+    uint32 quantity = 3;
+    string created_at = 4;
+    string updated_at = 5;
+}
+
+/** Order */
+enum OrderType {
+    EatIn = 0;
+    TakeOut = 1;
+}
+message Order {
+    string id = 1;
+    repeated OrderItem items = 2;
+    repeated OrderDiscount discounts = 3;
+    OrderType order_type = 4;
+    string order_at = 5;
+    string call_number = 6;
+    string client_id = 7;
+    string seat_name = 8;
+}
+message OrderParam {
+    string id = 1; /** 代入した場合は代入したIDが使用され、しなかったら生成される */
+    repeated OrderItem items = 2;
+    repeated OrderDiscount discounts = 3;
+    OrderType order_type = 4;
+    string order_at = 5;
+    string client_id = 6;
+    string seat_id = 7;
+}
+
+
+message OrderItem {
+    string product_id = 1;
+    uint32 quantity = 2;
+    uint64 amount = 3;
+    string coffee_brew_id = 4;
+}
+
+enum DiscountType {
+    PRICE = 0;
+}
+
+message OrderDiscount {
+    string id = 1; /** 一旦何も入ってない */
+    string discount_id = 2;
+    DiscountType type = 3;
+    uint64 discount_price = 4;
+}
+
+message Discount {
+    string id = 1;
+    string name = 2;
+    DiscountType type = 3;
+    uint64 discount_price = 4;
+}
+
+message Payment {
+    string id = 1;
+    int32 type = 2;
+
+    uint64 receive_amount = 3;
+    uint64 payment_amount = 4;
+    uint64 change_amount = 5;
+    string payment_at = 6;
+    string updated_at = 7;
+}
+message PaymentParam {
+    string id = 1;
+    int32 type = 2;
+
+    uint64 receive_amount = 3;
+    uint64 payment_amount = 4;
+    uint64 change_amount = 5;
+
+    string payment_at = 6;
+    string updated_at = 7;
+
+    oneof method {
+        PaymentCashParam cash = 8;
+        PaymentExternalParam external = 9;
+    }
+}
+message PaymentCashParam {}
+message PaymentExternalParam {
+    string payment_type = 1;
+    string external_device_id = 2;
+}
+message PaymentExternal {
+    string id = 1;
+    string payment_id = 2;
+    string payment_type = 3;
+    string status = 4;
+    string external_service_id = 5;
+    string external_device_id = 6;
+    string created_at = 7;
+    string updated_at = 8;
+}
+
+message Seat {
+    string id = 1;
+    string name = 2;
+}
+
+message DailySale {
+    string date = 1; // ISO8601形式 (YYYY-MM-DD)
+    uint64 total_sales = 2; // 総売上
+    uint64 total_quantity = 3; // 総数量
+}
+
+message ProductSale {
+    string product_id = 1;
+    string product_name = 2;
+    uint64 total_sales = 3; // 総売上
+    uint64 total_quantity = 4; // 総数量
+    
+    // コーヒー淹れ方用のフィールド
+    string coffee_brew_id = 7; // コーヒー淹れ方ID
+    string coffee_brew_name = 8; // コーヒー淹れ方名
+}

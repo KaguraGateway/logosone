@@ -9,10 +9,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import {
-  CoffeeBrew as ProtoCoffeeBrew,
-  ProductParam,
+  CoffeeBrewSchema,
+  ProductParamSchema,
   ProductType,
 } from 'proto/scripts/pos/pos_service_pb';
+import { create } from '@bufbuild/protobuf';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
@@ -196,14 +197,14 @@ export function ProductEditForm(props: Props) {
       return;
     }
     setIsLoading(true);
-    const data = new ProductParam({
+    const data = create(ProductParamSchema, {
       productName: name,
       isNowSales: isNowOnSale || false,
       productType: type === 'coffee' ? ProductType.COFFEE : ProductType.OTHER,
       productCategoryId: category.value,
       coffeeBeanId: coffeeBean?.value ?? '',
       coffeeBrews: brews.map((v) => {
-        return new ProtoCoffeeBrew({
+        return create(CoffeeBrewSchema, {
           id: v.id,
           name: v.name,
           beanQuantityGrams: v.beanQuantityGrams,

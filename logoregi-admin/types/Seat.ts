@@ -1,4 +1,4 @@
-import { Seat as ProtoSeat } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { Seat as ProtoSeat } from 'proto/scripts/pos/pos_service_pb';
 
 export type Seat = {
   id: string;

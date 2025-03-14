@@ -4,7 +4,7 @@ import {
   HStack,
   Stack,
 } from '@chakra-ui/react';
-import { DiscountType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { DiscountType } from 'proto/scripts/pos/pos_service_pb';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 import { useMutationAddDiscount } from '@/query/addDiscount';

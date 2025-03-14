@@ -1,4 +1,4 @@
-import { Product as ProtoProduct, ProductType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { Product as ProtoProduct, ProductType } from 'proto/scripts/pos/pos_service_pb';
 
 import { CoffeeBrew, toCoffeeBrewFromProto } from './CoffeeBrews';
 

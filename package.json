@@ -12,6 +12,7 @@
     "logoregi-handy",
     "logoregi-togo",
     "orderlink-frontend",
-    "orderlink-webcall"
+    "orderlink-webcall",
+    "proto"
   ]
 }

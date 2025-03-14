@@ -1,4 +1,4 @@
-import { Discount as ProtoDiscount } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { Discount as ProtoDiscount } from 'proto/scripts/pos/pos_service_pb';
 
 export type Discount = {
   id: string;

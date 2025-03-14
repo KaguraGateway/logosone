@@ -1,6 +1,7 @@
 'use client';
 import { Box, Flex } from '@chakra-ui/react';
-import { DeleteProductRequest } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { DeleteProductRequestSchema } from 'proto/scripts/pos/pos_service_pb';
+import { create } from '@bufbuild/protobuf';
 import { useState } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { FaInternetExplorer, FaRegEyeSlash, FaRegTrashAlt } from 'react-icons/fa';
@@ -23,7 +24,7 @@ export function ProductItem({ product }: { product: Product }) {
   const onCloseDelete = () => setIsOpenDelete(false);
   const onDelete = () => {
     setIsOpenDelete(false);
-    deleteMutation.mutate(new DeleteProductRequest({ productId: product.id }));
+    deleteMutation.mutate(create(DeleteProductRequestSchema, { productId: product.id }));
   };
   const onCloseEdit = () => setIsOpenEdit(false);
 

@@ -1,4 +1,4 @@
-import { getProducts } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service-PosService_connectquery';
+import { getProducts } from 'proto/scripts/pos/pos_service-PosService_connectquery';
 import { useQuery } from '@connectrpc/connect-query';
 
 export function useQueryProducts() {

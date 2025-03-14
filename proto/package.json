@@ -1,0 +1,29 @@
+{
+    "name": "proto",
+    "version": "1.7.0",
+    "description": "",
+    "main": "",
+    "files": [
+        "scripts/"
+    ],
+    "scripts": {
+        "generate": "buf generate",
+        "lint": "buf lint"
+    },
+    "author": "KaguraGateway",
+    "license": "ISC",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
+    "devDependencies": {
+        "@bufbuild/protoc-gen-es": "^2.2.3",
+        "@connectrpc/protoc-gen-connect-query": "^2.0.1"
+    },
+    "dependencies": {
+        "@bufbuild/buf": "^1.50.1",
+        "@bufbuild/protobuf": "^2.2.3",
+        "@connectrpc/connect": "^2.0.2",
+        "@connectrpc/connect-query": "^2.0.1",
+        "@connectrpc/connect-web": "^2.0.2"
+    }
+}

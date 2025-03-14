@@ -1,4 +1,4 @@
-import { Order as ProtoOrder, OrderItem as ProtoOrderItem, OrderType } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { Order as ProtoOrder, OrderItem as ProtoOrderItem, OrderType } from 'proto/scripts/pos/pos_service_pb';
 import { Product } from './Product';
 
 export type Order = {

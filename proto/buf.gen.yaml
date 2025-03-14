@@ -1,0 +1,23 @@
+version: v2
+plugins:
+  - local: protoc-gen-go
+    out: pkg
+    opt: paths=source_relative
+  - local: protoc-gen-connect-go
+    out: pkg
+    opt: paths=source_relative
+  - local: protoc-gen-es
+    out: scripts
+    opt: target=ts+js+dts
+  - local: protoc-gen-connect-query
+    out: scripts
+    opt: target=ts+js+dts
+  - remote: buf.build/connectrpc/swift
+    opt:
+      - GenerateAsyncMethods=true
+      - GenerateCallbackMethods=true
+      - Visibility=Public
+    out: Sources/cafelogos-grpc
+  - remote: buf.build/apple/swift
+    opt: Visibility=Public
+    out: Sources/cafelogos-grpc

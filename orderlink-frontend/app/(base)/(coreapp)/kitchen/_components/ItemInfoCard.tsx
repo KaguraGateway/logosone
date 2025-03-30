@@ -90,7 +90,7 @@ export function ItemInfoCard({
           )}
         </VStack>
         <Flex alignItems="center" ml="8" flex="1" maxW="300px" flexWrap="wrap">
-          <Text fontSize="2xl" fontWeight="semibold" color={productColor}>
+          <Text fontSize="2xl" fontWeight="semibold" color={productColor} overflow='hidden'>
             {productName}
           </Text>
           <Text fontSize="2xl" fontWeight="semibold" color={productColor}>

@@ -1229,6 +1229,8 @@ public struct Cafelogos_Pos_Payment: Sendable {
 
   public var updatedAt: String = String()
 
+  public var originalPaymentID: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -3883,6 +3885,7 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     5: .standard(proto: "change_amount"),
     6: .standard(proto: "payment_at"),
     7: .standard(proto: "updated_at"),
+    8: .standard(proto: "original_payment_id"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3898,6 +3901,7 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 5: try { try decoder.decodeSingularUInt64Field(value: &self.changeAmount) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.paymentAt) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.updatedAt) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.originalPaymentID) }()
       default: break
       }
     }
@@ -3925,6 +3929,9 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.updatedAt.isEmpty {
       try visitor.visitSingularStringField(value: self.updatedAt, fieldNumber: 7)
     }
+    if !self.originalPaymentID.isEmpty {
+      try visitor.visitSingularStringField(value: self.originalPaymentID, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3936,6 +3943,7 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.changeAmount != rhs.changeAmount {return false}
     if lhs.paymentAt != rhs.paymentAt {return false}
     if lhs.updatedAt != rhs.updatedAt {return false}
+    if lhs.originalPaymentID != rhs.originalPaymentID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

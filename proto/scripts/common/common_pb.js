@@ -8,7 +8,7 @@ import { fileDesc, messageDesc } from "@bufbuild/protobuf/codegenv1";
  * Describes the file common/common.proto.
  */
 export const file_common_common = /*@__PURE__*/
-  fileDesc("ChNjb21tb24vY29tbW9uLnByb3RvEhBjYWZlbG9nb3MuY29tbW9uIgcKBUVtcHR5QjtaOWdpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9jYWZlbG9nb3MtZ3JwYy9wa2cvY29tbW9uO2NvbW1vbmIGcHJvdG8z");
+  fileDesc("ChNjb21tb24vY29tbW9uLnByb3RvEhBjYWZlbG9nb3MuY29tbW9uIgcKBUVtcHR5QjtaOWdpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9sb2dvc29uZS9wcm90by9wa2cvY29tbW9uO2NvbW1vbmIGcHJvdG8z");
 
 /**
  * Describes the message cafelogos.common.Empty.

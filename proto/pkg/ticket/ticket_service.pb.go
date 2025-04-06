@@ -270,7 +270,7 @@ const file_ticket_ticket_service_proto_rawDesc = "" +
 	"created_at\x18\x03 \x01(\tR\tcreatedAt2\xce\x01\n" +
 	"\rTicketService\x12\\\n" +
 	"\vIssueTicket\x12$.cafelogos.ticket.RequestIssueTicket\x1a%.cafelogos.ticket.ResponseIssueTicket\"\x00\x12_\n" +
-	"\fRevokeTicket\x12%.cafelogos.ticket.RequestRevokeTicket\x1a&.cafelogos.ticket.ResponseRevokeTicket\"\x00B;Z9github.com/KaguraGateway/cafelogos-grpc/pkg/ticket;ticketb\x06proto3"
+	"\fRevokeTicket\x12%.cafelogos.ticket.RequestRevokeTicket\x1a&.cafelogos.ticket.ResponseRevokeTicket\"\x00B;Z9github.com/KaguraGateway/logosone/proto/pkg/ticket;ticketb\x06proto3"
 
 var (
 	file_ticket_ticket_service_proto_rawDescOnce sync.Once

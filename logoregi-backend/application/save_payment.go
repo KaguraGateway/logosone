@@ -66,16 +66,16 @@ func (uc *savePaymentUseCase) Execute(ctx context.Context, param PaymentParam) (
 		}
 	}
 
-	payment := model.ReconstructPayment(param.Id, orderIds, param.PaymentType, param.ReceiveAmount, param.PaymentAmount, param.PaymentAt, param.UpdatedAt)
+	payment := model.ReconstructPayment(param.Id, orderIds, param.PaymentType, param.ReceiveAmount, param.PaymentAmount, "", param.PaymentAt, param.UpdatedAt)
 	// 支払いチェック
 	// NOTE: 外部決済以外はチェック
 	if payment.GetPaymentType() != model.External && !domain_service.IsEnoughAmount(payment, orders) {
 		return nil, nil, ErrPaymentNotEnough
 	}
-	if payment.GetPaymentType() != model.External && param.ChangeAmount != payment.GetChangeAmount() {
+	if payment.GetPaymentType() != model.External && int64(param.ChangeAmount) != payment.GetChangeAmount() {
 		return nil, nil, ErrPaymentChangeAmountDiff
 	}
-	if param.PaymentAmount != domain_service.GetTotalAmount(orders) {
+	if int64(param.PaymentAmount) != domain_service.GetTotalAmount(orders) {
 		return nil, nil, ErrPaymentAmountDiff
 	}
 

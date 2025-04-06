@@ -150,6 +150,7 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 				param.OrderAt,
 				param.ClientId,
 				param.SeatId,
+				"", // paymentId
 			)
 		}
 		// 保存

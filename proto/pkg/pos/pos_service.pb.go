@@ -7,7 +7,7 @@
 package pos
 
 import (
-	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	common "github.com/KaguraGateway/logosone/proto/pkg/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -21,6 +21,52 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+type PaymentStatus int32
+
+const (
+	PaymentStatus_PENDING PaymentStatus = 0
+	PaymentStatus_SUCCESS PaymentStatus = 1
+)
+
+// Enum value maps for PaymentStatus.
+var (
+	PaymentStatus_name = map[int32]string{
+		0: "PENDING",
+		1: "SUCCESS",
+	}
+	PaymentStatus_value = map[string]int32{
+		"PENDING": 0,
+		"SUCCESS": 1,
+	}
+)
+
+func (x PaymentStatus) Enum() *PaymentStatus {
+	p := new(PaymentStatus)
+	*p = x
+	return p
+}
+
+func (x PaymentStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PaymentStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_pos_pos_service_proto_enumTypes[0].Descriptor()
+}
+
+func (PaymentStatus) Type() protoreflect.EnumType {
+	return &file_pos_pos_service_proto_enumTypes[0]
+}
+
+func (x PaymentStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PaymentStatus.Descriptor instead.
+func (PaymentStatus) EnumDescriptor() ([]byte, []int) {
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{0}
+}
 
 type ProductType int32
 
@@ -52,11 +98,11 @@ func (x ProductType) String() string {
 }
 
 func (ProductType) Descriptor() protoreflect.EnumDescriptor {
-	return file_pos_pos_service_proto_enumTypes[0].Descriptor()
+	return file_pos_pos_service_proto_enumTypes[1].Descriptor()
 }
 
 func (ProductType) Type() protoreflect.EnumType {
-	return &file_pos_pos_service_proto_enumTypes[0]
+	return &file_pos_pos_service_proto_enumTypes[1]
 }
 
 func (x ProductType) Number() protoreflect.EnumNumber {
@@ -65,7 +111,7 @@ func (x ProductType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ProductType.Descriptor instead.
 func (ProductType) EnumDescriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{0}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{1}
 }
 
 // * Order
@@ -99,11 +145,11 @@ func (x OrderType) String() string {
 }
 
 func (OrderType) Descriptor() protoreflect.EnumDescriptor {
-	return file_pos_pos_service_proto_enumTypes[1].Descriptor()
+	return file_pos_pos_service_proto_enumTypes[2].Descriptor()
 }
 
 func (OrderType) Type() protoreflect.EnumType {
-	return &file_pos_pos_service_proto_enumTypes[1]
+	return &file_pos_pos_service_proto_enumTypes[2]
 }
 
 func (x OrderType) Number() protoreflect.EnumNumber {
@@ -112,7 +158,7 @@ func (x OrderType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OrderType.Descriptor instead.
 func (OrderType) EnumDescriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{1}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{2}
 }
 
 type DiscountType int32
@@ -142,11 +188,11 @@ func (x DiscountType) String() string {
 }
 
 func (DiscountType) Descriptor() protoreflect.EnumDescriptor {
-	return file_pos_pos_service_proto_enumTypes[2].Descriptor()
+	return file_pos_pos_service_proto_enumTypes[3].Descriptor()
 }
 
 func (DiscountType) Type() protoreflect.EnumType {
-	return &file_pos_pos_service_proto_enumTypes[2]
+	return &file_pos_pos_service_proto_enumTypes[3]
 }
 
 func (x DiscountType) Number() protoreflect.EnumNumber {
@@ -155,7 +201,7 @@ func (x DiscountType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DiscountType.Descriptor instead.
 func (DiscountType) EnumDescriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{2}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{3}
 }
 
 type PostOrderResponse_Code int32
@@ -194,11 +240,11 @@ func (x PostOrderResponse_Code) String() string {
 }
 
 func (PostOrderResponse_Code) Descriptor() protoreflect.EnumDescriptor {
-	return file_pos_pos_service_proto_enumTypes[3].Descriptor()
+	return file_pos_pos_service_proto_enumTypes[4].Descriptor()
 }
 
 func (PostOrderResponse_Code) Type() protoreflect.EnumType {
-	return &file_pos_pos_service_proto_enumTypes[3]
+	return &file_pos_pos_service_proto_enumTypes[4]
 }
 
 func (x PostOrderResponse_Code) Number() protoreflect.EnumNumber {
@@ -886,7 +932,7 @@ func (x *RefundPaymentRequest) GetPaymentId() string {
 
 type RefundPaymentResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Status        int32                  `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
+	Status        PaymentStatus          `protobuf:"varint,1,opt,name=status,proto3,enum=cafelogos.pos.PaymentStatus" json:"status,omitempty"`
 	Payment       *Payment               `protobuf:"bytes,2,opt,name=payment,proto3" json:"payment,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -922,11 +968,11 @@ func (*RefundPaymentResponse) Descriptor() ([]byte, []int) {
 	return file_pos_pos_service_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *RefundPaymentResponse) GetStatus() int32 {
+func (x *RefundPaymentResponse) GetStatus() PaymentStatus {
 	if x != nil {
 		return x.Status
 	}
-	return 0
+	return PaymentStatus_PENDING
 }
 
 func (x *RefundPaymentResponse) GetPayment() *Payment {
@@ -3426,16 +3472,17 @@ func (x *Discount) GetDiscountPrice() uint64 {
 }
 
 type Payment struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Type          int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`
-	ReceiveAmount uint64                 `protobuf:"varint,3,opt,name=receive_amount,json=receiveAmount,proto3" json:"receive_amount,omitempty"`
-	PaymentAmount uint64                 `protobuf:"varint,4,opt,name=payment_amount,json=paymentAmount,proto3" json:"payment_amount,omitempty"`
-	ChangeAmount  uint64                 `protobuf:"varint,5,opt,name=change_amount,json=changeAmount,proto3" json:"change_amount,omitempty"`
-	PaymentAt     string                 `protobuf:"bytes,6,opt,name=payment_at,json=paymentAt,proto3" json:"payment_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	Id                string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Type              int32                  `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`
+	ReceiveAmount     uint64                 `protobuf:"varint,3,opt,name=receive_amount,json=receiveAmount,proto3" json:"receive_amount,omitempty"`
+	PaymentAmount     uint64                 `protobuf:"varint,4,opt,name=payment_amount,json=paymentAmount,proto3" json:"payment_amount,omitempty"`
+	ChangeAmount      uint64                 `protobuf:"varint,5,opt,name=change_amount,json=changeAmount,proto3" json:"change_amount,omitempty"`
+	PaymentAt         string                 `protobuf:"bytes,6,opt,name=payment_at,json=paymentAt,proto3" json:"payment_at,omitempty"`
+	UpdatedAt         string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	OriginalPaymentId string                 `protobuf:"bytes,8,opt,name=original_payment_id,json=originalPaymentId,proto3" json:"original_payment_id,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Payment) Reset() {
@@ -3513,6 +3560,13 @@ func (x *Payment) GetPaymentAt() string {
 func (x *Payment) GetUpdatedAt() string {
 	if x != nil {
 		return x.UpdatedAt
+	}
+	return ""
+}
+
+func (x *Payment) GetOriginalPaymentId() string {
+	if x != nil {
+		return x.OriginalPaymentId
 	}
 	return ""
 }
@@ -4088,9 +4142,9 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\x10external_payment\x18\x01 \x01(\v2\x1e.cafelogos.pos.PaymentExternalR\x0fexternalPayment\"5\n" +
 	"\x14RefundPaymentRequest\x12\x1d\n" +
 	"\n" +
-	"payment_id\x18\x01 \x01(\tR\tpaymentId\"a\n" +
-	"\x15RefundPaymentResponse\x12\x16\n" +
-	"\x06status\x18\x01 \x01(\x05R\x06status\x120\n" +
+	"payment_id\x18\x01 \x01(\tR\tpaymentId\"\x7f\n" +
+	"\x15RefundPaymentResponse\x124\n" +
+	"\x06status\x18\x01 \x01(\x0e2\x1c.cafelogos.pos.PaymentStatusR\x06status\x120\n" +
 	"\apayment\x18\x02 \x01(\v2\x16.cafelogos.pos.PaymentR\apayment\"/\n" +
 	"\x12DeleteOrderRequest\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\"I\n" +
@@ -4287,7 +4341,7 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12/\n" +
 	"\x04type\x18\x03 \x01(\x0e2\x1b.cafelogos.pos.DiscountTypeR\x04type\x12%\n" +
-	"\x0ediscount_price\x18\x04 \x01(\x04R\rdiscountPrice\"\xde\x01\n" +
+	"\x0ediscount_price\x18\x04 \x01(\x04R\rdiscountPrice\"\x8e\x02\n" +
 	"\aPayment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\x05R\x04type\x12%\n" +
@@ -4297,7 +4351,8 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\n" +
 	"payment_at\x18\x06 \x01(\tR\tpaymentAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAt\"\xe7\x02\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAt\x12.\n" +
+	"\x13original_payment_id\x18\b \x01(\tR\x11originalPaymentId\"\xe7\x02\n" +
 	"\fPaymentParam\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\x05R\x04type\x12%\n" +
@@ -4343,7 +4398,10 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"totalSales\x12%\n" +
 	"\x0etotal_quantity\x18\x04 \x01(\x04R\rtotalQuantity\x12$\n" +
 	"\x0ecoffee_brew_id\x18\a \x01(\tR\fcoffeeBrewId\x12(\n" +
-	"\x10coffee_brew_name\x18\b \x01(\tR\x0ecoffeeBrewName*$\n" +
+	"\x10coffee_brew_name\x18\b \x01(\tR\x0ecoffeeBrewName*)\n" +
+	"\rPaymentStatus\x12\v\n" +
+	"\aPENDING\x10\x00\x12\v\n" +
+	"\aSUCCESS\x10\x01*$\n" +
 	"\vProductType\x12\n" +
 	"\n" +
 	"\x06COFFEE\x10\x00\x12\t\n" +
@@ -4388,7 +4446,7 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\rGetDailySales\x12#.cafelogos.pos.GetDailySalesRequest\x1a$.cafelogos.pos.GetDailySalesResponse\"\x00\x12b\n" +
 	"\x0fGetProductSales\x12%.cafelogos.pos.GetProductSalesRequest\x1a&.cafelogos.pos.GetProductSalesResponse\"\x00\x12k\n" +
 	"\x12GetSalesByTimeSlot\x12(.cafelogos.pos.GetSalesByTimeSlotRequest\x1a).cafelogos.pos.GetSalesByTimeSlotResponse\"\x00\x12t\n" +
-	"\x15GetSalesByPaymentType\x12+.cafelogos.pos.GetSalesByPaymentTypeRequest\x1a,.cafelogos.pos.GetSalesByPaymentTypeResponse\"\x00B5Z3github.com/KaguraGateway/cafelogos-grpc/pkg/pos;posb\x06proto3"
+	"\x15GetSalesByPaymentType\x12+.cafelogos.pos.GetSalesByPaymentTypeRequest\x1a,.cafelogos.pos.GetSalesByPaymentTypeResponse\"\x00B5Z3github.com/KaguraGateway/logosone/proto/pkg/pos;posb\x06proto3"
 
 var (
 	file_pos_pos_service_proto_rawDescOnce sync.Once
@@ -4402,194 +4460,196 @@ func file_pos_pos_service_proto_rawDescGZIP() []byte {
 	return file_pos_pos_service_proto_rawDescData
 }
 
-var file_pos_pos_service_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_pos_pos_service_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_pos_pos_service_proto_msgTypes = make([]protoimpl.MessageInfo, 65)
 var file_pos_pos_service_proto_goTypes = []any{
-	(ProductType)(0),                       // 0: cafelogos.pos.ProductType
-	(OrderType)(0),                         // 1: cafelogos.pos.OrderType
-	(DiscountType)(0),                      // 2: cafelogos.pos.DiscountType
-	(PostOrderResponse_Code)(0),            // 3: cafelogos.pos.PostOrderResponse.Code
-	(*GetOrdersRequest)(nil),               // 4: cafelogos.pos.GetOrdersRequest
-	(*GetOrdersResponse)(nil),              // 5: cafelogos.pos.GetOrdersResponse
-	(*GetOrderResponse)(nil),               // 6: cafelogos.pos.GetOrderResponse
-	(*GetUnpaidOrdersBySeatIdRequest)(nil), // 7: cafelogos.pos.GetUnpaidOrdersBySeatIdRequest
-	(*PostOrderRequest)(nil),               // 8: cafelogos.pos.PostOrderRequest
-	(*PostOrderOption)(nil),                // 9: cafelogos.pos.PostOrderOption
-	(*PostOrderResponse)(nil),              // 10: cafelogos.pos.PostOrderResponse
-	(*PostPaymentRequest)(nil),             // 11: cafelogos.pos.PostPaymentRequest
-	(*PostPaymentRequestOption)(nil),       // 12: cafelogos.pos.PostPaymentRequestOption
-	(*UpdatePaymentRequest)(nil),           // 13: cafelogos.pos.UpdatePaymentRequest
-	(*PaymentResponse)(nil),                // 14: cafelogos.pos.PaymentResponse
-	(*GetExternalPaymentRequest)(nil),      // 15: cafelogos.pos.GetExternalPaymentRequest
-	(*GetExternalPaymentResponse)(nil),     // 16: cafelogos.pos.GetExternalPaymentResponse
-	(*RefundPaymentRequest)(nil),           // 17: cafelogos.pos.RefundPaymentRequest
-	(*RefundPaymentResponse)(nil),          // 18: cafelogos.pos.RefundPaymentResponse
-	(*DeleteOrderRequest)(nil),             // 19: cafelogos.pos.DeleteOrderRequest
-	(*GetProductsResponse)(nil),            // 20: cafelogos.pos.GetProductsResponse
-	(*GetProductCategoriesResponse)(nil),   // 21: cafelogos.pos.GetProductCategoriesResponse
-	(*PostProductCategoryRequest)(nil),     // 22: cafelogos.pos.PostProductCategoryRequest
-	(*PostProductRequest)(nil),             // 23: cafelogos.pos.PostProductRequest
-	(*UpdateProductRequest)(nil),           // 24: cafelogos.pos.UpdateProductRequest
-	(*DeleteProductRequest)(nil),           // 25: cafelogos.pos.DeleteProductRequest
-	(*PostStockRequest)(nil),               // 26: cafelogos.pos.PostStockRequest
-	(*GetStocksResponse)(nil),              // 27: cafelogos.pos.GetStocksResponse
-	(*UpdateStockRequest)(nil),             // 28: cafelogos.pos.UpdateStockRequest
-	(*PostCoffeeBeanRequest)(nil),          // 29: cafelogos.pos.PostCoffeeBeanRequest
-	(*GetCoffeeBeansResponse)(nil),         // 30: cafelogos.pos.GetCoffeeBeansResponse
-	(*PostSeatRequest)(nil),                // 31: cafelogos.pos.PostSeatRequest
-	(*UpdateSeatRequest)(nil),              // 32: cafelogos.pos.UpdateSeatRequest
-	(*DeleteSeatRequest)(nil),              // 33: cafelogos.pos.DeleteSeatRequest
-	(*GetSeatsResponse)(nil),               // 34: cafelogos.pos.GetSeatsResponse
-	(*PostNewClientRequest)(nil),           // 35: cafelogos.pos.PostNewClientRequest
-	(*PostNewClientResponse)(nil),          // 36: cafelogos.pos.PostNewClientResponse
-	(*UpdateClientRequest)(nil),            // 37: cafelogos.pos.UpdateClientRequest
-	(*GetDiscountsResponse)(nil),           // 38: cafelogos.pos.GetDiscountsResponse
-	(*PostDiscountRequest)(nil),            // 39: cafelogos.pos.PostDiscountRequest
-	(*GetDailySalesRequest)(nil),           // 40: cafelogos.pos.GetDailySalesRequest
-	(*GetDailySalesResponse)(nil),          // 41: cafelogos.pos.GetDailySalesResponse
-	(*GetProductSalesRequest)(nil),         // 42: cafelogos.pos.GetProductSalesRequest
-	(*GetSalesByTimeSlotRequest)(nil),      // 43: cafelogos.pos.GetSalesByTimeSlotRequest
-	(*GetSalesByTimeSlotResponse)(nil),     // 44: cafelogos.pos.GetSalesByTimeSlotResponse
-	(*TimeSlotSale)(nil),                   // 45: cafelogos.pos.TimeSlotSale
-	(*GetSalesByPaymentTypeRequest)(nil),   // 46: cafelogos.pos.GetSalesByPaymentTypeRequest
-	(*GetSalesByPaymentTypeResponse)(nil),  // 47: cafelogos.pos.GetSalesByPaymentTypeResponse
-	(*PaymentTypeSale)(nil),                // 48: cafelogos.pos.PaymentTypeSale
-	(*GetProductSalesResponse)(nil),        // 49: cafelogos.pos.GetProductSalesResponse
-	(*Product)(nil),                        // 50: cafelogos.pos.Product
-	(*ProductParam)(nil),                   // 51: cafelogos.pos.ProductParam
-	(*ProductCategory)(nil),                // 52: cafelogos.pos.ProductCategory
-	(*CoffeeBean)(nil),                     // 53: cafelogos.pos.CoffeeBean
-	(*CoffeeBrew)(nil),                     // 54: cafelogos.pos.CoffeeBrew
-	(*Stock)(nil),                          // 55: cafelogos.pos.Stock
-	(*Order)(nil),                          // 56: cafelogos.pos.Order
-	(*OrderParam)(nil),                     // 57: cafelogos.pos.OrderParam
-	(*OrderItem)(nil),                      // 58: cafelogos.pos.OrderItem
-	(*OrderDiscount)(nil),                  // 59: cafelogos.pos.OrderDiscount
-	(*Discount)(nil),                       // 60: cafelogos.pos.Discount
-	(*Payment)(nil),                        // 61: cafelogos.pos.Payment
-	(*PaymentParam)(nil),                   // 62: cafelogos.pos.PaymentParam
-	(*PaymentCashParam)(nil),               // 63: cafelogos.pos.PaymentCashParam
-	(*PaymentExternalParam)(nil),           // 64: cafelogos.pos.PaymentExternalParam
-	(*PaymentExternal)(nil),                // 65: cafelogos.pos.PaymentExternal
-	(*Seat)(nil),                           // 66: cafelogos.pos.Seat
-	(*DailySale)(nil),                      // 67: cafelogos.pos.DailySale
-	(*ProductSale)(nil),                    // 68: cafelogos.pos.ProductSale
-	(*common.Empty)(nil),                   // 69: cafelogos.common.Empty
+	(PaymentStatus)(0),                     // 0: cafelogos.pos.PaymentStatus
+	(ProductType)(0),                       // 1: cafelogos.pos.ProductType
+	(OrderType)(0),                         // 2: cafelogos.pos.OrderType
+	(DiscountType)(0),                      // 3: cafelogos.pos.DiscountType
+	(PostOrderResponse_Code)(0),            // 4: cafelogos.pos.PostOrderResponse.Code
+	(*GetOrdersRequest)(nil),               // 5: cafelogos.pos.GetOrdersRequest
+	(*GetOrdersResponse)(nil),              // 6: cafelogos.pos.GetOrdersResponse
+	(*GetOrderResponse)(nil),               // 7: cafelogos.pos.GetOrderResponse
+	(*GetUnpaidOrdersBySeatIdRequest)(nil), // 8: cafelogos.pos.GetUnpaidOrdersBySeatIdRequest
+	(*PostOrderRequest)(nil),               // 9: cafelogos.pos.PostOrderRequest
+	(*PostOrderOption)(nil),                // 10: cafelogos.pos.PostOrderOption
+	(*PostOrderResponse)(nil),              // 11: cafelogos.pos.PostOrderResponse
+	(*PostPaymentRequest)(nil),             // 12: cafelogos.pos.PostPaymentRequest
+	(*PostPaymentRequestOption)(nil),       // 13: cafelogos.pos.PostPaymentRequestOption
+	(*UpdatePaymentRequest)(nil),           // 14: cafelogos.pos.UpdatePaymentRequest
+	(*PaymentResponse)(nil),                // 15: cafelogos.pos.PaymentResponse
+	(*GetExternalPaymentRequest)(nil),      // 16: cafelogos.pos.GetExternalPaymentRequest
+	(*GetExternalPaymentResponse)(nil),     // 17: cafelogos.pos.GetExternalPaymentResponse
+	(*RefundPaymentRequest)(nil),           // 18: cafelogos.pos.RefundPaymentRequest
+	(*RefundPaymentResponse)(nil),          // 19: cafelogos.pos.RefundPaymentResponse
+	(*DeleteOrderRequest)(nil),             // 20: cafelogos.pos.DeleteOrderRequest
+	(*GetProductsResponse)(nil),            // 21: cafelogos.pos.GetProductsResponse
+	(*GetProductCategoriesResponse)(nil),   // 22: cafelogos.pos.GetProductCategoriesResponse
+	(*PostProductCategoryRequest)(nil),     // 23: cafelogos.pos.PostProductCategoryRequest
+	(*PostProductRequest)(nil),             // 24: cafelogos.pos.PostProductRequest
+	(*UpdateProductRequest)(nil),           // 25: cafelogos.pos.UpdateProductRequest
+	(*DeleteProductRequest)(nil),           // 26: cafelogos.pos.DeleteProductRequest
+	(*PostStockRequest)(nil),               // 27: cafelogos.pos.PostStockRequest
+	(*GetStocksResponse)(nil),              // 28: cafelogos.pos.GetStocksResponse
+	(*UpdateStockRequest)(nil),             // 29: cafelogos.pos.UpdateStockRequest
+	(*PostCoffeeBeanRequest)(nil),          // 30: cafelogos.pos.PostCoffeeBeanRequest
+	(*GetCoffeeBeansResponse)(nil),         // 31: cafelogos.pos.GetCoffeeBeansResponse
+	(*PostSeatRequest)(nil),                // 32: cafelogos.pos.PostSeatRequest
+	(*UpdateSeatRequest)(nil),              // 33: cafelogos.pos.UpdateSeatRequest
+	(*DeleteSeatRequest)(nil),              // 34: cafelogos.pos.DeleteSeatRequest
+	(*GetSeatsResponse)(nil),               // 35: cafelogos.pos.GetSeatsResponse
+	(*PostNewClientRequest)(nil),           // 36: cafelogos.pos.PostNewClientRequest
+	(*PostNewClientResponse)(nil),          // 37: cafelogos.pos.PostNewClientResponse
+	(*UpdateClientRequest)(nil),            // 38: cafelogos.pos.UpdateClientRequest
+	(*GetDiscountsResponse)(nil),           // 39: cafelogos.pos.GetDiscountsResponse
+	(*PostDiscountRequest)(nil),            // 40: cafelogos.pos.PostDiscountRequest
+	(*GetDailySalesRequest)(nil),           // 41: cafelogos.pos.GetDailySalesRequest
+	(*GetDailySalesResponse)(nil),          // 42: cafelogos.pos.GetDailySalesResponse
+	(*GetProductSalesRequest)(nil),         // 43: cafelogos.pos.GetProductSalesRequest
+	(*GetSalesByTimeSlotRequest)(nil),      // 44: cafelogos.pos.GetSalesByTimeSlotRequest
+	(*GetSalesByTimeSlotResponse)(nil),     // 45: cafelogos.pos.GetSalesByTimeSlotResponse
+	(*TimeSlotSale)(nil),                   // 46: cafelogos.pos.TimeSlotSale
+	(*GetSalesByPaymentTypeRequest)(nil),   // 47: cafelogos.pos.GetSalesByPaymentTypeRequest
+	(*GetSalesByPaymentTypeResponse)(nil),  // 48: cafelogos.pos.GetSalesByPaymentTypeResponse
+	(*PaymentTypeSale)(nil),                // 49: cafelogos.pos.PaymentTypeSale
+	(*GetProductSalesResponse)(nil),        // 50: cafelogos.pos.GetProductSalesResponse
+	(*Product)(nil),                        // 51: cafelogos.pos.Product
+	(*ProductParam)(nil),                   // 52: cafelogos.pos.ProductParam
+	(*ProductCategory)(nil),                // 53: cafelogos.pos.ProductCategory
+	(*CoffeeBean)(nil),                     // 54: cafelogos.pos.CoffeeBean
+	(*CoffeeBrew)(nil),                     // 55: cafelogos.pos.CoffeeBrew
+	(*Stock)(nil),                          // 56: cafelogos.pos.Stock
+	(*Order)(nil),                          // 57: cafelogos.pos.Order
+	(*OrderParam)(nil),                     // 58: cafelogos.pos.OrderParam
+	(*OrderItem)(nil),                      // 59: cafelogos.pos.OrderItem
+	(*OrderDiscount)(nil),                  // 60: cafelogos.pos.OrderDiscount
+	(*Discount)(nil),                       // 61: cafelogos.pos.Discount
+	(*Payment)(nil),                        // 62: cafelogos.pos.Payment
+	(*PaymentParam)(nil),                   // 63: cafelogos.pos.PaymentParam
+	(*PaymentCashParam)(nil),               // 64: cafelogos.pos.PaymentCashParam
+	(*PaymentExternalParam)(nil),           // 65: cafelogos.pos.PaymentExternalParam
+	(*PaymentExternal)(nil),                // 66: cafelogos.pos.PaymentExternal
+	(*Seat)(nil),                           // 67: cafelogos.pos.Seat
+	(*DailySale)(nil),                      // 68: cafelogos.pos.DailySale
+	(*ProductSale)(nil),                    // 69: cafelogos.pos.ProductSale
+	(*common.Empty)(nil),                   // 70: cafelogos.common.Empty
 }
 var file_pos_pos_service_proto_depIdxs = []int32{
-	56, // 0: cafelogos.pos.GetOrdersResponse.orders:type_name -> cafelogos.pos.Order
-	56, // 1: cafelogos.pos.GetOrderResponse.order:type_name -> cafelogos.pos.Order
-	57, // 2: cafelogos.pos.PostOrderRequest.order:type_name -> cafelogos.pos.OrderParam
-	9,  // 3: cafelogos.pos.PostOrderRequest.option:type_name -> cafelogos.pos.PostOrderOption
-	3,  // 4: cafelogos.pos.PostOrderResponse.code:type_name -> cafelogos.pos.PostOrderResponse.Code
-	62, // 5: cafelogos.pos.PostPaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
-	57, // 6: cafelogos.pos.PostPaymentRequest.post_orders:type_name -> cafelogos.pos.OrderParam
-	12, // 7: cafelogos.pos.PostPaymentRequest.option:type_name -> cafelogos.pos.PostPaymentRequestOption
-	62, // 8: cafelogos.pos.UpdatePaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
-	61, // 9: cafelogos.pos.PaymentResponse.payment:type_name -> cafelogos.pos.Payment
-	10, // 10: cafelogos.pos.PaymentResponse.order_responses:type_name -> cafelogos.pos.PostOrderResponse
-	65, // 11: cafelogos.pos.GetExternalPaymentResponse.external_payment:type_name -> cafelogos.pos.PaymentExternal
-	61, // 12: cafelogos.pos.RefundPaymentResponse.payment:type_name -> cafelogos.pos.Payment
-	50, // 13: cafelogos.pos.GetProductsResponse.products:type_name -> cafelogos.pos.Product
-	52, // 14: cafelogos.pos.GetProductCategoriesResponse.product_categories:type_name -> cafelogos.pos.ProductCategory
-	51, // 15: cafelogos.pos.PostProductRequest.product:type_name -> cafelogos.pos.ProductParam
-	51, // 16: cafelogos.pos.UpdateProductRequest.product:type_name -> cafelogos.pos.ProductParam
-	55, // 17: cafelogos.pos.GetStocksResponse.stocks:type_name -> cafelogos.pos.Stock
-	53, // 18: cafelogos.pos.GetCoffeeBeansResponse.coffee_beans:type_name -> cafelogos.pos.CoffeeBean
-	66, // 19: cafelogos.pos.UpdateSeatRequest.seat:type_name -> cafelogos.pos.Seat
-	66, // 20: cafelogos.pos.GetSeatsResponse.seats:type_name -> cafelogos.pos.Seat
-	60, // 21: cafelogos.pos.GetDiscountsResponse.discounts:type_name -> cafelogos.pos.Discount
-	2,  // 22: cafelogos.pos.PostDiscountRequest.type:type_name -> cafelogos.pos.DiscountType
-	67, // 23: cafelogos.pos.GetDailySalesResponse.daily_sales:type_name -> cafelogos.pos.DailySale
-	45, // 24: cafelogos.pos.GetSalesByTimeSlotResponse.time_slot_sales:type_name -> cafelogos.pos.TimeSlotSale
-	48, // 25: cafelogos.pos.GetSalesByPaymentTypeResponse.payment_type_sales:type_name -> cafelogos.pos.PaymentTypeSale
-	68, // 26: cafelogos.pos.GetProductSalesResponse.product_sales:type_name -> cafelogos.pos.ProductSale
-	52, // 27: cafelogos.pos.Product.product_category:type_name -> cafelogos.pos.ProductCategory
-	0,  // 28: cafelogos.pos.Product.product_type:type_name -> cafelogos.pos.ProductType
-	53, // 29: cafelogos.pos.Product.coffee_bean:type_name -> cafelogos.pos.CoffeeBean
-	54, // 30: cafelogos.pos.Product.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
-	55, // 31: cafelogos.pos.Product.stock:type_name -> cafelogos.pos.Stock
-	0,  // 32: cafelogos.pos.ProductParam.product_type:type_name -> cafelogos.pos.ProductType
-	54, // 33: cafelogos.pos.ProductParam.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
-	58, // 34: cafelogos.pos.Order.items:type_name -> cafelogos.pos.OrderItem
-	59, // 35: cafelogos.pos.Order.discounts:type_name -> cafelogos.pos.OrderDiscount
-	1,  // 36: cafelogos.pos.Order.order_type:type_name -> cafelogos.pos.OrderType
-	58, // 37: cafelogos.pos.OrderParam.items:type_name -> cafelogos.pos.OrderItem
-	59, // 38: cafelogos.pos.OrderParam.discounts:type_name -> cafelogos.pos.OrderDiscount
-	1,  // 39: cafelogos.pos.OrderParam.order_type:type_name -> cafelogos.pos.OrderType
-	2,  // 40: cafelogos.pos.OrderDiscount.type:type_name -> cafelogos.pos.DiscountType
-	2,  // 41: cafelogos.pos.Discount.type:type_name -> cafelogos.pos.DiscountType
-	63, // 42: cafelogos.pos.PaymentParam.cash:type_name -> cafelogos.pos.PaymentCashParam
-	64, // 43: cafelogos.pos.PaymentParam.external:type_name -> cafelogos.pos.PaymentExternalParam
-	4,  // 44: cafelogos.pos.PosService.GetOrders:input_type -> cafelogos.pos.GetOrdersRequest
-	7,  // 45: cafelogos.pos.PosService.GetUnpaidOrdersBySeatId:input_type -> cafelogos.pos.GetUnpaidOrdersBySeatIdRequest
-	8,  // 46: cafelogos.pos.PosService.PostOrder:input_type -> cafelogos.pos.PostOrderRequest
-	19, // 47: cafelogos.pos.PosService.DeleteOrder:input_type -> cafelogos.pos.DeleteOrderRequest
-	11, // 48: cafelogos.pos.PosService.PostPayment:input_type -> cafelogos.pos.PostPaymentRequest
-	13, // 49: cafelogos.pos.PosService.UpdatePayment:input_type -> cafelogos.pos.UpdatePaymentRequest
-	15, // 50: cafelogos.pos.PosService.GetExternalPayment:input_type -> cafelogos.pos.GetExternalPaymentRequest
-	17, // 51: cafelogos.pos.PosService.RefundPayment:input_type -> cafelogos.pos.RefundPaymentRequest
-	69, // 52: cafelogos.pos.PosService.GetProducts:input_type -> cafelogos.common.Empty
-	35, // 53: cafelogos.pos.PosService.PostNewClient:input_type -> cafelogos.pos.PostNewClientRequest
-	37, // 54: cafelogos.pos.PosService.UpdateClient:input_type -> cafelogos.pos.UpdateClientRequest
-	69, // 55: cafelogos.pos.PosService.GetProductCategories:input_type -> cafelogos.common.Empty
-	22, // 56: cafelogos.pos.PosService.PostProductCategory:input_type -> cafelogos.pos.PostProductCategoryRequest
-	23, // 57: cafelogos.pos.PosService.PostProduct:input_type -> cafelogos.pos.PostProductRequest
-	24, // 58: cafelogos.pos.PosService.UpdateProduct:input_type -> cafelogos.pos.UpdateProductRequest
-	25, // 59: cafelogos.pos.PosService.DeleteProduct:input_type -> cafelogos.pos.DeleteProductRequest
-	26, // 60: cafelogos.pos.PosService.PostStock:input_type -> cafelogos.pos.PostStockRequest
-	69, // 61: cafelogos.pos.PosService.GetStocks:input_type -> cafelogos.common.Empty
-	28, // 62: cafelogos.pos.PosService.UpdateStock:input_type -> cafelogos.pos.UpdateStockRequest
-	29, // 63: cafelogos.pos.PosService.PostCoffeeBean:input_type -> cafelogos.pos.PostCoffeeBeanRequest
-	69, // 64: cafelogos.pos.PosService.GetCoffeeBeans:input_type -> cafelogos.common.Empty
-	69, // 65: cafelogos.pos.PosService.DeleteAllOrders:input_type -> cafelogos.common.Empty
-	31, // 66: cafelogos.pos.PosService.PostSeat:input_type -> cafelogos.pos.PostSeatRequest
-	32, // 67: cafelogos.pos.PosService.UpdateSeat:input_type -> cafelogos.pos.UpdateSeatRequest
-	33, // 68: cafelogos.pos.PosService.DeleteSeat:input_type -> cafelogos.pos.DeleteSeatRequest
-	69, // 69: cafelogos.pos.PosService.GetSeats:input_type -> cafelogos.common.Empty
-	69, // 70: cafelogos.pos.PosService.GetDiscounts:input_type -> cafelogos.common.Empty
-	39, // 71: cafelogos.pos.PosService.PostDiscount:input_type -> cafelogos.pos.PostDiscountRequest
-	40, // 72: cafelogos.pos.PosService.GetDailySales:input_type -> cafelogos.pos.GetDailySalesRequest
-	42, // 73: cafelogos.pos.PosService.GetProductSales:input_type -> cafelogos.pos.GetProductSalesRequest
-	43, // 74: cafelogos.pos.PosService.GetSalesByTimeSlot:input_type -> cafelogos.pos.GetSalesByTimeSlotRequest
-	46, // 75: cafelogos.pos.PosService.GetSalesByPaymentType:input_type -> cafelogos.pos.GetSalesByPaymentTypeRequest
-	5,  // 76: cafelogos.pos.PosService.GetOrders:output_type -> cafelogos.pos.GetOrdersResponse
-	5,  // 77: cafelogos.pos.PosService.GetUnpaidOrdersBySeatId:output_type -> cafelogos.pos.GetOrdersResponse
-	10, // 78: cafelogos.pos.PosService.PostOrder:output_type -> cafelogos.pos.PostOrderResponse
-	69, // 79: cafelogos.pos.PosService.DeleteOrder:output_type -> cafelogos.common.Empty
-	14, // 80: cafelogos.pos.PosService.PostPayment:output_type -> cafelogos.pos.PaymentResponse
-	14, // 81: cafelogos.pos.PosService.UpdatePayment:output_type -> cafelogos.pos.PaymentResponse
-	16, // 82: cafelogos.pos.PosService.GetExternalPayment:output_type -> cafelogos.pos.GetExternalPaymentResponse
-	18, // 83: cafelogos.pos.PosService.RefundPayment:output_type -> cafelogos.pos.RefundPaymentResponse
-	20, // 84: cafelogos.pos.PosService.GetProducts:output_type -> cafelogos.pos.GetProductsResponse
-	36, // 85: cafelogos.pos.PosService.PostNewClient:output_type -> cafelogos.pos.PostNewClientResponse
-	69, // 86: cafelogos.pos.PosService.UpdateClient:output_type -> cafelogos.common.Empty
-	21, // 87: cafelogos.pos.PosService.GetProductCategories:output_type -> cafelogos.pos.GetProductCategoriesResponse
-	69, // 88: cafelogos.pos.PosService.PostProductCategory:output_type -> cafelogos.common.Empty
-	69, // 89: cafelogos.pos.PosService.PostProduct:output_type -> cafelogos.common.Empty
-	69, // 90: cafelogos.pos.PosService.UpdateProduct:output_type -> cafelogos.common.Empty
-	69, // 91: cafelogos.pos.PosService.DeleteProduct:output_type -> cafelogos.common.Empty
-	69, // 92: cafelogos.pos.PosService.PostStock:output_type -> cafelogos.common.Empty
-	27, // 93: cafelogos.pos.PosService.GetStocks:output_type -> cafelogos.pos.GetStocksResponse
-	69, // 94: cafelogos.pos.PosService.UpdateStock:output_type -> cafelogos.common.Empty
-	69, // 95: cafelogos.pos.PosService.PostCoffeeBean:output_type -> cafelogos.common.Empty
-	30, // 96: cafelogos.pos.PosService.GetCoffeeBeans:output_type -> cafelogos.pos.GetCoffeeBeansResponse
-	69, // 97: cafelogos.pos.PosService.DeleteAllOrders:output_type -> cafelogos.common.Empty
-	69, // 98: cafelogos.pos.PosService.PostSeat:output_type -> cafelogos.common.Empty
-	69, // 99: cafelogos.pos.PosService.UpdateSeat:output_type -> cafelogos.common.Empty
-	69, // 100: cafelogos.pos.PosService.DeleteSeat:output_type -> cafelogos.common.Empty
-	34, // 101: cafelogos.pos.PosService.GetSeats:output_type -> cafelogos.pos.GetSeatsResponse
-	38, // 102: cafelogos.pos.PosService.GetDiscounts:output_type -> cafelogos.pos.GetDiscountsResponse
-	69, // 103: cafelogos.pos.PosService.PostDiscount:output_type -> cafelogos.common.Empty
-	41, // 104: cafelogos.pos.PosService.GetDailySales:output_type -> cafelogos.pos.GetDailySalesResponse
-	49, // 105: cafelogos.pos.PosService.GetProductSales:output_type -> cafelogos.pos.GetProductSalesResponse
-	44, // 106: cafelogos.pos.PosService.GetSalesByTimeSlot:output_type -> cafelogos.pos.GetSalesByTimeSlotResponse
-	47, // 107: cafelogos.pos.PosService.GetSalesByPaymentType:output_type -> cafelogos.pos.GetSalesByPaymentTypeResponse
-	76, // [76:108] is the sub-list for method output_type
-	44, // [44:76] is the sub-list for method input_type
-	44, // [44:44] is the sub-list for extension type_name
-	44, // [44:44] is the sub-list for extension extendee
-	0,  // [0:44] is the sub-list for field type_name
+	57, // 0: cafelogos.pos.GetOrdersResponse.orders:type_name -> cafelogos.pos.Order
+	57, // 1: cafelogos.pos.GetOrderResponse.order:type_name -> cafelogos.pos.Order
+	58, // 2: cafelogos.pos.PostOrderRequest.order:type_name -> cafelogos.pos.OrderParam
+	10, // 3: cafelogos.pos.PostOrderRequest.option:type_name -> cafelogos.pos.PostOrderOption
+	4,  // 4: cafelogos.pos.PostOrderResponse.code:type_name -> cafelogos.pos.PostOrderResponse.Code
+	63, // 5: cafelogos.pos.PostPaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
+	58, // 6: cafelogos.pos.PostPaymentRequest.post_orders:type_name -> cafelogos.pos.OrderParam
+	13, // 7: cafelogos.pos.PostPaymentRequest.option:type_name -> cafelogos.pos.PostPaymentRequestOption
+	63, // 8: cafelogos.pos.UpdatePaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
+	62, // 9: cafelogos.pos.PaymentResponse.payment:type_name -> cafelogos.pos.Payment
+	11, // 10: cafelogos.pos.PaymentResponse.order_responses:type_name -> cafelogos.pos.PostOrderResponse
+	66, // 11: cafelogos.pos.GetExternalPaymentResponse.external_payment:type_name -> cafelogos.pos.PaymentExternal
+	0,  // 12: cafelogos.pos.RefundPaymentResponse.status:type_name -> cafelogos.pos.PaymentStatus
+	62, // 13: cafelogos.pos.RefundPaymentResponse.payment:type_name -> cafelogos.pos.Payment
+	51, // 14: cafelogos.pos.GetProductsResponse.products:type_name -> cafelogos.pos.Product
+	53, // 15: cafelogos.pos.GetProductCategoriesResponse.product_categories:type_name -> cafelogos.pos.ProductCategory
+	52, // 16: cafelogos.pos.PostProductRequest.product:type_name -> cafelogos.pos.ProductParam
+	52, // 17: cafelogos.pos.UpdateProductRequest.product:type_name -> cafelogos.pos.ProductParam
+	56, // 18: cafelogos.pos.GetStocksResponse.stocks:type_name -> cafelogos.pos.Stock
+	54, // 19: cafelogos.pos.GetCoffeeBeansResponse.coffee_beans:type_name -> cafelogos.pos.CoffeeBean
+	67, // 20: cafelogos.pos.UpdateSeatRequest.seat:type_name -> cafelogos.pos.Seat
+	67, // 21: cafelogos.pos.GetSeatsResponse.seats:type_name -> cafelogos.pos.Seat
+	61, // 22: cafelogos.pos.GetDiscountsResponse.discounts:type_name -> cafelogos.pos.Discount
+	3,  // 23: cafelogos.pos.PostDiscountRequest.type:type_name -> cafelogos.pos.DiscountType
+	68, // 24: cafelogos.pos.GetDailySalesResponse.daily_sales:type_name -> cafelogos.pos.DailySale
+	46, // 25: cafelogos.pos.GetSalesByTimeSlotResponse.time_slot_sales:type_name -> cafelogos.pos.TimeSlotSale
+	49, // 26: cafelogos.pos.GetSalesByPaymentTypeResponse.payment_type_sales:type_name -> cafelogos.pos.PaymentTypeSale
+	69, // 27: cafelogos.pos.GetProductSalesResponse.product_sales:type_name -> cafelogos.pos.ProductSale
+	53, // 28: cafelogos.pos.Product.product_category:type_name -> cafelogos.pos.ProductCategory
+	1,  // 29: cafelogos.pos.Product.product_type:type_name -> cafelogos.pos.ProductType
+	54, // 30: cafelogos.pos.Product.coffee_bean:type_name -> cafelogos.pos.CoffeeBean
+	55, // 31: cafelogos.pos.Product.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
+	56, // 32: cafelogos.pos.Product.stock:type_name -> cafelogos.pos.Stock
+	1,  // 33: cafelogos.pos.ProductParam.product_type:type_name -> cafelogos.pos.ProductType
+	55, // 34: cafelogos.pos.ProductParam.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
+	59, // 35: cafelogos.pos.Order.items:type_name -> cafelogos.pos.OrderItem
+	60, // 36: cafelogos.pos.Order.discounts:type_name -> cafelogos.pos.OrderDiscount
+	2,  // 37: cafelogos.pos.Order.order_type:type_name -> cafelogos.pos.OrderType
+	59, // 38: cafelogos.pos.OrderParam.items:type_name -> cafelogos.pos.OrderItem
+	60, // 39: cafelogos.pos.OrderParam.discounts:type_name -> cafelogos.pos.OrderDiscount
+	2,  // 40: cafelogos.pos.OrderParam.order_type:type_name -> cafelogos.pos.OrderType
+	3,  // 41: cafelogos.pos.OrderDiscount.type:type_name -> cafelogos.pos.DiscountType
+	3,  // 42: cafelogos.pos.Discount.type:type_name -> cafelogos.pos.DiscountType
+	64, // 43: cafelogos.pos.PaymentParam.cash:type_name -> cafelogos.pos.PaymentCashParam
+	65, // 44: cafelogos.pos.PaymentParam.external:type_name -> cafelogos.pos.PaymentExternalParam
+	5,  // 45: cafelogos.pos.PosService.GetOrders:input_type -> cafelogos.pos.GetOrdersRequest
+	8,  // 46: cafelogos.pos.PosService.GetUnpaidOrdersBySeatId:input_type -> cafelogos.pos.GetUnpaidOrdersBySeatIdRequest
+	9,  // 47: cafelogos.pos.PosService.PostOrder:input_type -> cafelogos.pos.PostOrderRequest
+	20, // 48: cafelogos.pos.PosService.DeleteOrder:input_type -> cafelogos.pos.DeleteOrderRequest
+	12, // 49: cafelogos.pos.PosService.PostPayment:input_type -> cafelogos.pos.PostPaymentRequest
+	14, // 50: cafelogos.pos.PosService.UpdatePayment:input_type -> cafelogos.pos.UpdatePaymentRequest
+	16, // 51: cafelogos.pos.PosService.GetExternalPayment:input_type -> cafelogos.pos.GetExternalPaymentRequest
+	18, // 52: cafelogos.pos.PosService.RefundPayment:input_type -> cafelogos.pos.RefundPaymentRequest
+	70, // 53: cafelogos.pos.PosService.GetProducts:input_type -> cafelogos.common.Empty
+	36, // 54: cafelogos.pos.PosService.PostNewClient:input_type -> cafelogos.pos.PostNewClientRequest
+	38, // 55: cafelogos.pos.PosService.UpdateClient:input_type -> cafelogos.pos.UpdateClientRequest
+	70, // 56: cafelogos.pos.PosService.GetProductCategories:input_type -> cafelogos.common.Empty
+	23, // 57: cafelogos.pos.PosService.PostProductCategory:input_type -> cafelogos.pos.PostProductCategoryRequest
+	24, // 58: cafelogos.pos.PosService.PostProduct:input_type -> cafelogos.pos.PostProductRequest
+	25, // 59: cafelogos.pos.PosService.UpdateProduct:input_type -> cafelogos.pos.UpdateProductRequest
+	26, // 60: cafelogos.pos.PosService.DeleteProduct:input_type -> cafelogos.pos.DeleteProductRequest
+	27, // 61: cafelogos.pos.PosService.PostStock:input_type -> cafelogos.pos.PostStockRequest
+	70, // 62: cafelogos.pos.PosService.GetStocks:input_type -> cafelogos.common.Empty
+	29, // 63: cafelogos.pos.PosService.UpdateStock:input_type -> cafelogos.pos.UpdateStockRequest
+	30, // 64: cafelogos.pos.PosService.PostCoffeeBean:input_type -> cafelogos.pos.PostCoffeeBeanRequest
+	70, // 65: cafelogos.pos.PosService.GetCoffeeBeans:input_type -> cafelogos.common.Empty
+	70, // 66: cafelogos.pos.PosService.DeleteAllOrders:input_type -> cafelogos.common.Empty
+	32, // 67: cafelogos.pos.PosService.PostSeat:input_type -> cafelogos.pos.PostSeatRequest
+	33, // 68: cafelogos.pos.PosService.UpdateSeat:input_type -> cafelogos.pos.UpdateSeatRequest
+	34, // 69: cafelogos.pos.PosService.DeleteSeat:input_type -> cafelogos.pos.DeleteSeatRequest
+	70, // 70: cafelogos.pos.PosService.GetSeats:input_type -> cafelogos.common.Empty
+	70, // 71: cafelogos.pos.PosService.GetDiscounts:input_type -> cafelogos.common.Empty
+	40, // 72: cafelogos.pos.PosService.PostDiscount:input_type -> cafelogos.pos.PostDiscountRequest
+	41, // 73: cafelogos.pos.PosService.GetDailySales:input_type -> cafelogos.pos.GetDailySalesRequest
+	43, // 74: cafelogos.pos.PosService.GetProductSales:input_type -> cafelogos.pos.GetProductSalesRequest
+	44, // 75: cafelogos.pos.PosService.GetSalesByTimeSlot:input_type -> cafelogos.pos.GetSalesByTimeSlotRequest
+	47, // 76: cafelogos.pos.PosService.GetSalesByPaymentType:input_type -> cafelogos.pos.GetSalesByPaymentTypeRequest
+	6,  // 77: cafelogos.pos.PosService.GetOrders:output_type -> cafelogos.pos.GetOrdersResponse
+	6,  // 78: cafelogos.pos.PosService.GetUnpaidOrdersBySeatId:output_type -> cafelogos.pos.GetOrdersResponse
+	11, // 79: cafelogos.pos.PosService.PostOrder:output_type -> cafelogos.pos.PostOrderResponse
+	70, // 80: cafelogos.pos.PosService.DeleteOrder:output_type -> cafelogos.common.Empty
+	15, // 81: cafelogos.pos.PosService.PostPayment:output_type -> cafelogos.pos.PaymentResponse
+	15, // 82: cafelogos.pos.PosService.UpdatePayment:output_type -> cafelogos.pos.PaymentResponse
+	17, // 83: cafelogos.pos.PosService.GetExternalPayment:output_type -> cafelogos.pos.GetExternalPaymentResponse
+	19, // 84: cafelogos.pos.PosService.RefundPayment:output_type -> cafelogos.pos.RefundPaymentResponse
+	21, // 85: cafelogos.pos.PosService.GetProducts:output_type -> cafelogos.pos.GetProductsResponse
+	37, // 86: cafelogos.pos.PosService.PostNewClient:output_type -> cafelogos.pos.PostNewClientResponse
+	70, // 87: cafelogos.pos.PosService.UpdateClient:output_type -> cafelogos.common.Empty
+	22, // 88: cafelogos.pos.PosService.GetProductCategories:output_type -> cafelogos.pos.GetProductCategoriesResponse
+	70, // 89: cafelogos.pos.PosService.PostProductCategory:output_type -> cafelogos.common.Empty
+	70, // 90: cafelogos.pos.PosService.PostProduct:output_type -> cafelogos.common.Empty
+	70, // 91: cafelogos.pos.PosService.UpdateProduct:output_type -> cafelogos.common.Empty
+	70, // 92: cafelogos.pos.PosService.DeleteProduct:output_type -> cafelogos.common.Empty
+	70, // 93: cafelogos.pos.PosService.PostStock:output_type -> cafelogos.common.Empty
+	28, // 94: cafelogos.pos.PosService.GetStocks:output_type -> cafelogos.pos.GetStocksResponse
+	70, // 95: cafelogos.pos.PosService.UpdateStock:output_type -> cafelogos.common.Empty
+	70, // 96: cafelogos.pos.PosService.PostCoffeeBean:output_type -> cafelogos.common.Empty
+	31, // 97: cafelogos.pos.PosService.GetCoffeeBeans:output_type -> cafelogos.pos.GetCoffeeBeansResponse
+	70, // 98: cafelogos.pos.PosService.DeleteAllOrders:output_type -> cafelogos.common.Empty
+	70, // 99: cafelogos.pos.PosService.PostSeat:output_type -> cafelogos.common.Empty
+	70, // 100: cafelogos.pos.PosService.UpdateSeat:output_type -> cafelogos.common.Empty
+	70, // 101: cafelogos.pos.PosService.DeleteSeat:output_type -> cafelogos.common.Empty
+	35, // 102: cafelogos.pos.PosService.GetSeats:output_type -> cafelogos.pos.GetSeatsResponse
+	39, // 103: cafelogos.pos.PosService.GetDiscounts:output_type -> cafelogos.pos.GetDiscountsResponse
+	70, // 104: cafelogos.pos.PosService.PostDiscount:output_type -> cafelogos.common.Empty
+	42, // 105: cafelogos.pos.PosService.GetDailySales:output_type -> cafelogos.pos.GetDailySalesResponse
+	50, // 106: cafelogos.pos.PosService.GetProductSales:output_type -> cafelogos.pos.GetProductSalesResponse
+	45, // 107: cafelogos.pos.PosService.GetSalesByTimeSlot:output_type -> cafelogos.pos.GetSalesByTimeSlotResponse
+	48, // 108: cafelogos.pos.PosService.GetSalesByPaymentType:output_type -> cafelogos.pos.GetSalesByPaymentTypeResponse
+	77, // [77:109] is the sub-list for method output_type
+	45, // [45:77] is the sub-list for method input_type
+	45, // [45:45] is the sub-list for extension type_name
+	45, // [45:45] is the sub-list for extension extendee
+	0,  // [0:45] is the sub-list for field type_name
 }
 
 func init() { file_pos_pos_service_proto_init() }
@@ -4606,7 +4666,7 @@ func file_pos_pos_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pos_pos_service_proto_rawDesc), len(file_pos_pos_service_proto_rawDesc)),
-			NumEnums:      4,
+			NumEnums:      5,
 			NumMessages:   65,
 			NumExtensions: 0,
 			NumServices:   1,

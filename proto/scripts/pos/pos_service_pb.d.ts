@@ -309,9 +309,9 @@ export declare const RefundPaymentRequestSchema: GenMessage<RefundPaymentRequest
  */
 export declare type RefundPaymentResponse = Message<"cafelogos.pos.RefundPaymentResponse"> & {
   /**
-   * @generated from field: int32 status = 1;
+   * @generated from field: cafelogos.pos.PaymentStatus status = 1;
    */
-  status: number;
+  status: PaymentStatus;
 
   /**
    * @generated from field: cafelogos.pos.Payment payment = 2;
@@ -1488,6 +1488,11 @@ export declare type Payment = Message<"cafelogos.pos.Payment"> & {
    * @generated from field: string updated_at = 7;
    */
   updatedAt: string;
+
+  /**
+   * @generated from field: string original_payment_id = 8;
+   */
+  originalPaymentId: string;
 };
 
 /**
@@ -1746,6 +1751,26 @@ export declare type ProductSale = Message<"cafelogos.pos.ProductSale"> & {
  * Use `create(ProductSaleSchema)` to create a new message.
  */
 export declare const ProductSaleSchema: GenMessage<ProductSale>;
+
+/**
+ * @generated from enum cafelogos.pos.PaymentStatus
+ */
+export enum PaymentStatus {
+  /**
+   * @generated from enum value: PENDING = 0;
+   */
+  PENDING = 0,
+
+  /**
+   * @generated from enum value: SUCCESS = 1;
+   */
+  SUCCESS = 1,
+}
+
+/**
+ * Describes the enum cafelogos.pos.PaymentStatus.
+ */
+export declare const PaymentStatusSchema: GenEnum<PaymentStatus>;
 
 /**
  * @generated from enum cafelogos.pos.ProductType

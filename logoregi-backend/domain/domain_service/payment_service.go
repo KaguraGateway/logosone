@@ -5,10 +5,10 @@ import (
 	"github.com/samber/lo"
 )
 
-func GetTotalAmount(orders []*model.Order) uint64 {
-	return lo.Reduce(orders, func(agg uint64, item *model.Order, index int) uint64 {
-		return agg + item.GetTotalAmount()
-	}, uint64(0))
+func GetTotalAmount(orders []*model.Order) int64 {
+	return lo.Reduce(orders, func(agg int64, item *model.Order, index int) int64 {
+		return agg + int64(item.GetTotalAmount())
+	}, int64(0))
 }
 
 func IsEnoughAmount(payment *model.Payment, orders []*model.Order) bool {

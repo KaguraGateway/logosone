@@ -40,6 +40,11 @@ export const updatePayment = PosService.method.updatePayment;
 export const getExternalPayment = PosService.method.getExternalPayment;
 
 /**
+ * @generated from rpc cafelogos.pos.PosService.RefundPayment
+ */
+export const refundPayment = PosService.method.refundPayment;
+
+/**
  * @generated from rpc cafelogos.pos.PosService.GetProducts
  */
 export const getProducts = PosService.method.getProducts;

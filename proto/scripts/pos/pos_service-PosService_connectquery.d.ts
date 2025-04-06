@@ -33,6 +33,10 @@ export const updatePayment: typeof PosService["method"]["updatePayment"];
  */
 export const getExternalPayment: typeof PosService["method"]["getExternalPayment"];
 /**
+ * @generated from rpc cafelogos.pos.PosService.RefundPayment
+ */
+export const refundPayment: typeof PosService["method"]["refundPayment"];
+/**
  * @generated from rpc cafelogos.pos.PosService.GetProducts
  */
 export const getProducts: typeof PosService["method"]["getProducts"];

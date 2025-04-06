@@ -52,6 +52,12 @@ public protocol Cafelogos_Pos_PosServiceClientInterface: Sendable {
     func `getExternalPayment`(request: Cafelogos_Pos_GetExternalPaymentRequest, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Pos_GetExternalPaymentResponse>
 
     @discardableResult
+    func `refundPayment`(request: Cafelogos_Pos_RefundPaymentRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_RefundPaymentResponse>) -> Void) -> Connect.Cancelable
+
+    @available(iOS 13, *)
+    func `refundPayment`(request: Cafelogos_Pos_RefundPaymentRequest, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Pos_RefundPaymentResponse>
+
+    @discardableResult
     func `getProducts`(request: Cafelogos_Common_Empty, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetProductsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
@@ -276,6 +282,16 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
     @available(iOS 13, *)
     public func `getExternalPayment`(request: Cafelogos_Pos_GetExternalPaymentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_GetExternalPaymentResponse> {
         return await self.client.unary(path: "/cafelogos.pos.PosService/GetExternalPayment", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @discardableResult
+    public func `refundPayment`(request: Cafelogos_Pos_RefundPaymentRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_RefundPaymentResponse>) -> Void) -> Connect.Cancelable {
+        return self.client.unary(path: "/cafelogos.pos.PosService/RefundPayment", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
+    }
+
+    @available(iOS 13, *)
+    public func `refundPayment`(request: Cafelogos_Pos_RefundPaymentRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_RefundPaymentResponse> {
+        return await self.client.unary(path: "/cafelogos.pos.PosService/RefundPayment", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
     @discardableResult
@@ -527,6 +543,7 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
             public static let postPayment = Connect.MethodSpec(name: "PostPayment", service: "cafelogos.pos.PosService", type: .unary)
             public static let updatePayment = Connect.MethodSpec(name: "UpdatePayment", service: "cafelogos.pos.PosService", type: .unary)
             public static let getExternalPayment = Connect.MethodSpec(name: "GetExternalPayment", service: "cafelogos.pos.PosService", type: .unary)
+            public static let refundPayment = Connect.MethodSpec(name: "RefundPayment", service: "cafelogos.pos.PosService", type: .unary)
             public static let getProducts = Connect.MethodSpec(name: "GetProducts", service: "cafelogos.pos.PosService", type: .unary)
             public static let postNewClient = Connect.MethodSpec(name: "PostNewClient", service: "cafelogos.pos.PosService", type: .unary)
             public static let updateClient = Connect.MethodSpec(name: "UpdateClient", service: "cafelogos.pos.PosService", type: .unary)

@@ -39,12 +39,6 @@ const (
 	OrderLinkServicePostOrderProcedure = "/cafelogos.orderlink.OrderLinkService/PostOrder"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	orderLinkServiceServiceDescriptor         = orderlink.File_orderlink_orderlink_service_proto.Services().ByName("OrderLinkService")
-	orderLinkServicePostOrderMethodDescriptor = orderLinkServiceServiceDescriptor.Methods().ByName("PostOrder")
-)
-
 // OrderLinkServiceClient is a client for the cafelogos.orderlink.OrderLinkService service.
 type OrderLinkServiceClient interface {
 	PostOrder(context.Context, *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error)
@@ -59,11 +53,12 @@ type OrderLinkServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewOrderLinkServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) OrderLinkServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	orderLinkServiceMethods := orderlink.File_orderlink_orderlink_service_proto.Services().ByName("OrderLinkService").Methods()
 	return &orderLinkServiceClient{
 		postOrder: connect.NewClient[orderlink.PostOrderInput, common.Empty](
 			httpClient,
 			baseURL+OrderLinkServicePostOrderProcedure,
-			connect.WithSchema(orderLinkServicePostOrderMethodDescriptor),
+			connect.WithSchema(orderLinkServiceMethods.ByName("PostOrder")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -90,10 +85,11 @@ type OrderLinkServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewOrderLinkServiceHandler(svc OrderLinkServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	orderLinkServiceMethods := orderlink.File_orderlink_orderlink_service_proto.Services().ByName("OrderLinkService").Methods()
 	orderLinkServicePostOrderHandler := connect.NewUnaryHandler(
 		OrderLinkServicePostOrderProcedure,
 		svc.PostOrder,
-		connect.WithSchema(orderLinkServicePostOrderMethodDescriptor),
+		connect.WithSchema(orderLinkServiceMethods.ByName("PostOrder")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/cafelogos.orderlink.OrderLinkService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

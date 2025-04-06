@@ -1,13 +1,22 @@
 'use client';
 
 import {
-  Box,
   Button,
   Flex,
   Text,
+  Box,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Order } from '@/types/Order';
+import { toaster } from '@/components/ui/toaster';
+import {
+  DialogRoot,
+  DialogContent,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  DialogTitle,
+} from '@/components/ui/dialog';
 
 type RefundConfirmModalProps = {
   isOpen: boolean;
@@ -17,64 +26,50 @@ type RefundConfirmModalProps = {
 };
 
 export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: RefundConfirmModalProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleRefund = async () => {
     if (!order.paymentId) {
-      setErrorMessage('支払いIDが見つかりません');
+      toaster.create({
+        description: '支払いIDが見つかりません',
+        type: 'error'
+      });
       return;
     }
     
-    setIsLoading(true);
-    setErrorMessage(null);
+    setLoading(true);
     
     try {
       const { useRefundPayment } = await import('@/query/refundPayment');
       const refundPaymentMutation = useRefundPayment();
       await refundPaymentMutation.mutateAsync(order.paymentId);
       
-      console.log('返金処理が完了しました');
+      toaster.create({
+        description: '返金処理が完了しました'
+      });
+      
       onSuccess();
       onClose();
     } catch (error) {
       console.error('返金処理エラー:', error);
-      setErrorMessage(error instanceof Error ? error.message : '不明なエラーが発生しました');
+      toaster.create({
+        description: error instanceof Error ? error.message : '返金処理に失敗しました',
+        type: 'error'
+      });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   if (!isOpen) return null;
   
   return (
-    <Box
-      position="fixed"
-      top={0}
-      left={0}
-      right={0}
-      bottom={0}
-      bg="rgba(0, 0, 0, 0.4)"
-      zIndex={1000}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      onClick={onClose}
-    >
-      <Box
-        bg="white"
-        borderRadius="md"
-        width="auto"
-        minW="md"
-        maxW="90%"
-        maxH="90%"
-        overflow="auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
-          返金確認
-        </Box>
-        <Box p={4}>
+    <DialogRoot open={isOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>返金確認</DialogTitle>
+        </DialogHeader>
+        <DialogBody>
           <Text mb={4}>以下の注文を返金します。よろしいですか？</Text>
           <Box p={4} bg="gray.50" borderRadius="md">
             <Flex justify="space-between" mb={2}>
@@ -91,23 +86,17 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
             </Flex>
           </Box>
           
-          {errorMessage && (
-            <Box mt={4} p={3} bg="red.50" color="red.500" borderRadius="md">
-              {errorMessage}
-            </Box>
-          )}
-          
           <Text mt={4} color="red.500">
             この操作は取り消せません。また、当日中の注文のみ返金可能です。
           </Text>
-        </Box>
-        <Box p={4} borderTopWidth="1px">
-          <Flex width="100%" gap={3}>
+        </DialogBody>
+        <DialogFooter>
+          <Flex gap={3} width="100%">
             <Button
               flex="1"
-              variant="outline"
               onClick={onClose}
-              disabled={isLoading}
+              variant="outline"
+              disabled={loading}
             >
               キャンセル
             </Button>
@@ -115,13 +104,13 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
               flex="1"
               colorScheme="red"
               onClick={handleRefund}
-              loading={isLoading}
+              loading={loading}
             >
               返金する
             </Button>
           </Flex>
-        </Box>
-      </Box>
-    </Box>
+        </DialogFooter>
+      </DialogContent>
+    </DialogRoot>
   );
 }

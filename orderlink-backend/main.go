@@ -38,6 +38,7 @@ import (
 	grpcserver "github.com/KaguraGateway/logosone/orderlink-backend/presentation/grpc_server"
 	httpserver "github.com/KaguraGateway/logosone/orderlink-backend/presentation/http_server"
 	"github.com/KaguraGateway/logosone/orderlink-backend/presentation/pubsub"
+	websocketpresentation "github.com/KaguraGateway/logosone/orderlink-backend/presentation/websocket"
 )
 
 func main() {
@@ -113,6 +114,12 @@ func main() {
 
 	// Start WebSocket Time Signal Goroutine
 	httpserver.StartWSTimeSignal(context.Background(), i)
+	
+	cookingTimesHandler, err := websocketpresentation.NewCookingTimesHandler(i)
+	if err != nil {
+		log.Fatalf("Failed to create cooking times handler: %v", err)
+	}
+	cookingTimesHandler.Start(context.Background())
 
 	// Start server
 	app := echo.New()
@@ -174,6 +181,7 @@ func buildInjector(isDev bool, db *bun.DB, wsClients []*websocket.OrderLinkWSCli
 	do.Provide(i, bundb.NewOrderItemRepositoryDb)
 	do.Provide(i, bundb.NewOrderTicketRepositoryDb)
 	do.Provide(i, bundb.NewOrderRepositoryDb)
+	do.Provide(i, bundb.NewCookingTimeRepositoryDb)
 	do.Provide(i, bundb.NewTxRepositoryDb)
 	do.Provide(i, websocket.NewServerToClientPubSubWS)
 	// Register S2S PubSub
@@ -192,6 +200,8 @@ func buildInjector(isDev bool, db *bun.DB, wsClients []*websocket.OrderLinkWSCli
 	do.Provide(i, application.NewPostOrderFromPosUseCase)
 	do.Provide(i, application.NewUpdateOrderItemStatusUseCase)
 	do.Provide(i, application.NewUpdateOrderStatusUseCase)
+	do.Provide(i, application.NewRecordCookingTimeUseCase)
+	do.Provide(i, application.NewGetCookingTimesUseCase)
 
 	return i
 }

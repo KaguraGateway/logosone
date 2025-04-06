@@ -1,22 +1,9 @@
 'use client';
 
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useToast,
-} from '@chakra-ui/react';
+import { Box, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Order } from '@/types/Order';
+import { Button } from '@/ui/form/Button';
 
 type RefundConfirmModalProps = {
   isOpen: boolean;
@@ -71,50 +58,75 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
     }
   };
 
+  if (!isOpen) return null;
+  
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
-      <ModalOverlay />
-      <ModalContent bg="white" maxW="md">
-        <ModalHeader>返金確認</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Text mb={4}>以下の注文を返金します。よろしいですか？</Text>
+    <Box
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      bottom={0}
+      bg="rgba(0, 0, 0, 0.4)"
+      zIndex={1000}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      onClick={onClose}
+    >
+      <Box
+        bg="white"
+        borderRadius="md"
+        width="auto"
+        minW="md"
+        maxW="90%"
+        maxH="90%"
+        overflow="auto"
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
+      >
+        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+          返金確認
+        </Box>
+        <Box p={4}>
+          <Box mb={4}>以下の注文を返金します。よろしいですか？</Box>
           <Box p={4} bg="gray.50" borderRadius="md">
-            <Flex justify="space-between" mb={2}>
-              <Text fontWeight="bold">注文ID:</Text>
-              <Text>{order.id}</Text>
-            </Flex>
-            <Flex justify="space-between" mb={2}>
-              <Text fontWeight="bold">注文タイプ:</Text>
-              <Text>{order.orderType === 'EatIn' ? 'イートイン' : 'テイクアウト'}</Text>
-            </Flex>
-            <Flex justify="space-between">
-              <Text fontWeight="bold">合計金額:</Text>
-              <Text>{order.totalAmount}円</Text>
-            </Flex>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Box fontWeight="bold">注文ID:</Box>
+              <Box>{order.id}</Box>
+            </Box>
+            <Box display="flex" justifyContent="space-between" mb={2}>
+              <Box fontWeight="bold">注文タイプ:</Box>
+              <Box>{order.orderType === 'EatIn' ? 'イートイン' : 'テイクアウト'}</Box>
+            </Box>
+            <Box display="flex" justifyContent="space-between">
+              <Box fontWeight="bold">合計金額:</Box>
+              <Box>{order.totalAmount}円</Box>
+            </Box>
           </Box>
-          <Text mt={4} color="red.500">
+          <Box mt={4} color="red.500">
             この操作は取り消せません。また、当日中の注文のみ返金可能です。
-          </Text>
-        </ModalBody>
-        <ModalFooter>
-          <ButtonGroup spacing={3}>
-            <Button
+          </Box>
+        </Box>
+        <Box p={4} borderTopWidth="1px">
+          <Box display="flex" width="100%" gap={3}>
+            <Button 
+              variant="outline" 
               onClick={onClose}
-              variant="outline"
+              style={{ flex: 1 }}
             >
               キャンセル
             </Button>
-            <Button
-              colorScheme="red"
+            <Button 
+              colorScheme="red" 
               onClick={handleRefund}
               isLoading={isLoading}
+              style={{ flex: 1 }}
             >
               返金する
             </Button>
-          </ButtonGroup>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }

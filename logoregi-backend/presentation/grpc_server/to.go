@@ -4,7 +4,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
+	"github.com/KaguraGateway/logosone/proto/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application/dto"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
@@ -108,14 +108,31 @@ func ToProtoPayment(payment *model.Payment) *pos.Payment {
 	if payment == nil {
 		return nil
 	}
+	
+	receiveAmount := uint64(0)
+	if payment.ReceiveAmount > 0 {
+		receiveAmount = uint64(payment.ReceiveAmount)
+	}
+	
+	paymentAmount := uint64(0)
+	if payment.PaymentAmount > 0 {
+		paymentAmount = uint64(payment.PaymentAmount)
+	}
+	
+	changeAmount := uint64(0)
+	if payment.GetChangeAmount() > 0 {
+		changeAmount = uint64(payment.GetChangeAmount())
+	}
+	
 	return &pos.Payment{
-		Id:            payment.GetId(),
-		Type:          int32(payment.GetPaymentType()),
-		ReceiveAmount: payment.ReceiveAmount,
-		PaymentAmount: payment.PaymentAmount,
-		ChangeAmount:  payment.GetChangeAmount(),
-		PaymentAt:     ToISO8601(payment.GetPaymentAt()),
-		UpdatedAt:     ToISO8601(payment.GetUpdatedAt()),
+		Id:                payment.GetId(),
+		Type:              int32(payment.GetPaymentType()),
+		ReceiveAmount:     receiveAmount,
+		PaymentAmount:     paymentAmount,
+		ChangeAmount:      changeAmount,
+		PaymentAt:         ToISO8601(payment.GetPaymentAt()),
+		UpdatedAt:         ToISO8601(payment.GetUpdatedAt()),
+		OriginalPaymentId: payment.GetOriginalPaymentId(),
 	}
 }
 
@@ -224,9 +241,9 @@ func ToPaymentParam(payment *pos.PaymentParam, reqPostOrders []*pos.OrderParam, 
 	return &application.PaymentParam{
 		Id:                   payment.Id,
 		PaymentType:          model.PaymentType(payment.Type),
-		ReceiveAmount:        payment.ReceiveAmount,
-		PaymentAmount:        payment.PaymentAmount,
-		ChangeAmount:         payment.ChangeAmount,
+		ReceiveAmount:        int64(payment.ReceiveAmount),
+		PaymentAmount:        int64(payment.PaymentAmount),
+		ChangeAmount:         int64(payment.ChangeAmount),
 		PaymentAt:            paymentAt,
 		UpdatedAt:            updatedAt,
 		OrderIds:             reqOrderIds,

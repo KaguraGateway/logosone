@@ -8,6 +8,7 @@ import {
   Box,
   Button
 } from '@chakra-ui/react';
+import { Menu } from '@chakra-ui/react';
 import { format, parseISO } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { useState } from 'react';
@@ -85,15 +86,23 @@ export default function Orders() {
                 </Td>
                 <Td>{order.totalAmount}円</Td>
                 <Td>
-                  <Box position="relative">
-                    <IconButton
-                      aria-label="操作"
-                      icon={<FiMoreVertical />}
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRefundClick(order)}
-                    />
-                  </Box>
+                  <Menu.Root>
+                    <Menu.Trigger>
+                      <IconButton
+                        aria-label="操作"
+                        icon={<FiMoreVertical />}
+                        variant="ghost"
+                        size="sm"
+                      />
+                    </Menu.Trigger>
+                    <Menu.Positioner>
+                      <Menu.Content>
+                        <Menu.Item onClick={() => handleRefundClick(order)}>
+                          返金
+                        </Menu.Item>
+                      </Menu.Content>
+                    </Menu.Positioner>
+                  </Menu.Root>
                 </Td>
               </Tr>
             </TCollectionItem>

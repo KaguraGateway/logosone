@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
+	"github.com/KaguraGateway/logosone/proto/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/samber/do"

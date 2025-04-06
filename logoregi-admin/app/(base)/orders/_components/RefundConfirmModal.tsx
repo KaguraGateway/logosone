@@ -17,25 +17,17 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleRefund = async () => {
+    if (!order.paymentId) {
+      setErrorMessage('支払いIDが見つかりません');
+      return;
+    }
+    
     setIsLoading(true);
     setErrorMessage(null);
     
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_GRPC_URL || 'http://localhost:8080';
-      const response = await fetch(`${baseUrl}/pos.PosService/RefundPayment`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          paymentId: order.paymentId,
-        }),
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || '返金処理に失敗しました');
-      }
+      const { refundPayment } = await import('@/query/refundPayment');
+      await refundPayment(order.paymentId);
       
       console.log('返金処理が完了しました');
       onSuccess();

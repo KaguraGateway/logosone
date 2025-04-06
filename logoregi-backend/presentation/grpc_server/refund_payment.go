@@ -6,6 +6,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/KaguraGateway/logosone/proto/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/samber/do"
 )
 
@@ -26,8 +27,13 @@ func (s *GrpcServer) RefundPayment(ctx context.Context, req *connect.Request[pos
 		}
 	}
 	
+	status := pos.PaymentStatus_PENDING
+	if payment.GetPaymentStatus() == model.PaymentStatusSuccess {
+		status = pos.PaymentStatus_SUCCESS
+	}
+	
 	return connect.NewResponse(&pos.RefundPaymentResponse{
-		Status: int32(payment.GetPaymentStatus()),
+		Status: status,
 		Payment: ToProtoPayment(payment),
 	}), nil
 }

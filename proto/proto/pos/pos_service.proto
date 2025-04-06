@@ -119,8 +119,13 @@ message RefundPaymentRequest {
     string payment_id = 1;
 }
 
+enum PaymentStatus {
+    PENDING = 0;
+    SUCCESS = 1;
+}
+
 message RefundPaymentResponse {
-    int32 status = 1;
+    PaymentStatus status = 1;
     Payment payment = 2;
 }
 message DeleteOrderRequest {

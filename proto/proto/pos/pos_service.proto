@@ -16,6 +16,7 @@ service PosService {
     rpc PostPayment(PostPaymentRequest) returns (PaymentResponse) {}
     rpc UpdatePayment(UpdatePaymentRequest) returns (PaymentResponse) {}
     rpc GetExternalPayment(GetExternalPaymentRequest) returns (GetExternalPaymentResponse) {}
+    rpc RefundPayment(RefundPaymentRequest) returns (RefundPaymentResponse) {}
 
     rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
 
@@ -112,6 +113,15 @@ message GetExternalPaymentRequest {
 }
 message GetExternalPaymentResponse {
     PaymentExternal external_payment = 1;
+}
+
+message RefundPaymentRequest {
+    string payment_id = 1;
+}
+
+message RefundPaymentResponse {
+    int32 status = 1;
+    Payment payment = 2;
 }
 message DeleteOrderRequest {
     string order_id = 1;
@@ -331,6 +341,7 @@ message Order {
     string call_number = 6;
     string client_id = 7;
     string seat_name = 8;
+    string payment_id = 9;
 }
 message OrderParam {
     string id = 1; /** 代入した場合は代入したIDが使用され、しなかったら生成される */

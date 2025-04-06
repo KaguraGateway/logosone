@@ -7,6 +7,7 @@ export type Order = {
   orderType: 'EatIn' | 'TakeOut';
   items: OrderItem[];
   totalAmount: number;
+  paymentId?: string;
 };
 
 export type OrderItem = {
@@ -47,5 +48,6 @@ export function toOrderFromProto(order: ProtoOrder, products: Product[]): Order 
     orderType: order.orderType === OrderType.EatIn ? 'EatIn' : 'TakeOut',
     items: items,
     totalAmount: totalAmount,
+    paymentId: order.paymentId,
   };
 }

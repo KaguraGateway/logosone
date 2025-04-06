@@ -7,36 +7,39 @@ import (
 )
 
 type Payment struct {
-	id            string
-	orderIds      []string
-	paymentType   PaymentType
-	ReceiveAmount uint64
-	PaymentAmount uint64
-	paymentAt     synchro.Time[tz.UTC]
-	updatedAt     synchro.Time[tz.UTC]
+	id              string
+	orderIds        []string
+	paymentType     PaymentType
+	ReceiveAmount   int64
+	PaymentAmount   int64
+	originalPaymentId string
+	paymentAt       synchro.Time[tz.UTC]
+	updatedAt       synchro.Time[tz.UTC]
 }
 
-func NewPayment(orderIds []string, paymentType PaymentType, receiveAmount uint64, paymentAmount uint64) *Payment {
+func NewPayment(orderIds []string, paymentType PaymentType, receiveAmount int64, paymentAmount int64) *Payment {
 	return &Payment{
-		id:            ulid.Make().String(),
-		orderIds:      orderIds,
-		paymentType:   paymentType,
-		ReceiveAmount: receiveAmount,
-		PaymentAmount: paymentAmount,
-		paymentAt:     synchro.Now[tz.UTC](),
-		updatedAt:     synchro.Now[tz.UTC](),
+		id:              ulid.Make().String(),
+		orderIds:        orderIds,
+		paymentType:     paymentType,
+		ReceiveAmount:   receiveAmount,
+		PaymentAmount:   paymentAmount,
+		originalPaymentId: "",
+		paymentAt:       synchro.Now[tz.UTC](),
+		updatedAt:       synchro.Now[tz.UTC](),
 	}
 }
 
-func ReconstructPayment(id string, orderIds []string, paymentType PaymentType, receiveAmount uint64, paymentAmount uint64, paymentAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC]) *Payment {
+func ReconstructPayment(id string, orderIds []string, paymentType PaymentType, receiveAmount int64, paymentAmount int64, originalPaymentId string, paymentAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC]) *Payment {
 	return &Payment{
-		id:            id,
-		orderIds:      orderIds,
-		paymentType:   paymentType,
-		ReceiveAmount: receiveAmount,
-		PaymentAmount: paymentAmount,
-		paymentAt:     paymentAt,
-		updatedAt:     updatedAt,
+		id:              id,
+		orderIds:        orderIds,
+		paymentType:     paymentType,
+		ReceiveAmount:   receiveAmount,
+		PaymentAmount:   paymentAmount,
+		originalPaymentId: originalPaymentId,
+		paymentAt:       paymentAt,
+		updatedAt:       updatedAt,
 	}
 }
 
@@ -52,12 +55,18 @@ func (payment *Payment) GetPaymentType() PaymentType {
 	return payment.paymentType
 }
 
-func (payment *Payment) GetChangeAmount() uint64 {
-	return payment.ReceiveAmount - payment.PaymentAmount
+func (payment *Payment) GetChangeAmount() int64 {
+	if payment.ReceiveAmount >= payment.PaymentAmount {
+		return payment.ReceiveAmount - payment.PaymentAmount
+	}
+	return 0
 }
 
-func (payment *Payment) GetShortfallAmount() uint64 {
-	return payment.PaymentAmount - payment.ReceiveAmount
+func (payment *Payment) GetShortfallAmount() int64 {
+	if payment.PaymentAmount > payment.ReceiveAmount {
+		return payment.PaymentAmount - payment.ReceiveAmount
+	}
+	return 0
 }
 
 func (payment *Payment) IsEnoughAmount() bool {
@@ -77,4 +86,12 @@ func (payment *Payment) GetPaymentAt() synchro.Time[tz.UTC] {
 
 func (payment *Payment) GetUpdatedAt() synchro.Time[tz.UTC] {
 	return payment.updatedAt
+}
+
+func (payment *Payment) GetOriginalPaymentId() string {
+	return payment.originalPaymentId
+}
+
+func (payment *Payment) IsRefund() bool {
+	return payment.paymentType == Refund
 }

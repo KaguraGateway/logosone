@@ -14,6 +14,7 @@ type Order struct {
 	orderAt    synchro.Time[tz.UTC]
 	clientId   string
 	seatId     string
+	paymentId  string
 }
 
 func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType, clientId string, seatId string) *Order {
@@ -25,10 +26,11 @@ func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType,
 		orderAt:    synchro.Now[tz.UTC](),
 		clientId:   clientId,
 		seatId:     seatId,
+		paymentId:  "",
 	}
 }
 
-func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, orderType OrderType, orderAt synchro.Time[tz.UTC], clientId string, seatId string) *Order {
+func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, orderType OrderType, orderAt synchro.Time[tz.UTC], clientId string, seatId string, paymentId string) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
@@ -37,6 +39,7 @@ func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, o
 		orderAt:    orderAt,
 		clientId:   clientId,
 		seatId:     seatId,
+		paymentId:  paymentId,
 	}
 }
 
@@ -89,4 +92,12 @@ func (order *Order) GetSeatId() string {
 
 func (order *Order) GetOrderType() OrderType {
 	return order.orderType
+}
+
+func (order *Order) GetPaymentId() string {
+	return order.paymentId
+}
+
+func (order *Order) SetPaymentId(paymentId string) {
+	order.paymentId = paymentId
 }

@@ -35,6 +35,18 @@ func (i *orderDb) SaveTx(ctx context.Context, tx interface{}, order *model.Order
 	if _, err := bunTx.NewInsert().Model(daoOrder).On("CONFLICT (id) DO UPDATE").Set("order_type = EXCLUDED.order_type").Set("order_at = EXCLUDED.order_at").Set("client_id = EXCLUDED.client_id").Set("seat_id = EXCLUDED.seat_id").Exec(ctx); err != nil {
 		return err
 	}
+	
+	if paymentId := order.GetPaymentId(); paymentId != "" {
+		orderPayment := &dao.OrderPayment{
+			ID:        order.GetId(),
+			OrderID:   order.GetId(),
+			PaymentID: paymentId,
+		}
+		if _, err := bunTx.NewInsert().Model(orderPayment).On("CONFLICT (id) DO UPDATE").Set("payment_id = EXCLUDED.payment_id").Exec(ctx); err != nil {
+			return err
+		}
+	}
+	
 	return nil
 }
 
@@ -75,6 +87,11 @@ func toOrderDiscount(discount dao.OrderDiscount) *model.Discount {
 }
 
 func toOrder(daoOrder *dao.Order) *model.Order {
+	paymentId := ""
+	if daoOrder.OrderPayment != nil {
+		paymentId = daoOrder.OrderPayment.PaymentID
+	}
+	
 	return model.ReconstructOrder(
 		daoOrder.ID,
 		lo.Map(daoOrder.OrderItems, func(daoOrderItem *dao.OrderItem, _ int) model.OrderItem {
@@ -87,6 +104,7 @@ func toOrder(daoOrder *dao.Order) *model.Order {
 		synchro.In[tz.UTC](daoOrder.OrderAt),
 		daoOrder.ClientID,
 		daoOrder.SeatID,
+		paymentId,
 	)
 }
 

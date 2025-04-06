@@ -242,6 +242,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	do.Provide(i, application.NewPostDiscountUseCase)
 	do.Provide(i, application.NewPostClientUseCase)
 	do.Provide(i, application.NewGetExternalPaymentUseCase)
+	do.Provide(i, application.NewRefundPaymentUseCase)
 	// 売上分析用のユースケース
 	do.Provide(i, application.NewGetDailySales)
 	do.Provide(i, application.NewGetProductSales)

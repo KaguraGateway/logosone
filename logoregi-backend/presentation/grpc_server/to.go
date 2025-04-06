@@ -136,6 +136,7 @@ func ToProtoOrder(order *model.Order) *pos.Order {
 		CallNumber: "", // TODO: implement
 		SeatName:   "", // TODO: implement
 		ClientId:   order.GetClientId(),
+		PaymentId:  order.GetPaymentId(),
 	}
 }
 

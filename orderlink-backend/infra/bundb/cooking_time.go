@@ -35,7 +35,7 @@ func toDaoCookingTime(cookingTime *cookingtime.CookingTime) *dao.CookingTime {
 func (r *cookingTimeRepositoryDb) FindByProductId(ctx context.Context, productId string) (*cookingtime.CookingTime, error) {
 	daoCookingTime := new(dao.CookingTime)
 	if err := r.db.NewSelect().Model(daoCookingTime).Where("product_id = ?", productId).Scan(ctx); err != nil {
-		if err == bun.ErrNoRows {
+		if err.Error() == "sql: no rows in result set" {
 			return cookingtime.NewCookingTime(productId), nil
 		}
 		return nil, err

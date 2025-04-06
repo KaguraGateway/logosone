@@ -4,7 +4,10 @@ import (
 	"context"
 
 	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/migrate"
 )
+
+var Migrations = migrate.NewMigrations()
 
 func init() {
 	Migrations.MustRegister(func(ctx context.Context, db *bun.DB) error {

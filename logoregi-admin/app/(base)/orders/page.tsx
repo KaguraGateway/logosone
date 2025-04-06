@@ -98,7 +98,7 @@ export default function Orders() {
                     </Menu.Trigger>
                     <Menu.Positioner>
                       <Menu.Content>
-                        <Menu.Item onClick={() => handleRefundClick(order)}>
+                        <Menu.Item value="refund" onClick={() => handleRefundClick(order)}>
                           返金
                         </Menu.Item>
                       </Menu.Content>

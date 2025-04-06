@@ -8,25 +8,22 @@ require (
 	connectrpc.com/connect v1.17.0
 	connectrpc.com/cors v0.1.0
 	github.com/KaguraGateway/cafelogos-grpc v1.7.1-0.20250313145654-4d201498c15d
+	github.com/KaguraGateway/logosone/proto v0.0.0-00010101000000-000000000000
 	github.com/cockroachdb/errors v1.11.3
 	github.com/oklog/ulid/v2 v2.1.0
 	github.com/rs/cors v1.11.1
-	github.com/stretchr/testify v1.8.4
 	github.com/uptrace/bun/extra/bundebug v1.2.3
 	golang.org/x/net v0.30.0
 )
 
 require (
-	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/itchyny/timefmt-go v0.1.6 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.4.0 // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/stretchr/testify v1.8.4 // indirect
 	google.golang.org/protobuf v1.35.1 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 require (
@@ -58,3 +55,5 @@ require (
 	golang.org/x/text v0.19.0 // indirect
 	mellium.im/sasl v0.3.2 // indirect
 )
+
+replace github.com/KaguraGateway/logosone/proto => ../proto

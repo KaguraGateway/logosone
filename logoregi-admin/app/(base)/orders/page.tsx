@@ -1,6 +1,8 @@
 'use client';
 
 import { Center, Spinner } from '@chakra-ui/react';
+import { format, parseISO } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 
 import { useQueryOrders } from '@/query/getOrders';
 import { useQueryProducts } from '@/query/getProducts';
@@ -47,7 +49,7 @@ export default function Orders() {
             <TCollectionItem key={order.id}>
               <Tr>
                 <Td>{order.id}</Td>
-                <Td>{order.orderAt}</Td>
+                <Td>{format(toZonedTime(parseISO(order.orderAt), 'Asia/Tokyo'), 'yyyy年MM月dd日 HH時mm分ss秒')}</Td>
                 <Td>{order.orderType === 'EatIn' ? 'イートイン' : 'テイクアウト'}</Td>
                 <Td>
                   <ul>

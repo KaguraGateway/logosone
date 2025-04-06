@@ -5,7 +5,6 @@ import (
 	"log"
 	"time"
 
-	cookingtime "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/cooking_time"
 	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
 	"github.com/samber/do"
 )

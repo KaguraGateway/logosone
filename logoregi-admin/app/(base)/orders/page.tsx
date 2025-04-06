@@ -30,7 +30,7 @@ import { RefundConfirmModal } from './_components/RefundConfirmModal';
 export default function Orders() {
   const { data: ordersData, isLoading: isOrdersLoading } = useQueryOrders();
   const { data: productsData, isLoading: isProductsLoading } = useQueryProducts();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { open: isOpen, onOpen, onClose } = useDisclosure();
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
 
   const isLoading = isOrdersLoading || isProductsLoading;

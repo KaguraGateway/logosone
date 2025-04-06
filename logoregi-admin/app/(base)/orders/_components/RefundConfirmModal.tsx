@@ -1,9 +1,7 @@
 'use client';
 
-import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Order } from '@/types/Order';
-import { Button } from '@/ui/form/Button';
 
 type RefundConfirmModalProps = {
   isOpen: boolean;
@@ -26,8 +24,9 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
     setErrorMessage(null);
     
     try {
-      const { refundPayment } = await import('@/query/refundPayment');
-      await refundPayment(order.paymentId);
+      const { useRefundPayment } = await import('@/query/refundPayment');
+      const refundPaymentMutation = useRefundPayment();
+      await refundPaymentMutation.mutateAsync(order.paymentId);
       
       console.log('返金処理が完了しました');
       onSuccess();
@@ -43,77 +42,96 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
   if (!isOpen) return null;
   
   return (
-    <Box
-      position="fixed"
-      top={0}
-      left={0}
-      right={0}
-      bottom={0}
-      bg="rgba(0, 0, 0, 0.4)"
-      zIndex={1000}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        zIndex: 1000,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
       onClick={onClose}
     >
-      <Box
-        bg="white"
-        borderRadius="md"
-        width="auto"
-        minW="md"
-        maxW="90%"
-        maxH="90%"
-        overflow="auto"
+      <div
+        style={{
+          backgroundColor: 'white',
+          borderRadius: '0.375rem',
+          width: 'auto',
+          minWidth: '28rem',
+          maxWidth: '90%',
+          maxHeight: '90%',
+          overflow: 'auto',
+        }}
         onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
-        <Box p={4} fontWeight="bold" borderBottomWidth="1px">
+        <div style={{ padding: '1rem', fontWeight: 'bold', borderBottomWidth: '1px', borderBottomStyle: 'solid', borderColor: '#E2E8F0' }}>
           返金確認
-        </Box>
-        <Box p={4}>
-          <Box mb={4}>以下の注文を返金します。よろしいですか？</Box>
-          <Box p={4} bg="gray.50" borderRadius="md">
-            <Box display="flex" justifyContent="space-between" mb={2}>
-              <Box fontWeight="bold">注文ID:</Box>
-              <Box>{order.id}</Box>
-            </Box>
-            <Box display="flex" justifyContent="space-between" mb={2}>
-              <Box fontWeight="bold">注文タイプ:</Box>
-              <Box>{order.orderType === 'EatIn' ? 'イートイン' : 'テイクアウト'}</Box>
-            </Box>
-            <Box display="flex" justifyContent="space-between">
-              <Box fontWeight="bold">合計金額:</Box>
-              <Box>{order.totalAmount}円</Box>
-            </Box>
-          </Box>
+        </div>
+        <div style={{ padding: '1rem' }}>
+          <div style={{ marginBottom: '1rem' }}>以下の注文を返金します。よろしいですか？</div>
+          <div style={{ padding: '1rem', backgroundColor: '#F7FAFC', borderRadius: '0.375rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ fontWeight: 'bold' }}>注文ID:</div>
+              <div>{order.id}</div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ fontWeight: 'bold' }}>注文タイプ:</div>
+              <div>{order.orderType === 'EatIn' ? 'イートイン' : 'テイクアウト'}</div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ fontWeight: 'bold' }}>合計金額:</div>
+              <div>{order.totalAmount}円</div>
+            </div>
+          </div>
           {errorMessage && (
-            <Box mt={4} p={3} bg="red.50" color="red.500" borderRadius="md">
+            <div style={{ marginTop: '1rem', padding: '0.75rem', backgroundColor: '#FFF5F5', color: '#E53E3E', borderRadius: '0.375rem' }}>
               {errorMessage}
-            </Box>
+            </div>
           )}
-          <Box mt={4} color="red.500">
+          <div style={{ marginTop: '1rem', color: '#E53E3E' }}>
             この操作は取り消せません。また、当日中の注文のみ返金可能です。
-          </Box>
-        </Box>
-        <Box p={4} borderTopWidth="1px">
-          <Box display="flex" width="100%" gap={3}>
-            <Button 
-              variant="outline" 
+          </div>
+        </div>
+        <div style={{ padding: '1rem', borderTopWidth: '1px', borderTopStyle: 'solid', borderColor: '#E2E8F0' }}>
+          <div style={{ display: 'flex', width: '100%', gap: '0.75rem' }}>
+            <button 
+              style={{ 
+                flex: 1, 
+                padding: '0.5rem 1rem', 
+                borderRadius: '0.375rem', 
+                border: '1px solid #CBD5E0',
+                backgroundColor: 'white',
+                cursor: 'pointer'
+              }}
               onClick={onClose}
-              style={{ flex: 1 }}
+              disabled={isLoading}
             >
               キャンセル
-            </Button>
-            <Button 
-              colorScheme="red" 
+            </button>
+            <button 
+              style={{ 
+                flex: 1, 
+                padding: '0.5rem 1rem', 
+                borderRadius: '0.375rem', 
+                backgroundColor: '#E53E3E',
+                color: 'white',
+                border: 'none',
+                cursor: 'pointer',
+                opacity: isLoading ? 0.7 : 1
+              }}
               onClick={handleRefund}
-              isLoading={isLoading}
-              style={{ flex: 1 }}
+              disabled={isLoading}
             >
-              返金する
-            </Button>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+              {isLoading ? '処理中...' : '返金する'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

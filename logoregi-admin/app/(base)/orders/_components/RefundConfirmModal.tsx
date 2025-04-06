@@ -107,7 +107,7 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
               flex="1"
               variant="outline"
               onClick={onClose}
-              isDisabled={isLoading}
+              disabled={isLoading}
             >
               キャンセル
             </Button>

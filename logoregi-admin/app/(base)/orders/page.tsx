@@ -4,11 +4,9 @@ import {
   Center, 
   Spinner, 
   IconButton, 
-  Menu, 
-  MenuButton, 
-  MenuList, 
-  MenuItem, 
-  useDisclosure 
+  useDisclosure,
+  Box,
+  Button
 } from '@chakra-ui/react';
 import { format, parseISO } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
@@ -87,18 +85,15 @@ export default function Orders() {
                 </Td>
                 <Td>{order.totalAmount}円</Td>
                 <Td>
-                  <Menu>
-                    <MenuButton
-                      as={IconButton}
+                  <Box position="relative">
+                    <IconButton
                       aria-label="操作"
                       icon={<FiMoreVertical />}
                       variant="ghost"
                       size="sm"
+                      onClick={() => handleRefundClick(order)}
                     />
-                    <MenuList>
-                      <MenuItem onClick={() => handleRefundClick(order)}>返金</MenuItem>
-                    </MenuList>
-                  </Menu>
+                  </Box>
                 </Td>
               </Tr>
             </TCollectionItem>

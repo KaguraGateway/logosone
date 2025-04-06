@@ -1,7 +1,6 @@
 version: v2
 modules:
   - path: proto
-clean: true
 lint:
   use:
     - DEFAULT

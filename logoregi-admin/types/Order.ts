@@ -48,6 +48,6 @@ export function toOrderFromProto(order: ProtoOrder, products: Product[]): Order 
     orderType: order.orderType === OrderType.EatIn ? 'EatIn' : 'TakeOut',
     items: items,
     totalAmount: totalAmount,
-    paymentId: order.paymentId,
+    paymentId: (order as any).paymentId || '',
   };
 }

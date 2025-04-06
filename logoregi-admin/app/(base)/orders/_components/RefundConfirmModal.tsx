@@ -104,9 +104,9 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
               flex="1"
               colorScheme="red"
               onClick={handleRefund}
-              loading={loading}
+              disabled={loading}
             >
-              返金する
+              {loading ? '処理中...' : '返金する'}
             </Button>
           </Flex>
         </DialogFooter>

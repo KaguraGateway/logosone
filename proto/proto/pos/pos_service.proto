@@ -4,7 +4,7 @@ package cafelogos.pos;
 
 import "common/common.proto";
 
-option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/pos;pos";
+option go_package = "github.com/KaguraGateway/logosone/proto/pkg/pos;pos";
 
 
 service PosService {
@@ -388,6 +388,7 @@ message Payment {
     uint64 change_amount = 5;
     string payment_at = 6;
     string updated_at = 7;
+    string original_payment_id = 8;
 }
 message PaymentParam {
     string id = 1;

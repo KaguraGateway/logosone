@@ -95,3 +95,8 @@ func (payment *Payment) GetOriginalPaymentId() string {
 func (payment *Payment) IsRefund() bool {
 	return payment.paymentType == Refund
 }
+
+func (payment *Payment) SetOriginalPaymentId(id string) error {
+	payment.originalPaymentId = id
+	return nil
+}

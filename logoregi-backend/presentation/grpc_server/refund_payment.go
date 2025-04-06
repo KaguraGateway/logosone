@@ -3,8 +3,8 @@ package grpc_server
 import (
 	"context"
 
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/connect"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
+	"connectrpc.com/connect"
+	"github.com/KaguraGateway/logosone/proto/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
 	"github.com/samber/do"
 )

@@ -5,8 +5,6 @@ import (
 	"errors"
 	"time"
 
-	"github.com/Code-Hex/synchro"
-	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/samber/do"
@@ -26,6 +24,7 @@ type refundPaymentUseCase struct {
 	paymentRepo repository.PaymentRepository
 	orderQS     OrderQueryService
 	stockRepo   repository.StockRepository
+	productQS   ProductQueryService
 }
 
 func NewRefundPaymentUseCase(i *do.Injector) (RefundPayment, error) {
@@ -33,6 +32,7 @@ func NewRefundPaymentUseCase(i *do.Injector) (RefundPayment, error) {
 		paymentRepo: do.MustInvoke[repository.PaymentRepository](i),
 		orderQS:     do.MustInvoke[OrderQueryService](i),
 		stockRepo:   do.MustInvoke[repository.StockRepository](i),
+		productQS:   do.MustInvoke[ProductQueryService](i),
 	}, nil
 }
 
@@ -69,15 +69,19 @@ func (uc *refundPaymentUseCase) Execute(ctx context.Context, paymentId string) (
 	}
 
 	for _, order := range orders {
-		for _, item := range order.GetOrderItems() {
-			product := item.GetProduct()
-			if product.GetStockId() != "" {
-				stock, err := uc.stockRepo.FindById(ctx, product.GetStockId())
+		for _, orderItem := range order.GetOrderItems() {
+			product, err := uc.productQS.FindById(ctx, orderItem.GetProductId())
+			if err != nil {
+				continue // 商品が見つからない場合はスキップ
+			}
+			
+			if product.Stock != nil {
+				stock, err := uc.stockRepo.FindById(ctx, product.Stock.GetId())
 				if err != nil {
 					continue // 在庫が見つからない場合はスキップ
 				}
 				
-				stock.IncreaseQuantity(item.GetQuantity())
+				stock.Quantity += int32(orderItem.Quantity)
 				if err := uc.stockRepo.Save(ctx, stock); err != nil {
 					return nil, err
 				}
@@ -92,7 +96,9 @@ func (uc *refundPaymentUseCase) Execute(ctx context.Context, paymentId string) (
 		-originalPayment.PaymentAmount,
 	)
 
-	refundPayment.originalPaymentId = originalPayment.GetId()
+	if err := refundPayment.SetOriginalPaymentId(originalPayment.GetId()); err != nil {
+		return nil, err
+	}
 
 	if err := uc.paymentRepo.Save(ctx, refundPayment); err != nil {
 		return nil, err

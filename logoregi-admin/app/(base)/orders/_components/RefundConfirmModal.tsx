@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, useToast } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Order } from '@/types/Order';
 import { Button } from '@/ui/form/Button';
@@ -14,10 +14,12 @@ type RefundConfirmModalProps = {
 
 export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: RefundConfirmModalProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleRefund = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
+    
     try {
       const baseUrl = process.env.NEXT_PUBLIC_GRPC_URL || 'http://localhost:8080';
       const response = await fetch(`${baseUrl}/pos.PosService/RefundPayment`, {
@@ -35,24 +37,12 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
         throw new Error(errorData.message || '返金処理に失敗しました');
       }
       
-      toast({
-        title: '返金処理が完了しました',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-      
+      console.log('返金処理が完了しました');
       onSuccess();
       onClose();
     } catch (error) {
       console.error('返金処理エラー:', error);
-      toast({
-        title: '返金処理に失敗しました',
-        description: error instanceof Error ? error.message : '不明なエラーが発生しました',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
+      setErrorMessage(error instanceof Error ? error.message : '不明なエラーが発生しました');
     } finally {
       setIsLoading(false);
     }
@@ -103,6 +93,11 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
               <Box>{order.totalAmount}円</Box>
             </Box>
           </Box>
+          {errorMessage && (
+            <Box mt={4} p={3} bg="red.50" color="red.500" borderRadius="md">
+              {errorMessage}
+            </Box>
+          )}
           <Box mt={4} color="red.500">
             この操作は取り消せません。また、当日中の注文のみ返金可能です。
           </Box>

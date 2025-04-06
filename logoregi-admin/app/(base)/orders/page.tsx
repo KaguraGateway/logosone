@@ -90,10 +90,11 @@ export default function Orders() {
                     <Menu.Trigger>
                       <IconButton
                         aria-label="操作"
-                        icon={<FiMoreVertical />}
                         variant="ghost"
                         size="sm"
-                      />
+                      >
+                        <FiMoreVertical />
+                      </IconButton>
                     </Menu.Trigger>
                     <Menu.Positioner>
                       <Menu.Content>

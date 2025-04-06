@@ -7,7 +7,6 @@ toolchain go1.24.0
 require (
 	connectrpc.com/connect v1.17.0
 	connectrpc.com/cors v0.1.0
-	github.com/KaguraGateway/cafelogos-grpc v1.7.1-0.20250313145654-4d201498c15d
 	github.com/KaguraGateway/logosone/proto v0.0.0-00010101000000-000000000000
 	github.com/cockroachdb/errors v1.11.3
 	github.com/oklog/ulid/v2 v2.1.0

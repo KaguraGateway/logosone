@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
+	"github.com/KaguraGateway/logosone/proto/pkg/orderlink"
+	"github.com/KaguraGateway/logosone/proto/pkg/orderlink/orderlinkconnect"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/samber/do"

@@ -28,6 +28,7 @@ type updateOrderItemStatusUseCase struct {
 	orderItemRepo repository.OrderItemRepository
 	txRepo        repository.TxRepository
 	pubsub        repository.SrvToSrvPubSubService
+	injector      *do.Injector
 }
 
 func NewUpdateOrderItemStatusUseCase(i *do.Injector) (UpdateOrderItemStatus, error) {
@@ -36,6 +37,7 @@ func NewUpdateOrderItemStatusUseCase(i *do.Injector) (UpdateOrderItemStatus, err
 		orderItemRepo: do.MustInvoke[repository.OrderItemRepository](i),
 		txRepo:        do.MustInvoke[repository.TxRepository](i),
 		pubsub:        do.MustInvoke[repository.SrvToSrvPubSubService](i),
+		injector:      i,
 	}, nil
 }
 
@@ -52,8 +54,41 @@ func (u *updateOrderItemStatusUseCase) Execute(ctx context.Context, input Update
 		return errors.Join(err, ErrOrderItemNotFound)
 	}
 
+	currentStatus := orderItem.Status()
+	
 	// ステータスを更新
 	orderItem.UpdateStatus(orderitem.OrderItemStatus(input.Status))
+	
+	if currentStatus == orderitem.OrderItemStatus(orderitem.NotYet) && 
+	   orderitem.OrderItemStatus(input.Status) == orderitem.OrderItemStatus(orderitem.Cooking) {
+		now := time.Now()
+		orderItem.SetCookingStartTime(now)
+	}
+	
+	if currentStatus == orderitem.OrderItemStatus(orderitem.Cooking) && 
+	   orderitem.OrderItemStatus(input.Status) == orderitem.OrderItemStatus(orderitem.Cooked) {
+		now := time.Now()
+		orderItem.SetCookingEndTime(now)
+		
+		if orderItem.CookingStartTime() != nil {
+			cookingTimeSeconds := int(now.Sub(*orderItem.CookingStartTime()).Seconds())
+			
+			recordCookingTimeInput := RecordCookingTimeInput{
+				ProductId:   orderItem.ProductId(),
+				CookingTime: cookingTimeSeconds,
+			}
+			
+			go func() {
+				recordCtx, recordCancel := context.WithTimeout(context.Background(), CtxTimeoutDur)
+				defer recordCancel()
+				
+				recordCookingTime := do.MustInvoke[RecordCookingTime](u.injector)
+				if err := recordCookingTime.Execute(recordCtx, recordCookingTimeInput); err != nil {
+					log.Printf("Failed to record cooking time: %v", err)
+				}
+			}()
+		}
+	}
 
 	// 注文を取得
 	order, err := u.orderRepo.FindById(ctx, orderItem.OrderId())

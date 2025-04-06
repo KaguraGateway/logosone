@@ -44,7 +44,11 @@ export default function CustomerPage() {
       <Flex mt="6">
         <VStack w="25%" alignItems="center">
           {cookingOrders.map((order) => (
-            <CookingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />
+            <CookingOrderCard 
+              key={order.OrderId} 
+              callNumber={order.TicketAddr} 
+              estimatedWaitingTime={order.estimatedWaitingTime}
+            />
           ))}
         </VStack>
         <Flex flex="1" flexWrap="wrap">

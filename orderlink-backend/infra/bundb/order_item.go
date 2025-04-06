@@ -21,16 +21,18 @@ func NewOrderItemRepositoryDb(i *do.Injector) (repository.OrderItemRepository, e
 }
 
 func toDomainOrderItem(daoOrderItem *dao.OrderItem) *orderitem.OrderItem {
-	return orderitem.RebuildOrderItem(daoOrderItem.Id, daoOrderItem.OrderId, daoOrderItem.ProductId, daoOrderItem.CoffeeBrewId, orderitem.OrderItemStatus(daoOrderItem.Status))
+	return orderitem.RebuildOrderItem(daoOrderItem.Id, daoOrderItem.OrderId, daoOrderItem.ProductId, daoOrderItem.CoffeeBrewId, orderitem.OrderItemStatus(daoOrderItem.Status), daoOrderItem.CookingStartTime, daoOrderItem.CookingEndTime)
 }
 
 func toDaoOrderItem(orderItem *orderitem.OrderItem) *dao.OrderItem {
 	return &dao.OrderItem{
-		Id:           orderItem.Id(),
-		OrderId:      orderItem.OrderId(),
-		ProductId:    orderItem.ProductId(),
-		CoffeeBrewId: orderItem.CoffeeBrewId(),
-		Status:       uint(orderItem.Status()),
+		Id:               orderItem.Id(),
+		OrderId:          orderItem.OrderId(),
+		ProductId:        orderItem.ProductId(),
+		CoffeeBrewId:     orderItem.CoffeeBrewId(),
+		Status:           uint(orderItem.Status()),
+		CookingStartTime: orderItem.CookingStartTime(),
+		CookingEndTime:   orderItem.CookingEndTime(),
 	}
 }
 
@@ -43,7 +45,10 @@ func (r *orderItemRepositoryDb) FindById(ctx context.Context, id string) (*order
 }
 
 func orderItemSaveQuery(q *bun.InsertQuery) *bun.InsertQuery {
-	return q.On("CONFLICT (id) DO UPDATE").Set("status = EXCLUDED.status")
+	return q.On("CONFLICT (id) DO UPDATE").
+		Set("status = EXCLUDED.status").
+		Set("cooking_start_time = EXCLUDED.cooking_start_time").
+		Set("cooking_end_time = EXCLUDED.cooking_end_time")
 }
 
 func (r *orderItemRepositoryDb) Save(ctx context.Context, orderItem *orderitem.OrderItem) error {

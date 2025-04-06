@@ -4,7 +4,7 @@ package cafelogos.pos;
 
 import "common/common.proto";
 
-option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/pos;pos";
+option go_package = "github.com/KaguraGateway/logosone/proto/pkg/pos;pos";
 
 
 service PosService {
@@ -16,6 +16,7 @@ service PosService {
     rpc PostPayment(PostPaymentRequest) returns (PaymentResponse) {}
     rpc UpdatePayment(UpdatePaymentRequest) returns (PaymentResponse) {}
     rpc GetExternalPayment(GetExternalPaymentRequest) returns (GetExternalPaymentResponse) {}
+    rpc RefundPayment(RefundPaymentRequest) returns (RefundPaymentResponse) {}
 
     rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
 
@@ -112,6 +113,20 @@ message GetExternalPaymentRequest {
 }
 message GetExternalPaymentResponse {
     PaymentExternal external_payment = 1;
+}
+
+message RefundPaymentRequest {
+    string payment_id = 1;
+}
+
+enum PaymentStatus {
+    PENDING = 0;
+    SUCCESS = 1;
+}
+
+message RefundPaymentResponse {
+    PaymentStatus status = 1;
+    Payment payment = 2;
 }
 message DeleteOrderRequest {
     string order_id = 1;
@@ -331,6 +346,7 @@ message Order {
     string call_number = 6;
     string client_id = 7;
     string seat_name = 8;
+    string payment_id = 9;
 }
 message OrderParam {
     string id = 1; /** 代入した場合は代入したIDが使用され、しなかったら生成される */
@@ -377,6 +393,7 @@ message Payment {
     uint64 change_amount = 5;
     string payment_at = 6;
     string updated_at = 7;
+    string original_payment_id = 8;
 }
 message PaymentParam {
     string id = 1;

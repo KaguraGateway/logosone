@@ -32,9 +32,9 @@ type PaymentParam struct {
 	PaymentType   model.PaymentType
 	PostOrders    []PostOrderParam
 	OrderIds      []string
-	ReceiveAmount uint64
-	PaymentAmount uint64
-	ChangeAmount  uint64
+	ReceiveAmount int64
+	PaymentAmount int64
+	ChangeAmount  int64
 	PaymentAt     synchro.Time[tz.UTC]
 	UpdatedAt     synchro.Time[tz.UTC]
 

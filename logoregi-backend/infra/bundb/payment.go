@@ -31,6 +31,7 @@ func toPayment(daoPayment *dao.Payment) *model.Payment {
 		model.PaymentType(daoPayment.PaymentType),
 		daoPayment.ReceiveAmount,
 		daoPayment.PaymentAmount,
+		daoPayment.OriginalPaymentId,
 		synchro.In[tz.UTC](daoPayment.PaymentAt),
 		synchro.In[tz.UTC](daoPayment.UpdatedAt),
 	)
@@ -60,17 +61,23 @@ func toDaoPayment(payment *model.Payment) *dao.Payment {
 				PaymentID: payment.GetId(),
 			}
 		}),
-		PaymentType:   uint(payment.GetPaymentType()),
-		ReceiveAmount: payment.ReceiveAmount,
-		PaymentAmount: payment.PaymentAmount,
-		ChangeAmount:  payment.GetChangeAmount(),
-		PaymentAt:     payment.GetPaymentAt().StdTime(),
-		UpdatedAt:     payment.GetUpdatedAt().StdTime(),
+		PaymentType:      uint(payment.GetPaymentType()),
+		ReceiveAmount:    payment.ReceiveAmount,
+		PaymentAmount:    payment.PaymentAmount,
+		ChangeAmount:     payment.GetChangeAmount(),
+		OriginalPaymentId: payment.GetOriginalPaymentId(),
+		PaymentAt:        payment.GetPaymentAt().StdTime(),
+		UpdatedAt:        payment.GetUpdatedAt().StdTime(),
 	}
 }
 
 func orderPaymentInsertQuery(q *bun.InsertQuery) *bun.InsertQuery {
-	return q.On("CONFLICT (id) DO UPDATE").Set("payment_type = EXCLUDED.payment_type").Set("receive_amount = EXCLUDED.receive_amount").Set("payment_amount = EXCLUDED.payment_amount").Set("change_amount = EXCLUDED.change_amount")
+	return q.On("CONFLICT (id) DO UPDATE").
+		Set("payment_type = EXCLUDED.payment_type").
+		Set("receive_amount = EXCLUDED.receive_amount").
+		Set("payment_amount = EXCLUDED.payment_amount").
+		Set("change_amount = EXCLUDED.change_amount").
+		Set("original_payment_id = EXCLUDED.original_payment_id")
 }
 
 func (i *paymentDb) Save(ctx context.Context, payment *model.Payment) error {

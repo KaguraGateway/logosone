@@ -1,7 +1,7 @@
 package grpc_server
 
 import (
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos/posconnect"
+	"github.com/KaguraGateway/logosone/proto/pkg/pos/posconnect"
 	"github.com/samber/do"
 	"github.com/uptrace/bun"
 )

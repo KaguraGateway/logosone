@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	"github.com/KaguraGateway/logosone/proto/pkg/common"
 )
 
 func (s *GrpcServer) DeleteAllOrders(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[common.Empty], error) {

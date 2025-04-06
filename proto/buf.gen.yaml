@@ -17,7 +17,7 @@ plugins:
       - GenerateAsyncMethods=true
       - GenerateCallbackMethods=true
       - Visibility=Public
-    out: Sources/cafelogos-grpc
+    out: Sources/logosone-proto
   - remote: buf.build/apple/swift
     opt: Visibility=Public
-    out: Sources/cafelogos-grpc
+    out: Sources/logosone-proto

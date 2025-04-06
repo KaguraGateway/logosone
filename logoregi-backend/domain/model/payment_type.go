@@ -5,4 +5,5 @@ type PaymentType int
 const (
 	Cash PaymentType = iota
 	External
+	Refund
 )

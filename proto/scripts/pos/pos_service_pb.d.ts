@@ -289,6 +289,43 @@ export declare type GetExternalPaymentResponse = Message<"cafelogos.pos.GetExter
 export declare const GetExternalPaymentResponseSchema: GenMessage<GetExternalPaymentResponse>;
 
 /**
+ * @generated from message cafelogos.pos.RefundPaymentRequest
+ */
+export declare type RefundPaymentRequest = Message<"cafelogos.pos.RefundPaymentRequest"> & {
+  /**
+   * @generated from field: string payment_id = 1;
+   */
+  paymentId: string;
+};
+
+/**
+ * Describes the message cafelogos.pos.RefundPaymentRequest.
+ * Use `create(RefundPaymentRequestSchema)` to create a new message.
+ */
+export declare const RefundPaymentRequestSchema: GenMessage<RefundPaymentRequest>;
+
+/**
+ * @generated from message cafelogos.pos.RefundPaymentResponse
+ */
+export declare type RefundPaymentResponse = Message<"cafelogos.pos.RefundPaymentResponse"> & {
+  /**
+   * @generated from field: cafelogos.pos.PaymentStatus status = 1;
+   */
+  status: PaymentStatus;
+
+  /**
+   * @generated from field: cafelogos.pos.Payment payment = 2;
+   */
+  payment?: Payment;
+};
+
+/**
+ * Describes the message cafelogos.pos.RefundPaymentResponse.
+ * Use `create(RefundPaymentResponseSchema)` to create a new message.
+ */
+export declare const RefundPaymentResponseSchema: GenMessage<RefundPaymentResponse>;
+
+/**
  * @generated from message cafelogos.pos.DeleteOrderRequest
  */
 export declare type DeleteOrderRequest = Message<"cafelogos.pos.DeleteOrderRequest"> & {
@@ -1257,6 +1294,11 @@ export declare type Order = Message<"cafelogos.pos.Order"> & {
    * @generated from field: string seat_name = 8;
    */
   seatName: string;
+
+  /**
+   * @generated from field: string payment_id = 9;
+   */
+  paymentId: string;
 };
 
 /**
@@ -1446,6 +1488,11 @@ export declare type Payment = Message<"cafelogos.pos.Payment"> & {
    * @generated from field: string updated_at = 7;
    */
   updatedAt: string;
+
+  /**
+   * @generated from field: string original_payment_id = 8;
+   */
+  originalPaymentId: string;
 };
 
 /**
@@ -1706,6 +1753,26 @@ export declare type ProductSale = Message<"cafelogos.pos.ProductSale"> & {
 export declare const ProductSaleSchema: GenMessage<ProductSale>;
 
 /**
+ * @generated from enum cafelogos.pos.PaymentStatus
+ */
+export enum PaymentStatus {
+  /**
+   * @generated from enum value: PENDING = 0;
+   */
+  PENDING = 0,
+
+  /**
+   * @generated from enum value: SUCCESS = 1;
+   */
+  SUCCESS = 1,
+}
+
+/**
+ * Describes the enum cafelogos.pos.PaymentStatus.
+ */
+export declare const PaymentStatusSchema: GenEnum<PaymentStatus>;
+
+/**
  * @generated from enum cafelogos.pos.ProductType
  */
 export enum ProductType {
@@ -1821,6 +1888,14 @@ export declare const PosService: GenService<{
     methodKind: "unary";
     input: typeof GetExternalPaymentRequestSchema;
     output: typeof GetExternalPaymentResponseSchema;
+  },
+  /**
+   * @generated from rpc cafelogos.pos.PosService.RefundPayment
+   */
+  refundPayment: {
+    methodKind: "unary";
+    input: typeof RefundPaymentRequestSchema;
+    output: typeof RefundPaymentResponseSchema;
   },
   /**
    * @generated from rpc cafelogos.pos.PosService.GetProducts

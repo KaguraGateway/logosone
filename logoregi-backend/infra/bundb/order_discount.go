@@ -19,7 +19,7 @@ func NewOrderDiscountDb(i *do.Injector) (repository.OrderDiscountRepository, err
 }
 
 func (i *orderDiscountDb) SaveTx(ctx context.Context, tx interface{}, orderDiscount *model.OrderDiscount) error {
-	bunTx := tx.(*bun.Tx)
+	bunTx := tx.(bun.Tx)
 	daoOrderDiscount := &dao.OrderDiscount{
 		ID:         orderDiscount.GetId(),
 		DiscountID: orderDiscount.GetDiscountId(),

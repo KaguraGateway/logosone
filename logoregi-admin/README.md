@@ -1,4 +1,4 @@
-# cageloso-pos-admin
+# cafelogos-pos-admin
 ## Setup
 ```
 # Install bun
@@ -6,7 +6,7 @@
 curl -fsSL https://bun.sh/install | bash
 
 # git clone
-git clone https://github.com/KaguraGateway/cagelogos-pos-admin.git
+git clone https://github.com/KaguraGateway/cafelogos-pos-admin.git
 
 # package install
 bun install

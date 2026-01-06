@@ -237,7 +237,7 @@ export function ProductEditForm(props: Props) {
           <HStack>
             <Input
               label="商品名"
-              placeholder="コーヒ"
+              placeholder="コーヒー"
               onChange={onChangeName}
               value={name}
               root={{ width: '50%' }}

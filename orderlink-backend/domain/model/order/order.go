@@ -10,12 +10,13 @@ import (
 )
 
 type Order struct {
-	id         string
-	orderItems []orderitem.OrderItem
-	orderAt    synchro.Time[tz.UTC]
-	orderType  OrderType
-	status     OrderStatus
-	seatName   *string
+	id                 string
+	orderItems         []orderitem.OrderItem
+	orderStatusHistory []OrderStatusHistory
+	orderAt            synchro.Time[tz.UTC]
+	orderType          OrderType
+	status             OrderStatus
+	seatName           *string
 }
 
 func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, seatName *string) (*Order, error) {
@@ -68,6 +69,10 @@ func (o *Order) Status() OrderStatus {
 	return o.status
 }
 
+func (o *Order) OrderStatusHistory() []OrderStatusHistory {
+	return o.orderStatusHistory
+}
+
 func (o *Order) UpdateStatus(status OrderStatus) error {
 	fmt.Printf("o.status: %v\n", o.status)
 	fmt.Printf("status: %v\n", status)
@@ -78,5 +83,8 @@ func (o *Order) UpdateStatus(status OrderStatus) error {
 		return domain.ErrCantOperationOrderStatus
 	}
 	o.status = status
+
+	o.orderStatusHistory = append(o.orderStatusHistory, NewOrderStatusHistory(status))
+
 	return nil
 }

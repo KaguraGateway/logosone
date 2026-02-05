@@ -41,6 +41,17 @@ func toDaoOrder(order *order.Order) *dao.Order {
 	}
 }
 
+func toDaoOrderStatusHistories(orderModel *order.Order) []*dao.OrderStatusHistory {
+	return lo.Map(orderModel.OrderStatusHistory(), func(orderStatusHistory order.OrderStatusHistory, _ int) *dao.OrderStatusHistory {
+		return &dao.OrderStatusHistory{
+			Id:        orderStatusHistory.ID(),
+			OrderId:   orderModel.Id(),
+			Status:    uint(orderStatusHistory.Status()),
+			CreatedAt: orderStatusHistory.CreatedAt().StdTime(),
+		}
+	})
+}
+
 func (r *orderRepositoryDb) Exists(ctx context.Context, id string) (bool, error) {
 	return r.db.NewSelect().Model((*dao.Order)(nil)).Where("id = ?", id).Exists(ctx)
 }
@@ -62,6 +73,11 @@ func (r *orderRepositoryDb) Save(ctx context.Context, order *order.Order) error 
 	if _, err := orderSaveQuery(r.db.NewInsert().Model(daoOrder)).Exec(ctx); err != nil {
 		return err
 	}
+	daoOrderStatusHistories := toDaoOrderStatusHistories(order)
+	if _, err := r.db.NewInsert().Model(daoOrderStatusHistories).Exec(ctx); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -69,6 +85,11 @@ func (r *orderRepositoryDb) SaveTx(ctx context.Context, tx interface{}, order *o
 	bunTx := tx.(bun.Tx)
 	daoOrder := toDaoOrder(order)
 	if _, err := orderSaveQuery(bunTx.NewInsert().Model(daoOrder)).Exec(ctx); err != nil {
+		return err
+	}
+
+	daoOrderStatusHistories := toDaoOrderStatusHistories(order)
+	if _, err := r.db.NewInsert().Model(daoOrderStatusHistories).Exec(ctx); err != nil {
 		return err
 	}
 	return nil
@@ -116,4 +137,11 @@ func (s *orderQueryServiceDb) FindAllNotProvided(ctx context.Context) ([]*applic
 	return lo.Map(daoOrder, func(order dao.Order, _ int) *application.OrderDto {
 		return toOrderDto(order)
 	}), nil
+}
+
+func (s *orderQueryServiceDb) ListOrdersWithServeAt(ctx context.Context) ([]*application.OrderWithServeAtDto, error) {
+	daoOrder := make([]dao.Order, 0)
+	if err := s.db.NewSelect().Model(&daoOrder).Column("order.*").Relation("Ticket").Relation("OrderItems").Relation("OrderStatusHistories").Scan(ctx); err != nil {
+
+	}
 }

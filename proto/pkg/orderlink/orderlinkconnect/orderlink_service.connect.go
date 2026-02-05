@@ -5,13 +5,14 @@
 package orderlinkconnect
 
 import (
-	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
-	orderlink "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink"
 	http "net/http"
 	strings "strings"
+
+	connect "connectrpc.com/connect"
+	common "github.com/KaguraGateway/logosone/proto/pkg/common"
+	orderlink "github.com/KaguraGateway/logosone/proto/pkg/orderlink"
 )
 
 // This is a compile-time assertion to ensure that this generated file and the connect package are

@@ -5,12 +5,13 @@
 package ticketconnect
 
 import (
-	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	ticket "github.com/KaguraGateway/cafelogos-grpc/pkg/ticket"
 	http "net/http"
 	strings "strings"
+
+	connect "connectrpc.com/connect"
+	ticket "github.com/KaguraGateway/logosone/proto/pkg/ticket"
 )
 
 // This is a compile-time assertion to ensure that this generated file and the connect package are

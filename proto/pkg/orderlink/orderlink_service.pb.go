@@ -7,12 +7,13 @@
 package orderlink
 
 import (
-	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	common "github.com/KaguraGateway/logosone/proto/pkg/common"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (

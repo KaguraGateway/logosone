@@ -5,13 +5,14 @@
 package posconnect
 
 import (
-	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
-	pos "github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
 	http "net/http"
 	strings "strings"
+
+	connect "connectrpc.com/connect"
+	common "github.com/KaguraGateway/logosone/proto/pkg/common"
+	pos "github.com/KaguraGateway/logosone/proto/pkg/pos"
 )
 
 // This is a compile-time assertion to ensure that this generated file and the connect package are

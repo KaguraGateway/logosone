@@ -1359,23 +1359,15 @@ public struct Cafelogos_Pos_ProductSale: Sendable {
 fileprivate let _protobuf_package = "cafelogos.pos"
 
 extension Cafelogos_Pos_ProductType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "COFFEE"),
-    1: .same(proto: "OTHER"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0COFFEE\0\u{1}OTHER\0")
 }
 
 extension Cafelogos_Pos_OrderType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "EatIn"),
-    1: .same(proto: "TakeOut"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0EatIn\0\u{1}TakeOut\0")
 }
 
 extension Cafelogos_Pos_DiscountType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "PRICE"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0PRICE\0")
 }
 
 extension Cafelogos_Pos_GetOrdersRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -1399,9 +1391,7 @@ extension Cafelogos_Pos_GetOrdersRequest: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension Cafelogos_Pos_GetOrdersResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetOrdersResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "orders"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}orders\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1431,9 +1421,7 @@ extension Cafelogos_Pos_GetOrdersResponse: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Cafelogos_Pos_GetOrderResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetOrderResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "order"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}order\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1467,9 +1455,7 @@ extension Cafelogos_Pos_GetOrderResponse: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension Cafelogos_Pos_GetUnpaidOrdersBySeatIdRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetUnpaidOrdersBySeatIdRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "seat_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}seat_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1499,10 +1485,7 @@ extension Cafelogos_Pos_GetUnpaidOrdersBySeatIdRequest: SwiftProtobuf.Message, S
 
 extension Cafelogos_Pos_PostOrderRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "order"),
-    2: .same(proto: "option"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}order\0\u{1}option\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1541,9 +1524,7 @@ extension Cafelogos_Pos_PostOrderRequest: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension Cafelogos_Pos_PostOrderOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderOption"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "is_post_orderlink"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}is_post_orderlink\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1573,11 +1554,7 @@ extension Cafelogos_Pos_PostOrderOption: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension Cafelogos_Pos_PostOrderResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "code"),
-    2: .standard(proto: "error_message"),
-    3: .standard(proto: "call_number"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}code\0\u{3}error_message\0\u{3}call_number\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1616,22 +1593,12 @@ extension Cafelogos_Pos_PostOrderResponse: SwiftProtobuf.Message, SwiftProtobuf.
 }
 
 extension Cafelogos_Pos_PostOrderResponse.Code: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "OK"),
-    1: .same(proto: "SOLD_OUT_PRODUCT"),
-    2: .same(proto: "NOT_SOLD_PRODUCT"),
-    3: .same(proto: "OTHER"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0OK\0\u{1}SOLD_OUT_PRODUCT\0\u{1}NOT_SOLD_PRODUCT\0\u{1}OTHER\0")
 }
 
 extension Cafelogos_Pos_PostPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostPaymentRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "payment"),
-    2: .standard(proto: "post_orders"),
-    3: .standard(proto: "order_ids"),
-    4: .same(proto: "option"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}payment\0\u{3}post_orders\0\u{3}order_ids\0\u{1}option\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1680,9 +1647,7 @@ extension Cafelogos_Pos_PostPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf
 
 extension Cafelogos_Pos_PostPaymentRequestOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostPaymentRequestOption"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "is_post_orderlink"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}is_post_orderlink\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1712,9 +1677,7 @@ extension Cafelogos_Pos_PostPaymentRequestOption: SwiftProtobuf.Message, SwiftPr
 
 extension Cafelogos_Pos_UpdatePaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdatePaymentRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "payment"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}payment\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1748,11 +1711,7 @@ extension Cafelogos_Pos_UpdatePaymentRequest: SwiftProtobuf.Message, SwiftProtob
 
 extension Cafelogos_Pos_PaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PaymentResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "status"),
-    2: .same(proto: "payment"),
-    3: .standard(proto: "order_responses"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}status\0\u{1}payment\0\u{3}order_responses\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1796,9 +1755,7 @@ extension Cafelogos_Pos_PaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension Cafelogos_Pos_GetExternalPaymentRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetExternalPaymentRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "payment_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}payment_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1828,9 +1785,7 @@ extension Cafelogos_Pos_GetExternalPaymentRequest: SwiftProtobuf.Message, SwiftP
 
 extension Cafelogos_Pos_GetExternalPaymentResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetExternalPaymentResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "external_payment"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}external_payment\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1864,9 +1819,7 @@ extension Cafelogos_Pos_GetExternalPaymentResponse: SwiftProtobuf.Message, Swift
 
 extension Cafelogos_Pos_DeleteOrderRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteOrderRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "order_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1896,9 +1849,7 @@ extension Cafelogos_Pos_DeleteOrderRequest: SwiftProtobuf.Message, SwiftProtobuf
 
 extension Cafelogos_Pos_GetProductsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetProductsResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "products"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}products\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1928,9 +1879,7 @@ extension Cafelogos_Pos_GetProductsResponse: SwiftProtobuf.Message, SwiftProtobu
 
 extension Cafelogos_Pos_GetProductCategoriesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetProductCategoriesResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_categories"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_categories\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1960,9 +1909,7 @@ extension Cafelogos_Pos_GetProductCategoriesResponse: SwiftProtobuf.Message, Swi
 
 extension Cafelogos_Pos_PostProductCategoryRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostProductCategoryRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -1992,9 +1939,7 @@ extension Cafelogos_Pos_PostProductCategoryRequest: SwiftProtobuf.Message, Swift
 
 extension Cafelogos_Pos_PostProductRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostProductRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "product"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}product\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2028,10 +1973,7 @@ extension Cafelogos_Pos_PostProductRequest: SwiftProtobuf.Message, SwiftProtobuf
 
 extension Cafelogos_Pos_UpdateProductRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateProductRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
-    2: .same(proto: "product"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_id\0\u{1}product\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2070,9 +2012,7 @@ extension Cafelogos_Pos_UpdateProductRequest: SwiftProtobuf.Message, SwiftProtob
 
 extension Cafelogos_Pos_DeleteProductRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteProductRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2102,10 +2042,7 @@ extension Cafelogos_Pos_DeleteProductRequest: SwiftProtobuf.Message, SwiftProtob
 
 extension Cafelogos_Pos_PostStockRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostStockRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "quantity"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}quantity\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2140,9 +2077,7 @@ extension Cafelogos_Pos_PostStockRequest: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension Cafelogos_Pos_GetStocksResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetStocksResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "stocks"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}stocks\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2172,11 +2107,7 @@ extension Cafelogos_Pos_GetStocksResponse: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Cafelogos_Pos_UpdateStockRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateStockRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "quantity"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}quantity\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2216,10 +2147,7 @@ extension Cafelogos_Pos_UpdateStockRequest: SwiftProtobuf.Message, SwiftProtobuf
 
 extension Cafelogos_Pos_PostCoffeeBeanRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostCoffeeBeanRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .standard(proto: "gram_quantity"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{3}gram_quantity\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2254,9 +2182,7 @@ extension Cafelogos_Pos_PostCoffeeBeanRequest: SwiftProtobuf.Message, SwiftProto
 
 extension Cafelogos_Pos_GetCoffeeBeansResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetCoffeeBeansResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "coffee_beans"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}coffee_beans\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2286,9 +2212,7 @@ extension Cafelogos_Pos_GetCoffeeBeansResponse: SwiftProtobuf.Message, SwiftProt
 
 extension Cafelogos_Pos_PostSeatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostSeatRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2318,9 +2242,7 @@ extension Cafelogos_Pos_PostSeatRequest: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension Cafelogos_Pos_UpdateSeatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateSeatRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "seat"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}seat\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2354,9 +2276,7 @@ extension Cafelogos_Pos_UpdateSeatRequest: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Cafelogos_Pos_DeleteSeatRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DeleteSeatRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "seat_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}seat_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2386,9 +2306,7 @@ extension Cafelogos_Pos_DeleteSeatRequest: SwiftProtobuf.Message, SwiftProtobuf.
 
 extension Cafelogos_Pos_GetSeatsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSeatsResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "seats"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}seats\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2418,9 +2336,7 @@ extension Cafelogos_Pos_GetSeatsResponse: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension Cafelogos_Pos_PostNewClientRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostNewClientRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2450,10 +2366,7 @@ extension Cafelogos_Pos_PostNewClientRequest: SwiftProtobuf.Message, SwiftProtob
 
 extension Cafelogos_Pos_PostNewClientResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostNewClientResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2488,10 +2401,7 @@ extension Cafelogos_Pos_PostNewClientResponse: SwiftProtobuf.Message, SwiftProto
 
 extension Cafelogos_Pos_UpdateClientRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".UpdateClientRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2526,9 +2436,7 @@ extension Cafelogos_Pos_UpdateClientRequest: SwiftProtobuf.Message, SwiftProtobu
 
 extension Cafelogos_Pos_GetDiscountsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDiscountsResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "discounts"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}discounts\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2558,11 +2466,7 @@ extension Cafelogos_Pos_GetDiscountsResponse: SwiftProtobuf.Message, SwiftProtob
 
 extension Cafelogos_Pos_PostDiscountRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostDiscountRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "type"),
-    3: .standard(proto: "discount_price"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}name\0\u{1}type\0\u{3}discount_price\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2602,10 +2506,7 @@ extension Cafelogos_Pos_PostDiscountRequest: SwiftProtobuf.Message, SwiftProtobu
 
 extension Cafelogos_Pos_GetDailySalesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDailySalesRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "start_date"),
-    2: .standard(proto: "end_date"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}start_date\0\u{3}end_date\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2640,9 +2541,7 @@ extension Cafelogos_Pos_GetDailySalesRequest: SwiftProtobuf.Message, SwiftProtob
 
 extension Cafelogos_Pos_GetDailySalesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetDailySalesResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "daily_sales"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}daily_sales\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2672,10 +2571,7 @@ extension Cafelogos_Pos_GetDailySalesResponse: SwiftProtobuf.Message, SwiftProto
 
 extension Cafelogos_Pos_GetProductSalesRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetProductSalesRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "start_date"),
-    2: .standard(proto: "end_date"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}start_date\0\u{3}end_date\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2710,9 +2606,7 @@ extension Cafelogos_Pos_GetProductSalesRequest: SwiftProtobuf.Message, SwiftProt
 
 extension Cafelogos_Pos_GetSalesByTimeSlotRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSalesByTimeSlotRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "date"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}date\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2742,9 +2636,7 @@ extension Cafelogos_Pos_GetSalesByTimeSlotRequest: SwiftProtobuf.Message, SwiftP
 
 extension Cafelogos_Pos_GetSalesByTimeSlotResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSalesByTimeSlotResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "time_slot_sales"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}time_slot_sales\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2774,12 +2666,7 @@ extension Cafelogos_Pos_GetSalesByTimeSlotResponse: SwiftProtobuf.Message, Swift
 
 extension Cafelogos_Pos_TimeSlotSale: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".TimeSlotSale"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "start_date"),
-    2: .standard(proto: "end_date"),
-    3: .standard(proto: "total_sales"),
-    4: .standard(proto: "total_quantity"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}start_date\0\u{3}end_date\0\u{3}total_sales\0\u{3}total_quantity\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2824,10 +2711,7 @@ extension Cafelogos_Pos_TimeSlotSale: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Cafelogos_Pos_GetSalesByPaymentTypeRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSalesByPaymentTypeRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "start_date"),
-    2: .standard(proto: "end_date"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}start_date\0\u{3}end_date\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2862,9 +2746,7 @@ extension Cafelogos_Pos_GetSalesByPaymentTypeRequest: SwiftProtobuf.Message, Swi
 
 extension Cafelogos_Pos_GetSalesByPaymentTypeResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetSalesByPaymentTypeResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "payment_type_sales"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}payment_type_sales\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2894,11 +2776,7 @@ extension Cafelogos_Pos_GetSalesByPaymentTypeResponse: SwiftProtobuf.Message, Sw
 
 extension Cafelogos_Pos_PaymentTypeSale: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PaymentTypeSale"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "payment_type"),
-    3: .standard(proto: "total_sales"),
-    4: .standard(proto: "total_quantity"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}payment_type\0\u{4}\u{2}total_sales\0\u{3}total_quantity\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2938,9 +2816,7 @@ extension Cafelogos_Pos_PaymentTypeSale: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension Cafelogos_Pos_GetProductSalesResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".GetProductSalesResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_sales"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_sales\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -2970,22 +2846,7 @@ extension Cafelogos_Pos_GetProductSalesResponse: SwiftProtobuf.Message, SwiftPro
 
 extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Product"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
-    2: .standard(proto: "product_name"),
-    3: .standard(proto: "product_category"),
-    4: .standard(proto: "product_type"),
-    5: .standard(proto: "product_color"),
-    6: .standard(proto: "is_now_sales"),
-    7: .standard(proto: "created_at"),
-    8: .standard(proto: "updated_at"),
-    9: .standard(proto: "coffee_bean"),
-    10: .standard(proto: "coffee_brews"),
-    11: .same(proto: "amount"),
-    12: .same(proto: "stock"),
-    20: .standard(proto: "is_managing_order"),
-    21: .standard(proto: "is_ol_kitchen"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_id\0\u{3}product_name\0\u{3}product_category\0\u{3}product_type\0\u{3}product_color\0\u{3}is_now_sales\0\u{3}created_at\0\u{3}updated_at\0\u{3}coffee_bean\0\u{3}coffee_brews\0\u{1}amount\0\u{1}stock\0\u{4}\u{8}is_managing_order\0\u{3}is_ol_kitchen\0")
 
   fileprivate class _StorageClass {
     var _productID: String = String()
@@ -3003,15 +2864,11 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     var _isManagingOrder: Bool = false
     var _isOlKitchen: Bool = false
 
-    #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
       // The type itself is protecting the reference to its storage via CoW semantics.
       // This will force a copy to be made of this reference when the first mutation occurs;
       // hence, it is safe to mark this as `nonisolated(unsafe)`.
       static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
 
     private init() {}
 
@@ -3150,19 +3007,7 @@ extension Cafelogos_Pos_Product: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
 extension Cafelogos_Pos_ProductParam: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ProductParam"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_name"),
-    2: .standard(proto: "product_category_id"),
-    3: .standard(proto: "product_type"),
-    4: .standard(proto: "is_now_sales"),
-    5: .standard(proto: "product_color"),
-    6: .standard(proto: "coffee_bean_id"),
-    7: .standard(proto: "coffee_brews"),
-    8: .same(proto: "amount"),
-    9: .standard(proto: "stock_id"),
-    20: .standard(proto: "is_managing_order"),
-    21: .standard(proto: "is_ol_use_kitchen"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_name\0\u{3}product_category_id\0\u{3}product_type\0\u{3}is_now_sales\0\u{3}product_color\0\u{3}coffee_bean_id\0\u{3}coffee_brews\0\u{1}amount\0\u{3}stock_id\0\u{4}\u{b}is_managing_order\0\u{3}is_ol_use_kitchen\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3242,12 +3087,7 @@ extension Cafelogos_Pos_ProductParam: SwiftProtobuf.Message, SwiftProtobuf._Mess
 
 extension Cafelogos_Pos_ProductCategory: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ProductCategory"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .standard(proto: "created_at"),
-    4: .standard(proto: "updated_at"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{3}created_at\0\u{3}updated_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3292,13 +3132,7 @@ extension Cafelogos_Pos_ProductCategory: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension Cafelogos_Pos_CoffeeBean: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CoffeeBean"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .standard(proto: "gram_quantity"),
-    4: .standard(proto: "created_at"),
-    5: .standard(proto: "updated_at"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{3}gram_quantity\0\u{3}created_at\0\u{3}updated_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3348,14 +3182,7 @@ extension Cafelogos_Pos_CoffeeBean: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
 extension Cafelogos_Pos_CoffeeBrew: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CoffeeBrew"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .standard(proto: "bean_quantity_grams"),
-    4: .same(proto: "amount"),
-    5: .standard(proto: "created_at"),
-    6: .standard(proto: "updated_at"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{3}bean_quantity_grams\0\u{1}amount\0\u{3}created_at\0\u{3}updated_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3410,13 +3237,7 @@ extension Cafelogos_Pos_CoffeeBrew: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
 extension Cafelogos_Pos_Stock: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Stock"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "quantity"),
-    4: .standard(proto: "created_at"),
-    5: .standard(proto: "updated_at"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}quantity\0\u{3}created_at\0\u{3}updated_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3466,16 +3287,7 @@ extension Cafelogos_Pos_Stock: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Order"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "items"),
-    3: .same(proto: "discounts"),
-    4: .standard(proto: "order_type"),
-    5: .standard(proto: "order_at"),
-    6: .standard(proto: "call_number"),
-    7: .standard(proto: "client_id"),
-    8: .standard(proto: "seat_name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}items\0\u{1}discounts\0\u{3}order_type\0\u{3}order_at\0\u{3}call_number\0\u{3}client_id\0\u{3}seat_name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3540,15 +3352,7 @@ extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 
 extension Cafelogos_Pos_OrderParam: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OrderParam"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "items"),
-    3: .same(proto: "discounts"),
-    4: .standard(proto: "order_type"),
-    5: .standard(proto: "order_at"),
-    6: .standard(proto: "client_id"),
-    7: .standard(proto: "seat_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}items\0\u{1}discounts\0\u{3}order_type\0\u{3}order_at\0\u{3}client_id\0\u{3}seat_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3608,12 +3412,7 @@ extension Cafelogos_Pos_OrderParam: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
 extension Cafelogos_Pos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OrderItem"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
-    2: .same(proto: "quantity"),
-    3: .same(proto: "amount"),
-    4: .standard(proto: "coffee_brew_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_id\0\u{1}quantity\0\u{1}amount\0\u{3}coffee_brew_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3658,12 +3457,7 @@ extension Cafelogos_Pos_OrderItem: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Cafelogos_Pos_OrderDiscount: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".OrderDiscount"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .standard(proto: "discount_id"),
-    3: .same(proto: "type"),
-    4: .standard(proto: "discount_price"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}discount_id\0\u{1}type\0\u{3}discount_price\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3708,12 +3502,7 @@ extension Cafelogos_Pos_OrderDiscount: SwiftProtobuf.Message, SwiftProtobuf._Mes
 
 extension Cafelogos_Pos_Discount: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Discount"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-    3: .same(proto: "type"),
-    4: .standard(proto: "discount_price"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0\u{1}type\0\u{3}discount_price\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3758,15 +3547,7 @@ extension Cafelogos_Pos_Discount: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 
 extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Payment"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "type"),
-    3: .standard(proto: "receive_amount"),
-    4: .standard(proto: "payment_amount"),
-    5: .standard(proto: "change_amount"),
-    6: .standard(proto: "payment_at"),
-    7: .standard(proto: "updated_at"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}type\0\u{3}receive_amount\0\u{3}payment_amount\0\u{3}change_amount\0\u{3}payment_at\0\u{3}updated_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3826,17 +3607,7 @@ extension Cafelogos_Pos_Payment: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
 extension Cafelogos_Pos_PaymentParam: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PaymentParam"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "type"),
-    3: .standard(proto: "receive_amount"),
-    4: .standard(proto: "payment_amount"),
-    5: .standard(proto: "change_amount"),
-    6: .standard(proto: "payment_at"),
-    7: .standard(proto: "updated_at"),
-    8: .same(proto: "cash"),
-    9: .same(proto: "external"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}type\0\u{3}receive_amount\0\u{3}payment_amount\0\u{3}change_amount\0\u{3}payment_at\0\u{3}updated_at\0\u{1}cash\0\u{1}external\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3957,10 +3728,7 @@ extension Cafelogos_Pos_PaymentCashParam: SwiftProtobuf.Message, SwiftProtobuf._
 
 extension Cafelogos_Pos_PaymentExternalParam: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PaymentExternalParam"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "payment_type"),
-    2: .standard(proto: "external_device_id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}payment_type\0\u{3}external_device_id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3995,16 +3763,7 @@ extension Cafelogos_Pos_PaymentExternalParam: SwiftProtobuf.Message, SwiftProtob
 
 extension Cafelogos_Pos_PaymentExternal: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PaymentExternal"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .standard(proto: "payment_id"),
-    3: .standard(proto: "payment_type"),
-    4: .same(proto: "status"),
-    5: .standard(proto: "external_service_id"),
-    6: .standard(proto: "external_device_id"),
-    7: .standard(proto: "created_at"),
-    8: .standard(proto: "updated_at"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}payment_id\0\u{3}payment_type\0\u{1}status\0\u{3}external_service_id\0\u{3}external_device_id\0\u{3}created_at\0\u{3}updated_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4069,10 +3828,7 @@ extension Cafelogos_Pos_PaymentExternal: SwiftProtobuf.Message, SwiftProtobuf._M
 
 extension Cafelogos_Pos_Seat: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Seat"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .same(proto: "name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4107,11 +3863,7 @@ extension Cafelogos_Pos_Seat: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
 
 extension Cafelogos_Pos_DailySale: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DailySale"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "date"),
-    2: .standard(proto: "total_sales"),
-    3: .standard(proto: "total_quantity"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}date\0\u{3}total_sales\0\u{3}total_quantity\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -4151,14 +3903,7 @@ extension Cafelogos_Pos_DailySale: SwiftProtobuf.Message, SwiftProtobuf._Message
 
 extension Cafelogos_Pos_ProductSale: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ProductSale"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
-    2: .standard(proto: "product_name"),
-    3: .standard(proto: "total_sales"),
-    4: .standard(proto: "total_quantity"),
-    7: .standard(proto: "coffee_brew_id"),
-    8: .standard(proto: "coffee_brew_name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_id\0\u{3}product_name\0\u{3}total_sales\0\u{3}total_quantity\0\u{4}\u{3}coffee_brew_id\0\u{3}coffee_brew_name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

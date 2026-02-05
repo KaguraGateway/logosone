@@ -12,6 +12,116 @@ import type { EmptySchema } from "../common/common_pb";
 export declare const file_orderlink_orderlink_service: GenFile;
 
 /**
+ * 提供済みオーダーの一覧を返すのレスポンス
+ *
+ * @generated from message cafelogos.orderlink.ListOrdersResponse
+ */
+export declare type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrdersResponse"> & {
+  /**
+   * @generated from field: string order_id = 1;
+   */
+  orderId: string;
+
+  /**
+   * @generated from field: string order_at = 2;
+   */
+  orderAt: string;
+
+  /**
+   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderType type = 3;
+   */
+  type: ListOrdersResponse_OrderType;
+
+  /**
+   * @generated from field: string ticket_id = 4;
+   */
+  ticketId: string;
+
+  /**
+   * @generated from field: string ticket_addr = 5;
+   */
+  ticketAddr: string;
+
+  /**
+   * @generated from field: string seat_name = 6;
+   */
+  seatName: string;
+
+  /**
+   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderStatus stauts = 7;
+   */
+  stauts: ListOrdersResponse_OrderStatus;
+
+  /**
+   * @generated from field: optional string served_at = 8;
+   */
+  servedAt?: string;
+};
+
+/**
+ * Describes the message cafelogos.orderlink.ListOrdersResponse.
+ * Use `create(ListOrdersResponseSchema)` to create a new message.
+ */
+export declare const ListOrdersResponseSchema: GenMessage<ListOrdersResponse>;
+
+/**
+ * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderType
+ */
+export enum ListOrdersResponse_OrderType {
+  /**
+   * @generated from enum value: EAT_IN = 0;
+   */
+  EAT_IN = 0,
+
+  /**
+   * @generated from enum value: TAKE_OUT = 1;
+   */
+  TAKE_OUT = 1,
+}
+
+/**
+ * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderType.
+ */
+export declare const ListOrdersResponse_OrderTypeSchema: GenEnum<ListOrdersResponse_OrderType>;
+
+/**
+ * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderStatus
+ */
+export enum ListOrdersResponse_OrderStatus {
+  /**
+   * @generated from enum value: NotYet = 0;
+   */
+  NotYet = 0,
+
+  /**
+   * @generated from enum value: Cooking = 1;
+   */
+  Cooking = 1,
+
+  /**
+   * @generated from enum value: Cooked = 2;
+   */
+  Cooked = 2,
+
+  /**
+   * @generated from enum value: Calling = 3;
+   */
+  Calling = 3,
+
+  /**
+   * Provided
+   *
+   * @generated from enum value: Served = 4;
+   */
+  Served = 4,
+}
+
+/**
+ * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderStatus.
+ */
+export declare const ListOrdersResponse_OrderStatusSchema: GenEnum<ListOrdersResponse_OrderStatus>;
+
+/**
  * @generated from message cafelogos.orderlink.PostOrderItemInput
  */
 export declare type PostOrderItemInput = Message<"cafelogos.orderlink.PostOrderItemInput"> & {
@@ -128,6 +238,16 @@ export declare const OrderLinkService: GenService<{
     methodKind: "unary";
     input: typeof PostOrderInputSchema;
     output: typeof EmptySchema;
+  },
+  /**
+   * 提供済みオーダーの一覧を返す
+   *
+   * @generated from rpc cafelogos.orderlink.OrderLinkService.ListOrders
+   */
+  listOrders: {
+    methodKind: "unary";
+    input: typeof EmptySchema;
+    output: typeof ListOrdersResponseSchema;
   },
 }>;
 

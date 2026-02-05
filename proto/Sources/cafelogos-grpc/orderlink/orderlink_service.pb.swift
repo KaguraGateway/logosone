@@ -20,6 +20,124 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+/// 提供済みオーダーの一覧を返すのレスポンス
+public struct Cafelogos_Orderlink_ListOrdersResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var orderID: String = String()
+
+  public var orderAt: String = String()
+
+  public var type: Cafelogos_Orderlink_ListOrdersResponse.OrderType = .eatIn
+
+  public var ticketID: String = String()
+
+  public var ticketAddr: String = String()
+
+  public var seatName: String = String()
+
+  public var stauts: Cafelogos_Orderlink_ListOrdersResponse.OrderStatus = .notYet
+
+  public var servedAt: String {
+    get {return _servedAt ?? String()}
+    set {_servedAt = newValue}
+  }
+  /// Returns true if `servedAt` has been explicitly set.
+  public var hasServedAt: Bool {return self._servedAt != nil}
+  /// Clears the value of `servedAt`. Subsequent reads from it will return its default value.
+  public mutating func clearServedAt() {self._servedAt = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum OrderType: SwiftProtobuf.Enum, Swift.CaseIterable {
+    public typealias RawValue = Int
+    case eatIn // = 0
+    case takeOut // = 1
+    case UNRECOGNIZED(Int)
+
+    public init() {
+      self = .eatIn
+    }
+
+    public init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .eatIn
+      case 1: self = .takeOut
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    public var rawValue: Int {
+      switch self {
+      case .eatIn: return 0
+      case .takeOut: return 1
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+    // The compiler won't synthesize support with the UNRECOGNIZED case.
+    public static let allCases: [Cafelogos_Orderlink_ListOrdersResponse.OrderType] = [
+      .eatIn,
+      .takeOut,
+    ]
+
+  }
+
+  public enum OrderStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+    public typealias RawValue = Int
+    case notYet // = 0
+    case cooking // = 1
+    case cooked // = 2
+    case calling // = 3
+
+    /// Provided
+    case served // = 4
+    case UNRECOGNIZED(Int)
+
+    public init() {
+      self = .notYet
+    }
+
+    public init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .notYet
+      case 1: self = .cooking
+      case 2: self = .cooked
+      case 3: self = .calling
+      case 4: self = .served
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    public var rawValue: Int {
+      switch self {
+      case .notYet: return 0
+      case .cooking: return 1
+      case .cooked: return 2
+      case .calling: return 3
+      case .served: return 4
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+    // The compiler won't synthesize support with the UNRECOGNIZED case.
+    public static let allCases: [Cafelogos_Orderlink_ListOrdersResponse.OrderStatus] = [
+      .notYet,
+      .cooking,
+      .cooked,
+      .calling,
+      .served,
+    ]
+
+  }
+
+  public init() {}
+
+  fileprivate var _servedAt: String? = nil
+}
+
 public struct Cafelogos_Orderlink_PostOrderItemInput: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -104,15 +222,86 @@ public struct Cafelogos_Orderlink_PostOrderInput: Sendable {
 
 fileprivate let _protobuf_package = "cafelogos.orderlink"
 
+extension Cafelogos_Orderlink_ListOrdersResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ListOrdersResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0\u{3}order_at\0\u{1}type\0\u{3}ticket_id\0\u{3}ticket_addr\0\u{3}seat_name\0\u{1}stauts\0\u{3}served_at\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.orderID) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.orderAt) }()
+      case 3: try { try decoder.decodeSingularEnumField(value: &self.type) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.ticketID) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.ticketAddr) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.seatName) }()
+      case 7: try { try decoder.decodeSingularEnumField(value: &self.stauts) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self._servedAt) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.orderID.isEmpty {
+      try visitor.visitSingularStringField(value: self.orderID, fieldNumber: 1)
+    }
+    if !self.orderAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.orderAt, fieldNumber: 2)
+    }
+    if self.type != .eatIn {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 3)
+    }
+    if !self.ticketID.isEmpty {
+      try visitor.visitSingularStringField(value: self.ticketID, fieldNumber: 4)
+    }
+    if !self.ticketAddr.isEmpty {
+      try visitor.visitSingularStringField(value: self.ticketAddr, fieldNumber: 5)
+    }
+    if !self.seatName.isEmpty {
+      try visitor.visitSingularStringField(value: self.seatName, fieldNumber: 6)
+    }
+    if self.stauts != .notYet {
+      try visitor.visitSingularEnumField(value: self.stauts, fieldNumber: 7)
+    }
+    try { if let v = self._servedAt {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 8)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Orderlink_ListOrdersResponse, rhs: Cafelogos_Orderlink_ListOrdersResponse) -> Bool {
+    if lhs.orderID != rhs.orderID {return false}
+    if lhs.orderAt != rhs.orderAt {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs.ticketID != rhs.ticketID {return false}
+    if lhs.ticketAddr != rhs.ticketAddr {return false}
+    if lhs.seatName != rhs.seatName {return false}
+    if lhs.stauts != rhs.stauts {return false}
+    if lhs._servedAt != rhs._servedAt {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Orderlink_ListOrdersResponse.OrderType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0EAT_IN\0\u{1}TAKE_OUT\0")
+}
+
+extension Cafelogos_Orderlink_ListOrdersResponse.OrderStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NotYet\0\u{1}Cooking\0\u{1}Cooked\0\u{1}Calling\0\u{1}Served\0")
+}
+
 extension Cafelogos_Orderlink_PostOrderItemInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderItemInput"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
-    2: .standard(proto: "coffee_brew_id"),
-    3: .same(proto: "quantity"),
-    20: .standard(proto: "is_managing_order"),
-    21: .standard(proto: "is_ol_kitchen"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_id\0\u{3}coffee_brew_id\0\u{1}quantity\0\u{4}\u{11}is_managing_order\0\u{3}is_ol_kitchen\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -162,15 +351,7 @@ extension Cafelogos_Orderlink_PostOrderItemInput: SwiftProtobuf.Message, SwiftPr
 
 extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderInput"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "order_id"),
-    2: .standard(proto: "order_at"),
-    3: .same(proto: "items"),
-    4: .same(proto: "type"),
-    5: .standard(proto: "ticket_id"),
-    6: .standard(proto: "ticket_addr"),
-    7: .standard(proto: "seat_name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0\u{3}order_at\0\u{1}items\0\u{1}type\0\u{3}ticket_id\0\u{3}ticket_addr\0\u{3}seat_name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -229,8 +410,5 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
 }
 
 extension Cafelogos_Orderlink_PostOrderInput.OrderType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "EAT_IN"),
-    1: .same(proto: "TAKE_OUT"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0EAT_IN\0\u{1}TAKE_OUT\0")
 }

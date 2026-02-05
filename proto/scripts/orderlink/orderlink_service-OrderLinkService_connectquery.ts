@@ -8,3 +8,10 @@ import { OrderLinkService } from "./orderlink_service_pb";
  * @generated from rpc cafelogos.orderlink.OrderLinkService.PostOrder
  */
 export const postOrder = OrderLinkService.method.postOrder;
+
+/**
+ * 提供済みオーダーの一覧を返す
+ *
+ * @generated from rpc cafelogos.orderlink.OrderLinkService.ListOrders
+ */
+export const listOrders = OrderLinkService.method.listOrders;

@@ -16,7 +16,7 @@ type OrderQueryService interface {
 }
 
 type OrderDto struct {
-	Id         stringda
+	Id         string
 	OrderAt    synchro.Time[tz.UTC]
 	OrderType  order.OrderType
 	TicketAddr string

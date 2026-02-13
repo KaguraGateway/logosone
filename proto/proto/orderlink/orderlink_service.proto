@@ -8,6 +8,7 @@ option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;order
 
 service OrderLinkService {
     rpc PostOrder(PostOrderInput) returns (common.Empty) {}
+    rpc GetWaitTime(GetWaitTimeInput) returns (GetWaitTimeOutput) {}
     // 提供済みオーダーの一覧を返す
     rpc ListOrders(common.Empty) returns (ListOrdersResponse) {}
 }
@@ -35,6 +36,14 @@ message ListOrdersResponse {
         Calling = 3;
         Served = 4; // Provided
     }
+}
+
+message GetWaitTimeInput {
+    repeated string product_ids = 1;
+}
+
+message GetWaitTimeOutput{
+    uint32 wait_time_minutes = 1;
 }
 
 message PostOrderItemInput {

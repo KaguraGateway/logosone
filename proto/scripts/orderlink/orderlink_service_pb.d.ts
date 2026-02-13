@@ -122,6 +122,38 @@ export enum ListOrdersResponse_OrderStatus {
 export declare const ListOrdersResponse_OrderStatusSchema: GenEnum<ListOrdersResponse_OrderStatus>;
 
 /**
+ * @generated from message cafelogos.orderlink.GetWaitTimeInput
+ */
+export declare type GetWaitTimeInput = Message<"cafelogos.orderlink.GetWaitTimeInput"> & {
+  /**
+   * @generated from field: repeated string product_ids = 1;
+   */
+  productIds: string[];
+};
+
+/**
+ * Describes the message cafelogos.orderlink.GetWaitTimeInput.
+ * Use `create(GetWaitTimeInputSchema)` to create a new message.
+ */
+export declare const GetWaitTimeInputSchema: GenMessage<GetWaitTimeInput>;
+
+/**
+ * @generated from message cafelogos.orderlink.GetWaitTimeOutput
+ */
+export declare type GetWaitTimeOutput = Message<"cafelogos.orderlink.GetWaitTimeOutput"> & {
+  /**
+   * @generated from field: uint32 wait_time_minutes = 1;
+   */
+  waitTimeMinutes: number;
+};
+
+/**
+ * Describes the message cafelogos.orderlink.GetWaitTimeOutput.
+ * Use `create(GetWaitTimeOutputSchema)` to create a new message.
+ */
+export declare const GetWaitTimeOutputSchema: GenMessage<GetWaitTimeOutput>;
+
+/**
  * @generated from message cafelogos.orderlink.PostOrderItemInput
  */
 export declare type PostOrderItemInput = Message<"cafelogos.orderlink.PostOrderItemInput"> & {
@@ -238,6 +270,14 @@ export declare const OrderLinkService: GenService<{
     methodKind: "unary";
     input: typeof PostOrderInputSchema;
     output: typeof EmptySchema;
+  },
+  /**
+   * @generated from rpc cafelogos.orderlink.OrderLinkService.GetWaitTime
+   */
+  getWaitTime: {
+    methodKind: "unary";
+    input: typeof GetWaitTimeInputSchema;
+    output: typeof GetWaitTimeOutputSchema;
   },
   /**
    * 提供済みオーダーの一覧を返す

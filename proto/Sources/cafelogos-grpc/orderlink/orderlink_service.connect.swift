@@ -17,6 +17,12 @@ public protocol Cafelogos_Orderlink_OrderLinkServiceClientInterface: Sendable {
     @available(iOS 13, *)
     func `postOrder`(request: Cafelogos_Orderlink_PostOrderInput, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Common_Empty>
 
+    @discardableResult
+    func `getWaitTime`(request: Cafelogos_Orderlink_GetWaitTimeInput, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Orderlink_GetWaitTimeOutput>) -> Void) -> Connect.Cancelable
+
+    @available(iOS 13, *)
+    func `getWaitTime`(request: Cafelogos_Orderlink_GetWaitTimeInput, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Orderlink_GetWaitTimeOutput>
+
     /// 提供済みオーダーの一覧を返す
     @discardableResult
     func `listOrders`(request: Cafelogos_Common_Empty, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Orderlink_ListOrdersResponse>) -> Void) -> Connect.Cancelable
@@ -45,6 +51,16 @@ public final class Cafelogos_Orderlink_OrderLinkServiceClient: Cafelogos_Orderli
     }
 
     @discardableResult
+    public func `getWaitTime`(request: Cafelogos_Orderlink_GetWaitTimeInput, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Orderlink_GetWaitTimeOutput>) -> Void) -> Connect.Cancelable {
+        return self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/GetWaitTime", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
+    }
+
+    @available(iOS 13, *)
+    public func `getWaitTime`(request: Cafelogos_Orderlink_GetWaitTimeInput, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Orderlink_GetWaitTimeOutput> {
+        return await self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/GetWaitTime", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @discardableResult
     public func `listOrders`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Orderlink_ListOrdersResponse>) -> Void) -> Connect.Cancelable {
         return self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/ListOrders", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
@@ -57,6 +73,7 @@ public final class Cafelogos_Orderlink_OrderLinkServiceClient: Cafelogos_Orderli
     public enum Metadata {
         public enum Methods {
             public static let postOrder = Connect.MethodSpec(name: "PostOrder", service: "cafelogos.orderlink.OrderLinkService", type: .unary)
+            public static let getWaitTime = Connect.MethodSpec(name: "GetWaitTime", service: "cafelogos.orderlink.OrderLinkService", type: .unary)
             public static let listOrders = Connect.MethodSpec(name: "ListOrders", service: "cafelogos.orderlink.OrderLinkService", type: .unary)
         }
     }

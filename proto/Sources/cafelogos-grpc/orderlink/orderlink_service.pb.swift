@@ -41,11 +41,11 @@ public struct Cafelogos_Orderlink_ListOrdersResponse: Sendable {
   public var stauts: Cafelogos_Orderlink_ListOrdersResponse.OrderStatus = .notYet
 
   public var servedAt: String {
-    get {return _servedAt ?? String()}
+    get {_servedAt ?? String()}
     set {_servedAt = newValue}
   }
   /// Returns true if `servedAt` has been explicitly set.
-  public var hasServedAt: Bool {return self._servedAt != nil}
+  public var hasServedAt: Bool {self._servedAt != nil}
   /// Clears the value of `servedAt`. Subsequent reads from it will return its default value.
   public mutating func clearServedAt() {self._servedAt = nil}
 
@@ -136,6 +136,30 @@ public struct Cafelogos_Orderlink_ListOrdersResponse: Sendable {
   public init() {}
 
   fileprivate var _servedAt: String? = nil
+}
+
+public struct Cafelogos_Orderlink_GetWaitTimeInput: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var productIds: [String] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Cafelogos_Orderlink_GetWaitTimeOutput: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var waitTimeMinutes: UInt32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 public struct Cafelogos_Orderlink_PostOrderItemInput: Sendable {
@@ -297,6 +321,66 @@ extension Cafelogos_Orderlink_ListOrdersResponse.OrderType: SwiftProtobuf._Proto
 
 extension Cafelogos_Orderlink_ListOrdersResponse.OrderStatus: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0NotYet\0\u{1}Cooking\0\u{1}Cooked\0\u{1}Calling\0\u{1}Served\0")
+}
+
+extension Cafelogos_Orderlink_GetWaitTimeInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetWaitTimeInput"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_ids\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.productIds) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.productIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.productIds, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Orderlink_GetWaitTimeInput, rhs: Cafelogos_Orderlink_GetWaitTimeInput) -> Bool {
+    if lhs.productIds != rhs.productIds {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Cafelogos_Orderlink_GetWaitTimeOutput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetWaitTimeOutput"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}wait_time_minutes\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularUInt32Field(value: &self.waitTimeMinutes) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.waitTimeMinutes != 0 {
+      try visitor.visitSingularUInt32Field(value: self.waitTimeMinutes, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Orderlink_GetWaitTimeOutput, rhs: Cafelogos_Orderlink_GetWaitTimeOutput) -> Bool {
+    if lhs.waitTimeMinutes != rhs.waitTimeMinutes {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
 }
 
 extension Cafelogos_Orderlink_PostOrderItemInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {

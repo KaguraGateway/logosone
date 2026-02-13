@@ -38,11 +38,11 @@ public struct Cafelogos_Ticket_ResponseIssueTicket: Sendable {
   // methods supported on all messages.
 
   public var ticket: Cafelogos_Ticket_Ticket {
-    get {return _ticket ?? Cafelogos_Ticket_Ticket()}
+    get {_ticket ?? Cafelogos_Ticket_Ticket()}
     set {_ticket = newValue}
   }
   /// Returns true if `ticket` has been explicitly set.
-  public var hasTicket: Bool {return self._ticket != nil}
+  public var hasTicket: Bool {self._ticket != nil}
   /// Clears the value of `ticket`. Subsequent reads from it will return its default value.
   public mutating func clearTicket() {self._ticket = nil}
 

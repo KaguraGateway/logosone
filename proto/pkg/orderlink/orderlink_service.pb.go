@@ -7,13 +7,12 @@
 package orderlink
 
 import (
+	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	common "github.com/KaguraGateway/logosone/proto/pkg/common"
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -167,7 +166,7 @@ func (x PostOrderInput_OrderType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use PostOrderInput_OrderType.Descriptor instead.
 func (PostOrderInput_OrderType) EnumDescriptor() ([]byte, []int) {
-	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{2, 0}
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{4, 0}
 }
 
 // 提供済みオーダーの一覧を返すのレスポンス
@@ -271,6 +270,94 @@ func (x *ListOrdersResponse) GetServedAt() string {
 	return ""
 }
 
+type GetWaitTimeInput struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProductIds    []string               `protobuf:"bytes,1,rep,name=product_ids,json=productIds,proto3" json:"product_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetWaitTimeInput) Reset() {
+	*x = GetWaitTimeInput{}
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWaitTimeInput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWaitTimeInput) ProtoMessage() {}
+
+func (x *GetWaitTimeInput) ProtoReflect() protoreflect.Message {
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWaitTimeInput.ProtoReflect.Descriptor instead.
+func (*GetWaitTimeInput) Descriptor() ([]byte, []int) {
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *GetWaitTimeInput) GetProductIds() []string {
+	if x != nil {
+		return x.ProductIds
+	}
+	return nil
+}
+
+type GetWaitTimeOutput struct {
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	WaitTimeMinutes uint32                 `protobuf:"varint,1,opt,name=wait_time_minutes,json=waitTimeMinutes,proto3" json:"wait_time_minutes,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *GetWaitTimeOutput) Reset() {
+	*x = GetWaitTimeOutput{}
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetWaitTimeOutput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetWaitTimeOutput) ProtoMessage() {}
+
+func (x *GetWaitTimeOutput) ProtoReflect() protoreflect.Message {
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetWaitTimeOutput.ProtoReflect.Descriptor instead.
+func (*GetWaitTimeOutput) Descriptor() ([]byte, []int) {
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *GetWaitTimeOutput) GetWaitTimeMinutes() uint32 {
+	if x != nil {
+		return x.WaitTimeMinutes
+	}
+	return 0
+}
+
 type PostOrderItemInput struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	ProductId       string                 `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
@@ -284,7 +371,7 @@ type PostOrderItemInput struct {
 
 func (x *PostOrderItemInput) Reset() {
 	*x = PostOrderItemInput{}
-	mi := &file_orderlink_orderlink_service_proto_msgTypes[1]
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -296,7 +383,7 @@ func (x *PostOrderItemInput) String() string {
 func (*PostOrderItemInput) ProtoMessage() {}
 
 func (x *PostOrderItemInput) ProtoReflect() protoreflect.Message {
-	mi := &file_orderlink_orderlink_service_proto_msgTypes[1]
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -309,7 +396,7 @@ func (x *PostOrderItemInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostOrderItemInput.ProtoReflect.Descriptor instead.
 func (*PostOrderItemInput) Descriptor() ([]byte, []int) {
-	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{1}
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *PostOrderItemInput) GetProductId() string {
@@ -362,7 +449,7 @@ type PostOrderInput struct {
 
 func (x *PostOrderInput) Reset() {
 	*x = PostOrderInput{}
-	mi := &file_orderlink_orderlink_service_proto_msgTypes[2]
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -374,7 +461,7 @@ func (x *PostOrderInput) String() string {
 func (*PostOrderInput) ProtoMessage() {}
 
 func (x *PostOrderInput) ProtoReflect() protoreflect.Message {
-	mi := &file_orderlink_orderlink_service_proto_msgTypes[2]
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -387,7 +474,7 @@ func (x *PostOrderInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostOrderInput.ProtoReflect.Descriptor instead.
 func (*PostOrderInput) Descriptor() ([]byte, []int) {
-	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{2}
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *PostOrderInput) GetOrderId() string {
@@ -468,7 +555,12 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\n" +
 	"\x06Served\x10\x04B\f\n" +
 	"\n" +
-	"_served_at\"\xc5\x01\n" +
+	"_served_at\"3\n" +
+	"\x10GetWaitTimeInput\x12\x1f\n" +
+	"\vproduct_ids\x18\x01 \x03(\tR\n" +
+	"productIds\"?\n" +
+	"\x11GetWaitTimeOutput\x12*\n" +
+	"\x11wait_time_minutes\x18\x01 \x01(\rR\x0fwaitTimeMinutes\"\xc5\x01\n" +
 	"\x12PostOrderItemInput\x12\x1d\n" +
 	"\n" +
 	"product_id\x18\x01 \x01(\tR\tproductId\x12$\n" +
@@ -488,9 +580,10 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\tOrderType\x12\n" +
 	"\n" +
 	"\x06EAT_IN\x10\x00\x12\f\n" +
-	"\bTAKE_OUT\x10\x012\xb1\x01\n" +
+	"\bTAKE_OUT\x10\x012\x91\x02\n" +
 	"\x10OrderLinkService\x12K\n" +
-	"\tPostOrder\x12#.cafelogos.orderlink.PostOrderInput\x1a\x17.cafelogos.common.Empty\"\x00\x12P\n" +
+	"\tPostOrder\x12#.cafelogos.orderlink.PostOrderInput\x1a\x17.cafelogos.common.Empty\"\x00\x12^\n" +
+	"\vGetWaitTime\x12%.cafelogos.orderlink.GetWaitTimeInput\x1a&.cafelogos.orderlink.GetWaitTimeOutput\"\x00\x12P\n" +
 	"\n" +
 	"ListOrders\x12\x17.cafelogos.common.Empty\x1a'.cafelogos.orderlink.ListOrdersResponse\"\x00BAZ?github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;orderlinkb\x06proto3"
 
@@ -507,27 +600,31 @@ func file_orderlink_orderlink_service_proto_rawDescGZIP() []byte {
 }
 
 var file_orderlink_orderlink_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_orderlink_orderlink_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_orderlink_orderlink_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_orderlink_orderlink_service_proto_goTypes = []any{
 	(ListOrdersResponse_OrderType)(0),   // 0: cafelogos.orderlink.ListOrdersResponse.OrderType
 	(ListOrdersResponse_OrderStatus)(0), // 1: cafelogos.orderlink.ListOrdersResponse.OrderStatus
 	(PostOrderInput_OrderType)(0),       // 2: cafelogos.orderlink.PostOrderInput.OrderType
 	(*ListOrdersResponse)(nil),          // 3: cafelogos.orderlink.ListOrdersResponse
-	(*PostOrderItemInput)(nil),          // 4: cafelogos.orderlink.PostOrderItemInput
-	(*PostOrderInput)(nil),              // 5: cafelogos.orderlink.PostOrderInput
-	(*common.Empty)(nil),                // 6: cafelogos.common.Empty
+	(*GetWaitTimeInput)(nil),            // 4: cafelogos.orderlink.GetWaitTimeInput
+	(*GetWaitTimeOutput)(nil),           // 5: cafelogos.orderlink.GetWaitTimeOutput
+	(*PostOrderItemInput)(nil),          // 6: cafelogos.orderlink.PostOrderItemInput
+	(*PostOrderInput)(nil),              // 7: cafelogos.orderlink.PostOrderInput
+	(*common.Empty)(nil),                // 8: cafelogos.common.Empty
 }
 var file_orderlink_orderlink_service_proto_depIdxs = []int32{
 	0, // 0: cafelogos.orderlink.ListOrdersResponse.type:type_name -> cafelogos.orderlink.ListOrdersResponse.OrderType
 	1, // 1: cafelogos.orderlink.ListOrdersResponse.stauts:type_name -> cafelogos.orderlink.ListOrdersResponse.OrderStatus
-	4, // 2: cafelogos.orderlink.PostOrderInput.items:type_name -> cafelogos.orderlink.PostOrderItemInput
+	6, // 2: cafelogos.orderlink.PostOrderInput.items:type_name -> cafelogos.orderlink.PostOrderItemInput
 	2, // 3: cafelogos.orderlink.PostOrderInput.type:type_name -> cafelogos.orderlink.PostOrderInput.OrderType
-	5, // 4: cafelogos.orderlink.OrderLinkService.PostOrder:input_type -> cafelogos.orderlink.PostOrderInput
-	6, // 5: cafelogos.orderlink.OrderLinkService.ListOrders:input_type -> cafelogos.common.Empty
-	6, // 6: cafelogos.orderlink.OrderLinkService.PostOrder:output_type -> cafelogos.common.Empty
-	3, // 7: cafelogos.orderlink.OrderLinkService.ListOrders:output_type -> cafelogos.orderlink.ListOrdersResponse
-	6, // [6:8] is the sub-list for method output_type
-	4, // [4:6] is the sub-list for method input_type
+	7, // 4: cafelogos.orderlink.OrderLinkService.PostOrder:input_type -> cafelogos.orderlink.PostOrderInput
+	4, // 5: cafelogos.orderlink.OrderLinkService.GetWaitTime:input_type -> cafelogos.orderlink.GetWaitTimeInput
+	8, // 6: cafelogos.orderlink.OrderLinkService.ListOrders:input_type -> cafelogos.common.Empty
+	8, // 7: cafelogos.orderlink.OrderLinkService.PostOrder:output_type -> cafelogos.common.Empty
+	5, // 8: cafelogos.orderlink.OrderLinkService.GetWaitTime:output_type -> cafelogos.orderlink.GetWaitTimeOutput
+	3, // 9: cafelogos.orderlink.OrderLinkService.ListOrders:output_type -> cafelogos.orderlink.ListOrdersResponse
+	7, // [7:10] is the sub-list for method output_type
+	4, // [4:7] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
 	4, // [4:4] is the sub-list for extension extendee
 	0, // [0:4] is the sub-list for field type_name
@@ -545,7 +642,7 @@ func file_orderlink_orderlink_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_orderlink_orderlink_service_proto_rawDesc), len(file_orderlink_orderlink_service_proto_rawDesc)),
 			NumEnums:      3,
-			NumMessages:   3,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -5,14 +5,13 @@
 package orderlinkconnect
 
 import (
+	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
+	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	orderlink "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink"
 	http "net/http"
 	strings "strings"
-
-	connect "connectrpc.com/connect"
-	common "github.com/KaguraGateway/logosone/proto/pkg/common"
-	orderlink "github.com/KaguraGateway/logosone/proto/pkg/orderlink"
 )
 
 // This is a compile-time assertion to ensure that this generated file and the connect package are
@@ -38,6 +37,9 @@ const (
 	// OrderLinkServicePostOrderProcedure is the fully-qualified name of the OrderLinkService's
 	// PostOrder RPC.
 	OrderLinkServicePostOrderProcedure = "/cafelogos.orderlink.OrderLinkService/PostOrder"
+	// OrderLinkServiceGetWaitTimeProcedure is the fully-qualified name of the OrderLinkService's
+	// GetWaitTime RPC.
+	OrderLinkServiceGetWaitTimeProcedure = "/cafelogos.orderlink.OrderLinkService/GetWaitTime"
 	// OrderLinkServiceListOrdersProcedure is the fully-qualified name of the OrderLinkService's
 	// ListOrders RPC.
 	OrderLinkServiceListOrdersProcedure = "/cafelogos.orderlink.OrderLinkService/ListOrders"
@@ -46,6 +48,7 @@ const (
 // OrderLinkServiceClient is a client for the cafelogos.orderlink.OrderLinkService service.
 type OrderLinkServiceClient interface {
 	PostOrder(context.Context, *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error)
+	GetWaitTime(context.Context, *connect.Request[orderlink.GetWaitTimeInput]) (*connect.Response[orderlink.GetWaitTimeOutput], error)
 	// 提供済みオーダーの一覧を返す
 	ListOrders(context.Context, *connect.Request[common.Empty]) (*connect.Response[orderlink.ListOrdersResponse], error)
 }
@@ -67,6 +70,12 @@ func NewOrderLinkServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(orderLinkServiceMethods.ByName("PostOrder")),
 			connect.WithClientOptions(opts...),
 		),
+		getWaitTime: connect.NewClient[orderlink.GetWaitTimeInput, orderlink.GetWaitTimeOutput](
+			httpClient,
+			baseURL+OrderLinkServiceGetWaitTimeProcedure,
+			connect.WithSchema(orderLinkServiceMethods.ByName("GetWaitTime")),
+			connect.WithClientOptions(opts...),
+		),
 		listOrders: connect.NewClient[common.Empty, orderlink.ListOrdersResponse](
 			httpClient,
 			baseURL+OrderLinkServiceListOrdersProcedure,
@@ -78,13 +87,19 @@ func NewOrderLinkServiceClient(httpClient connect.HTTPClient, baseURL string, op
 
 // orderLinkServiceClient implements OrderLinkServiceClient.
 type orderLinkServiceClient struct {
-	postOrder  *connect.Client[orderlink.PostOrderInput, common.Empty]
-	listOrders *connect.Client[common.Empty, orderlink.ListOrdersResponse]
+	postOrder   *connect.Client[orderlink.PostOrderInput, common.Empty]
+	getWaitTime *connect.Client[orderlink.GetWaitTimeInput, orderlink.GetWaitTimeOutput]
+	listOrders  *connect.Client[common.Empty, orderlink.ListOrdersResponse]
 }
 
 // PostOrder calls cafelogos.orderlink.OrderLinkService.PostOrder.
 func (c *orderLinkServiceClient) PostOrder(ctx context.Context, req *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error) {
 	return c.postOrder.CallUnary(ctx, req)
+}
+
+// GetWaitTime calls cafelogos.orderlink.OrderLinkService.GetWaitTime.
+func (c *orderLinkServiceClient) GetWaitTime(ctx context.Context, req *connect.Request[orderlink.GetWaitTimeInput]) (*connect.Response[orderlink.GetWaitTimeOutput], error) {
+	return c.getWaitTime.CallUnary(ctx, req)
 }
 
 // ListOrders calls cafelogos.orderlink.OrderLinkService.ListOrders.
@@ -95,6 +110,7 @@ func (c *orderLinkServiceClient) ListOrders(ctx context.Context, req *connect.Re
 // OrderLinkServiceHandler is an implementation of the cafelogos.orderlink.OrderLinkService service.
 type OrderLinkServiceHandler interface {
 	PostOrder(context.Context, *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error)
+	GetWaitTime(context.Context, *connect.Request[orderlink.GetWaitTimeInput]) (*connect.Response[orderlink.GetWaitTimeOutput], error)
 	// 提供済みオーダーの一覧を返す
 	ListOrders(context.Context, *connect.Request[common.Empty]) (*connect.Response[orderlink.ListOrdersResponse], error)
 }
@@ -112,6 +128,12 @@ func NewOrderLinkServiceHandler(svc OrderLinkServiceHandler, opts ...connect.Han
 		connect.WithSchema(orderLinkServiceMethods.ByName("PostOrder")),
 		connect.WithHandlerOptions(opts...),
 	)
+	orderLinkServiceGetWaitTimeHandler := connect.NewUnaryHandler(
+		OrderLinkServiceGetWaitTimeProcedure,
+		svc.GetWaitTime,
+		connect.WithSchema(orderLinkServiceMethods.ByName("GetWaitTime")),
+		connect.WithHandlerOptions(opts...),
+	)
 	orderLinkServiceListOrdersHandler := connect.NewUnaryHandler(
 		OrderLinkServiceListOrdersProcedure,
 		svc.ListOrders,
@@ -122,6 +144,8 @@ func NewOrderLinkServiceHandler(svc OrderLinkServiceHandler, opts ...connect.Han
 		switch r.URL.Path {
 		case OrderLinkServicePostOrderProcedure:
 			orderLinkServicePostOrderHandler.ServeHTTP(w, r)
+		case OrderLinkServiceGetWaitTimeProcedure:
+			orderLinkServiceGetWaitTimeHandler.ServeHTTP(w, r)
 		case OrderLinkServiceListOrdersProcedure:
 			orderLinkServiceListOrdersHandler.ServeHTTP(w, r)
 		default:
@@ -135,6 +159,10 @@ type UnimplementedOrderLinkServiceHandler struct{}
 
 func (UnimplementedOrderLinkServiceHandler) PostOrder(context.Context, *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.orderlink.OrderLinkService.PostOrder is not implemented"))
+}
+
+func (UnimplementedOrderLinkServiceHandler) GetWaitTime(context.Context, *connect.Request[orderlink.GetWaitTimeInput]) (*connect.Response[orderlink.GetWaitTimeOutput], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.orderlink.OrderLinkService.GetWaitTime is not implemented"))
 }
 
 func (UnimplementedOrderLinkServiceHandler) ListOrders(context.Context, *connect.Request[common.Empty]) (*connect.Response[orderlink.ListOrdersResponse], error) {

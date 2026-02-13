@@ -9,6 +9,10 @@ import { OrderLinkService } from "./orderlink_service_pb";
  */
 export const postOrder: typeof OrderLinkService["method"]["postOrder"];
 /**
+ * @generated from rpc cafelogos.orderlink.OrderLinkService.GetWaitTime
+ */
+export const getWaitTime: typeof OrderLinkService["method"]["getWaitTime"];
+/**
  * 提供済みオーダーの一覧を返す
  *
  * @generated from rpc cafelogos.orderlink.OrderLinkService.ListOrders

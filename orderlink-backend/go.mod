@@ -9,7 +9,7 @@ require (
 	connectrpc.com/connect v1.17.0
 	connectrpc.com/cors v0.1.0
 	github.com/Code-Hex/synchro v0.5.2
-	github.com/KaguraGateway/cafelogos-grpc v1.0.24
+	github.com/KaguraGateway/logosone/proto v0.0.0-20260205051115-7653785c0d82
 	github.com/cockroachdb/errors v1.11.3
 	github.com/getsentry/sentry-go v0.29.0
 	github.com/gorilla/websocket v1.5.3
@@ -34,7 +34,6 @@ require (
 	cloud.google.com/go/auth/oauth2adapt v0.2.4 // indirect
 	cloud.google.com/go/compute/metadata v0.5.2 // indirect
 	cloud.google.com/go/iam v1.2.1 // indirect
-	github.com/KaguraGateway/logosone/proto v0.0.0-20260205051115-7653785c0d82 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cockroachdb/logtags v0.0.0-20230118201751-21c54148d20b // indirect
 	github.com/cockroachdb/redact v1.1.5 // indirect

@@ -1,6 +1,6 @@
 module github.com/KaguraGateway/logosone/orderlink-backend
 
-go 1.24.0
+go 1.26.0
 
 require (
 	cloud.google.com/go/pubsub v1.44.0
@@ -8,7 +8,6 @@ require (
 	connectrpc.com/cors v0.1.0
 	github.com/Code-Hex/synchro v0.5.2
 	github.com/KaguraGateway/cafelogos-grpc v1.7.0
-	github.com/KaguraGateway/logosone/proto v0.0.0-20260205051115-7653785c0d82
 	github.com/cockroachdb/errors v1.11.3
 	github.com/getsentry/sentry-go v0.29.0
 	github.com/gorilla/websocket v1.5.3

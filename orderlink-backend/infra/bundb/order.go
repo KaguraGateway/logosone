@@ -26,9 +26,14 @@ func NewOrderRepositoryDb(i *do.Injector) (repository.OrderRepository, error) {
 }
 
 func toDomainOrder(daoOrder *dao.Order) *order.Order {
-	return order.RebuildOrder(daoOrder.Id, lo.Map(daoOrder.OrderItems, func(orderItem *dao.OrderItem, _ int) orderitem.OrderItem {
+	orderItems := lo.Map(daoOrder.OrderItems, func(orderItem *dao.OrderItem, _ int) orderitem.OrderItem {
 		return *toDomainOrderItem(orderItem)
-	}), synchro.In[tz.UTC](daoOrder.OrderAt), order.OrderType(daoOrder.OrderType), order.OrderStatus(daoOrder.Status), daoOrder.SeatName)
+	})
+	orderStatusHistories := lo.Map(daoOrder.OrderStatusHistories, func(daoOrderStatusHistory *dao.OrderStatusHistory, _ int) order.OrderStatusHistory {
+		return order.RebuildOrderStatusHistory(daoOrderStatusHistory.Id, order.OrderStatus(daoOrderStatusHistory.Status), synchro.In[tz.UTC](daoOrderStatusHistory.CreatedAt))
+	})
+
+	return order.RebuildOrder(daoOrder.Id, orderItems, orderStatusHistories, synchro.In[tz.UTC](daoOrder.OrderAt), order.OrderType(daoOrder.OrderType), order.OrderStatus(daoOrder.Status), daoOrder.SeatName)
 }
 
 func toDaoOrder(order *order.Order) *dao.Order {
@@ -95,6 +100,17 @@ func (r *orderRepositoryDb) SaveTx(ctx context.Context, tx interface{}, order *o
 	return nil
 }
 
+func (r *orderRepositoryDb) ListOrders(ctx context.Context) ([]*order.Order, error) {
+	daoOrders := make([]dao.Order, 0)
+	if err := r.db.NewSelect().Model(&daoOrders).Column("order.*").Relation("Ticket").Relation("OrderItems").Relation("OrderStatusHistories").Order("OrderStatusHistories.created_at asc").Scan(ctx); err != nil {
+		return nil, err
+	}
+
+	return lo.Map(daoOrders, func(daoOrder dao.Order, _ int) *order.Order {
+		return toDomainOrder(&daoOrder)
+	}), nil
+}
+
 type orderQueryServiceDb struct {
 	db *bun.DB
 }
@@ -137,11 +153,4 @@ func (s *orderQueryServiceDb) FindAllNotProvided(ctx context.Context) ([]*applic
 	return lo.Map(daoOrder, func(order dao.Order, _ int) *application.OrderDto {
 		return toOrderDto(order)
 	}), nil
-}
-
-func (s *orderQueryServiceDb) ListOrdersWithServeAt(ctx context.Context) ([]*application.OrderWithServeAtDto, error) {
-	daoOrder := make([]dao.Order, 0)
-	if err := s.db.NewSelect().Model(&daoOrder).Column("order.*").Relation("Ticket").Relation("OrderItems").Relation("OrderStatusHistories").Scan(ctx); err != nil {
-
-	}
 }

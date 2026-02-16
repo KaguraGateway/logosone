@@ -25,23 +25,25 @@ func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[
 	}
 
 	return &Order{
-		id:         id,
-		orderItems: orderItems,
-		orderAt:    orderAt,
-		orderType:  orderType,
-		status:     OrderStatus(NotYet),
-		seatName:   seatName,
+		id:                 id,
+		orderItems:         orderItems,
+		orderStatusHistory: make([]OrderStatusHistory, 0),
+		orderAt:            orderAt,
+		orderType:          orderType,
+		status:             OrderStatus(NotYet),
+		seatName:           seatName,
 	}, nil
 }
 
-func RebuildOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, status OrderStatus, seatName *string) *Order {
+func RebuildOrder(id string, orderItems []orderitem.OrderItem, orderStatusHistories []OrderStatusHistory, orderAt synchro.Time[tz.UTC], orderType OrderType, status OrderStatus, seatName *string) *Order {
 	return &Order{
-		id:         id,
-		orderItems: orderItems,
-		orderAt:    orderAt,
-		orderType:  orderType,
-		status:     status,
-		seatName:   seatName,
+		id:                 id,
+		orderItems:         orderItems,
+		orderStatusHistory: orderStatusHistories,
+		orderAt:            orderAt,
+		orderType:          orderType,
+		status:             status,
+		seatName:           seatName,
 	}
 }
 

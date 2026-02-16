@@ -193,6 +193,7 @@ func buildInjector(isDev bool, db *bun.DB, wsClients []*websocket.OrderLinkWSCli
 	do.Provide(i, application.NewPostOrderFromPosUseCase)
 	do.Provide(i, application.NewUpdateOrderItemStatusUseCase)
 	do.Provide(i, application.NewUpdateOrderStatusUseCase)
+	do.Provide(i, application.NewListOrdersUseCase)
 
 	return i
 }

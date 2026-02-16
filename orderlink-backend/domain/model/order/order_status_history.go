@@ -20,6 +20,14 @@ func NewOrderStatusHistory(status OrderStatus) OrderStatusHistory {
 	}
 }
 
+func RebuildOrderStatusHistory(id string, status OrderStatus, createdAt synchro.Time[tz.UTC]) OrderStatusHistory {
+	return OrderStatusHistory{
+		id:        id,
+		status:    status,
+		createdAt: createdAt,
+	}
+}
+
 func (o OrderStatusHistory) ID() string {
 	return o.id
 }

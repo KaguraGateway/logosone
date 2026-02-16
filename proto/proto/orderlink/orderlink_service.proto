@@ -20,7 +20,7 @@ message ListOrdersResponse {
     string ticket_id = 4;
     string ticket_addr = 5;
     string seat_name = 6;
-    OrderStatus stauts = 7;
+    OrderStatus status = 7;
     optional string served_at = 8;
 
     enum OrderType {

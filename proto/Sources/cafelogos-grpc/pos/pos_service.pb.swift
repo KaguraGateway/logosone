@@ -149,11 +149,11 @@ public struct Cafelogos_Pos_GetOrderResponse: Sendable {
   // methods supported on all messages.
 
   public var order: Cafelogos_Pos_Order {
-    get {return _order ?? Cafelogos_Pos_Order()}
+    get {_order ?? Cafelogos_Pos_Order()}
     set {_order = newValue}
   }
   /// Returns true if `order` has been explicitly set.
-  public var hasOrder: Bool {return self._order != nil}
+  public var hasOrder: Bool {self._order != nil}
   /// Clears the value of `order`. Subsequent reads from it will return its default value.
   public mutating func clearOrder() {self._order = nil}
 
@@ -182,20 +182,20 @@ public struct Cafelogos_Pos_PostOrderRequest: Sendable {
   // methods supported on all messages.
 
   public var order: Cafelogos_Pos_OrderParam {
-    get {return _order ?? Cafelogos_Pos_OrderParam()}
+    get {_order ?? Cafelogos_Pos_OrderParam()}
     set {_order = newValue}
   }
   /// Returns true if `order` has been explicitly set.
-  public var hasOrder: Bool {return self._order != nil}
+  public var hasOrder: Bool {self._order != nil}
   /// Clears the value of `order`. Subsequent reads from it will return its default value.
   public mutating func clearOrder() {self._order = nil}
 
   public var option: Cafelogos_Pos_PostOrderOption {
-    get {return _option ?? Cafelogos_Pos_PostOrderOption()}
+    get {_option ?? Cafelogos_Pos_PostOrderOption()}
     set {_option = newValue}
   }
   /// Returns true if `option` has been explicitly set.
-  public var hasOption: Bool {return self._option != nil}
+  public var hasOption: Bool {self._option != nil}
   /// Clears the value of `option`. Subsequent reads from it will return its default value.
   public mutating func clearOption() {self._option = nil}
 
@@ -283,11 +283,11 @@ public struct Cafelogos_Pos_PostPaymentRequest: Sendable {
   // methods supported on all messages.
 
   public var payment: Cafelogos_Pos_PaymentParam {
-    get {return _payment ?? Cafelogos_Pos_PaymentParam()}
+    get {_payment ?? Cafelogos_Pos_PaymentParam()}
     set {_payment = newValue}
   }
   /// Returns true if `payment` has been explicitly set.
-  public var hasPayment: Bool {return self._payment != nil}
+  public var hasPayment: Bool {self._payment != nil}
   /// Clears the value of `payment`. Subsequent reads from it will return its default value.
   public mutating func clearPayment() {self._payment = nil}
 
@@ -296,11 +296,11 @@ public struct Cafelogos_Pos_PostPaymentRequest: Sendable {
   public var orderIds: [String] = []
 
   public var option: Cafelogos_Pos_PostPaymentRequestOption {
-    get {return _option ?? Cafelogos_Pos_PostPaymentRequestOption()}
+    get {_option ?? Cafelogos_Pos_PostPaymentRequestOption()}
     set {_option = newValue}
   }
   /// Returns true if `option` has been explicitly set.
-  public var hasOption: Bool {return self._option != nil}
+  public var hasOption: Bool {self._option != nil}
   /// Clears the value of `option`. Subsequent reads from it will return its default value.
   public mutating func clearOption() {self._option = nil}
 
@@ -330,11 +330,11 @@ public struct Cafelogos_Pos_UpdatePaymentRequest: Sendable {
   // methods supported on all messages.
 
   public var payment: Cafelogos_Pos_PaymentParam {
-    get {return _payment ?? Cafelogos_Pos_PaymentParam()}
+    get {_payment ?? Cafelogos_Pos_PaymentParam()}
     set {_payment = newValue}
   }
   /// Returns true if `payment` has been explicitly set.
-  public var hasPayment: Bool {return self._payment != nil}
+  public var hasPayment: Bool {self._payment != nil}
   /// Clears the value of `payment`. Subsequent reads from it will return its default value.
   public mutating func clearPayment() {self._payment = nil}
 
@@ -353,11 +353,11 @@ public struct Cafelogos_Pos_PaymentResponse: Sendable {
   public var status: Int32 = 0
 
   public var payment: Cafelogos_Pos_Payment {
-    get {return _payment ?? Cafelogos_Pos_Payment()}
+    get {_payment ?? Cafelogos_Pos_Payment()}
     set {_payment = newValue}
   }
   /// Returns true if `payment` has been explicitly set.
-  public var hasPayment: Bool {return self._payment != nil}
+  public var hasPayment: Bool {self._payment != nil}
   /// Clears the value of `payment`. Subsequent reads from it will return its default value.
   public mutating func clearPayment() {self._payment = nil}
 
@@ -388,11 +388,11 @@ public struct Cafelogos_Pos_GetExternalPaymentResponse: Sendable {
   // methods supported on all messages.
 
   public var externalPayment: Cafelogos_Pos_PaymentExternal {
-    get {return _externalPayment ?? Cafelogos_Pos_PaymentExternal()}
+    get {_externalPayment ?? Cafelogos_Pos_PaymentExternal()}
     set {_externalPayment = newValue}
   }
   /// Returns true if `externalPayment` has been explicitly set.
-  public var hasExternalPayment: Bool {return self._externalPayment != nil}
+  public var hasExternalPayment: Bool {self._externalPayment != nil}
   /// Clears the value of `externalPayment`. Subsequent reads from it will return its default value.
   public mutating func clearExternalPayment() {self._externalPayment = nil}
 
@@ -457,11 +457,11 @@ public struct Cafelogos_Pos_PostProductRequest: Sendable {
   // methods supported on all messages.
 
   public var product: Cafelogos_Pos_ProductParam {
-    get {return _product ?? Cafelogos_Pos_ProductParam()}
+    get {_product ?? Cafelogos_Pos_ProductParam()}
     set {_product = newValue}
   }
   /// Returns true if `product` has been explicitly set.
-  public var hasProduct: Bool {return self._product != nil}
+  public var hasProduct: Bool {self._product != nil}
   /// Clears the value of `product`. Subsequent reads from it will return its default value.
   public mutating func clearProduct() {self._product = nil}
 
@@ -480,11 +480,11 @@ public struct Cafelogos_Pos_UpdateProductRequest: Sendable {
   public var productID: String = String()
 
   public var product: Cafelogos_Pos_ProductParam {
-    get {return _product ?? Cafelogos_Pos_ProductParam()}
+    get {_product ?? Cafelogos_Pos_ProductParam()}
     set {_product = newValue}
   }
   /// Returns true if `product` has been explicitly set.
-  public var hasProduct: Bool {return self._product != nil}
+  public var hasProduct: Bool {self._product != nil}
   /// Clears the value of `product`. Subsequent reads from it will return its default value.
   public mutating func clearProduct() {self._product = nil}
 
@@ -593,11 +593,11 @@ public struct Cafelogos_Pos_UpdateSeatRequest: Sendable {
   // methods supported on all messages.
 
   public var seat: Cafelogos_Pos_Seat {
-    get {return _seat ?? Cafelogos_Pos_Seat()}
+    get {_seat ?? Cafelogos_Pos_Seat()}
     set {_seat = newValue}
   }
   /// Returns true if `seat` has been explicitly set.
-  public var hasSeat: Bool {return self._seat != nil}
+  public var hasSeat: Bool {self._seat != nil}
   /// Clears the value of `seat`. Subsequent reads from it will return its default value.
   public mutating func clearSeat() {self._seat = nil}
 
@@ -859,88 +859,88 @@ public struct Cafelogos_Pos_Product: @unchecked Sendable {
   // methods supported on all messages.
 
   public var productID: String {
-    get {return _storage._productID}
+    get {_storage._productID}
     set {_uniqueStorage()._productID = newValue}
   }
 
   public var productName: String {
-    get {return _storage._productName}
+    get {_storage._productName}
     set {_uniqueStorage()._productName = newValue}
   }
 
   public var productCategory: Cafelogos_Pos_ProductCategory {
-    get {return _storage._productCategory ?? Cafelogos_Pos_ProductCategory()}
+    get {_storage._productCategory ?? Cafelogos_Pos_ProductCategory()}
     set {_uniqueStorage()._productCategory = newValue}
   }
   /// Returns true if `productCategory` has been explicitly set.
-  public var hasProductCategory: Bool {return _storage._productCategory != nil}
+  public var hasProductCategory: Bool {_storage._productCategory != nil}
   /// Clears the value of `productCategory`. Subsequent reads from it will return its default value.
   public mutating func clearProductCategory() {_uniqueStorage()._productCategory = nil}
 
   public var productType: Cafelogos_Pos_ProductType {
-    get {return _storage._productType}
+    get {_storage._productType}
     set {_uniqueStorage()._productType = newValue}
   }
 
   public var productColor: String {
-    get {return _storage._productColor}
+    get {_storage._productColor}
     set {_uniqueStorage()._productColor = newValue}
   }
 
   public var isNowSales: Bool {
-    get {return _storage._isNowSales}
+    get {_storage._isNowSales}
     set {_uniqueStorage()._isNowSales = newValue}
   }
 
   public var createdAt: String {
-    get {return _storage._createdAt}
+    get {_storage._createdAt}
     set {_uniqueStorage()._createdAt = newValue}
   }
 
   public var updatedAt: String {
-    get {return _storage._updatedAt}
+    get {_storage._updatedAt}
     set {_uniqueStorage()._updatedAt = newValue}
   }
 
   /// Only Coffee
   public var coffeeBean: Cafelogos_Pos_CoffeeBean {
-    get {return _storage._coffeeBean ?? Cafelogos_Pos_CoffeeBean()}
+    get {_storage._coffeeBean ?? Cafelogos_Pos_CoffeeBean()}
     set {_uniqueStorage()._coffeeBean = newValue}
   }
   /// Returns true if `coffeeBean` has been explicitly set.
-  public var hasCoffeeBean: Bool {return _storage._coffeeBean != nil}
+  public var hasCoffeeBean: Bool {_storage._coffeeBean != nil}
   /// Clears the value of `coffeeBean`. Subsequent reads from it will return its default value.
   public mutating func clearCoffeeBean() {_uniqueStorage()._coffeeBean = nil}
 
   public var coffeeBrews: [Cafelogos_Pos_CoffeeBrew] {
-    get {return _storage._coffeeBrews}
+    get {_storage._coffeeBrews}
     set {_uniqueStorage()._coffeeBrews = newValue}
   }
 
   /// Only Other
   public var amount: UInt64 {
-    get {return _storage._amount}
+    get {_storage._amount}
     set {_uniqueStorage()._amount = newValue}
   }
 
   public var stock: Cafelogos_Pos_Stock {
-    get {return _storage._stock ?? Cafelogos_Pos_Stock()}
+    get {_storage._stock ?? Cafelogos_Pos_Stock()}
     set {_uniqueStorage()._stock = newValue}
   }
   /// Returns true if `stock` has been explicitly set.
-  public var hasStock: Bool {return _storage._stock != nil}
+  public var hasStock: Bool {_storage._stock != nil}
   /// Clears the value of `stock`. Subsequent reads from it will return its default value.
   public mutating func clearStock() {_uniqueStorage()._stock = nil}
 
   /// Only Admin
   public var isManagingOrder: Bool {
-    get {return _storage._isManagingOrder}
+    get {_storage._isManagingOrder}
     set {_uniqueStorage()._isManagingOrder = newValue}
   }
 
   /// OrderLinkでキッチン機能を使うかどうか
   public var isOlKitchen: Bool {
-    get {return _storage._isOlKitchen}
+    get {_storage._isOlKitchen}
     set {_uniqueStorage()._isOlKitchen = newValue}
   }
 

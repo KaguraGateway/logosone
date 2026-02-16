@@ -7,13 +7,12 @@
 package orderlink
 
 import (
+	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	common "github.com/KaguraGateway/logosone/proto/pkg/common"
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -179,7 +178,7 @@ type ListOrdersResponse struct {
 	TicketId      string                         `protobuf:"bytes,4,opt,name=ticket_id,json=ticketId,proto3" json:"ticket_id,omitempty"`
 	TicketAddr    string                         `protobuf:"bytes,5,opt,name=ticket_addr,json=ticketAddr,proto3" json:"ticket_addr,omitempty"`
 	SeatName      string                         `protobuf:"bytes,6,opt,name=seat_name,json=seatName,proto3" json:"seat_name,omitempty"`
-	Stauts        ListOrdersResponse_OrderStatus `protobuf:"varint,7,opt,name=stauts,proto3,enum=cafelogos.orderlink.ListOrdersResponse_OrderStatus" json:"stauts,omitempty"`
+	Status        ListOrdersResponse_OrderStatus `protobuf:"varint,7,opt,name=status,proto3,enum=cafelogos.orderlink.ListOrdersResponse_OrderStatus" json:"status,omitempty"`
 	ServedAt      *string                        `protobuf:"bytes,8,opt,name=served_at,json=servedAt,proto3,oneof" json:"served_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -257,9 +256,9 @@ func (x *ListOrdersResponse) GetSeatName() string {
 	return ""
 }
 
-func (x *ListOrdersResponse) GetStauts() ListOrdersResponse_OrderStatus {
+func (x *ListOrdersResponse) GetStatus() ListOrdersResponse_OrderStatus {
 	if x != nil {
-		return x.Stauts
+		return x.Status
 	}
 	return ListOrdersResponse_NotYet
 }
@@ -452,7 +451,7 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\vticket_addr\x18\x05 \x01(\tR\n" +
 	"ticketAddr\x12\x1b\n" +
 	"\tseat_name\x18\x06 \x01(\tR\bseatName\x12K\n" +
-	"\x06stauts\x18\a \x01(\x0e23.cafelogos.orderlink.ListOrdersResponse.OrderStatusR\x06stauts\x12 \n" +
+	"\x06status\x18\a \x01(\x0e23.cafelogos.orderlink.ListOrdersResponse.OrderStatusR\x06status\x12 \n" +
 	"\tserved_at\x18\b \x01(\tH\x00R\bservedAt\x88\x01\x01\"%\n" +
 	"\tOrderType\x12\n" +
 	"\n" +
@@ -519,7 +518,7 @@ var file_orderlink_orderlink_service_proto_goTypes = []any{
 }
 var file_orderlink_orderlink_service_proto_depIdxs = []int32{
 	0, // 0: cafelogos.orderlink.ListOrdersResponse.type:type_name -> cafelogos.orderlink.ListOrdersResponse.OrderType
-	1, // 1: cafelogos.orderlink.ListOrdersResponse.stauts:type_name -> cafelogos.orderlink.ListOrdersResponse.OrderStatus
+	1, // 1: cafelogos.orderlink.ListOrdersResponse.status:type_name -> cafelogos.orderlink.ListOrdersResponse.OrderStatus
 	4, // 2: cafelogos.orderlink.PostOrderInput.items:type_name -> cafelogos.orderlink.PostOrderItemInput
 	2, // 3: cafelogos.orderlink.PostOrderInput.type:type_name -> cafelogos.orderlink.PostOrderInput.OrderType
 	5, // 4: cafelogos.orderlink.OrderLinkService.PostOrder:input_type -> cafelogos.orderlink.PostOrderInput

@@ -48,9 +48,9 @@ export declare type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrders
   seatName: string;
 
   /**
-   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderStatus stauts = 7;
+   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderStatus status = 7;
    */
-  stauts: ListOrdersResponse_OrderStatus;
+  status: ListOrdersResponse_OrderStatus;
 
   /**
    * @generated from field: optional string served_at = 8;

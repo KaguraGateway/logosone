@@ -38,14 +38,14 @@ public struct Cafelogos_Orderlink_ListOrdersResponse: Sendable {
 
   public var seatName: String = String()
 
-  public var stauts: Cafelogos_Orderlink_ListOrdersResponse.OrderStatus = .notYet
+  public var status: Cafelogos_Orderlink_ListOrdersResponse.OrderStatus = .notYet
 
   public var servedAt: String {
-    get {return _servedAt ?? String()}
+    get {_servedAt ?? String()}
     set {_servedAt = newValue}
   }
   /// Returns true if `servedAt` has been explicitly set.
-  public var hasServedAt: Bool {return self._servedAt != nil}
+  public var hasServedAt: Bool {self._servedAt != nil}
   /// Clears the value of `servedAt`. Subsequent reads from it will return its default value.
   public mutating func clearServedAt() {self._servedAt = nil}
 
@@ -224,7 +224,7 @@ fileprivate let _protobuf_package = "cafelogos.orderlink"
 
 extension Cafelogos_Orderlink_ListOrdersResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ListOrdersResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0\u{3}order_at\0\u{1}type\0\u{3}ticket_id\0\u{3}ticket_addr\0\u{3}seat_name\0\u{1}stauts\0\u{3}served_at\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0\u{3}order_at\0\u{1}type\0\u{3}ticket_id\0\u{3}ticket_addr\0\u{3}seat_name\0\u{1}status\0\u{3}served_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -238,7 +238,7 @@ extension Cafelogos_Orderlink_ListOrdersResponse: SwiftProtobuf.Message, SwiftPr
       case 4: try { try decoder.decodeSingularStringField(value: &self.ticketID) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.ticketAddr) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.seatName) }()
-      case 7: try { try decoder.decodeSingularEnumField(value: &self.stauts) }()
+      case 7: try { try decoder.decodeSingularEnumField(value: &self.status) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self._servedAt) }()
       default: break
       }
@@ -268,8 +268,8 @@ extension Cafelogos_Orderlink_ListOrdersResponse: SwiftProtobuf.Message, SwiftPr
     if !self.seatName.isEmpty {
       try visitor.visitSingularStringField(value: self.seatName, fieldNumber: 6)
     }
-    if self.stauts != .notYet {
-      try visitor.visitSingularEnumField(value: self.stauts, fieldNumber: 7)
+    if self.status != .notYet {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 7)
     }
     try { if let v = self._servedAt {
       try visitor.visitSingularStringField(value: v, fieldNumber: 8)
@@ -284,7 +284,7 @@ extension Cafelogos_Orderlink_ListOrdersResponse: SwiftProtobuf.Message, SwiftPr
     if lhs.ticketID != rhs.ticketID {return false}
     if lhs.ticketAddr != rhs.ticketAddr {return false}
     if lhs.seatName != rhs.seatName {return false}
-    if lhs.stauts != rhs.stauts {return false}
+    if lhs.status != rhs.status {return false}
     if lhs._servedAt != rhs._servedAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

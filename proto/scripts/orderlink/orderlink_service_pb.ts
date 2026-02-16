@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file orderlink/orderlink_service.proto.
  */
 export const file_orderlink_orderlink_service: GenFile = /*@__PURE__*/
-  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsikwMKEkxpc3RPcmRlcnNSZXNwb25zZRIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI/CgR0eXBlGAMgASgOMjEuY2FmZWxvZ29zLm9yZGVybGluay5MaXN0T3JkZXJzUmVzcG9uc2UuT3JkZXJUeXBlEhEKCXRpY2tldF9pZBgEIAEoCRITCgt0aWNrZXRfYWRkchgFIAEoCRIRCglzZWF0X25hbWUYBiABKAkSQwoGc3RhdHVzGAcgASgOMjMuY2FmZWxvZ29zLm9yZGVybGluay5MaXN0T3JkZXJzUmVzcG9uc2UuT3JkZXJTdGF0dXMSFgoJc2VydmVkX2F0GAggASgJSACIAQEiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEiSwoLT3JkZXJTdGF0dXMSCgoGTm90WWV0EAASCwoHQ29va2luZxABEgoKBkNvb2tlZBACEgsKB0NhbGxpbmcQAxIKCgZTZXJ2ZWQQBEIMCgpfc2VydmVkX2F0IoQBChJQb3N0T3JkZXJJdGVtSW5wdXQSEgoKcHJvZHVjdF9pZBgBIAEoCRIWCg5jb2ZmZWVfYnJld19pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoDRIZChFpc19tYW5hZ2luZ19vcmRlchgUIAEoCBIVCg1pc19vbF9raXRjaGVuGBUgASgIIosCCg5Qb3N0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI2CgVpdGVtcxgDIAMoCzInLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySXRlbUlucHV0EjsKBHR5cGUYBCABKA4yLS5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0Lk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBSABKAkSEwoLdGlja2V0X2FkZHIYBiABKAkSEQoJc2VhdF9uYW1lGAcgASgJIiUKCU9yZGVyVHlwZRIKCgZFQVRfSU4QABIMCghUQUtFX09VVBABMrEBChBPcmRlckxpbmtTZXJ2aWNlEksKCVBvc3RPcmRlchIjLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQaFy5jYWZlbG9nb3MuY29tbW9uLkVtcHR5IgASUAoKTGlzdE9yZGVycxIXLmNhZmVsb2dvcy5jb21tb24uRW1wdHkaJy5jYWZlbG9nb3Mub3JkZXJsaW5rLkxpc3RPcmRlcnNSZXNwb25zZSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9jYWZlbG9nb3MtZ3JwYy9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
+  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsiQAoSTGlzdE9yZGVyc1Jlc3BvbnNlEioKBm9yZGVycxgBIAMoCzIaLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIi7AIKBU9yZGVyEhAKCG9yZGVyX2lkGAEgASgJEhAKCG9yZGVyX2F0GAIgASgJEjIKBHR5cGUYAyABKA4yJC5jYWZlbG9nb3Mub3JkZXJsaW5rLk9yZGVyLk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBCABKAkSEwoLdGlja2V0X2FkZHIYBSABKAkSEQoJc2VhdF9uYW1lGAYgASgJEjYKBnN0YXR1cxgHIAEoDjImLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIuT3JkZXJTdGF0dXMSFgoJc2VydmVkX2F0GAggASgJSACIAQEiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEiSwoLT3JkZXJTdGF0dXMSCgoGTm90WWV0EAASCwoHQ29va2luZxABEgoKBkNvb2tlZBACEgsKB0NhbGxpbmcQAxIKCgZTZXJ2ZWQQBEIMCgpfc2VydmVkX2F0IoQBChJQb3N0T3JkZXJJdGVtSW5wdXQSEgoKcHJvZHVjdF9pZBgBIAEoCRIWCg5jb2ZmZWVfYnJld19pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoDRIZChFpc19tYW5hZ2luZ19vcmRlchgUIAEoCBIVCg1pc19vbF9raXRjaGVuGBUgASgIIosCCg5Qb3N0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI2CgVpdGVtcxgDIAMoCzInLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySXRlbUlucHV0EjsKBHR5cGUYBCABKA4yLS5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0Lk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBSABKAkSEwoLdGlja2V0X2FkZHIYBiABKAkSEQoJc2VhdF9uYW1lGAcgASgJIiUKCU9yZGVyVHlwZRIKCgZFQVRfSU4QABIMCghUQUtFX09VVBABMrEBChBPcmRlckxpbmtTZXJ2aWNlEksKCVBvc3RPcmRlchIjLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQaFy5jYWZlbG9nb3MuY29tbW9uLkVtcHR5IgASUAoKTGlzdE9yZGVycxIXLmNhZmVsb2dvcy5jb21tb24uRW1wdHkaJy5jYWZlbG9nb3Mub3JkZXJsaW5rLkxpc3RPcmRlcnNSZXNwb25zZSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9jYWZlbG9nb3MtZ3JwYy9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
 
 /**
  * 提供済みオーダーの一覧を返すのレスポンス
@@ -20,6 +20,23 @@ export const file_orderlink_orderlink_service: GenFile = /*@__PURE__*/
  * @generated from message cafelogos.orderlink.ListOrdersResponse
  */
 export type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrdersResponse"> & {
+  /**
+   * @generated from field: repeated cafelogos.orderlink.Order orders = 1;
+   */
+  orders: Order[];
+};
+
+/**
+ * Describes the message cafelogos.orderlink.ListOrdersResponse.
+ * Use `create(ListOrdersResponseSchema)` to create a new message.
+ */
+export const ListOrdersResponseSchema: GenMessage<ListOrdersResponse> = /*@__PURE__*/
+  messageDesc(file_orderlink_orderlink_service, 0);
+
+/**
+ * @generated from message cafelogos.orderlink.Order
+ */
+export type Order = Message<"cafelogos.orderlink.Order"> & {
   /**
    * @generated from field: string order_id = 1;
    */
@@ -31,9 +48,9 @@ export type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrdersResponse
   orderAt: string;
 
   /**
-   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderType type = 3;
+   * @generated from field: cafelogos.orderlink.Order.OrderType type = 3;
    */
-  type: ListOrdersResponse_OrderType;
+  type: Order_OrderType;
 
   /**
    * @generated from field: string ticket_id = 4;
@@ -51,9 +68,9 @@ export type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrdersResponse
   seatName: string;
 
   /**
-   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderStatus status = 7;
+   * @generated from field: cafelogos.orderlink.Order.OrderStatus status = 7;
    */
-  status: ListOrdersResponse_OrderStatus;
+  status: Order_OrderStatus;
 
   /**
    * @generated from field: optional string served_at = 8;
@@ -62,16 +79,16 @@ export type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrdersResponse
 };
 
 /**
- * Describes the message cafelogos.orderlink.ListOrdersResponse.
- * Use `create(ListOrdersResponseSchema)` to create a new message.
+ * Describes the message cafelogos.orderlink.Order.
+ * Use `create(OrderSchema)` to create a new message.
  */
-export const ListOrdersResponseSchema: GenMessage<ListOrdersResponse> = /*@__PURE__*/
-  messageDesc(file_orderlink_orderlink_service, 0);
+export const OrderSchema: GenMessage<Order> = /*@__PURE__*/
+  messageDesc(file_orderlink_orderlink_service, 1);
 
 /**
- * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderType
+ * @generated from enum cafelogos.orderlink.Order.OrderType
  */
-export enum ListOrdersResponse_OrderType {
+export enum Order_OrderType {
   /**
    * @generated from enum value: EAT_IN = 0;
    */
@@ -84,15 +101,15 @@ export enum ListOrdersResponse_OrderType {
 }
 
 /**
- * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderType.
+ * Describes the enum cafelogos.orderlink.Order.OrderType.
  */
-export const ListOrdersResponse_OrderTypeSchema: GenEnum<ListOrdersResponse_OrderType> = /*@__PURE__*/
-  enumDesc(file_orderlink_orderlink_service, 0, 0);
+export const Order_OrderTypeSchema: GenEnum<Order_OrderType> = /*@__PURE__*/
+  enumDesc(file_orderlink_orderlink_service, 1, 0);
 
 /**
- * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderStatus
+ * @generated from enum cafelogos.orderlink.Order.OrderStatus
  */
-export enum ListOrdersResponse_OrderStatus {
+export enum Order_OrderStatus {
   /**
    * @generated from enum value: NotYet = 0;
    */
@@ -122,10 +139,10 @@ export enum ListOrdersResponse_OrderStatus {
 }
 
 /**
- * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderStatus.
+ * Describes the enum cafelogos.orderlink.Order.OrderStatus.
  */
-export const ListOrdersResponse_OrderStatusSchema: GenEnum<ListOrdersResponse_OrderStatus> = /*@__PURE__*/
-  enumDesc(file_orderlink_orderlink_service, 0, 1);
+export const Order_OrderStatusSchema: GenEnum<Order_OrderStatus> = /*@__PURE__*/
+  enumDesc(file_orderlink_orderlink_service, 1, 1);
 
 /**
  * @generated from message cafelogos.orderlink.PostOrderItemInput
@@ -166,7 +183,7 @@ export type PostOrderItemInput = Message<"cafelogos.orderlink.PostOrderItemInput
  * Use `create(PostOrderItemInputSchema)` to create a new message.
  */
 export const PostOrderItemInputSchema: GenMessage<PostOrderItemInput> = /*@__PURE__*/
-  messageDesc(file_orderlink_orderlink_service, 1);
+  messageDesc(file_orderlink_orderlink_service, 2);
 
 /**
  * @generated from message cafelogos.orderlink.PostOrderInput
@@ -213,7 +230,7 @@ export type PostOrderInput = Message<"cafelogos.orderlink.PostOrderInput"> & {
  * Use `create(PostOrderInputSchema)` to create a new message.
  */
 export const PostOrderInputSchema: GenMessage<PostOrderInput> = /*@__PURE__*/
-  messageDesc(file_orderlink_orderlink_service, 2);
+  messageDesc(file_orderlink_orderlink_service, 3);
 
 /**
  * @generated from enum cafelogos.orderlink.PostOrderInput.OrderType
@@ -234,7 +251,7 @@ export enum PostOrderInput_OrderType {
  * Describes the enum cafelogos.orderlink.PostOrderInput.OrderType.
  */
 export const PostOrderInput_OrderTypeSchema: GenEnum<PostOrderInput_OrderType> = /*@__PURE__*/
-  enumDesc(file_orderlink_orderlink_service, 2, 0);
+  enumDesc(file_orderlink_orderlink_service, 3, 0);
 
 /**
  * @generated from service cafelogos.orderlink.OrderLinkService

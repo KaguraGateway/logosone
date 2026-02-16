@@ -14,6 +14,10 @@ service OrderLinkService {
 
 // 提供済みオーダーの一覧を返すのレスポンス
 message ListOrdersResponse {
+    repeated Order orders = 1;
+}
+
+message Order {
     string order_id = 1;
     string order_at = 2;
     OrderType type = 3;

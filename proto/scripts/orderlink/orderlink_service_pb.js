@@ -9,7 +9,7 @@ import { file_common_common } from "../common/common_pb";
  * Describes the file orderlink/orderlink_service.proto.
  */
 export const file_orderlink_orderlink_service = /*@__PURE__*/
-  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsikwMKEkxpc3RPcmRlcnNSZXNwb25zZRIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI/CgR0eXBlGAMgASgOMjEuY2FmZWxvZ29zLm9yZGVybGluay5MaXN0T3JkZXJzUmVzcG9uc2UuT3JkZXJUeXBlEhEKCXRpY2tldF9pZBgEIAEoCRITCgt0aWNrZXRfYWRkchgFIAEoCRIRCglzZWF0X25hbWUYBiABKAkSQwoGc3RhdHVzGAcgASgOMjMuY2FmZWxvZ29zLm9yZGVybGluay5MaXN0T3JkZXJzUmVzcG9uc2UuT3JkZXJTdGF0dXMSFgoJc2VydmVkX2F0GAggASgJSACIAQEiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEiSwoLT3JkZXJTdGF0dXMSCgoGTm90WWV0EAASCwoHQ29va2luZxABEgoKBkNvb2tlZBACEgsKB0NhbGxpbmcQAxIKCgZTZXJ2ZWQQBEIMCgpfc2VydmVkX2F0IoQBChJQb3N0T3JkZXJJdGVtSW5wdXQSEgoKcHJvZHVjdF9pZBgBIAEoCRIWCg5jb2ZmZWVfYnJld19pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoDRIZChFpc19tYW5hZ2luZ19vcmRlchgUIAEoCBIVCg1pc19vbF9raXRjaGVuGBUgASgIIosCCg5Qb3N0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI2CgVpdGVtcxgDIAMoCzInLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySXRlbUlucHV0EjsKBHR5cGUYBCABKA4yLS5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0Lk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBSABKAkSEwoLdGlja2V0X2FkZHIYBiABKAkSEQoJc2VhdF9uYW1lGAcgASgJIiUKCU9yZGVyVHlwZRIKCgZFQVRfSU4QABIMCghUQUtFX09VVBABMrEBChBPcmRlckxpbmtTZXJ2aWNlEksKCVBvc3RPcmRlchIjLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQaFy5jYWZlbG9nb3MuY29tbW9uLkVtcHR5IgASUAoKTGlzdE9yZGVycxIXLmNhZmVsb2dvcy5jb21tb24uRW1wdHkaJy5jYWZlbG9nb3Mub3JkZXJsaW5rLkxpc3RPcmRlcnNSZXNwb25zZSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9jYWZlbG9nb3MtZ3JwYy9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
+  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsiQAoSTGlzdE9yZGVyc1Jlc3BvbnNlEioKBm9yZGVycxgBIAMoCzIaLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIi7AIKBU9yZGVyEhAKCG9yZGVyX2lkGAEgASgJEhAKCG9yZGVyX2F0GAIgASgJEjIKBHR5cGUYAyABKA4yJC5jYWZlbG9nb3Mub3JkZXJsaW5rLk9yZGVyLk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBCABKAkSEwoLdGlja2V0X2FkZHIYBSABKAkSEQoJc2VhdF9uYW1lGAYgASgJEjYKBnN0YXR1cxgHIAEoDjImLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIuT3JkZXJTdGF0dXMSFgoJc2VydmVkX2F0GAggASgJSACIAQEiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEiSwoLT3JkZXJTdGF0dXMSCgoGTm90WWV0EAASCwoHQ29va2luZxABEgoKBkNvb2tlZBACEgsKB0NhbGxpbmcQAxIKCgZTZXJ2ZWQQBEIMCgpfc2VydmVkX2F0IoQBChJQb3N0T3JkZXJJdGVtSW5wdXQSEgoKcHJvZHVjdF9pZBgBIAEoCRIWCg5jb2ZmZWVfYnJld19pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoDRIZChFpc19tYW5hZ2luZ19vcmRlchgUIAEoCBIVCg1pc19vbF9raXRjaGVuGBUgASgIIosCCg5Qb3N0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI2CgVpdGVtcxgDIAMoCzInLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySXRlbUlucHV0EjsKBHR5cGUYBCABKA4yLS5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0Lk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBSABKAkSEwoLdGlja2V0X2FkZHIYBiABKAkSEQoJc2VhdF9uYW1lGAcgASgJIiUKCU9yZGVyVHlwZRIKCgZFQVRfSU4QABIMCghUQUtFX09VVBABMrEBChBPcmRlckxpbmtTZXJ2aWNlEksKCVBvc3RPcmRlchIjLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQaFy5jYWZlbG9nb3MuY29tbW9uLkVtcHR5IgASUAoKTGlzdE9yZGVycxIXLmNhZmVsb2dvcy5jb21tb24uRW1wdHkaJy5jYWZlbG9nb3Mub3JkZXJsaW5rLkxpc3RPcmRlcnNSZXNwb25zZSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9jYWZlbG9nb3MtZ3JwYy9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
 
 /**
  * Describes the message cafelogos.orderlink.ListOrdersResponse.
@@ -19,48 +19,55 @@ export const ListOrdersResponseSchema = /*@__PURE__*/
   messageDesc(file_orderlink_orderlink_service, 0);
 
 /**
- * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderType.
+ * Describes the message cafelogos.orderlink.Order.
+ * Use `create(OrderSchema)` to create a new message.
  */
-export const ListOrdersResponse_OrderTypeSchema = /*@__PURE__*/
-  enumDesc(file_orderlink_orderlink_service, 0, 0);
+export const OrderSchema = /*@__PURE__*/
+  messageDesc(file_orderlink_orderlink_service, 1);
 
 /**
- * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderType
+ * Describes the enum cafelogos.orderlink.Order.OrderType.
  */
-export const ListOrdersResponse_OrderType = /*@__PURE__*/
-  tsEnum(ListOrdersResponse_OrderTypeSchema);
+export const Order_OrderTypeSchema = /*@__PURE__*/
+  enumDesc(file_orderlink_orderlink_service, 1, 0);
 
 /**
- * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderStatus.
+ * @generated from enum cafelogos.orderlink.Order.OrderType
  */
-export const ListOrdersResponse_OrderStatusSchema = /*@__PURE__*/
-  enumDesc(file_orderlink_orderlink_service, 0, 1);
+export const Order_OrderType = /*@__PURE__*/
+  tsEnum(Order_OrderTypeSchema);
 
 /**
- * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderStatus
+ * Describes the enum cafelogos.orderlink.Order.OrderStatus.
  */
-export const ListOrdersResponse_OrderStatus = /*@__PURE__*/
-  tsEnum(ListOrdersResponse_OrderStatusSchema);
+export const Order_OrderStatusSchema = /*@__PURE__*/
+  enumDesc(file_orderlink_orderlink_service, 1, 1);
+
+/**
+ * @generated from enum cafelogos.orderlink.Order.OrderStatus
+ */
+export const Order_OrderStatus = /*@__PURE__*/
+  tsEnum(Order_OrderStatusSchema);
 
 /**
  * Describes the message cafelogos.orderlink.PostOrderItemInput.
  * Use `create(PostOrderItemInputSchema)` to create a new message.
  */
 export const PostOrderItemInputSchema = /*@__PURE__*/
-  messageDesc(file_orderlink_orderlink_service, 1);
+  messageDesc(file_orderlink_orderlink_service, 2);
 
 /**
  * Describes the message cafelogos.orderlink.PostOrderInput.
  * Use `create(PostOrderInputSchema)` to create a new message.
  */
 export const PostOrderInputSchema = /*@__PURE__*/
-  messageDesc(file_orderlink_orderlink_service, 2);
+  messageDesc(file_orderlink_orderlink_service, 3);
 
 /**
  * Describes the enum cafelogos.orderlink.PostOrderInput.OrderType.
  */
 export const PostOrderInput_OrderTypeSchema = /*@__PURE__*/
-  enumDesc(file_orderlink_orderlink_service, 2, 0);
+  enumDesc(file_orderlink_orderlink_service, 3, 0);
 
 /**
  * @generated from enum cafelogos.orderlink.PostOrderInput.OrderType

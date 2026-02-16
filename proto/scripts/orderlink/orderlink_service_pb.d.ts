@@ -18,6 +18,22 @@ export declare const file_orderlink_orderlink_service: GenFile;
  */
 export declare type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrdersResponse"> & {
   /**
+   * @generated from field: repeated cafelogos.orderlink.Order orders = 1;
+   */
+  orders: Order[];
+};
+
+/**
+ * Describes the message cafelogos.orderlink.ListOrdersResponse.
+ * Use `create(ListOrdersResponseSchema)` to create a new message.
+ */
+export declare const ListOrdersResponseSchema: GenMessage<ListOrdersResponse>;
+
+/**
+ * @generated from message cafelogos.orderlink.Order
+ */
+export declare type Order = Message<"cafelogos.orderlink.Order"> & {
+  /**
    * @generated from field: string order_id = 1;
    */
   orderId: string;
@@ -28,9 +44,9 @@ export declare type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrders
   orderAt: string;
 
   /**
-   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderType type = 3;
+   * @generated from field: cafelogos.orderlink.Order.OrderType type = 3;
    */
-  type: ListOrdersResponse_OrderType;
+  type: Order_OrderType;
 
   /**
    * @generated from field: string ticket_id = 4;
@@ -48,9 +64,9 @@ export declare type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrders
   seatName: string;
 
   /**
-   * @generated from field: cafelogos.orderlink.ListOrdersResponse.OrderStatus status = 7;
+   * @generated from field: cafelogos.orderlink.Order.OrderStatus status = 7;
    */
-  status: ListOrdersResponse_OrderStatus;
+  status: Order_OrderStatus;
 
   /**
    * @generated from field: optional string served_at = 8;
@@ -59,15 +75,15 @@ export declare type ListOrdersResponse = Message<"cafelogos.orderlink.ListOrders
 };
 
 /**
- * Describes the message cafelogos.orderlink.ListOrdersResponse.
- * Use `create(ListOrdersResponseSchema)` to create a new message.
+ * Describes the message cafelogos.orderlink.Order.
+ * Use `create(OrderSchema)` to create a new message.
  */
-export declare const ListOrdersResponseSchema: GenMessage<ListOrdersResponse>;
+export declare const OrderSchema: GenMessage<Order>;
 
 /**
- * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderType
+ * @generated from enum cafelogos.orderlink.Order.OrderType
  */
-export enum ListOrdersResponse_OrderType {
+export enum Order_OrderType {
   /**
    * @generated from enum value: EAT_IN = 0;
    */
@@ -80,14 +96,14 @@ export enum ListOrdersResponse_OrderType {
 }
 
 /**
- * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderType.
+ * Describes the enum cafelogos.orderlink.Order.OrderType.
  */
-export declare const ListOrdersResponse_OrderTypeSchema: GenEnum<ListOrdersResponse_OrderType>;
+export declare const Order_OrderTypeSchema: GenEnum<Order_OrderType>;
 
 /**
- * @generated from enum cafelogos.orderlink.ListOrdersResponse.OrderStatus
+ * @generated from enum cafelogos.orderlink.Order.OrderStatus
  */
-export enum ListOrdersResponse_OrderStatus {
+export enum Order_OrderStatus {
   /**
    * @generated from enum value: NotYet = 0;
    */
@@ -117,9 +133,9 @@ export enum ListOrdersResponse_OrderStatus {
 }
 
 /**
- * Describes the enum cafelogos.orderlink.ListOrdersResponse.OrderStatus.
+ * Describes the enum cafelogos.orderlink.Order.OrderStatus.
  */
-export declare const ListOrdersResponse_OrderStatusSchema: GenEnum<ListOrdersResponse_OrderStatus>;
+export declare const Order_OrderStatusSchema: GenEnum<Order_OrderStatus>;
 
 /**
  * @generated from message cafelogos.orderlink.PostOrderItemInput

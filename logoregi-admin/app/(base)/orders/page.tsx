@@ -40,10 +40,6 @@ export default function Orders() {
     onOpen();
   };
 
-  const handleRefundSuccess = () => {
-    window.location.reload();
-  };
-
   if (isLoading) {
     return (
       <Center>
@@ -116,7 +112,6 @@ export default function Orders() {
           isOpen={isOpen}
           onClose={onClose}
           order={selectedOrder}
-          onSuccess={handleRefundSuccess}
         />
       )}
     </div>

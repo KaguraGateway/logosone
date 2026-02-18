@@ -17,16 +17,18 @@ import {
   DialogFooter,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useRefundPayment } from "@/query/refundPayment";
 
 type RefundConfirmModalProps = {
   isOpen: boolean;
   onClose: () => void;
   order: Order;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 };
 
 export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: RefundConfirmModalProps) {
   const [loading, setLoading] = useState(false);
+  const refundPaymentMutation = useRefundPayment();
 
   const handleRefund = async () => {
     if (!order.paymentId) {
@@ -40,15 +42,15 @@ export function RefundConfirmModal({ isOpen, onClose, order, onSuccess }: Refund
     setLoading(true);
     
     try {
-      const { useRefundPayment } = await import('@/query/refundPayment');
-      const refundPaymentMutation = useRefundPayment();
-      await refundPaymentMutation.mutateAsync(order.paymentId);
+      await refundPaymentMutation.mutateAsync({
+        paymentId: order.paymentId
+      });
       
       toaster.create({
         description: '返金処理が完了しました'
       });
       
-      onSuccess();
+      onSuccess?.();
       onClose();
     } catch (error) {
       console.error('返金処理エラー:', error);

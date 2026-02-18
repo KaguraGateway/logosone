@@ -22,16 +22,20 @@ func (r *GrpcServer) ListOrders(ctx context.Context, req *connect.Request[common
 
 	// 返り値をorderlink.ListOrdersResponseに変換して返す
 	resOrders := lo.Map(orders, func(or *application.ListOrdersOutput, _ int) *orderlink.Order {
+		servedAt := or.ServedAt.Format("2006-01-02T15:04:05Z")
+
 		return &orderlink.Order{
 			OrderId:    or.OrderId,
 			OrderAt:    or.OrderAt.Format("2006-01-02T15:04:05Z"),
-			Type:       or.OrderType,
+			Type:       orderlink.Order_OrderType(or.Type),
 			TicketId:   "",
 			TicketAddr: "",
 			Status:     orderlink.Order_OrderStatus(or.Status),
-			ServedAt:   or.ServedAt.Format("2006-01-02T15:04:05Z"),
+			ServedAt:   &servedAt,
 		}
 	})
 
-	return connect.NewResponse(), nil
+	return connect.NewResponse(&orderlink.ListOrdersResponse{
+		Orders: resOrders,
+	}), nil
 }

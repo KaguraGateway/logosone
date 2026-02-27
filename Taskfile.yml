@@ -36,6 +36,7 @@ tasks:
       PORT: 3001
       NEXT_PUBLIC_WEBSOCKET_API: ws://localhost:8082/
       NEXT_PUBLIC_GRPC_HOST: http://localhost:8080
+      NEXT_PUBLIC_GRPC_ORDERLINK_HOST: http://localhost:8000
 
   dev:logoregi-handy:
     dir: ./logoregi-handy

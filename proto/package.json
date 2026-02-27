@@ -1,5 +1,5 @@
 {
-    "name": "proto",
+    "name": "@kaguragateway/cafelogos-grpc",
     "version": "1.7.0",
     "description": "",
     "main": "",

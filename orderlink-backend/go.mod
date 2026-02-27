@@ -19,10 +19,10 @@ require (
 	github.com/redis/go-redis/v9 v9.17.3
 	github.com/samber/do v1.6.0
 	github.com/samber/lo v1.52.0
-	github.com/uptrace/bun v1.2.16
-	github.com/uptrace/bun/dialect/pgdialect v1.2.16
-	github.com/uptrace/bun/driver/pgdriver v1.2.16
-	github.com/uptrace/bun/extra/bundebug v1.2.16
+	github.com/uptrace/bun v1.2.17
+	github.com/uptrace/bun/dialect/pgdialect v1.2.17
+	github.com/uptrace/bun/driver/pgdriver v1.2.17
+	github.com/uptrace/bun/extra/bundebug v1.2.17
 	github.com/urfave/cli/v2 v2.27.5
 	golang.org/x/net v0.50.0
 )

@@ -25,13 +25,15 @@ func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[
 	}
 
 	return &Order{
-		id:                 id,
-		orderItems:         orderItems,
-		orderStatusHistory: make([]OrderStatusHistory, 0),
-		orderAt:            orderAt,
-		orderType:          orderType,
-		status:             OrderStatus(NotYet),
-		seatName:           seatName,
+		id:         id,
+		orderItems: orderItems,
+		orderStatusHistory: []OrderStatusHistory{
+			NewOrderStatusHistory(NotYet),
+		},
+		orderAt:   orderAt,
+		orderType: orderType,
+		status:    OrderStatus(NotYet),
+		seatName:  seatName,
 	}, nil
 }
 

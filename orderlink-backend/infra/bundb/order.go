@@ -79,8 +79,10 @@ func (r *orderRepositoryDb) Save(ctx context.Context, order *order.Order) error 
 		return err
 	}
 	daoOrderStatusHistories := toDaoOrderStatusHistories(order)
-	if _, err := r.db.NewInsert().Model(daoOrderStatusHistories).Exec(ctx); err != nil {
-		return err
+	if len(daoOrderStatusHistories) > 0 {
+		if _, err := r.db.NewInsert().Model(&daoOrderStatusHistories).Exec(ctx); err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -94,9 +96,12 @@ func (r *orderRepositoryDb) SaveTx(ctx context.Context, tx interface{}, order *o
 	}
 
 	daoOrderStatusHistories := toDaoOrderStatusHistories(order)
-	if _, err := r.db.NewInsert().Model(daoOrderStatusHistories).Exec(ctx); err != nil {
-		return err
+	if len(daoOrderStatusHistories) > 0 {
+		if _, err := r.db.NewInsert().Model(&daoOrderStatusHistories).Exec(ctx); err != nil {
+			return err
+		}
 	}
+
 	return nil
 }
 

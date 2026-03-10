@@ -16,14 +16,15 @@
         "registry": "https://npm.pkg.github.com/"
     },
     "devDependencies": {
-        "@bufbuild/protoc-gen-es": "^2.2.3",
-        "@connectrpc/protoc-gen-connect-query": "^2.0.1"
+        "@bufbuild/protoc-gen-es": "^2.11.0",
+        "@connectrpc/protoc-gen-connect-query": "^2.2.0"
     },
     "dependencies": {
-        "@bufbuild/buf": "^1.50.1",
-        "@bufbuild/protobuf": "^2.2.3",
-        "@connectrpc/connect": "^2.0.2",
-        "@connectrpc/connect-query": "^2.0.1",
-        "@connectrpc/connect-web": "^2.0.2"
+        "@bufbuild/buf": "^1.66.1",
+        "@bufbuild/protobuf": "^2.11.0",
+        "@connectrpc/connect": "^2.1.1",
+        "@connectrpc/connect-query": "^2.2.0",
+        "@connectrpc/connect-web": "^2.1.1",
+        "codegenv1": "link:@bufbuild/protobuf/codegenv1"
     }
 }

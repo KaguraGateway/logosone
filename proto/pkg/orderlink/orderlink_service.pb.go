@@ -7,13 +7,12 @@
 package orderlink
 
 import (
+	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	common "github.com/KaguraGateway/logosone/proto/pkg/common"
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -538,7 +537,7 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\x10OrderLinkService\x12K\n" +
 	"\tPostOrder\x12#.cafelogos.orderlink.PostOrderInput\x1a\x17.cafelogos.common.Empty\"\x00\x12P\n" +
 	"\n" +
-	"ListOrders\x12\x17.cafelogos.common.Empty\x1a'.cafelogos.orderlink.ListOrdersResponse\"\x00BAZ?github.com/KaguraGateway/logosone/proto/pkg/orderlink;orderlinkb\x06proto3"
+	"ListOrders\x12\x17.cafelogos.common.Empty\x1a'.cafelogos.orderlink.ListOrdersResponse\"\x00BAZ?github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;orderlinkb\x06proto3"
 
 var (
 	file_orderlink_orderlink_service_proto_rawDescOnce sync.Once

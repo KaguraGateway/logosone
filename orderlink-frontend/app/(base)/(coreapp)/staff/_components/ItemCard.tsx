@@ -71,6 +71,7 @@ type ItemCardProps = {
   callNumber: string;
   seatNumber?: string;
   waitingTime: React.ReactNode;
+  servedTime: React.ReactNode;
   type: 'takeout' | 'eat-in';
   status: 'cooking' | 'calling' | 'provided';
   onCall: () => void;
@@ -129,7 +130,7 @@ export function ItemCard(props: ItemCardProps) {
           </Text>
           <Flex flexDirection="column" alignItems="center">
             <Text fontSize="sm" fontWeight="medium" color="gray.600" mb="0.5">
-              {props.waitingTime}待ち
+              {props.status === 'provided' ? `${props.servedTime}経過` : `${props.waitingTime}待ち`}
             </Text>
             <OrderBadge type={props.type} />
           </Flex>

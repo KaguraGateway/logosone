@@ -1,5 +1,5 @@
-import { createPromiseClient } from '@connectrpc/connect';
-import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_connect';
+import { createClient } from '@connectrpc/connect';
+import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
 
 import { createTransport } from './transport';
 
@@ -21,7 +21,7 @@ export type Product = {
 
 export async function fetchProductsDTO(): Promise<Array<Product>> {
   const transport = createTransport();
-  const client = createPromiseClient(PosService, transport);
+  const client = createClient(PosService, transport);
 
   try {
     const data = await client.getProducts({});

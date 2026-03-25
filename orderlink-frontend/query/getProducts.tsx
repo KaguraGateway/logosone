@@ -1,5 +1,5 @@
 import { createClient } from '@connectrpc/connect';
-import { PosService } from '@kaguragateway/cafelogos-grpc/scripts/pos/pos_service_pb';
+import { PosService } from 'proto/scripts/pos/pos_service_pb';
 
 import { createTransport } from './transport';
 

@@ -1,7 +1,7 @@
 import { createClient } from "@connectrpc/connect";
 import { createOrderLinkTransport } from "./transport";
-import { OrderLinkService } from "@kaguragateway/cafelogos-grpc/scripts/orderlink/orderlink_service_pb";
-import type { Order as ProtoOrder } from "@kaguragateway/cafelogos-grpc/scripts/orderlink/orderlink_service_pb";
+import { OrderLinkService } from "proto/scripts/orderlink/orderlink_service_pb";
+import type { Order as ProtoOrder } from "proto/scripts/orderlink/orderlink_service_pb";
 import type { OrderStatus, OrderType } from "@/zod/orders";
 
 export type Order = {

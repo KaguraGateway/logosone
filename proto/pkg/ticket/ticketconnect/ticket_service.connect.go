@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	ticket "github.com/KaguraGateway/cafelogos-grpc/pkg/ticket"
+	ticket "github.com/KaguraGateway/logosone/proto/pkg/ticket"
 	http "net/http"
 	strings "strings"
 )

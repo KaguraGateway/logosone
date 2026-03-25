@@ -1,5 +1,5 @@
 {
-    "name": "@kaguragateway/cafelogos-grpc",
+    "name": "proto",
     "version": "1.7.0",
     "description": "",
     "main": "",
@@ -24,7 +24,6 @@
         "@bufbuild/protobuf": "^2.11.0",
         "@connectrpc/connect": "^2.1.1",
         "@connectrpc/connect-query": "^2.2.0",
-        "@connectrpc/connect-web": "^2.1.1",
-        "codegenv1": "link:@bufbuild/protobuf/codegenv1"
+        "@connectrpc/connect-web": "^2.1.1"
     }
 }

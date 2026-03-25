@@ -4,7 +4,7 @@ package cafelogos.orderlink;
 
 import "common/common.proto";
 
-option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;orderlink";
+option go_package = "github.com/KaguraGateway/logosone/proto/pkg/orderlink;orderlink";
 
 service OrderLinkService {
     rpc PostOrder(PostOrderInput) returns (common.Empty) {}

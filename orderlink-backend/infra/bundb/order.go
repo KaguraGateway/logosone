@@ -107,7 +107,7 @@ func (r *orderRepositoryDb) SaveTx(ctx context.Context, tx interface{}, order *o
 
 func (r *orderRepositoryDb) ListOrders(ctx context.Context) ([]*order.Order, error) {
 	daoOrders := make([]dao.Order, 0)
-	if err := r.db.NewSelect().Model(&daoOrders).Column("order.*").Relation("Ticket").Relation("OrderItems").Relation("OrderStatusHistories").Order("OrderStatusHistories.created_at asc").Scan(ctx); err != nil {
+	if err := r.db.NewSelect().Model(&daoOrders).Column("order.*").Relation("Ticket").Relation("OrderItems").Relation("OrderStatusHistories").Scan(ctx); err != nil {
 		return nil, err
 	}
 

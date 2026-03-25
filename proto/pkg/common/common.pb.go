@@ -62,7 +62,7 @@ var File_common_common_proto protoreflect.FileDescriptor
 const file_common_common_proto_rawDesc = "" +
 	"\n" +
 	"\x13common/common.proto\x12\x10cafelogos.common\"\a\n" +
-	"\x05EmptyB;Z9github.com/KaguraGateway/cafelogos-grpc/pkg/common;commonb\x06proto3"
+	"\x05EmptyB;Z9github.com/KaguraGateway/logosone/proto/pkg/common;commonb\x06proto3"
 
 var (
 	file_common_common_proto_rawDescOnce sync.Once

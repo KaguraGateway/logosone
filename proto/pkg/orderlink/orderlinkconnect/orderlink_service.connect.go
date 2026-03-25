@@ -8,8 +8,8 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
-	orderlink "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink"
+	common "github.com/KaguraGateway/logosone/proto/pkg/common"
+	orderlink "github.com/KaguraGateway/logosone/proto/pkg/orderlink"
 	http "net/http"
 	strings "strings"
 )

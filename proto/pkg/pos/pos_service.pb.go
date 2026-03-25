@@ -7,7 +7,7 @@
 package pos
 
 import (
-	common "github.com/KaguraGateway/cafelogos-grpc/pkg/common"
+	common "github.com/KaguraGateway/logosone/proto/pkg/common"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -4275,7 +4275,7 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\rGetDailySales\x12#.cafelogos.pos.GetDailySalesRequest\x1a$.cafelogos.pos.GetDailySalesResponse\"\x00\x12b\n" +
 	"\x0fGetProductSales\x12%.cafelogos.pos.GetProductSalesRequest\x1a&.cafelogos.pos.GetProductSalesResponse\"\x00\x12k\n" +
 	"\x12GetSalesByTimeSlot\x12(.cafelogos.pos.GetSalesByTimeSlotRequest\x1a).cafelogos.pos.GetSalesByTimeSlotResponse\"\x00\x12t\n" +
-	"\x15GetSalesByPaymentType\x12+.cafelogos.pos.GetSalesByPaymentTypeRequest\x1a,.cafelogos.pos.GetSalesByPaymentTypeResponse\"\x00B5Z3github.com/KaguraGateway/cafelogos-grpc/pkg/pos;posb\x06proto3"
+	"\x15GetSalesByPaymentType\x12+.cafelogos.pos.GetSalesByPaymentTypeRequest\x1a,.cafelogos.pos.GetSalesByPaymentTypeResponse\"\x00B5Z3github.com/KaguraGateway/logosone/proto/pkg/pos;posb\x06proto3"
 
 var (
 	file_pos_pos_service_proto_rawDescOnce sync.Once

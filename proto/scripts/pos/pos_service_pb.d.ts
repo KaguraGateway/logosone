@@ -1170,6 +1170,11 @@ export declare type CoffeeBrew = Message<"cafelogos.pos.CoffeeBrew"> & {
    * @generated from field: string updated_at = 6;
    */
   updatedAt: string;
+
+  /**
+   * @generated from field: uint32 brewing_time = 7;
+   */
+  brewingTime: number;
 };
 
 /**

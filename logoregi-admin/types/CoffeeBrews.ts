@@ -5,6 +5,7 @@ export type CoffeeBrew = {
   name: string;
   beanQuantityGrams: number;
   amount: number;
+  brewingTime: number;
 };
 
 export function toCoffeeBrewFromProto(coffeeBrew: ProtoCoffeeBrew): CoffeeBrew {
@@ -13,6 +14,7 @@ export function toCoffeeBrewFromProto(coffeeBrew: ProtoCoffeeBrew): CoffeeBrew {
     name: coffeeBrew.name,
     beanQuantityGrams: coffeeBrew.beanQuantityGrams,
     amount: Number(coffeeBrew.amount),
+    brewingTime: coffeeBrew.brewingTime,
   };
 }
 

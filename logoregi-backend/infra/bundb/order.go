@@ -31,8 +31,9 @@ func (i *orderDb) SaveTx(ctx context.Context, tx interface{}, order *model.Order
 		OrderAt:   order.GetOrderAt().StdTime(),
 		ClientID:  order.GetClientId(),
 		SeatID:    order.GetSeatId(),
+		Status:    int(order.GetStatus()),
 	}
-	if _, err := bunTx.NewInsert().Model(daoOrder).On("CONFLICT (id) DO UPDATE").Set("order_type = EXCLUDED.order_type").Set("order_at = EXCLUDED.order_at").Set("client_id = EXCLUDED.client_id").Set("seat_id = EXCLUDED.seat_id").Exec(ctx); err != nil {
+	if _, err := bunTx.NewInsert().Model(daoOrder).On("CONFLICT (id) DO UPDATE").Set("order_type = EXCLUDED.order_type").Set("order_at = EXCLUDED.order_at").Set("client_id = EXCLUDED.client_id").Set("seat_id = EXCLUDED.seat_id").Set("status = EXCLUDED.status").Exec(ctx); err != nil {
 		return err
 	}
 	return nil
@@ -45,6 +46,16 @@ func (i *orderDb) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
+func (i *orderDb) FindAllByStatus(ctx context.Context, status model.OrderStatus) ([]*model.Order, error) {
+	daoOrders := make([]dao.Order, 0)
+	if err := orderRelationQuery(i.db.NewSelect().Model(&daoOrders).Column("order.*").Where("status = ?", status)).Order("id ASC").Scan(ctx); err != nil {
+		return nil, err
+	}
+	return lo.Map(daoOrders, func(daoOrder dao.Order, _ int) *model.Order {
+		return toOrder(&daoOrder)
+	}), nil
+}
+
 type orderQueryServiceDb struct {
 	db *bun.DB
 }
@@ -54,9 +65,9 @@ func NewOrderQueryServiceDb(i *do.Injector) (application.OrderQueryService, erro
 }
 
 func toOrderItem(daoOrderItem *dao.OrderItem) *model.OrderItem {
-	var coffeeBrew model.ProductCoffeeBrew
+	var coffeeBrew *model.ProductCoffeeBrew
 	if daoOrderItem.CoffeeBrew != nil {
-		coffeeBrew = *toProductCoffeeBrew(*daoOrderItem.CoffeeBrew)
+		coffeeBrew = toProductCoffeeBrew(*daoOrderItem.CoffeeBrew)
 	}
 	return model.ReconstructOrderItem(
 		*toProduct(daoOrderItem.Product),
@@ -87,6 +98,7 @@ func toOrder(daoOrder *dao.Order) *model.Order {
 		synchro.In[tz.UTC](daoOrder.OrderAt),
 		daoOrder.ClientID,
 		daoOrder.SeatID,
+		model.OrderStatus(daoOrder.Status),
 	)
 }
 
@@ -102,7 +114,6 @@ func orderRelationQuery(q *bun.SelectQuery) *bun.SelectQuery {
 		Relation("OrderDiscounts").
 		Relation("OrderDiscounts.Discount").
 		Relation("OrderPayment").
-		Relation("OrderPayment.Payment").
 		Relation("Seat")
 }
 

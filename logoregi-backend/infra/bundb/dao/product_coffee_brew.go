@@ -8,6 +8,7 @@ type ProductCoffeeBrew struct {
 	ProductID         string    `bun:",notnull"`
 	BeanQuantityGrams int       `bun:",notnull"`
 	Amount            uint      `bun:",notnull"`
+	BrewingTime       uint32    `bun:",notnull,default:0"`
 	CreatedAt         time.Time `bun:",nullzero,notnull"`
 	UpdatedAt         time.Time `bun:",nullzero,notnull,default:current_timestamp"`
 }

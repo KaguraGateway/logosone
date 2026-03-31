@@ -7,7 +7,7 @@ import (
 type OrderItem struct {
 	product    Product
 	Quantity   uint64
-	coffeeBrew ProductCoffeeBrew
+	coffeeBrew *ProductCoffeeBrew
 }
 
 func NewOrderItem(product Product, quantity uint64) *OrderItem {
@@ -17,7 +17,7 @@ func NewOrderItem(product Product, quantity uint64) *OrderItem {
 	}
 }
 
-func NewOrderItemCoffee(product Product, quantity uint64, brew ProductCoffeeBrew) (*OrderItem, error) {
+func NewOrderItemCoffee(product Product, quantity uint64, brew *ProductCoffeeBrew) (*OrderItem, error) {
 	item := NewOrderItem(product, quantity)
 	if err := item.SetCoffeeHowToBrew(brew); err != nil {
 		return nil, err
@@ -25,7 +25,7 @@ func NewOrderItemCoffee(product Product, quantity uint64, brew ProductCoffeeBrew
 	return item, nil
 }
 
-func ReconstructOrderItem(product Product, quantity uint64, brew ProductCoffeeBrew) *OrderItem {
+func ReconstructOrderItem(product Product, quantity uint64, brew *ProductCoffeeBrew) *OrderItem {
 	return &OrderItem{
 		product:    product,
 		Quantity:   quantity,
@@ -57,11 +57,11 @@ func (OrderItem *OrderItem) GetTotalAmount() uint64 {
 	return OrderItem.GetProductAmount() * OrderItem.Quantity
 }
 
-func (OrderItem *OrderItem) GetCoffeeHowToBrew() ProductCoffeeBrew {
+func (OrderItem *OrderItem) GetCoffeeHowToBrew() *ProductCoffeeBrew {
 	return OrderItem.coffeeBrew
 }
 
-func (OrderItem *OrderItem) SetCoffeeHowToBrew(brew ProductCoffeeBrew) error {
+func (OrderItem *OrderItem) SetCoffeeHowToBrew(brew *ProductCoffeeBrew) error {
 	if OrderItem.product.ProductType != ProductType(Coffee) || OrderItem.product.CoffeeBrews == nil {
 		return domain.ErrProductNotCoffee
 	}

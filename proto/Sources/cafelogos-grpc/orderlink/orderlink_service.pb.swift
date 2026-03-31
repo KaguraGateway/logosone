@@ -61,6 +61,8 @@ public struct Cafelogos_Orderlink_PostOrderInput: Sendable {
 
   public var seatName: String = String()
 
+  public var estimatedCookingTime: UInt32 = 0
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OrderType: SwiftProtobuf.Enum, Swift.CaseIterable {
@@ -156,7 +158,7 @@ extension Cafelogos_Orderlink_PostOrderItemInput: SwiftProtobuf.Message, SwiftPr
 
 extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderInput"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0\u{3}order_at\0\u{1}items\0\u{1}type\0\u{3}ticket_id\0\u{3}ticket_addr\0\u{3}seat_name\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0\u{3}order_at\0\u{1}items\0\u{1}type\0\u{3}ticket_id\0\u{3}ticket_addr\0\u{3}seat_name\0\u{3}estimated_cooking_time\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -171,6 +173,7 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
       case 5: try { try decoder.decodeSingularStringField(value: &self.ticketID) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.ticketAddr) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.seatName) }()
+      case 8: try { try decoder.decodeSingularUInt32Field(value: &self.estimatedCookingTime) }()
       default: break
       }
     }
@@ -198,6 +201,9 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     if !self.seatName.isEmpty {
       try visitor.visitSingularStringField(value: self.seatName, fieldNumber: 7)
     }
+    if self.estimatedCookingTime != 0 {
+      try visitor.visitSingularUInt32Field(value: self.estimatedCookingTime, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -209,6 +215,7 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
     if lhs.ticketID != rhs.ticketID {return false}
     if lhs.ticketAddr != rhs.ticketAddr {return false}
     if lhs.seatName != rhs.seatName {return false}
+    if lhs.estimatedCookingTime != rhs.estimatedCookingTime {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

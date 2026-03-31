@@ -89,6 +89,11 @@ export declare type PostOrderInput = Message<"cafelogos.orderlink.PostOrderInput
    * @generated from field: string seat_name = 7;
    */
   seatName: string;
+
+  /**
+   * @generated from field: uint32 estimated_cooking_time = 8;
+   */
+  estimatedCookingTime: number;
 };
 
 /**

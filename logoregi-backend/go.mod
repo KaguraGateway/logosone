@@ -4,6 +4,8 @@ go 1.24
 
 toolchain go1.24.0
 
+replace github.com/KaguraGateway/cafelogos-grpc => ../proto
+
 require (
 	connectrpc.com/connect v1.17.0
 	connectrpc.com/cors v0.1.0

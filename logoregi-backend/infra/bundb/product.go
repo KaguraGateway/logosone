@@ -63,6 +63,30 @@ func (i *productDb) Save(ctx context.Context, product *model.Product) error {
 		Exec(ctx); err != nil {
 		return err
 	}
+
+	if product.ProductType == model.ProductType(model.Coffee) {
+		for _, brew := range product.CoffeeBrews {
+			daoBrew := &dao.ProductCoffeeBrew{
+				ID:                brew.GetId(),
+				Name:              brew.GetName(),
+				ProductID:         product.GetId(),
+				BeanQuantityGrams: int(brew.BeanQuantityGrams),
+				Amount:            uint(brew.Amount),
+				BrewingTime:       brew.GetBrewingTime(),
+				CreatedAt:         brew.GetCreatedAt().StdTime(),
+				UpdatedAt:         brew.GetUpdatedAt().StdTime(),
+			}
+			if _, err := i.db.NewInsert().Model(daoBrew).On("CONFLICT (id) DO UPDATE").
+				Set("name = EXCLUDED.name").
+				Set("bean_quantity_grams = EXCLUDED.bean_quantity_grams").
+				Set("amount = EXCLUDED.amount").
+				Set("brewing_time = EXCLUDED.brewing_time").
+				Exec(ctx); err != nil {
+				return err
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -92,7 +116,7 @@ func toProduct(product *dao.Product) *model.Product {
 	var productCoffeeBrews []*model.ProductCoffeeBrew
 	if product.CoffeeBrews != nil {
 		productCoffeeBrews = lo.Map(product.CoffeeBrews, func(coffeeBrew *dao.ProductCoffeeBrew, _ int) *model.ProductCoffeeBrew {
-			return model.ReconstructProductCoffeeBrew(coffeeBrew.ID, coffeeBrew.ProductID, coffeeBrew.Name, uint32(coffeeBrew.BeanQuantityGrams), uint64(coffeeBrew.Amount), synchro.In[tz.UTC](coffeeBrew.CreatedAt), synchro.In[tz.UTC](coffeeBrew.UpdatedAt))
+			return toProductCoffeeBrew(*coffeeBrew)
 		})
 	}
 	// Only Other

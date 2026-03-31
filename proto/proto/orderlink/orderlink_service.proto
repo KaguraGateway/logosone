@@ -27,6 +27,7 @@ message PostOrderInput {
     string ticket_id = 5;
     string ticket_addr = 6;
     string seat_name = 7;
+    uint32 estimated_cooking_time = 8;
 
     enum OrderType {
         EAT_IN = 0;

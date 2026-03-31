@@ -2,7 +2,8 @@
 
 import {
   Box,
-  Button as ChakraButton, createListCollection,
+  Button as ChakraButton,
+  createListCollection,
   HStack,
   Input as ChakraInput,
   Stack,
@@ -176,11 +177,12 @@ export function ProductEditForm(props: Props) {
     setIsOpenCoffeeBeanForm(true);
   };
   const onClickAddBrew = () => {
-    setBrews([...brews, { id: '', name: '', amount: 0, beanQuantityGrams: 0 }]);
+    setBrews([...brews, { id: '', name: '', amount: 0, beanQuantityGrams: 0, brewingTime: 0 }]);
   };
   const onChangeBrew = (index: number, brew: CoffeeBrew) => {
     setBrews((prev) => {
-      if (isNaN(brew.amount) || isNaN(brew.beanQuantityGrams)) return prev;
+      if (isNaN(brew.amount) || isNaN(brew.beanQuantityGrams) || isNaN(brew.brewingTime))
+        return prev;
       prev[index] = brew;
       return [...prev];
     });
@@ -209,6 +211,7 @@ export function ProductEditForm(props: Props) {
           name: v.name,
           beanQuantityGrams: v.beanQuantityGrams,
           amount: BigInt(v.amount),
+          brewingTime: v.brewingTime,
         });
       }),
       amount: BigInt(amount),
@@ -224,7 +227,10 @@ export function ProductEditForm(props: Props) {
       setIsLoading(false);
     };
     if (props.product != null) {
-      updateMutation.mutateAsync({ product: data, productId: props.product.id }, { onSuccess, onSettled });
+      updateMutation.mutateAsync(
+        { product: data, productId: props.product.id },
+        { onSuccess, onSettled }
+      );
     } else {
       postMutation.mutateAsync({ product: data }, { onSuccess, onSettled });
     }
@@ -260,7 +266,7 @@ export function ProductEditForm(props: Props) {
             />
             <SelectWithAdd
               label="商品カテゴリ"
-              items={createListCollection({items: categories})}
+              items={createListCollection({ items: categories })}
               onAdd={onAddCategory}
               selectedOption={category}
               onChange={(details) => setCategory(details)}
@@ -270,7 +276,7 @@ export function ProductEditForm(props: Props) {
             <>
               <SelectWithAdd
                 label="豆の種類"
-                items={createListCollection({items: coffeeBeans})}
+                items={createListCollection({ items: coffeeBeans })}
                 onAdd={onAddCoffeeBean}
                 selectedOption={coffeeBean}
                 onChange={(details) => setCoffeeBean(details)}
@@ -280,6 +286,7 @@ export function ProductEditForm(props: Props) {
                   <Th>淹れ方</Th>
                   <Th>必要な豆の量</Th>
                   <Th>価格（円）</Th>
+                  <Th>調理時間(分)</Th>
                   <Th grow="64px">削除</Th>
                 </TableHeader>
                 <Tbody>
@@ -324,6 +331,20 @@ export function ProductEditForm(props: Props) {
                               onChangeBrew(index, {
                                 ...brew,
                                 amount: Number(event.target.value),
+                              })
+                            }
+                          />
+                        </Td>
+                        <Td>
+                          <ChakraInput
+                            display="flex"
+                            outline="0"
+                            placeholder="5"
+                            value={brew.brewingTime / 60}
+                            onChange={(event) =>
+                              onChangeBrew(index, {
+                                ...brew,
+                                brewingTime: Number(event.target.value) * 60,
                               })
                             }
                           />
@@ -373,7 +394,7 @@ export function ProductEditForm(props: Props) {
               />
               <SelectWithAdd
                 label="在庫"
-                items={createListCollection({items: stocks})}
+                items={createListCollection({ items: stocks })}
                 onAdd={onAddStock}
                 selectedOption={stock}
                 onChange={(details) => setStock(details)}
@@ -392,8 +413,8 @@ export function ProductEditForm(props: Props) {
               checked={isOlUseKitchen}
             />
           </VStack>
-          <HStack width='full'>
-            <Button type="button" variant='outline' onClick={() => props.onCancel()}>
+          <HStack width="full">
+            <Button type="button" variant="outline" onClick={() => props.onCancel()}>
               キャンセル
             </Button>
             <LoadingButton type="submit" colorScheme="green" isLoading={isLoading}>
@@ -404,7 +425,10 @@ export function ProductEditForm(props: Props) {
       </form>
       <ProductCategoryFormDialog isOpen={isOpenCategoryForm} onClose={onCloseCategoryForm} />
       <StockFormDialog isOpen={isOpenStockForm} onClose={() => setIsOpenStockForm(false)} />
-      <CoffeeBeanFormDialog isOpen={isOpenCoffeeBeanForm} onClose={() => setIsOpenCoffeeBeanForm(false)} />
+      <CoffeeBeanFormDialog
+        isOpen={isOpenCoffeeBeanForm}
+        onClose={() => setIsOpenCoffeeBeanForm(false)}
+      />
     </>
   );
 }
@@ -417,7 +441,7 @@ type DialogProps = {
 
 export function ProductEditFormDialog(props: DialogProps) {
   if (!props.isOpen) return null;
-  
+
   return (
     <Box
       position="fixed"
@@ -434,7 +458,7 @@ export function ProductEditFormDialog(props: DialogProps) {
     >
       <Box
         bg="white"
-        color='black'
+        color="black"
         borderRadius="md"
         width="auto"
         minW="2xl"

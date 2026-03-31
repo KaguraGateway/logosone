@@ -145,16 +145,17 @@ func (x *PostOrderItemInput) GetIsOlKitchen() bool {
 }
 
 type PostOrderInput struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	OrderId       string                   `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	OrderAt       string                   `protobuf:"bytes,2,opt,name=order_at,json=orderAt,proto3" json:"order_at,omitempty"`
-	Items         []*PostOrderItemInput    `protobuf:"bytes,3,rep,name=items,proto3" json:"items,omitempty"`
-	Type          PostOrderInput_OrderType `protobuf:"varint,4,opt,name=type,proto3,enum=cafelogos.orderlink.PostOrderInput_OrderType" json:"type,omitempty"`
-	TicketId      string                   `protobuf:"bytes,5,opt,name=ticket_id,json=ticketId,proto3" json:"ticket_id,omitempty"`
-	TicketAddr    string                   `protobuf:"bytes,6,opt,name=ticket_addr,json=ticketAddr,proto3" json:"ticket_addr,omitempty"`
-	SeatName      string                   `protobuf:"bytes,7,opt,name=seat_name,json=seatName,proto3" json:"seat_name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState   `protogen:"open.v1"`
+	OrderId              string                   `protobuf:"bytes,1,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	OrderAt              string                   `protobuf:"bytes,2,opt,name=order_at,json=orderAt,proto3" json:"order_at,omitempty"`
+	Items                []*PostOrderItemInput    `protobuf:"bytes,3,rep,name=items,proto3" json:"items,omitempty"`
+	Type                 PostOrderInput_OrderType `protobuf:"varint,4,opt,name=type,proto3,enum=cafelogos.orderlink.PostOrderInput_OrderType" json:"type,omitempty"`
+	TicketId             string                   `protobuf:"bytes,5,opt,name=ticket_id,json=ticketId,proto3" json:"ticket_id,omitempty"`
+	TicketAddr           string                   `protobuf:"bytes,6,opt,name=ticket_addr,json=ticketAddr,proto3" json:"ticket_addr,omitempty"`
+	SeatName             string                   `protobuf:"bytes,7,opt,name=seat_name,json=seatName,proto3" json:"seat_name,omitempty"`
+	EstimatedCookingTime uint32                   `protobuf:"varint,8,opt,name=estimated_cooking_time,json=estimatedCookingTime,proto3" json:"estimated_cooking_time,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *PostOrderInput) Reset() {
@@ -236,6 +237,13 @@ func (x *PostOrderInput) GetSeatName() string {
 	return ""
 }
 
+func (x *PostOrderInput) GetEstimatedCookingTime() uint32 {
+	if x != nil {
+		return x.EstimatedCookingTime
+	}
+	return 0
+}
+
 var File_orderlink_orderlink_service_proto protoreflect.FileDescriptor
 
 const file_orderlink_orderlink_service_proto_rawDesc = "" +
@@ -247,7 +255,7 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\x0ecoffee_brew_id\x18\x02 \x01(\tR\fcoffeeBrewId\x12\x1a\n" +
 	"\bquantity\x18\x03 \x01(\rR\bquantity\x12*\n" +
 	"\x11is_managing_order\x18\x14 \x01(\bR\x0fisManagingOrder\x12\"\n" +
-	"\ris_ol_kitchen\x18\x15 \x01(\bR\visOlKitchen\"\xca\x02\n" +
+	"\ris_ol_kitchen\x18\x15 \x01(\bR\visOlKitchen\"\x80\x03\n" +
 	"\x0ePostOrderInput\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x19\n" +
 	"\border_at\x18\x02 \x01(\tR\aorderAt\x12=\n" +
@@ -256,7 +264,8 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\tticket_id\x18\x05 \x01(\tR\bticketId\x12\x1f\n" +
 	"\vticket_addr\x18\x06 \x01(\tR\n" +
 	"ticketAddr\x12\x1b\n" +
-	"\tseat_name\x18\a \x01(\tR\bseatName\"%\n" +
+	"\tseat_name\x18\a \x01(\tR\bseatName\x124\n" +
+	"\x16estimated_cooking_time\x18\b \x01(\rR\x14estimatedCookingTime\"%\n" +
 	"\tOrderType\x12\n" +
 	"\n" +
 	"\x06EAT_IN\x10\x00\x12\f\n" +

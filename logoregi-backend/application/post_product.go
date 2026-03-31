@@ -57,7 +57,7 @@ func (uc *postProductUseCase) Execute(ctx context.Context, param *ProductParam) 
 		product = *model.NewProductCoffee(*productName, *productCategory, param.Color, param.IsNowSales, *coffeeBean, coffeeBrews, param.IsManagingOrder, param.IsOlUseKitchen)
 
 		for _, pBrew := range param.CoffeeBrews {
-			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount)
+			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount, pBrew.BrewingTime)
 			if err != nil {
 				return errors.Join(err, ErrInvalidParam)
 			}

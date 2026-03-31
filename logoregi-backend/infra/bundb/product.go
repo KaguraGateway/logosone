@@ -9,6 +9,7 @@ import (
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/KaguraGateway/logosone/logoregi-backend/infra/bundb/dao"
+	"github.com/oklog/ulid/v2"
 	"github.com/samber/do"
 	"github.com/samber/lo"
 	"github.com/uptrace/bun"
@@ -66,8 +67,12 @@ func (i *productDb) Save(ctx context.Context, product *model.Product) error {
 
 	if product.ProductType == model.ProductType(model.Coffee) {
 		for _, brew := range product.CoffeeBrews {
+			brewId := brew.GetId()
+			if brewId == "" {
+				brewId = ulid.Make().String()
+			}
 			daoBrew := &dao.ProductCoffeeBrew{
-				ID:                brew.GetId(),
+				ID:                brewId,
 				Name:              brew.GetName(),
 				ProductID:         product.GetId(),
 				BeanQuantityGrams: int(brew.BeanQuantityGrams),

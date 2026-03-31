@@ -1,6 +1,6 @@
 'use client';
 
-import {toProductFromProto} from '@/types/Product';
+import { toProductFromProto } from '@/types/Product';
 import { Table } from '@/ui/table/Table';
 import { TableHeader } from '@/ui/table/TableHader';
 import { Tbody } from '@/ui/table/Tbody';
@@ -8,21 +8,22 @@ import { Th } from '@/ui/table/Th';
 
 import { ProductAddButton } from './_components/ProductAddButton';
 import { ProductItem } from './_components/ProductItem';
-import {useQueryProducts} from "@/query/getProducts";
-import { Center, Spinner } from "@chakra-ui/react";
+import { useQueryProducts } from '@/query/getProducts';
+import { Center, Spinner } from '@chakra-ui/react';
 
 export default function Products() {
   const { data, isLoading } = useQueryProducts();
-  const products = data?.products?.map((product) => {
-    return toProductFromProto(product);
-  }) ?? [];
+  const products =
+    data?.products?.map((product) => {
+      return toProductFromProto(product);
+    }) ?? [];
 
   if (isLoading) {
     return (
       <Center>
         <Spinner />
       </Center>
-    )
+    );
   }
 
   return (
@@ -37,9 +38,9 @@ export default function Products() {
           <Th>必要な豆g</Th>
           <Th>編集 / 削除</Th>
         </TableHeader>
-        <Tbody color='black'>
+        <Tbody color="black">
           {products.map((product) => (
-            <ProductItem key={product.name} product={product} />
+            <ProductItem key={product.id} product={product} />
           ))}
         </Tbody>
       </Table>

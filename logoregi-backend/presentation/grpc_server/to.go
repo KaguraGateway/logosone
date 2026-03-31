@@ -45,6 +45,7 @@ func ToProtoCoffeeBrew(brew *model.ProductCoffeeBrew) *pos.CoffeeBrew {
 		Name:              brew.GetName(),
 		BeanQuantityGrams: brew.BeanQuantityGrams,
 		Amount:            brew.Amount,
+		BrewingTime:       brew.GetBrewingTime(),
 		CreatedAt:         ToISO8601(brew.GetCreatedAt()),
 		UpdatedAt:         ToISO8601(brew.GetUpdatedAt()),
 	}
@@ -69,7 +70,7 @@ func ToProtoOrderItem(item *model.OrderItem) *pos.OrderItem {
 	}
 	coffeeBrewId := ""
 	coffeeBrew := item.GetCoffeeHowToBrew()
-	if &coffeeBrew != nil {
+	if coffeeBrew != nil {
 		coffeeBrewId = coffeeBrew.GetId()
 	}
 
@@ -155,6 +156,7 @@ func ToProductParam(product *pos.ProductParam) *application.ProductParam {
 				Name:              brew.Name,
 				BeanQuantityGrams: brew.BeanQuantityGrams,
 				Amount:            brew.Amount,
+				BrewingTime:       brew.BrewingTime,
 			}
 		}),
 		Amount:          product.Amount,

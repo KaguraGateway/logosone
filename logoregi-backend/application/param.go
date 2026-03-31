@@ -11,6 +11,7 @@ type CoffeeBrewParam struct {
 	Name              string
 	BeanQuantityGrams uint32
 	Amount            uint64
+	BrewingTime       uint32
 }
 
 type ProductParam struct {

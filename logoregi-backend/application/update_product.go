@@ -82,7 +82,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 			return false
 		})
 		for _, pBrew := range newBrews {
-			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount)
+			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount, pBrew.BrewingTime)
 			if err != nil {
 				return errors.Join(err, ErrInvalidParam)
 			}
@@ -93,7 +93,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 		// Diff
 		diffBrews := lo.Filter(param.CoffeeBrews, func(pBrew CoffeeBrewParam, _ int) bool {
 			for _, brew := range product.CoffeeBrews {
-				if pBrew.Id == brew.GetId() && (pBrew.Name != brew.GetName() || pBrew.BeanQuantityGrams != brew.BeanQuantityGrams || pBrew.Amount != brew.Amount) {
+				if pBrew.Id == brew.GetId() && (pBrew.Name != brew.GetName() || pBrew.BeanQuantityGrams != brew.BeanQuantityGrams || pBrew.Amount != brew.Amount || pBrew.BrewingTime != brew.GetBrewingTime()) {
 					return true
 				}
 			}
@@ -109,6 +109,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 			}
 			brew.BeanQuantityGrams = pBrew.BeanQuantityGrams
 			brew.Amount = pBrew.Amount
+			brew.BrewingTime = pBrew.BrewingTime
 			if err := uc.coffeeBrewRepo.Save(cctx, brew); err != nil {
 				return err
 			}
@@ -131,7 +132,10 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 
 	// Only Other
 	if param.Amount != 0 {
-		product.SetAmount(param.Amount)
+		err := product.SetAmount(param.Amount)
+		if err != nil {
+			return err
+		}
 	}
 	if model.ProductType(param.ProductType) == model.ProductType(model.Other) && param.StockId != product.Stock.GetId() {
 		stock, err := uc.stockRepo.FindById(cctx, param.StockId)

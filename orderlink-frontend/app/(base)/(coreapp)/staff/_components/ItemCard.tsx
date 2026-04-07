@@ -167,7 +167,7 @@ export function ItemCard(props: ItemCardProps) {
         </Text>
       </Flex>
       <Box mt="4" style={{ display: isAllChecked ? '' : 'none' }}>
-        <Flex style={{ display: props.type === 'takeout' && isCalled ? '' : 'none' }}>
+        <Flex style={{ display: props.type === 'takeout' && isCalled && props.status !== 'provided' ? '' : 'none' }}>
           <Button colorScheme="red" bg="red.500" mr="2" leftIcon={<MdOutlineClear />} onClick={props.onCancelCall}>
             取り消し
           </Button>
@@ -190,7 +190,7 @@ export function ItemCard(props: ItemCardProps) {
           bg="blue.500"
           w="full"
           leftIcon={<MdOutlineDone />}
-          style={{ display: props.type === 'eat-in' ? '' : 'none' }}
+          style={{ display: props.type === 'eat-in' && props.status !== 'provided' ? '' : 'none' }}
           onClick={props.onProvided}
         >
           提供完了

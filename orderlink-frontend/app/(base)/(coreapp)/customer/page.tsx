@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Box, Flex, Heading, SimpleGrid } from '@chakra-ui/react';
 import Link from 'next/link';
 import { IconContext } from 'react-icons';
 import { BiDish } from 'react-icons/bi';
@@ -29,7 +29,7 @@ export default function CustomerPage() {
         </Link>
       </Flex>
       <Flex h="80px" boxShadow="lg" color="white">
-        <Flex w="25%" h="full" bg="gray.500" alignItems="center" justifyContent="center">
+        <Flex w="30%" h="full" bg="gray.500" alignItems="center" justifyContent="center">
           <Heading fontSize="4xl">調理中</Heading>
         </Flex>
         <Flex flex="1" h="full" bg="teal.500" alignItems="center" justifyContent="center">
@@ -42,11 +42,11 @@ export default function CustomerPage() {
         </Flex>
       </Flex>
       <Flex mt="6">
-        <VStack w="25%" alignItems="center">
+        <SimpleGrid w="30%" columns={2} spacing={4}>
           {cookingOrders.map((order) => (
             <CookingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />
           ))}
-        </VStack>
+        </SimpleGrid>
         <Flex flex="1" flexWrap="wrap">
           {callingOrders.map((order) => (
             <CallingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />

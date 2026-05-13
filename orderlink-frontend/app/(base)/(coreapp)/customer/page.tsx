@@ -29,7 +29,7 @@ export default function CustomerPage() {
         </Link>
       </Flex>
       <Flex h="80px" boxShadow="lg" color="white">
-        <Flex w="30%" h="full" bg="gray.500" alignItems="center" justifyContent="center">
+        <Flex w="45%" h="full" bg="gray.500" alignItems="center" justifyContent="center">
           <Heading fontSize="4xl">調理中</Heading>
         </Flex>
         <Flex flex="1" h="full" bg="teal.500" alignItems="center" justifyContent="center">
@@ -42,7 +42,7 @@ export default function CustomerPage() {
         </Flex>
       </Flex>
       <Flex mt="6">
-        <SimpleGrid w="30%" columns={2} spacing={4}>
+        <SimpleGrid w="45%" columns={2} spacing={4}>
           {cookingOrders.map((order) => (
             <CookingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />
           ))}

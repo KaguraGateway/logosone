@@ -4,10 +4,41 @@ package cafelogos.orderlink;
 
 import "common/common.proto";
 
-option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;orderlink";
+option go_package = "github.com/KaguraGateway/logosone/proto/pkg/orderlink;orderlink";
 
 service OrderLinkService {
     rpc PostOrder(PostOrderInput) returns (common.Empty) {}
+    // 提供済みオーダーの一覧を返す
+    rpc ListOrders(common.Empty) returns (ListOrdersResponse) {}
+}
+
+// 提供済みオーダーの一覧を返すのレスポンス
+message ListOrdersResponse {
+    repeated Order orders = 1;
+}
+
+message Order {
+    string order_id = 1;
+    string order_at = 2;
+    OrderType type = 3;
+    string ticket_id = 4;
+    string ticket_addr = 5;
+    string seat_name = 6;
+    OrderStatus status = 7;
+    optional string served_at = 8;
+
+    enum OrderType {
+        EAT_IN = 0;
+        TAKE_OUT = 1;
+    }
+
+    enum OrderStatus {
+        NotYet = 0;
+        Cooking = 1;
+        Cooked = 2;
+        Calling = 3;
+        Served = 4; // Provided
+    }
 }
 
 message PostOrderItemInput {

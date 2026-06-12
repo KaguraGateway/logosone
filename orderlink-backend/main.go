@@ -4,14 +4,15 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/KaguraGateway/logosone/orderlink-backend/infra/gcp"
-	"github.com/KaguraGateway/logosone/orderlink-backend/infra/goredis"
-	"github.com/getsentry/sentry-go"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/gcp"
+	"github.com/KaguraGateway/logosone/orderlink-backend/infra/goredis"
+	"github.com/getsentry/sentry-go"
 
 	"github.com/labstack/echo/v4"
 
@@ -31,13 +32,13 @@ import (
 
 	connectcors "connectrpc.com/cors"
 
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
 	"github.com/KaguraGateway/logosone/orderlink-backend/application"
 	"github.com/KaguraGateway/logosone/orderlink-backend/infra/bundb"
 	"github.com/KaguraGateway/logosone/orderlink-backend/infra/websocket"
 	grpcserver "github.com/KaguraGateway/logosone/orderlink-backend/presentation/grpc_server"
 	httpserver "github.com/KaguraGateway/logosone/orderlink-backend/presentation/http_server"
 	"github.com/KaguraGateway/logosone/orderlink-backend/presentation/pubsub"
+	"github.com/KaguraGateway/logosone/proto/pkg/orderlink/orderlinkconnect"
 )
 
 func main() {
@@ -192,6 +193,7 @@ func buildInjector(isDev bool, db *bun.DB, wsClients []*websocket.OrderLinkWSCli
 	do.Provide(i, application.NewPostOrderFromPosUseCase)
 	do.Provide(i, application.NewUpdateOrderItemStatusUseCase)
 	do.Provide(i, application.NewUpdateOrderStatusUseCase)
+	do.Provide(i, application.NewListOrdersUseCase)
 
 	return i
 }

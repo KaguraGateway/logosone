@@ -26,9 +26,14 @@ func NewOrderRepositoryDb(i *do.Injector) (repository.OrderRepository, error) {
 }
 
 func toDomainOrder(daoOrder *dao.Order) *order.Order {
-	return order.RebuildOrder(daoOrder.Id, lo.Map(daoOrder.OrderItems, func(orderItem *dao.OrderItem, _ int) orderitem.OrderItem {
+	orderItems := lo.Map(daoOrder.OrderItems, func(orderItem *dao.OrderItem, _ int) orderitem.OrderItem {
 		return *toDomainOrderItem(orderItem)
-	}), synchro.In[tz.UTC](daoOrder.OrderAt), order.OrderType(daoOrder.OrderType), order.OrderStatus(daoOrder.Status), daoOrder.SeatName)
+	})
+	orderStatusHistories := lo.Map(daoOrder.OrderStatusHistories, func(daoOrderStatusHistory *dao.OrderStatusHistory, _ int) order.OrderStatusHistory {
+		return order.RebuildOrderStatusHistory(daoOrderStatusHistory.Id, order.OrderStatus(daoOrderStatusHistory.Status), synchro.In[tz.UTC](daoOrderStatusHistory.CreatedAt))
+	})
+
+	return order.RebuildOrder(daoOrder.Id, orderItems, orderStatusHistories, synchro.In[tz.UTC](daoOrder.OrderAt), order.OrderType(daoOrder.OrderType), order.OrderStatus(daoOrder.Status), daoOrder.SeatName)
 }
 
 func toDaoOrder(order *order.Order) *dao.Order {
@@ -39,6 +44,17 @@ func toDaoOrder(order *order.Order) *dao.Order {
 		Status:    uint(order.Status()),
 		SeatName:  order.SeatName(),
 	}
+}
+
+func toDaoOrderStatusHistories(orderModel *order.Order) []*dao.OrderStatusHistory {
+	return lo.Map(orderModel.OrderStatusHistory(), func(orderStatusHistory order.OrderStatusHistory, _ int) *dao.OrderStatusHistory {
+		return &dao.OrderStatusHistory{
+			Id:        orderStatusHistory.ID(),
+			OrderId:   orderModel.Id(),
+			Status:    uint(orderStatusHistory.Status()),
+			CreatedAt: orderStatusHistory.CreatedAt().StdTime(),
+		}
+	})
 }
 
 func (r *orderRepositoryDb) Exists(ctx context.Context, id string) (bool, error) {
@@ -62,6 +78,13 @@ func (r *orderRepositoryDb) Save(ctx context.Context, order *order.Order) error 
 	if _, err := orderSaveQuery(r.db.NewInsert().Model(daoOrder)).Exec(ctx); err != nil {
 		return err
 	}
+	daoOrderStatusHistories := toDaoOrderStatusHistories(order)
+	if len(daoOrderStatusHistories) > 0 {
+		if _, err := r.db.NewInsert().Model(&daoOrderStatusHistories).Exec(ctx); err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -71,7 +94,26 @@ func (r *orderRepositoryDb) SaveTx(ctx context.Context, tx interface{}, order *o
 	if _, err := orderSaveQuery(bunTx.NewInsert().Model(daoOrder)).Exec(ctx); err != nil {
 		return err
 	}
+
+	daoOrderStatusHistories := toDaoOrderStatusHistories(order)
+	if len(daoOrderStatusHistories) > 0 {
+		if _, err := r.db.NewInsert().Model(&daoOrderStatusHistories).Exec(ctx); err != nil {
+			return err
+		}
+	}
+
 	return nil
+}
+
+func (r *orderRepositoryDb) ListOrders(ctx context.Context) ([]*order.Order, error) {
+	daoOrders := make([]dao.Order, 0)
+	if err := r.db.NewSelect().Model(&daoOrders).Column("order.*").Relation("Ticket").Relation("OrderItems").Relation("OrderStatusHistories").Scan(ctx); err != nil {
+		return nil, err
+	}
+
+	return lo.Map(daoOrders, func(daoOrder dao.Order, _ int) *order.Order {
+		return toDomainOrder(&daoOrder)
+	}), nil
 }
 
 type orderQueryServiceDb struct {

@@ -71,6 +71,7 @@ type ItemCardProps = {
   callNumber: string;
   seatNumber?: string;
   waitingTime: React.ReactNode;
+  servedTime: React.ReactNode;
   type: 'takeout' | 'eat-in';
   status: 'cooking' | 'calling' | 'provided';
   onCall: () => void;
@@ -129,7 +130,17 @@ export function ItemCard(props: ItemCardProps) {
           </Text>
           <Flex flexDirection="column" alignItems="center">
             <Text fontSize="sm" fontWeight="medium" color="gray.600" mb="0.5">
-              {props.waitingTime}待ち
+              {props.status === 'provided' ? (
+                <>
+                  {props.servedTime}
+                  経過
+                </>
+              ) : (
+                <>
+                  {props.waitingTime}
+                  待ち
+                </> 
+              )}
             </Text>
             <OrderBadge type={props.type} />
           </Flex>
@@ -156,7 +167,7 @@ export function ItemCard(props: ItemCardProps) {
         </Text>
       </Flex>
       <Box mt="4" style={{ display: isAllChecked ? '' : 'none' }}>
-        <Flex style={{ display: props.type === 'takeout' && isCalled ? '' : 'none' }}>
+        <Flex style={{ display: props.type === 'takeout' && isCalled && props.status !== 'provided' ? '' : 'none' }}>
           <Button colorScheme="red" bg="red.500" mr="2" leftIcon={<MdOutlineClear />} onClick={props.onCancelCall}>
             取り消し
           </Button>
@@ -179,7 +190,7 @@ export function ItemCard(props: ItemCardProps) {
           bg="blue.500"
           w="full"
           leftIcon={<MdOutlineDone />}
-          style={{ display: props.type === 'eat-in' ? '' : 'none' }}
+          style={{ display: props.type === 'eat-in' && props.status !== 'provided' ? '' : 'none' }}
           onClick={props.onProvided}
         >
           提供完了

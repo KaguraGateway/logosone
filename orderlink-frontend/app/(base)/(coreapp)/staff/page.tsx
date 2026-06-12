@@ -4,6 +4,7 @@ import { Button, Flex, HStack, Text } from '@chakra-ui/react';
 import { BiCoffeeTogo } from 'react-icons/bi';
 import { FiCoffee } from 'react-icons/fi';
 import { FiCheckSquare } from 'react-icons/fi';
+import { useState } from 'react';
 
 import { useStaff } from '@/app/(base)/(coreapp)/staff/use';
 import { useProduct } from '@/jotai/product';
@@ -15,6 +16,7 @@ import { OrderStatus, OrderStatusEnum, OrderType, OrderTypeEnum } from '@/zod/or
 
 import { FilterModal } from './_components/FilterModal';
 import { ItemCard } from './_components/ItemCard';
+import { Order } from '@/query/listOrders';
 
 function fromOrderType(orderType: OrderType): 'takeout' | 'eat-in' {
   switch (orderType) {
@@ -59,6 +61,7 @@ export default function StaffPage() {
     onAllTakeoutOnly,
     onAllProvidedOnly,
     filteredOrders,
+    providedOrders,
     staffFilter,
     onCall,
     onCancelCall,
@@ -138,11 +141,12 @@ export default function StaffPage() {
           </Text>
         </Flex>
         <Flex alignItems="flex-start" flexWrap="wrap">
-          {filteredOrders.map((order) => (
+          {!staffFilter.isProvided && filteredOrders.map((order) => (
             <ItemCard
               key={order.OrderId}
               callNumber={order.TicketAddr}
               seatNumber={order.SeatName}
+              servedTime=""
               waitingTime={<ElapsedMinTime dateISO={order.OrderAt} />}
               type={fromOrderType(order.OrderType)}
               status={fromOrderStatus(order.Status)}
@@ -161,6 +165,21 @@ export default function StaffPage() {
                   status: fromItemStatus(item.Status),
                 };
               })}
+            />
+          ))}
+          {staffFilter.isProvided && providedOrders.map((order) => (
+            <ItemCard
+              key={order.id}
+              callNumber={order.ticketAddr}
+              seatNumber={order.seatName}
+              servedTime={<ElapsedMinTime dateISO={order.servedAt} />}
+              waitingTime={<ElapsedMinTime dateISO={order.orderAt} />}
+              type={fromOrderType(order.type)}
+              status={fromOrderStatus(order.status)}
+              onCall={() => onCall(order.id)}
+              onCancelCall={() => onCancelCall(order.id)}
+              onProvided={() => onProvided(order.id)}
+              items={[]}
             />
           ))}
         </Flex>

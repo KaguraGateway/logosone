@@ -4,6 +4,7 @@ import { useOrderLink } from '@/jotai/orderlink';
 import { useProduct } from '@/jotai/product';
 import { FilterItem } from '@/usecase/Filter';
 import { OrderStatusEnum, OrderTypeEnum } from '@/zod/orders';
+import { fetchListOrders, Order } from '@/query/listOrders';
 
 export type StaffFilter = {
   items: FilterItem[];
@@ -21,6 +22,9 @@ export function useStaff() {
   });
   const { orders, UpdateOrderStatus } = useOrderLink();
   const [isOpenFilterModal, setIsFilterModal] = useState(false);
+
+  const [isProvidedOnly, setIsProvidedOnly] = useState(false);
+  const [providedOrders, setProvidedOrders] = useState<Array<Order>>([]);
 
   const onOpenFilterModal = () => {
     setIsFilterModal(true);
@@ -52,7 +56,14 @@ export function useStaff() {
       isProvided: false,
     });
   };
-  const onAllProvidedOnly = () => {
+  const onAllProvidedOnly = async() => {
+    // 提供済みオーダーを作成したListOrdersから取得して、setProvidedOrdersにセットする
+    const orders = await fetchListOrders();
+
+    setProvidedOrders(orders.filter((order) => {
+      return order.status === OrderStatusEnum.Provided;
+    }));
+
     setStaffFilter({
       items: getDefaultFilterItems(),
       isTakeout: true,
@@ -129,6 +140,7 @@ export function useStaff() {
     onAllTakeoutOnly,
     onAllProvidedOnly,
     filteredOrders,
+    providedOrders,
     staffFilter,
     onCall,
     onCancelCall,

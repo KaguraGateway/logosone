@@ -4,7 +4,7 @@ package cafelogos.pos;
 
 import "common/common.proto";
 
-option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/pos;pos";
+option go_package = "github.com/KaguraGateway/logosone/proto/pkg/pos;pos";
 
 
 service PosService {

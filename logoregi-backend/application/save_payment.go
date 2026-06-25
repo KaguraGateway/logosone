@@ -47,6 +47,7 @@ func (uc *savePaymentUseCase) Execute(ctx context.Context, param PaymentParam) (
 				// NOTE: 外部決済の場合、まだこの時点では決済完了していないので、決済完了時点でOrderLinkに通知するためにIsPostOrderLinkをfalseにする
 				orderParam.IsPostOrderLink = false
 			}
+			// FIXME: こんなところで呼び出してるからなんらかで決済失敗してもOrderLinkにオーダーが流れる問題が
 			order, orderTicket, err := uc.postOrderUseCase.Execute(ctx, orderParam)
 			if err != nil {
 				return nil, nil, err

@@ -43,3 +43,9 @@ sea-orm-cli migrate fresh
 # DBスキーマからentityファイルを生成
 sea-orm-cli generate entity -o src/infra/dao
 ```
+
+## GitHub Codespaces上で動作させるときは
+- ポートフォワーディングを有効にする
+- `:8080`だけPublicにしておく
+    - デスクトップアプリからリモートアクセスする場合はPrivateでも良さそう
+- dbのurlのlocalhostはコンテナ名にしておく

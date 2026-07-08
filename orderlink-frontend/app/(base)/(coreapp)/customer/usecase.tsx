@@ -3,7 +3,10 @@ import { useEffect, useMemo } from 'react';
 ///@ts-ignore
 import useSound from 'use-sound';
 import { useOrderLink } from '@/jotai/orderlink';
-import { OrderStatusEnum } from '@/zod/orders';
+import { type Order, OrderStatusEnum } from '@/zod/orders';
+
+const sortByTicketAddr = (a: Order, b: Order) =>
+  a.TicketAddr.localeCompare(b.TicketAddr, undefined, { numeric: true });
 
 export function useCustomer() {
   const { orders } = useOrderLink();
@@ -12,12 +15,17 @@ export function useCustomer() {
   });
 
   const cookingOrders = useMemo(() => {
-    return orders.filter(
-      (order) => order.Status !== OrderStatusEnum.Provided && order.Status !== OrderStatusEnum.Calling
-    );
+    return orders
+      .filter(
+        (order) =>
+          order.Status !== OrderStatusEnum.Provided && order.Status !== OrderStatusEnum.Calling
+      )
+      .sort(sortByTicketAddr);
   }, [orders]);
   const callingOrders = useMemo(() => {
-    return orders.filter((order) => order.Status === OrderStatusEnum.Calling);
+    return orders
+      .filter((order) => order.Status === OrderStatusEnum.Calling)
+      .sort(sortByTicketAddr);
   }, [orders]);
   useEffect(() => {
     if (callingOrders.length > 0) {

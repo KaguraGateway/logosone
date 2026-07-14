@@ -30,7 +30,7 @@ func (r *GrpcServer) ListOrders(ctx context.Context, req *connect.Request[common
 			Type:       orderlink.Order_OrderType(or.Type),
 			TicketId:   "",
 			TicketAddr: "",
-			SeatName:   "",
+			SeatName:   lo.FromPtr(or.SeatName),
 			Status:     orderlink.Order_OrderStatus(or.Status),
 			ServedAt:   &servedAt,
 		}

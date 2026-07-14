@@ -53,6 +53,7 @@ func (u *listOrdersUseCase) Execute(ctx context.Context) ([]*ListOrdersOutput, e
 			// TODO: ちゃんと返すようにする
 			TicketId:   "",
 			TicketAddr: "",
+			SeatName:   or.SeatName(),
 			Status:     or.Status(),
 			ServedAt:   servedAt,
 		}
@@ -65,6 +66,7 @@ type ListOrdersOutput struct {
 	Type       order.OrderType
 	TicketId   string
 	TicketAddr string
+	SeatName   *string
 	Status     order.OrderStatus
 	ServedAt   synchro.Time[tz.UTC]
 }

@@ -1,9 +1,7 @@
 import { atom, useAtom } from 'jotai';
 import { useCallback, useContext, useEffect } from 'react';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-///@ts-ignore
-import useSound from 'use-sound';
 
+import { useNotificationSound } from '@/hooks/useNotificationSound';
 import { EventSchema } from '@/zod/event';
 import { OrderItemStatus } from '@/zod/order_items';
 import { Order, OrdersSchema, OrderStatus } from '@/zod/orders';
@@ -17,9 +15,7 @@ const ordersAtom = atom<Array<Order>>([]);
 export function useOrderLink() {
   const { client } = useContext(WebSocketContext);
   const [orders, setOrders] = useAtom(ordersAtom);
-  const [play] = useSound('/orderlink_sound.mp3', {
-    interrupt: true
-  });
+  const { play } = useNotificationSound('/orderlink_sound.mp3');
 
   // Ordersまわりの処理
   useEffect(() => {

@@ -13,16 +13,18 @@ type ProductCoffeeBrew struct {
 	name              string
 	BeanQuantityGrams uint32
 	Amount            uint64
+	preparationTime   int32
 	createdAt         synchro.Time[tz.UTC]
 	updatedAt         synchro.Time[tz.UTC]
 }
 
-func NewProductCoffeeBrew(productId string, name string, beanQuantityGrams uint32, amount uint64) (*ProductCoffeeBrew, error) {
+func NewProductCoffeeBrew(productId string, name string, beanQuantityGrams uint32, amount uint64, preparationTime int32) (*ProductCoffeeBrew, error) {
 	brew := &ProductCoffeeBrew{
 		id:                ulid.Make().String(),
 		productId:         productId,
 		BeanQuantityGrams: beanQuantityGrams,
 		Amount:            amount,
+		preparationTime:   preparationTime,
 		createdAt:         synchro.Now[tz.UTC](),
 		updatedAt:         synchro.Now[tz.UTC](),
 	}
@@ -32,13 +34,14 @@ func NewProductCoffeeBrew(productId string, name string, beanQuantityGrams uint3
 	return brew, nil
 }
 
-func ReconstructProductCoffeeBrew(id string, productId string, name string, beanQuantityGrams uint32, amount uint64, createdAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC]) *ProductCoffeeBrew {
+func ReconstructProductCoffeeBrew(id string, productId string, name string, beanQuantityGrams uint32, amount uint64, preparationTime int32, createdAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC]) *ProductCoffeeBrew {
 	return &ProductCoffeeBrew{
 		id:                id,
 		productId:         productId,
 		name:              name,
 		BeanQuantityGrams: beanQuantityGrams,
 		Amount:            amount,
+		preparationTime:   preparationTime,
 		createdAt:         createdAt,
 		updatedAt:         updatedAt,
 	}
@@ -70,4 +73,8 @@ func (coffeeHowToBrew *ProductCoffeeBrew) GetCreatedAt() synchro.Time[tz.UTC] {
 
 func (coffeeHowToBrew *ProductCoffeeBrew) GetUpdatedAt() synchro.Time[tz.UTC] {
 	return coffeeHowToBrew.updatedAt
+}
+
+func (coffeeHowToBrew *ProductCoffeeBrew) GetPreparationTime() int32 {
+	return coffeeHowToBrew.preparationTime
 }

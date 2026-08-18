@@ -41,13 +41,6 @@ const (
 	TicketServiceRevokeTicketProcedure = "/cafelogos.ticket.TicketService/RevokeTicket"
 )
 
-// These variables are the protoreflect.Descriptor objects for the RPCs defined in this package.
-var (
-	ticketServiceServiceDescriptor            = ticket.File_ticket_ticket_service_proto.Services().ByName("TicketService")
-	ticketServiceIssueTicketMethodDescriptor  = ticketServiceServiceDescriptor.Methods().ByName("IssueTicket")
-	ticketServiceRevokeTicketMethodDescriptor = ticketServiceServiceDescriptor.Methods().ByName("RevokeTicket")
-)
-
 // TicketServiceClient is a client for the cafelogos.ticket.TicketService service.
 type TicketServiceClient interface {
 	IssueTicket(context.Context, *connect.Request[ticket.RequestIssueTicket]) (*connect.Response[ticket.ResponseIssueTicket], error)
@@ -63,17 +56,18 @@ type TicketServiceClient interface {
 // http://api.acme.com or https://acme.com/grpc).
 func NewTicketServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) TicketServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
+	ticketServiceMethods := ticket.File_ticket_ticket_service_proto.Services().ByName("TicketService").Methods()
 	return &ticketServiceClient{
 		issueTicket: connect.NewClient[ticket.RequestIssueTicket, ticket.ResponseIssueTicket](
 			httpClient,
 			baseURL+TicketServiceIssueTicketProcedure,
-			connect.WithSchema(ticketServiceIssueTicketMethodDescriptor),
+			connect.WithSchema(ticketServiceMethods.ByName("IssueTicket")),
 			connect.WithClientOptions(opts...),
 		),
 		revokeTicket: connect.NewClient[ticket.RequestRevokeTicket, ticket.ResponseRevokeTicket](
 			httpClient,
 			baseURL+TicketServiceRevokeTicketProcedure,
-			connect.WithSchema(ticketServiceRevokeTicketMethodDescriptor),
+			connect.WithSchema(ticketServiceMethods.ByName("RevokeTicket")),
 			connect.WithClientOptions(opts...),
 		),
 	}
@@ -107,16 +101,17 @@ type TicketServiceHandler interface {
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
 func NewTicketServiceHandler(svc TicketServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	ticketServiceMethods := ticket.File_ticket_ticket_service_proto.Services().ByName("TicketService").Methods()
 	ticketServiceIssueTicketHandler := connect.NewUnaryHandler(
 		TicketServiceIssueTicketProcedure,
 		svc.IssueTicket,
-		connect.WithSchema(ticketServiceIssueTicketMethodDescriptor),
+		connect.WithSchema(ticketServiceMethods.ByName("IssueTicket")),
 		connect.WithHandlerOptions(opts...),
 	)
 	ticketServiceRevokeTicketHandler := connect.NewUnaryHandler(
 		TicketServiceRevokeTicketProcedure,
 		svc.RevokeTicket,
-		connect.WithSchema(ticketServiceRevokeTicketMethodDescriptor),
+		connect.WithSchema(ticketServiceMethods.ByName("RevokeTicket")),
 		connect.WithHandlerOptions(opts...),
 	)
 	return "/cafelogos.ticket.TicketService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

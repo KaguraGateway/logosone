@@ -308,6 +308,7 @@ message CoffeeBrew {
     uint64 amount = 4;
     string created_at = 5;
     string updated_at = 6;
+    int32 preparation_time = 7;
 }
 message Stock {
     string id = 1;

@@ -15,12 +15,12 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public struct Cafelogos_Orderlink_PostOrderItemInput: Sendable {
+public nonisolated struct Cafelogos_Orderlink_PostOrderItemInput: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -42,7 +42,7 @@ public struct Cafelogos_Orderlink_PostOrderItemInput: Sendable {
   public init() {}
 }
 
-public struct Cafelogos_Orderlink_PostOrderInput: Sendable {
+public nonisolated struct Cafelogos_Orderlink_PostOrderInput: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -63,7 +63,7 @@ public struct Cafelogos_Orderlink_PostOrderInput: Sendable {
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  public enum OrderType: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public nonisolated enum OrderType: SwiftProtobuf.Enum, Swift.CaseIterable {
     public typealias RawValue = Int
     case eatIn // = 0
     case takeOut // = 1
@@ -102,17 +102,11 @@ public struct Cafelogos_Orderlink_PostOrderInput: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "cafelogos.orderlink"
+fileprivate nonisolated let _protobuf_package = "cafelogos.orderlink"
 
-extension Cafelogos_Orderlink_PostOrderItemInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cafelogos_Orderlink_PostOrderItemInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderItemInput"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "product_id"),
-    2: .standard(proto: "coffee_brew_id"),
-    3: .same(proto: "quantity"),
-    20: .standard(proto: "is_managing_order"),
-    21: .standard(proto: "is_ol_kitchen"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}product_id\0\u{3}coffee_brew_id\0\u{1}quantity\0\u{4}\u{11}is_managing_order\0\u{3}is_ol_kitchen\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -160,17 +154,9 @@ extension Cafelogos_Orderlink_PostOrderItemInput: SwiftProtobuf.Message, SwiftPr
   }
 }
 
-extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".PostOrderInput"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "order_id"),
-    2: .standard(proto: "order_at"),
-    3: .same(proto: "items"),
-    4: .same(proto: "type"),
-    5: .standard(proto: "ticket_id"),
-    6: .standard(proto: "ticket_addr"),
-    7: .standard(proto: "seat_name"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0\u{3}order_at\0\u{1}items\0\u{1}type\0\u{3}ticket_id\0\u{3}ticket_addr\0\u{3}seat_name\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -228,9 +214,6 @@ extension Cafelogos_Orderlink_PostOrderInput: SwiftProtobuf.Message, SwiftProtob
   }
 }
 
-extension Cafelogos_Orderlink_PostOrderInput.OrderType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "EAT_IN"),
-    1: .same(proto: "TAKE_OUT"),
-  ]
+nonisolated extension Cafelogos_Orderlink_PostOrderInput.OrderType: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0EAT_IN\0\u{1}TAKE_OUT\0")
 }

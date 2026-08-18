@@ -15,12 +15,12 @@ import SwiftProtobuf
 // incompatible with the version of SwiftProtobuf to which you are linking.
 // Please ensure that you are building against the same version of the API
 // that was used to generate this file.
-fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
+fileprivate nonisolated struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAPIVersionCheck {
   struct _2: SwiftProtobuf.ProtobufAPIVersion_2 {}
   typealias Version = _2
 }
 
-public struct Cafelogos_Ticket_RequestIssueTicket: Sendable {
+public nonisolated struct Cafelogos_Ticket_RequestIssueTicket: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -32,17 +32,17 @@ public struct Cafelogos_Ticket_RequestIssueTicket: Sendable {
   public init() {}
 }
 
-public struct Cafelogos_Ticket_ResponseIssueTicket: Sendable {
+public nonisolated struct Cafelogos_Ticket_ResponseIssueTicket: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var ticket: Cafelogos_Ticket_Ticket {
-    get {return _ticket ?? Cafelogos_Ticket_Ticket()}
+    get {_ticket ?? Cafelogos_Ticket_Ticket()}
     set {_ticket = newValue}
   }
   /// Returns true if `ticket` has been explicitly set.
-  public var hasTicket: Bool {return self._ticket != nil}
+  public var hasTicket: Bool {self._ticket != nil}
   /// Clears the value of `ticket`. Subsequent reads from it will return its default value.
   public mutating func clearTicket() {self._ticket = nil}
 
@@ -53,7 +53,7 @@ public struct Cafelogos_Ticket_ResponseIssueTicket: Sendable {
   fileprivate var _ticket: Cafelogos_Ticket_Ticket? = nil
 }
 
-public struct Cafelogos_Ticket_RequestRevokeTicket: Sendable {
+public nonisolated struct Cafelogos_Ticket_RequestRevokeTicket: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -65,7 +65,7 @@ public struct Cafelogos_Ticket_RequestRevokeTicket: Sendable {
   public init() {}
 }
 
-public struct Cafelogos_Ticket_ResponseRevokeTicket: Sendable {
+public nonisolated struct Cafelogos_Ticket_ResponseRevokeTicket: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -75,7 +75,7 @@ public struct Cafelogos_Ticket_ResponseRevokeTicket: Sendable {
   public init() {}
 }
 
-public struct Cafelogos_Ticket_Ticket: Sendable {
+public nonisolated struct Cafelogos_Ticket_Ticket: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -94,13 +94,11 @@ public struct Cafelogos_Ticket_Ticket: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-fileprivate let _protobuf_package = "cafelogos.ticket"
+fileprivate nonisolated let _protobuf_package = "cafelogos.ticket"
 
-extension Cafelogos_Ticket_RequestIssueTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cafelogos_Ticket_RequestIssueTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RequestIssueTicket"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "prefix"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}prefix\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -128,11 +126,9 @@ extension Cafelogos_Ticket_RequestIssueTicket: SwiftProtobuf.Message, SwiftProto
   }
 }
 
-extension Cafelogos_Ticket_ResponseIssueTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cafelogos_Ticket_ResponseIssueTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResponseIssueTicket"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "ticket"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}ticket\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -164,11 +160,9 @@ extension Cafelogos_Ticket_ResponseIssueTicket: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-extension Cafelogos_Ticket_RequestRevokeTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cafelogos_Ticket_RequestRevokeTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RequestRevokeTicket"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -196,7 +190,7 @@ extension Cafelogos_Ticket_RequestRevokeTicket: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-extension Cafelogos_Ticket_ResponseRevokeTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cafelogos_Ticket_ResponseRevokeTicket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ResponseRevokeTicket"
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
@@ -215,13 +209,9 @@ extension Cafelogos_Ticket_ResponseRevokeTicket: SwiftProtobuf.Message, SwiftPro
   }
 }
 
-extension Cafelogos_Ticket_Ticket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+nonisolated extension Cafelogos_Ticket_Ticket: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Ticket"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "id"),
-    2: .standard(proto: "ticket_addr"),
-    3: .standard(proto: "created_at"),
-  ]
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{3}ticket_addr\0\u{3}created_at\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {

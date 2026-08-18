@@ -28,6 +28,7 @@ func toProductCoffeeBrew(daoProductCoffeeBrew dao.ProductCoffeeBrew) *model.Prod
 		daoProductCoffeeBrew.Name,
 		uint32(daoProductCoffeeBrew.BeanQuantityGrams),
 		uint64(daoProductCoffeeBrew.Amount),
+		daoProductCoffeeBrew.PreparationTime,
 		synchro.In[tz.UTC](daoProductCoffeeBrew.CreatedAt),
 		synchro.In[tz.UTC](daoProductCoffeeBrew.UpdatedAt),
 	)
@@ -59,10 +60,11 @@ func (i *productCoffeeBrewDb) Save(ctx context.Context, productCoffeeBrew *model
 		Name:              productCoffeeBrew.GetName(),
 		BeanQuantityGrams: int(productCoffeeBrew.BeanQuantityGrams),
 		Amount:            uint(productCoffeeBrew.Amount),
+		PreparationTime:   productCoffeeBrew.GetPreparationTime(),
 		CreatedAt:         productCoffeeBrew.GetCreatedAt().StdTime(),
 		UpdatedAt:         productCoffeeBrew.GetUpdatedAt().StdTime(),
 	}
-	if _, err := i.db.NewInsert().Model(daoCoffeeBrew).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("bean_quantity_grams = EXCLUDED.bean_quantity_grams").Set("amount = EXCLUDED.amount").Exec(ctx); err != nil {
+	if _, err := i.db.NewInsert().Model(daoCoffeeBrew).On("CONFLICT (id) DO UPDATE").Set("name = EXCLUDED.name").Set("bean_quantity_grams = EXCLUDED.bean_quantity_grams").Set("amount = EXCLUDED.amount").Set("preparation_time = EXCLUDED.preparation_time").Exec(ctx); err != nil {
 		return err
 	}
 	return nil

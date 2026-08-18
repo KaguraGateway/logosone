@@ -82,7 +82,7 @@ func (uc *updateProductUseCase) Execute(ctx context.Context, id string, param *P
 			return false
 		})
 		for _, pBrew := range newBrews {
-			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount)
+			brew, err := model.NewProductCoffeeBrew(product.GetId(), pBrew.Name, pBrew.BeanQuantityGrams, pBrew.Amount, pBrew.PreparationTime)
 			if err != nil {
 				return errors.Join(err, ErrInvalidParam)
 			}

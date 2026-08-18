@@ -92,7 +92,7 @@ func toProduct(product *dao.Product) *model.Product {
 	var productCoffeeBrews []*model.ProductCoffeeBrew
 	if product.CoffeeBrews != nil {
 		productCoffeeBrews = lo.Map(product.CoffeeBrews, func(coffeeBrew *dao.ProductCoffeeBrew, _ int) *model.ProductCoffeeBrew {
-			return model.ReconstructProductCoffeeBrew(coffeeBrew.ID, coffeeBrew.ProductID, coffeeBrew.Name, uint32(coffeeBrew.BeanQuantityGrams), uint64(coffeeBrew.Amount), synchro.In[tz.UTC](coffeeBrew.CreatedAt), synchro.In[tz.UTC](coffeeBrew.UpdatedAt))
+			return model.ReconstructProductCoffeeBrew(coffeeBrew.ID, coffeeBrew.ProductID, coffeeBrew.Name, uint32(coffeeBrew.BeanQuantityGrams), uint64(coffeeBrew.Amount), int32(coffeeBrew.PreparationTime), synchro.In[tz.UTC](coffeeBrew.CreatedAt), synchro.In[tz.UTC](coffeeBrew.UpdatedAt))
 		})
 	}
 	// Only Other

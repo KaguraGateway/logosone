@@ -37,11 +37,15 @@ const (
 	// OrderLinkServicePostOrderProcedure is the fully-qualified name of the OrderLinkService's
 	// PostOrder RPC.
 	OrderLinkServicePostOrderProcedure = "/cafelogos.orderlink.OrderLinkService/PostOrder"
+	// OrderLinkServiceCancelOrderProcedure is the fully-qualified name of the OrderLinkService's
+	// CancelOrder RPC.
+	OrderLinkServiceCancelOrderProcedure = "/cafelogos.orderlink.OrderLinkService/CancelOrder"
 )
 
 // OrderLinkServiceClient is a client for the cafelogos.orderlink.OrderLinkService service.
 type OrderLinkServiceClient interface {
 	PostOrder(context.Context, *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error)
+	CancelOrder(context.Context, *connect.Request[orderlink.CancelOrderInput]) (*connect.Response[common.Empty], error)
 }
 
 // NewOrderLinkServiceClient constructs a client for the cafelogos.orderlink.OrderLinkService
@@ -61,12 +65,19 @@ func NewOrderLinkServiceClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(orderLinkServiceMethods.ByName("PostOrder")),
 			connect.WithClientOptions(opts...),
 		),
+		cancelOrder: connect.NewClient[orderlink.CancelOrderInput, common.Empty](
+			httpClient,
+			baseURL+OrderLinkServiceCancelOrderProcedure,
+			connect.WithSchema(orderLinkServiceMethods.ByName("CancelOrder")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // orderLinkServiceClient implements OrderLinkServiceClient.
 type orderLinkServiceClient struct {
-	postOrder *connect.Client[orderlink.PostOrderInput, common.Empty]
+	postOrder   *connect.Client[orderlink.PostOrderInput, common.Empty]
+	cancelOrder *connect.Client[orderlink.CancelOrderInput, common.Empty]
 }
 
 // PostOrder calls cafelogos.orderlink.OrderLinkService.PostOrder.
@@ -74,9 +85,15 @@ func (c *orderLinkServiceClient) PostOrder(ctx context.Context, req *connect.Req
 	return c.postOrder.CallUnary(ctx, req)
 }
 
+// CancelOrder calls cafelogos.orderlink.OrderLinkService.CancelOrder.
+func (c *orderLinkServiceClient) CancelOrder(ctx context.Context, req *connect.Request[orderlink.CancelOrderInput]) (*connect.Response[common.Empty], error) {
+	return c.cancelOrder.CallUnary(ctx, req)
+}
+
 // OrderLinkServiceHandler is an implementation of the cafelogos.orderlink.OrderLinkService service.
 type OrderLinkServiceHandler interface {
 	PostOrder(context.Context, *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error)
+	CancelOrder(context.Context, *connect.Request[orderlink.CancelOrderInput]) (*connect.Response[common.Empty], error)
 }
 
 // NewOrderLinkServiceHandler builds an HTTP handler from the service implementation. It returns the
@@ -92,10 +109,18 @@ func NewOrderLinkServiceHandler(svc OrderLinkServiceHandler, opts ...connect.Han
 		connect.WithSchema(orderLinkServiceMethods.ByName("PostOrder")),
 		connect.WithHandlerOptions(opts...),
 	)
+	orderLinkServiceCancelOrderHandler := connect.NewUnaryHandler(
+		OrderLinkServiceCancelOrderProcedure,
+		svc.CancelOrder,
+		connect.WithSchema(orderLinkServiceMethods.ByName("CancelOrder")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/cafelogos.orderlink.OrderLinkService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case OrderLinkServicePostOrderProcedure:
 			orderLinkServicePostOrderHandler.ServeHTTP(w, r)
+		case OrderLinkServiceCancelOrderProcedure:
+			orderLinkServiceCancelOrderHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -107,4 +132,8 @@ type UnimplementedOrderLinkServiceHandler struct{}
 
 func (UnimplementedOrderLinkServiceHandler) PostOrder(context.Context, *connect.Request[orderlink.PostOrderInput]) (*connect.Response[common.Empty], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.orderlink.OrderLinkService.PostOrder is not implemented"))
+}
+
+func (UnimplementedOrderLinkServiceHandler) CancelOrder(context.Context, *connect.Request[orderlink.CancelOrderInput]) (*connect.Response[common.Empty], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.orderlink.OrderLinkService.CancelOrder is not implemented"))
 }

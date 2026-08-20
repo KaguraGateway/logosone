@@ -118,6 +118,22 @@ export enum PostOrderInput_OrderType {
 export declare const PostOrderInput_OrderTypeSchema: GenEnum<PostOrderInput_OrderType>;
 
 /**
+ * @generated from message cafelogos.orderlink.CancelOrderInput
+ */
+export declare type CancelOrderInput = Message<"cafelogos.orderlink.CancelOrderInput"> & {
+  /**
+   * @generated from field: string order_id = 1;
+   */
+  orderId: string;
+};
+
+/**
+ * Describes the message cafelogos.orderlink.CancelOrderInput.
+ * Use `create(CancelOrderInputSchema)` to create a new message.
+ */
+export declare const CancelOrderInputSchema: GenMessage<CancelOrderInput>;
+
+/**
  * @generated from service cafelogos.orderlink.OrderLinkService
  */
 export declare const OrderLinkService: GenService<{
@@ -127,6 +143,14 @@ export declare const OrderLinkService: GenService<{
   postOrder: {
     methodKind: "unary";
     input: typeof PostOrderInputSchema;
+    output: typeof EmptySchema;
+  },
+  /**
+   * @generated from rpc cafelogos.orderlink.OrderLinkService.CancelOrder
+   */
+  cancelOrder: {
+    methodKind: "unary";
+    input: typeof CancelOrderInputSchema;
     output: typeof EmptySchema;
   },
 }>;

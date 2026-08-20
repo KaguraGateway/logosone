@@ -8,6 +8,7 @@ option go_package = "github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;order
 
 service OrderLinkService {
     rpc PostOrder(PostOrderInput) returns (common.Empty) {}
+    rpc CancelOrder(CancelOrderInput) returns (common.Empty) {}
 }
 
 message PostOrderItemInput {
@@ -32,4 +33,8 @@ message PostOrderInput {
         EAT_IN = 0;
         TAKE_OUT = 1;
     }
+}
+
+message CancelOrderInput {
+    string order_id = 1;
 }

@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file orderlink/orderlink_service.proto.
  */
 export const file_orderlink_orderlink_service: GenFile = /*@__PURE__*/
-  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsihAEKElBvc3RPcmRlckl0ZW1JbnB1dBISCgpwcm9kdWN0X2lkGAEgASgJEhYKDmNvZmZlZV9icmV3X2lkGAIgASgJEhAKCHF1YW50aXR5GAMgASgNEhkKEWlzX21hbmFnaW5nX29yZGVyGBQgASgIEhUKDWlzX29sX2tpdGNoZW4YFSABKAgiiwIKDlBvc3RPcmRlcklucHV0EhAKCG9yZGVyX2lkGAEgASgJEhAKCG9yZGVyX2F0GAIgASgJEjYKBWl0ZW1zGAMgAygLMicuY2FmZWxvZ29zLm9yZGVybGluay5Qb3N0T3JkZXJJdGVtSW5wdXQSOwoEdHlwZRgEIAEoDjItLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQuT3JkZXJUeXBlEhEKCXRpY2tldF9pZBgFIAEoCRITCgt0aWNrZXRfYWRkchgGIAEoCRIRCglzZWF0X25hbWUYByABKAkiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEyXwoQT3JkZXJMaW5rU2VydmljZRJLCglQb3N0T3JkZXISIy5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0GhcuY2FmZWxvZ29zLmNvbW1vbi5FbXB0eSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9jYWZlbG9nb3MtZ3JwYy9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
+  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsihAEKElBvc3RPcmRlckl0ZW1JbnB1dBISCgpwcm9kdWN0X2lkGAEgASgJEhYKDmNvZmZlZV9icmV3X2lkGAIgASgJEhAKCHF1YW50aXR5GAMgASgNEhkKEWlzX21hbmFnaW5nX29yZGVyGBQgASgIEhUKDWlzX29sX2tpdGNoZW4YFSABKAgiiwIKDlBvc3RPcmRlcklucHV0EhAKCG9yZGVyX2lkGAEgASgJEhAKCG9yZGVyX2F0GAIgASgJEjYKBWl0ZW1zGAMgAygLMicuY2FmZWxvZ29zLm9yZGVybGluay5Qb3N0T3JkZXJJdGVtSW5wdXQSOwoEdHlwZRgEIAEoDjItLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQuT3JkZXJUeXBlEhEKCXRpY2tldF9pZBgFIAEoCRITCgt0aWNrZXRfYWRkchgGIAEoCRIRCglzZWF0X25hbWUYByABKAkiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEiJAoQQ2FuY2VsT3JkZXJJbnB1dBIQCghvcmRlcl9pZBgBIAEoCTKwAQoQT3JkZXJMaW5rU2VydmljZRJLCglQb3N0T3JkZXISIy5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0GhcuY2FmZWxvZ29zLmNvbW1vbi5FbXB0eSIAEk8KC0NhbmNlbE9yZGVyEiUuY2FmZWxvZ29zLm9yZGVybGluay5DYW5jZWxPcmRlcklucHV0GhcuY2FmZWxvZ29zLmNvbW1vbi5FbXB0eSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9jYWZlbG9nb3MtZ3JwYy9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
 
 /**
  * @generated from message cafelogos.orderlink.PostOrderItemInput
@@ -124,6 +124,23 @@ export const PostOrderInput_OrderTypeSchema: GenEnum<PostOrderInput_OrderType> =
   enumDesc(file_orderlink_orderlink_service, 1, 0);
 
 /**
+ * @generated from message cafelogos.orderlink.CancelOrderInput
+ */
+export type CancelOrderInput = Message<"cafelogos.orderlink.CancelOrderInput"> & {
+  /**
+   * @generated from field: string order_id = 1;
+   */
+  orderId: string;
+};
+
+/**
+ * Describes the message cafelogos.orderlink.CancelOrderInput.
+ * Use `create(CancelOrderInputSchema)` to create a new message.
+ */
+export const CancelOrderInputSchema: GenMessage<CancelOrderInput> = /*@__PURE__*/
+  messageDesc(file_orderlink_orderlink_service, 2);
+
+/**
  * @generated from service cafelogos.orderlink.OrderLinkService
  */
 export const OrderLinkService: GenService<{
@@ -133,6 +150,14 @@ export const OrderLinkService: GenService<{
   postOrder: {
     methodKind: "unary";
     input: typeof PostOrderInputSchema;
+    output: typeof EmptySchema;
+  },
+  /**
+   * @generated from rpc cafelogos.orderlink.OrderLinkService.CancelOrder
+   */
+  cancelOrder: {
+    methodKind: "unary";
+    input: typeof CancelOrderInputSchema;
     output: typeof EmptySchema;
   },
 }> = /*@__PURE__*/

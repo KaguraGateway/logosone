@@ -8,3 +8,7 @@ import { OrderLinkService } from "./orderlink_service_pb";
  * @generated from rpc cafelogos.orderlink.OrderLinkService.PostOrder
  */
 export const postOrder: typeof OrderLinkService["method"]["postOrder"];
+/**
+ * @generated from rpc cafelogos.orderlink.OrderLinkService.CancelOrder
+ */
+export const cancelOrder: typeof OrderLinkService["method"]["cancelOrder"];

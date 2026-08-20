@@ -44,6 +44,8 @@ service PosService {
     rpc DeleteSeat(DeleteSeatRequest) returns (common.Empty) {}
     rpc GetSeats(common.Empty) returns (GetSeatsResponse) {}
 
+    rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse) {}
+
     rpc GetDiscounts(common.Empty) returns (GetDiscountsResponse) {}
     rpc PostDiscount(PostDiscountRequest) returns (common.Empty) {}
 
@@ -323,6 +325,11 @@ enum OrderType {
     EatIn = 0;
     TakeOut = 1;
 }
+enum OrderStatus {
+    ORDER_STATUS_UNKNOWN = 0;
+    ORDER_STATUS_ACTIVE = 1;
+    ORDER_STATUS_CANCELED = 2;
+}
 message Order {
     string id = 1;
     repeated OrderItem items = 2;
@@ -332,6 +339,7 @@ message Order {
     string call_number = 6;
     string client_id = 7;
     string seat_name = 8;
+    OrderStatus status = 9;
 }
 message OrderParam {
     string id = 1; /** 代入した場合は代入したIDが使用され、しなかったら生成される */
@@ -432,3 +440,9 @@ message ProductSale {
     string coffee_brew_id = 7; // コーヒー淹れ方ID
     string coffee_brew_name = 8; // コーヒー淹れ方名
 }
+
+message CancelOrderRequest {
+    string order_id = 1;
+}
+
+message CancelOrderResponse{}

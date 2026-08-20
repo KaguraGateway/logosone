@@ -16,6 +16,12 @@ public protocol Cafelogos_Orderlink_OrderLinkServiceClientInterface: Sendable {
 
     @available(iOS 13, *)
     func `postOrder`(request: Cafelogos_Orderlink_PostOrderInput, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Common_Empty>
+
+    @discardableResult
+    func `cancelOrder`(request: Cafelogos_Orderlink_CancelOrderInput, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable
+
+    @available(iOS 13, *)
+    func `cancelOrder`(request: Cafelogos_Orderlink_CancelOrderInput, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Common_Empty>
 }
 
 /// Concrete implementation of `Cafelogos_Orderlink_OrderLinkServiceClientInterface`.
@@ -36,9 +42,20 @@ public final class Cafelogos_Orderlink_OrderLinkServiceClient: Cafelogos_Orderli
         return await self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/PostOrder", idempotencyLevel: .unknown, request: request, headers: headers)
     }
 
+    @discardableResult
+    public func `cancelOrder`(request: Cafelogos_Orderlink_CancelOrderInput, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Common_Empty>) -> Void) -> Connect.Cancelable {
+        return self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/CancelOrder", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
+    }
+
+    @available(iOS 13, *)
+    public func `cancelOrder`(request: Cafelogos_Orderlink_CancelOrderInput, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Common_Empty> {
+        return await self.client.unary(path: "/cafelogos.orderlink.OrderLinkService/CancelOrder", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
     public enum Metadata {
         public enum Methods {
             public static let postOrder = Connect.MethodSpec(name: "PostOrder", service: "cafelogos.orderlink.OrderLinkService", type: .unary)
+            public static let cancelOrder = Connect.MethodSpec(name: "CancelOrder", service: "cafelogos.orderlink.OrderLinkService", type: .unary)
         }
     }
 }

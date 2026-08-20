@@ -89,6 +89,44 @@ public nonisolated enum Cafelogos_Pos_OrderType: SwiftProtobuf.Enum, Swift.CaseI
 
 }
 
+public nonisolated enum Cafelogos_Pos_OrderStatus: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case unknown // = 0
+  case active // = 1
+  case canceled // = 2
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .unknown
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknown
+    case 1: self = .active
+    case 2: self = .canceled
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .unknown: return 0
+    case .active: return 1
+    case .canceled: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Cafelogos_Pos_OrderStatus] = [
+    .unknown,
+    .active,
+    .canceled,
+  ]
+
+}
+
 public nonisolated enum Cafelogos_Pos_DiscountType: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case price // = 0
@@ -1090,6 +1128,8 @@ public nonisolated struct Cafelogos_Pos_Order: Sendable {
 
   public var seatName: String = String()
 
+  public var status: Cafelogos_Pos_OrderStatus = .unknown
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -1356,6 +1396,28 @@ public nonisolated struct Cafelogos_Pos_ProductSale: Sendable {
   public init() {}
 }
 
+public nonisolated struct Cafelogos_Pos_CancelOrderRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var orderID: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public nonisolated struct Cafelogos_Pos_CancelOrderResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate nonisolated let _protobuf_package = "cafelogos.pos"
@@ -1366,6 +1428,10 @@ nonisolated extension Cafelogos_Pos_ProductType: SwiftProtobuf._ProtoNameProvidi
 
 nonisolated extension Cafelogos_Pos_OrderType: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0EatIn\0\u{1}TakeOut\0")
+}
+
+nonisolated extension Cafelogos_Pos_OrderStatus: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{2}\0ORDER_STATUS_UNKNOWN\0\u{1}ORDER_STATUS_ACTIVE\0\u{1}ORDER_STATUS_CANCELED\0")
 }
 
 nonisolated extension Cafelogos_Pos_DiscountType: SwiftProtobuf._ProtoNameProviding {
@@ -3294,7 +3360,7 @@ nonisolated extension Cafelogos_Pos_Stock: SwiftProtobuf.Message, SwiftProtobuf.
 
 nonisolated extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Order"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}items\0\u{1}discounts\0\u{3}order_type\0\u{3}order_at\0\u{3}call_number\0\u{3}client_id\0\u{3}seat_name\0")
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{1}id\0\u{1}items\0\u{1}discounts\0\u{3}order_type\0\u{3}order_at\0\u{3}call_number\0\u{3}client_id\0\u{3}seat_name\0\u{1}status\0")
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
@@ -3310,6 +3376,7 @@ nonisolated extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf.
       case 6: try { try decoder.decodeSingularStringField(value: &self.callNumber) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.clientID) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.seatName) }()
+      case 9: try { try decoder.decodeSingularEnumField(value: &self.status) }()
       default: break
       }
     }
@@ -3340,6 +3407,9 @@ nonisolated extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.seatName.isEmpty {
       try visitor.visitSingularStringField(value: self.seatName, fieldNumber: 8)
     }
+    if self.status != .unknown {
+      try visitor.visitSingularEnumField(value: self.status, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3352,6 +3422,7 @@ nonisolated extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf.
     if lhs.callNumber != rhs.callNumber {return false}
     if lhs.clientID != rhs.clientID {return false}
     if lhs.seatName != rhs.seatName {return false}
+    if lhs.status != rhs.status {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -3958,6 +4029,55 @@ nonisolated extension Cafelogos_Pos_ProductSale: SwiftProtobuf.Message, SwiftPro
     if lhs.totalQuantity != rhs.totalQuantity {return false}
     if lhs.coffeeBrewID != rhs.coffeeBrewID {return false}
     if lhs.coffeeBrewName != rhs.coffeeBrewName {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Cafelogos_Pos_CancelOrderRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CancelOrderRequest"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap(bytecode: "\0\u{3}order_id\0")
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.orderID) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.orderID.isEmpty {
+      try visitor.visitSingularStringField(value: self.orderID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_CancelOrderRequest, rhs: Cafelogos_Pos_CancelOrderRequest) -> Bool {
+    if lhs.orderID != rhs.orderID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+nonisolated extension Cafelogos_Pos_CancelOrderResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".CancelOrderResponse"
+  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    // Load everything into unknown fields
+    while try decoder.nextFieldNumber() != nil {}
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Cafelogos_Pos_CancelOrderResponse, rhs: Cafelogos_Pos_CancelOrderResponse) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

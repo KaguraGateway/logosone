@@ -132,6 +132,11 @@ export const deleteSeat = PosService.method.deleteSeat;
 export const getSeats = PosService.method.getSeats;
 
 /**
+ * @generated from rpc cafelogos.pos.PosService.CancelOrder
+ */
+export const cancelOrder = PosService.method.cancelOrder;
+
+/**
  * @generated from rpc cafelogos.pos.PosService.GetDiscounts
  */
 export const getDiscounts = PosService.method.getDiscounts;

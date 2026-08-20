@@ -1262,6 +1262,11 @@ export declare type Order = Message<"cafelogos.pos.Order"> & {
    * @generated from field: string seat_name = 8;
    */
   seatName: string;
+
+  /**
+   * @generated from field: cafelogos.pos.OrderStatus status = 9;
+   */
+  status: OrderStatus;
 };
 
 /**
@@ -1711,6 +1716,34 @@ export declare type ProductSale = Message<"cafelogos.pos.ProductSale"> & {
 export declare const ProductSaleSchema: GenMessage<ProductSale>;
 
 /**
+ * @generated from message cafelogos.pos.CancelOrderRequest
+ */
+export declare type CancelOrderRequest = Message<"cafelogos.pos.CancelOrderRequest"> & {
+  /**
+   * @generated from field: string order_id = 1;
+   */
+  orderId: string;
+};
+
+/**
+ * Describes the message cafelogos.pos.CancelOrderRequest.
+ * Use `create(CancelOrderRequestSchema)` to create a new message.
+ */
+export declare const CancelOrderRequestSchema: GenMessage<CancelOrderRequest>;
+
+/**
+ * @generated from message cafelogos.pos.CancelOrderResponse
+ */
+export declare type CancelOrderResponse = Message<"cafelogos.pos.CancelOrderResponse"> & {
+};
+
+/**
+ * Describes the message cafelogos.pos.CancelOrderResponse.
+ * Use `create(CancelOrderResponseSchema)` to create a new message.
+ */
+export declare const CancelOrderResponseSchema: GenMessage<CancelOrderResponse>;
+
+/**
  * @generated from enum cafelogos.pos.ProductType
  */
 export enum ProductType {
@@ -1751,6 +1784,31 @@ export enum OrderType {
  * Describes the enum cafelogos.pos.OrderType.
  */
 export declare const OrderTypeSchema: GenEnum<OrderType>;
+
+/**
+ * @generated from enum cafelogos.pos.OrderStatus
+ */
+export enum OrderStatus {
+  /**
+   * @generated from enum value: ORDER_STATUS_UNKNOWN = 0;
+   */
+  UNKNOWN = 0,
+
+  /**
+   * @generated from enum value: ORDER_STATUS_ACTIVE = 1;
+   */
+  ACTIVE = 1,
+
+  /**
+   * @generated from enum value: ORDER_STATUS_CANCELED = 2;
+   */
+  CANCELED = 2,
+}
+
+/**
+ * Describes the enum cafelogos.pos.OrderStatus.
+ */
+export declare const OrderStatusSchema: GenEnum<OrderStatus>;
 
 /**
  * @generated from enum cafelogos.pos.DiscountType
@@ -1972,6 +2030,14 @@ export declare const PosService: GenService<{
     methodKind: "unary";
     input: typeof EmptySchema;
     output: typeof GetSeatsResponseSchema;
+  },
+  /**
+   * @generated from rpc cafelogos.pos.PosService.CancelOrder
+   */
+  cancelOrder: {
+    methodKind: "unary";
+    input: typeof CancelOrderRequestSchema;
+    output: typeof CancelOrderResponseSchema;
   },
   /**
    * @generated from rpc cafelogos.pos.PosService.GetDiscounts

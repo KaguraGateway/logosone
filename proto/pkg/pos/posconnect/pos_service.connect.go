@@ -95,6 +95,8 @@ const (
 	PosServiceDeleteSeatProcedure = "/cafelogos.pos.PosService/DeleteSeat"
 	// PosServiceGetSeatsProcedure is the fully-qualified name of the PosService's GetSeats RPC.
 	PosServiceGetSeatsProcedure = "/cafelogos.pos.PosService/GetSeats"
+	// PosServiceCancelOrderProcedure is the fully-qualified name of the PosService's CancelOrder RPC.
+	PosServiceCancelOrderProcedure = "/cafelogos.pos.PosService/CancelOrder"
 	// PosServiceGetDiscountsProcedure is the fully-qualified name of the PosService's GetDiscounts RPC.
 	PosServiceGetDiscountsProcedure = "/cafelogos.pos.PosService/GetDiscounts"
 	// PosServicePostDiscountProcedure is the fully-qualified name of the PosService's PostDiscount RPC.
@@ -141,6 +143,7 @@ type PosServiceClient interface {
 	UpdateSeat(context.Context, *connect.Request[pos.UpdateSeatRequest]) (*connect.Response[common.Empty], error)
 	DeleteSeat(context.Context, *connect.Request[pos.DeleteSeatRequest]) (*connect.Response[common.Empty], error)
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
+	CancelOrder(context.Context, *connect.Request[pos.CancelOrderRequest]) (*connect.Response[pos.CancelOrderResponse], error)
 	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
 	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
 	GetDailySales(context.Context, *connect.Request[pos.GetDailySalesRequest]) (*connect.Response[pos.GetDailySalesResponse], error)
@@ -311,6 +314,12 @@ func NewPosServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...
 			connect.WithSchema(posServiceMethods.ByName("GetSeats")),
 			connect.WithClientOptions(opts...),
 		),
+		cancelOrder: connect.NewClient[pos.CancelOrderRequest, pos.CancelOrderResponse](
+			httpClient,
+			baseURL+PosServiceCancelOrderProcedure,
+			connect.WithSchema(posServiceMethods.ByName("CancelOrder")),
+			connect.WithClientOptions(opts...),
+		),
 		getDiscounts: connect.NewClient[common.Empty, pos.GetDiscountsResponse](
 			httpClient,
 			baseURL+PosServiceGetDiscountsProcedure,
@@ -377,6 +386,7 @@ type posServiceClient struct {
 	updateSeat              *connect.Client[pos.UpdateSeatRequest, common.Empty]
 	deleteSeat              *connect.Client[pos.DeleteSeatRequest, common.Empty]
 	getSeats                *connect.Client[common.Empty, pos.GetSeatsResponse]
+	cancelOrder             *connect.Client[pos.CancelOrderRequest, pos.CancelOrderResponse]
 	getDiscounts            *connect.Client[common.Empty, pos.GetDiscountsResponse]
 	postDiscount            *connect.Client[pos.PostDiscountRequest, common.Empty]
 	getDailySales           *connect.Client[pos.GetDailySalesRequest, pos.GetDailySalesResponse]
@@ -510,6 +520,11 @@ func (c *posServiceClient) GetSeats(ctx context.Context, req *connect.Request[co
 	return c.getSeats.CallUnary(ctx, req)
 }
 
+// CancelOrder calls cafelogos.pos.PosService.CancelOrder.
+func (c *posServiceClient) CancelOrder(ctx context.Context, req *connect.Request[pos.CancelOrderRequest]) (*connect.Response[pos.CancelOrderResponse], error) {
+	return c.cancelOrder.CallUnary(ctx, req)
+}
+
 // GetDiscounts calls cafelogos.pos.PosService.GetDiscounts.
 func (c *posServiceClient) GetDiscounts(ctx context.Context, req *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error) {
 	return c.getDiscounts.CallUnary(ctx, req)
@@ -568,6 +583,7 @@ type PosServiceHandler interface {
 	UpdateSeat(context.Context, *connect.Request[pos.UpdateSeatRequest]) (*connect.Response[common.Empty], error)
 	DeleteSeat(context.Context, *connect.Request[pos.DeleteSeatRequest]) (*connect.Response[common.Empty], error)
 	GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error)
+	CancelOrder(context.Context, *connect.Request[pos.CancelOrderRequest]) (*connect.Response[pos.CancelOrderResponse], error)
 	GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error)
 	PostDiscount(context.Context, *connect.Request[pos.PostDiscountRequest]) (*connect.Response[common.Empty], error)
 	GetDailySales(context.Context, *connect.Request[pos.GetDailySalesRequest]) (*connect.Response[pos.GetDailySalesResponse], error)
@@ -734,6 +750,12 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 		connect.WithSchema(posServiceMethods.ByName("GetSeats")),
 		connect.WithHandlerOptions(opts...),
 	)
+	posServiceCancelOrderHandler := connect.NewUnaryHandler(
+		PosServiceCancelOrderProcedure,
+		svc.CancelOrder,
+		connect.WithSchema(posServiceMethods.ByName("CancelOrder")),
+		connect.WithHandlerOptions(opts...),
+	)
 	posServiceGetDiscountsHandler := connect.NewUnaryHandler(
 		PosServiceGetDiscountsProcedure,
 		svc.GetDiscounts,
@@ -822,6 +844,8 @@ func NewPosServiceHandler(svc PosServiceHandler, opts ...connect.HandlerOption) 
 			posServiceDeleteSeatHandler.ServeHTTP(w, r)
 		case PosServiceGetSeatsProcedure:
 			posServiceGetSeatsHandler.ServeHTTP(w, r)
+		case PosServiceCancelOrderProcedure:
+			posServiceCancelOrderHandler.ServeHTTP(w, r)
 		case PosServiceGetDiscountsProcedure:
 			posServiceGetDiscountsHandler.ServeHTTP(w, r)
 		case PosServicePostDiscountProcedure:
@@ -941,6 +965,10 @@ func (UnimplementedPosServiceHandler) DeleteSeat(context.Context, *connect.Reque
 
 func (UnimplementedPosServiceHandler) GetSeats(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetSeatsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.GetSeats is not implemented"))
+}
+
+func (UnimplementedPosServiceHandler) CancelOrder(context.Context, *connect.Request[pos.CancelOrderRequest]) (*connect.Response[pos.CancelOrderResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("cafelogos.pos.PosService.CancelOrder is not implemented"))
 }
 
 func (UnimplementedPosServiceHandler) GetDiscounts(context.Context, *connect.Request[common.Empty]) (*connect.Response[pos.GetDiscountsResponse], error) {

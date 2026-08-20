@@ -164,6 +164,12 @@ public protocol Cafelogos_Pos_PosServiceClientInterface: Sendable {
     func `getSeats`(request: Cafelogos_Common_Empty, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Pos_GetSeatsResponse>
 
     @discardableResult
+    func `cancelOrder`(request: Cafelogos_Pos_CancelOrderRequest, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_CancelOrderResponse>) -> Void) -> Connect.Cancelable
+
+    @available(iOS 13, *)
+    func `cancelOrder`(request: Cafelogos_Pos_CancelOrderRequest, headers: Connect.Headers) async -> ResponseMessage<Cafelogos_Pos_CancelOrderResponse>
+
+    @discardableResult
     func `getDiscounts`(request: Cafelogos_Common_Empty, headers: Connect.Headers, completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetDiscountsResponse>) -> Void) -> Connect.Cancelable
 
     @available(iOS 13, *)
@@ -461,6 +467,16 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
     }
 
     @discardableResult
+    public func `cancelOrder`(request: Cafelogos_Pos_CancelOrderRequest, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_CancelOrderResponse>) -> Void) -> Connect.Cancelable {
+        return self.client.unary(path: "/cafelogos.pos.PosService/CancelOrder", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
+    }
+
+    @available(iOS 13, *)
+    public func `cancelOrder`(request: Cafelogos_Pos_CancelOrderRequest, headers: Connect.Headers = [:]) async -> ResponseMessage<Cafelogos_Pos_CancelOrderResponse> {
+        return await self.client.unary(path: "/cafelogos.pos.PosService/CancelOrder", idempotencyLevel: .unknown, request: request, headers: headers)
+    }
+
+    @discardableResult
     public func `getDiscounts`(request: Cafelogos_Common_Empty, headers: Connect.Headers = [:], completion: @escaping @Sendable (ResponseMessage<Cafelogos_Pos_GetDiscountsResponse>) -> Void) -> Connect.Cancelable {
         return self.client.unary(path: "/cafelogos.pos.PosService/GetDiscounts", idempotencyLevel: .unknown, request: request, headers: headers, completion: completion)
     }
@@ -547,6 +563,7 @@ public final class Cafelogos_Pos_PosServiceClient: Cafelogos_Pos_PosServiceClien
             public static let updateSeat = Connect.MethodSpec(name: "UpdateSeat", service: "cafelogos.pos.PosService", type: .unary)
             public static let deleteSeat = Connect.MethodSpec(name: "DeleteSeat", service: "cafelogos.pos.PosService", type: .unary)
             public static let getSeats = Connect.MethodSpec(name: "GetSeats", service: "cafelogos.pos.PosService", type: .unary)
+            public static let cancelOrder = Connect.MethodSpec(name: "CancelOrder", service: "cafelogos.pos.PosService", type: .unary)
             public static let getDiscounts = Connect.MethodSpec(name: "GetDiscounts", service: "cafelogos.pos.PosService", type: .unary)
             public static let postDiscount = Connect.MethodSpec(name: "PostDiscount", service: "cafelogos.pos.PosService", type: .unary)
             public static let getDailySales = Connect.MethodSpec(name: "GetDailySales", service: "cafelogos.pos.PosService", type: .unary)

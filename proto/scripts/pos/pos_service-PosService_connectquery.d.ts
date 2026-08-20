@@ -107,6 +107,10 @@ export const deleteSeat: typeof PosService["method"]["deleteSeat"];
  */
 export const getSeats: typeof PosService["method"]["getSeats"];
 /**
+ * @generated from rpc cafelogos.pos.PosService.CancelOrder
+ */
+export const cancelOrder: typeof PosService["method"]["cancelOrder"];
+/**
  * @generated from rpc cafelogos.pos.PosService.GetDiscounts
  */
 export const getDiscounts: typeof PosService["method"]["getDiscounts"];

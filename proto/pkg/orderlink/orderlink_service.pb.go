@@ -280,6 +280,102 @@ func (x *CancelOrderInput) GetOrderId() string {
 	return ""
 }
 
+type CancelOrderOutput struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Items         []*CancelItemInfo      `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelOrderOutput) Reset() {
+	*x = CancelOrderOutput{}
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelOrderOutput) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelOrderOutput) ProtoMessage() {}
+
+func (x *CancelOrderOutput) ProtoReflect() protoreflect.Message {
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelOrderOutput.ProtoReflect.Descriptor instead.
+func (*CancelOrderOutput) Descriptor() ([]byte, []int) {
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CancelOrderOutput) GetItems() []*CancelItemInfo {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+type CancelItemInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ProductId     string                 `protobuf:"bytes,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	Status        int32                  `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelItemInfo) Reset() {
+	*x = CancelItemInfo{}
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelItemInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelItemInfo) ProtoMessage() {}
+
+func (x *CancelItemInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelItemInfo.ProtoReflect.Descriptor instead.
+func (*CancelItemInfo) Descriptor() ([]byte, []int) {
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CancelItemInfo) GetProductId() string {
+	if x != nil {
+		return x.ProductId
+	}
+	return ""
+}
+
+func (x *CancelItemInfo) GetStatus() int32 {
+	if x != nil {
+		return x.Status
+	}
+	return 0
+}
+
 var File_orderlink_orderlink_service_proto protoreflect.FileDescriptor
 
 const file_orderlink_orderlink_service_proto_rawDesc = "" +
@@ -306,7 +402,13 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\x06EAT_IN\x10\x00\x12\f\n" +
 	"\bTAKE_OUT\x10\x01\"-\n" +
 	"\x10CancelOrderInput\x12\x19\n" +
-	"\border_id\x18\x01 \x01(\tR\aorderId2\xb0\x01\n" +
+	"\border_id\x18\x01 \x01(\tR\aorderId\"N\n" +
+	"\x11CancelOrderOutput\x129\n" +
+	"\x05items\x18\x01 \x03(\v2#.cafelogos.orderlink.CancelItemInfoR\x05items\"G\n" +
+	"\x0eCancelItemInfo\x12\x1d\n" +
+	"\n" +
+	"product_id\x18\x01 \x01(\tR\tproductId\x12\x16\n" +
+	"\x06status\x18\x02 \x01(\x05R\x06status2\xb0\x01\n" +
 	"\x10OrderLinkService\x12K\n" +
 	"\tPostOrder\x12#.cafelogos.orderlink.PostOrderInput\x1a\x17.cafelogos.common.Empty\"\x00\x12O\n" +
 	"\vCancelOrder\x12%.cafelogos.orderlink.CancelOrderInput\x1a\x17.cafelogos.common.Empty\"\x00BAZ?github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink;orderlinkb\x06proto3"
@@ -324,26 +426,29 @@ func file_orderlink_orderlink_service_proto_rawDescGZIP() []byte {
 }
 
 var file_orderlink_orderlink_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_orderlink_orderlink_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_orderlink_orderlink_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_orderlink_orderlink_service_proto_goTypes = []any{
 	(PostOrderInput_OrderType)(0), // 0: cafelogos.orderlink.PostOrderInput.OrderType
 	(*PostOrderItemInput)(nil),    // 1: cafelogos.orderlink.PostOrderItemInput
 	(*PostOrderInput)(nil),        // 2: cafelogos.orderlink.PostOrderInput
 	(*CancelOrderInput)(nil),      // 3: cafelogos.orderlink.CancelOrderInput
-	(*common.Empty)(nil),          // 4: cafelogos.common.Empty
+	(*CancelOrderOutput)(nil),     // 4: cafelogos.orderlink.CancelOrderOutput
+	(*CancelItemInfo)(nil),        // 5: cafelogos.orderlink.CancelItemInfo
+	(*common.Empty)(nil),          // 6: cafelogos.common.Empty
 }
 var file_orderlink_orderlink_service_proto_depIdxs = []int32{
 	1, // 0: cafelogos.orderlink.PostOrderInput.items:type_name -> cafelogos.orderlink.PostOrderItemInput
 	0, // 1: cafelogos.orderlink.PostOrderInput.type:type_name -> cafelogos.orderlink.PostOrderInput.OrderType
-	2, // 2: cafelogos.orderlink.OrderLinkService.PostOrder:input_type -> cafelogos.orderlink.PostOrderInput
-	3, // 3: cafelogos.orderlink.OrderLinkService.CancelOrder:input_type -> cafelogos.orderlink.CancelOrderInput
-	4, // 4: cafelogos.orderlink.OrderLinkService.PostOrder:output_type -> cafelogos.common.Empty
-	4, // 5: cafelogos.orderlink.OrderLinkService.CancelOrder:output_type -> cafelogos.common.Empty
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	5, // 2: cafelogos.orderlink.CancelOrderOutput.items:type_name -> cafelogos.orderlink.CancelItemInfo
+	2, // 3: cafelogos.orderlink.OrderLinkService.PostOrder:input_type -> cafelogos.orderlink.PostOrderInput
+	3, // 4: cafelogos.orderlink.OrderLinkService.CancelOrder:input_type -> cafelogos.orderlink.CancelOrderInput
+	6, // 5: cafelogos.orderlink.OrderLinkService.PostOrder:output_type -> cafelogos.common.Empty
+	6, // 6: cafelogos.orderlink.OrderLinkService.CancelOrder:output_type -> cafelogos.common.Empty
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_orderlink_orderlink_service_proto_init() }
@@ -357,7 +462,7 @@ func file_orderlink_orderlink_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_orderlink_orderlink_service_proto_rawDesc), len(file_orderlink_orderlink_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   3,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

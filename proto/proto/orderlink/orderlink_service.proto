@@ -38,3 +38,12 @@ message PostOrderInput {
 message CancelOrderInput {
     string order_id = 1;
 }
+
+message CancelOrderOutput {
+    repeated CancelItemInfo items = 1;
+}
+
+message CancelItemInfo {
+    string product_id = 1;
+    int32 status = 2;
+}

@@ -134,6 +134,43 @@ export declare type CancelOrderInput = Message<"cafelogos.orderlink.CancelOrderI
 export declare const CancelOrderInputSchema: GenMessage<CancelOrderInput>;
 
 /**
+ * @generated from message cafelogos.orderlink.CancelOrderOutput
+ */
+export declare type CancelOrderOutput = Message<"cafelogos.orderlink.CancelOrderOutput"> & {
+  /**
+   * @generated from field: repeated cafelogos.orderlink.CancelItemInfo items = 1;
+   */
+  items: CancelItemInfo[];
+};
+
+/**
+ * Describes the message cafelogos.orderlink.CancelOrderOutput.
+ * Use `create(CancelOrderOutputSchema)` to create a new message.
+ */
+export declare const CancelOrderOutputSchema: GenMessage<CancelOrderOutput>;
+
+/**
+ * @generated from message cafelogos.orderlink.CancelItemInfo
+ */
+export declare type CancelItemInfo = Message<"cafelogos.orderlink.CancelItemInfo"> & {
+  /**
+   * @generated from field: string product_id = 1;
+   */
+  productId: string;
+
+  /**
+   * @generated from field: int32 status = 2;
+   */
+  status: number;
+};
+
+/**
+ * Describes the message cafelogos.orderlink.CancelItemInfo.
+ * Use `create(CancelItemInfoSchema)` to create a new message.
+ */
+export declare const CancelItemInfoSchema: GenMessage<CancelItemInfo>;
+
+/**
  * @generated from service cafelogos.orderlink.OrderLinkService
  */
 export declare const OrderLinkService: GenService<{

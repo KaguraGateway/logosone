@@ -9,4 +9,5 @@ import (
 type OrderRepository interface {
 	SaveTx(ctx context.Context, tx interface{}, order *model.Order) error
 	Delete(ctx context.Context, id string) error
+	UpdateStatus(ctx context.Context, id string, status model.OrderStatus) error
 }

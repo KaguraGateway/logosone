@@ -14,7 +14,16 @@ type Order struct {
 	orderAt    synchro.Time[tz.UTC]
 	clientId   string
 	seatId     string
+	status     OrderStatus
 }
+
+type OrderStatus string
+
+const (
+	OrderStatusUnknown  OrderStatus = "UNKNOWN"
+	OrderStatusActive   OrderStatus = "ACTIVE"
+	OrderStatusCanceled OrderStatus = "CANCELED"
+)
 
 func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType, clientId string, seatId string) *Order {
 	return &Order{

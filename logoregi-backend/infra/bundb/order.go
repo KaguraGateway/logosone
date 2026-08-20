@@ -147,3 +147,14 @@ func (i *orderQueryServiceDb) FindByPaymentId(ctx context.Context, paymentId str
 	}
 	return toOrder(daoOrder), nil
 }
+
+func (r *repository.OrderRepository) UpdateStatus(ctx, context.Context, id string, status model.OrderStatus) error {
+	_, err := r.db.NewUpdate().
+		Model((*dao.Order)(nil)).
+		Where("status = ?", id).
+		Exec(ctx)
+	if err != nil {
+		return err
+	}
+	return nil
+}

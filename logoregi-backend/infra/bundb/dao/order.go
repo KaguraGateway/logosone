@@ -10,6 +10,7 @@ type Order struct {
 	OrderAt   time.Time `bun:",notnull"`
 	ClientID  string    `bun:",notnull"`
 	Client    *Client   `bun:"rel:belongs-to"`
+	Status    string    `bun:"status,notnull"`
 
 	SeatID string
 	Seat   *Seat `bun:"rel:belongs-to,join:seat_id=id"`

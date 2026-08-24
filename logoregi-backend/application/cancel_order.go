@@ -105,6 +105,7 @@ func (uc *cancelOrderUseCase) Execute(ctx context.Context, orderId string) error
 
 		return nil
 	})
+
 	if err != nil {
 		return fmt.Errorf("transaction failed: %w", err)
 	}
@@ -115,5 +116,6 @@ func (uc *cancelOrderUseCase) Execute(ctx context.Context, orderId string) error
 	if err != nil {
 		log.Printf("failed to revoke ticket (maybe no ticket): %v", err)
 	}
+
 	return nil
 }

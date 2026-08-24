@@ -5,12 +5,16 @@ import (
 	"fmt"
 	"log"
 
+	"connectrpc.com/connect"
+
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/samber/do"
 
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
 	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket"
+	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
 )
 
 type CancelOrder interface {
@@ -24,8 +28,8 @@ type cancelOrderUseCase struct {
 	stockRepo repository.StockRepository
 	txRepo    repository.TxRepository
 
-	orderLinkClient orderlink.OrderLinkServiceClient
-	ticketClient    ticket.TicketServiceClient
+	orderLinkClient orderlinkconnect.OrderLinkServiceClient
+	ticketClient    ticketconnect.TicketServiceClient
 }
 
 func NewCancelOrderUseCase(i *do.Injector) (CancelOrder, error) {
@@ -35,8 +39,8 @@ func NewCancelOrderUseCase(i *do.Injector) (CancelOrder, error) {
 		productQS:       do.MustInvoke[ProductQueryService](i),
 		stockRepo:       do.MustInvoke[repository.StockRepository](i),
 		txRepo:          do.MustInvoke[repository.TxRepository](i),
-		orderLinkClient: do.MustInvoke[orderlink.OrderLinkServiceClient](i),
-		ticketClient:    do.MustInvoke[ticket.TicketServiceClient](i),
+		orderLinkClient: do.MustInvoke[orderlinkconnect.OrderLinkServiceClient](i),
+		ticketClient:    do.MustInvoke[ticketconnect.TicketServiceClient](i),
 	}, nil
 }
 
@@ -49,17 +53,19 @@ func (uc *cancelOrderUseCase) Execute(ctx context.Context, orderId string) error
 		return fmt.Errorf("failed to find order: %w", err)
 	}
 
-	if order.Status == model.OrderStatusCanceled {
+	if order.GetStatus() == model.OrderStatusCanceled {
 		return nil
 	}
 
 	statusMap := make(map[string]int32)
-	olResp, err := uc.orderLinkClient.CancelOrder(ctx, &orderlink.CancelOrderInput{
-		OrderId: orderId,
+	olReq := connect.NewRequest(&orderlink.CancelOrderInput{
+		OrderID: orderId,
 	})
-	if err == nil && olResp != nil {
-		for _, item := range olResp.Items {
-			statusMap[item.ProductId] = item.Status
+	olResp, err := uc.orderLinkClient.CancelOrder(ctx, olReq)
+
+	if err == nil && olResp != nil && olResp.Msg != nil {
+		for _, item := range olResp.Msg.Items {
+			statusMap[item.ProductID] = item.Status
 		}
 	} else {
 		log.Printf("OrderLink cancel warning (maybe not sent to kitchen): %v", err)
@@ -110,9 +116,10 @@ func (uc *cancelOrderUseCase) Execute(ctx context.Context, orderId string) error
 		return fmt.Errorf("transaction failed: %w", err)
 	}
 
-	_, err = uc.ticketClient.RevokeTicket(ctx, &ticket.RequestRevokeTicket{
-		Id: orderId,
+	ticketReq := connect.NewRequest(&ticket.RequestRevokeTicket{
+		ID: orderId,
 	})
+	_, err = uc.ticketClient.RevokeTicket(ctx, ticketReq)
 	if err != nil {
 		log.Printf("failed to revoke ticket (maybe no ticket): %v", err)
 	}

@@ -31,8 +31,17 @@ func (i *orderDb) SaveTx(ctx context.Context, tx interface{}, order *model.Order
 		OrderAt:   order.GetOrderAt().StdTime(),
 		ClientID:  order.GetClientId(),
 		SeatID:    order.GetSeatId(),
+		Status:    string(order.GetStatus()),
 	}
-	if _, err := bunTx.NewInsert().Model(daoOrder).On("CONFLICT (id) DO UPDATE").Set("order_type = EXCLUDED.order_type").Set("order_at = EXCLUDED.order_at").Set("client_id = EXCLUDED.client_id").Set("seat_id = EXCLUDED.seat_id").Exec(ctx); err != nil {
+
+	if _, err := bunTx.NewInsert().Model(daoOrder).
+		On("CONFLICT (id) DO UPDATE").
+		Set("order_type = EXCLUDED.order_type").
+		Set("order_at = EXCLUDED.order_at").
+		Set("client_id = EXCLUDED.client_id").
+		Set("seat_id = EXCLUDED.seat_id").
+		Set("status = EXCLUDED.status").
+		Exec(ctx); err != nil {
 		return err
 	}
 	return nil
@@ -40,6 +49,18 @@ func (i *orderDb) SaveTx(ctx context.Context, tx interface{}, order *model.Order
 
 func (i *orderDb) Delete(ctx context.Context, id string) error {
 	if _, err := i.db.NewDelete().Model(&dao.Order{}).Where("id = ?", id).Exec(ctx); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (i *orderDb) UpdateStatus(ctx context.Context, id string, status model.OrderStatus) error {
+	_, err := i.db.NewUpdate().
+		Model((*dao.Order)(nil)).
+		Set("status = ?", status).
+		Where("id = ?", id).
+		Exec(ctx)
+	if err != nil {
 		return err
 	}
 	return nil
@@ -87,6 +108,7 @@ func toOrder(daoOrder *dao.Order) *model.Order {
 		synchro.In[tz.UTC](daoOrder.OrderAt),
 		daoOrder.ClientID,
 		daoOrder.SeatID,
+		model.OrderStatus(daoOrder.Status),
 	)
 }
 
@@ -146,15 +168,4 @@ func (i *orderQueryServiceDb) FindByPaymentId(ctx context.Context, paymentId str
 		return nil, err
 	}
 	return toOrder(daoOrder), nil
-}
-
-func (i *orderDb) UpdateStatus(ctx context.Context, id string, status model.OrderStatus) error {
-	_, err := i.db.NewUpdate().
-		Model((*dao.Order)(nil)).
-		Where("status = ?", id).
-		Exec(ctx)
-	if err != nil {
-		return err
-	}
-	return nil
 }

@@ -34,10 +34,11 @@ func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType,
 		orderAt:    synchro.Now[tz.UTC](),
 		clientId:   clientId,
 		seatId:     seatId,
+		status:     OrderStatusActive,
 	}
 }
 
-func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, orderType OrderType, orderAt synchro.Time[tz.UTC], clientId string, seatId string) *Order {
+func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, orderType OrderType, orderAt synchro.Time[tz.UTC], clientId string, seatId string, status OrderStatus) *Order {
 	return &Order{
 		id:         id,
 		orderItems: orderItems,
@@ -46,6 +47,7 @@ func ReconstructOrder(id string, orderItems []OrderItem, discounts []Discount, o
 		orderAt:    orderAt,
 		clientId:   clientId,
 		seatId:     seatId,
+		status:     status,
 	}
 }
 
@@ -98,4 +100,8 @@ func (order *Order) GetSeatId() string {
 
 func (order *Order) GetOrderType() OrderType {
 	return order.orderType
+}
+
+func (order *Order) GetStatus() OrderStatus {
+	return order.status
 }

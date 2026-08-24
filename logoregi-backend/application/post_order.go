@@ -142,15 +142,7 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 				param.ClientId,
 				param.SeatId)
 		} else {
-			order = model.ReconstructOrder(
-				param.Id,
-				orderItems,
-				discounts,
-				param.OrderType,
-				param.OrderAt,
-				param.ClientId,
-				param.SeatId,
-			)
+			order = model.ReconstructOrder(param.Id, orderItems, discounts, param.OrderType, param.OrderAt, param.ClientId, param.SeatId, "")
 		}
 		// 保存
 		if err := uc.orderRepo.SaveTx(ctx, tx, order); err != nil {

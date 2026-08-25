@@ -33,7 +33,13 @@ func toDomainOrder(daoOrder *dao.Order) *order.Order {
 		return order.RebuildOrderStatusHistory(daoOrderStatusHistory.Id, order.OrderStatus(daoOrderStatusHistory.Status), synchro.In[tz.UTC](daoOrderStatusHistory.CreatedAt))
 	})
 
-	return order.RebuildOrder(daoOrder.Id, orderItems, orderStatusHistories, synchro.In[tz.UTC](daoOrder.OrderAt), order.OrderType(daoOrder.OrderType), order.OrderStatus(daoOrder.Status), daoOrder.SeatName)
+	var ticketId, ticketAddr string
+	if daoOrder.Ticket != nil{
+		ticketId = daoOrder.Ticket.TicketId
+		ticketAddr = daoOrder.Ticket.TicketAddr
+	}
+
+	return order.RebuildOrder(daoOrder.Id, orderItems, orderStatusHistories, synchro.In[tz.UTC](daoOrder.OrderAt), order.OrderType(daoOrder.OrderType), order.OrderStatus(daoOrder.Status), daoOrder.SeatName, ticketId, ticketAddr)
 }
 
 func toDaoOrder(order *order.Order) *dao.Order {

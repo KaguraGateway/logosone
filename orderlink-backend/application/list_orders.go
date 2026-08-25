@@ -51,8 +51,8 @@ func (u *listOrdersUseCase) Execute(ctx context.Context) ([]*ListOrdersOutput, e
 			OrderAt: or.OrderAt(),
 			Type:    or.OrderType(),
 			// TODO: ちゃんと返すようにする
-			TicketId:   "",
-			TicketAddr: "",
+			TicketId:   or.TicketId(),
+			TicketAddr: or.TicketAddr(),
 			SeatName:   or.SeatName(),
 			Status:     or.Status(),
 			ServedAt:   servedAt,

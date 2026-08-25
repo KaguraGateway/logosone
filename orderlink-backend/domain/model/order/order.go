@@ -17,9 +17,11 @@ type Order struct {
 	orderType          OrderType
 	status             OrderStatus
 	seatName           *string
+	ticketId           string
+	ticketAddr         string
 }
 
-func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, seatName *string) (*Order, error) {
+func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[tz.UTC], orderType OrderType, seatName *string, ticketId string, ticketAddr string) (*Order, error) {
 	if len(id) == 0 {
 		return nil, domain.ErrInvalidOrderId
 	}
@@ -34,10 +36,12 @@ func NewOrder(id string, orderItems []orderitem.OrderItem, orderAt synchro.Time[
 		orderType: orderType,
 		status:    OrderStatus(NotYet),
 		seatName:  seatName,
+		ticketId:  ticketId,
+		ticketAddr: ticketAddr,
 	}, nil
 }
 
-func RebuildOrder(id string, orderItems []orderitem.OrderItem, orderStatusHistories []OrderStatusHistory, orderAt synchro.Time[tz.UTC], orderType OrderType, status OrderStatus, seatName *string) *Order {
+func RebuildOrder(id string, orderItems []orderitem.OrderItem, orderStatusHistories []OrderStatusHistory, orderAt synchro.Time[tz.UTC], orderType OrderType, status OrderStatus, seatName *string, ticketId string, ticketAddr string) *Order {
 	return &Order{
 		id:                 id,
 		orderItems:         orderItems,
@@ -46,6 +50,8 @@ func RebuildOrder(id string, orderItems []orderitem.OrderItem, orderStatusHistor
 		orderType:          orderType,
 		status:             status,
 		seatName:           seatName,
+		ticketId:           ticketId,
+		ticketAddr:         ticketAddr,
 	}
 }
 
@@ -75,6 +81,12 @@ func (o *Order) Status() OrderStatus {
 
 func (o *Order) OrderStatusHistory() []OrderStatusHistory {
 	return o.orderStatusHistory
+}
+func(o *Order) TicketId() string {
+	return o.ticketId
+}
+func(o *Order) TicketAddr() string{
+	return o.ticketAddr
 }
 
 func (o *Order) UpdateStatus(status OrderStatus) error {

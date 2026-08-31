@@ -13,7 +13,7 @@ export function CoffeeBrewItem({ coffeeBrew }: { coffeeBrew: CoffeeBrew }) {
       <Td></Td>
       <Td></Td>
       <Td>{coffeeBrew.beanQuantityGrams}g</Td>
-      <Td></Td>
+      <Td>{coffeeBrew.preparationTime}分</Td>
     </Tr>
   );
 }

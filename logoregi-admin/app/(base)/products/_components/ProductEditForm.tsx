@@ -176,7 +176,7 @@ export function ProductEditForm(props: Props) {
     setIsOpenCoffeeBeanForm(true);
   };
   const onClickAddBrew = () => {
-    setBrews([...brews, { id: '', name: '', amount: 0, beanQuantityGrams: 0 }]);
+    setBrews([...brews, { id: '', name: '', amount: 0, beanQuantityGrams: 0, preparationTime: 0 }]);
   };
   const onChangeBrew = (index: number, brew: CoffeeBrew) => {
     setBrews((prev) => {
@@ -209,6 +209,7 @@ export function ProductEditForm(props: Props) {
           name: v.name,
           beanQuantityGrams: v.beanQuantityGrams,
           amount: BigInt(v.amount),
+          preparationTime: v.preparationTime,
         });
       }),
       amount: BigInt(amount),
@@ -280,6 +281,7 @@ export function ProductEditForm(props: Props) {
                   <Th>淹れ方</Th>
                   <Th>必要な豆の量</Th>
                   <Th>価格（円）</Th>
+                  <Th>作成時間</Th>
                   <Th grow="64px">削除</Th>
                 </TableHeader>
                 <Tbody>
@@ -325,6 +327,20 @@ export function ProductEditForm(props: Props) {
                                 ...brew,
                                 amount: Number(event.target.value),
                               })
+                            }
+                          />
+                        </Td>
+                        <Td>
+                          <ChakraInput
+                            display="flex"
+                            outline="0"
+                            placeholder="3"
+                            value={brew.preparationTime}
+                            onChange={(event) =>
+                              onChangeBrew(index, {
+                                ...brew,
+                                preparationTime: Number(event.target.value),
+                                })
                             }
                           />
                         </Td>

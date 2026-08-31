@@ -3036,7 +3036,7 @@ func (x *Order) GetSeatName() string {
 type OrderParam struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// * 代入した場合は代入したIDが使用され、しなかったら生成される
+	//* 代入した場合は代入したIDが使用され、しなかったら生成される
 	Items         []*OrderItem     `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
 	Discounts     []*OrderDiscount `protobuf:"bytes,3,rep,name=discounts,proto3" json:"discounts,omitempty"`
 	OrderType     OrderType        `protobuf:"varint,4,opt,name=order_type,json=orderType,proto3,enum=cafelogos.pos.OrderType" json:"order_type,omitempty"`
@@ -3197,7 +3197,7 @@ func (x *OrderItem) GetCoffeeBrewId() string {
 type OrderDiscount struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// * 一旦何も入ってない
+	//* 一旦何も入ってない
 	DiscountId    string       `protobuf:"bytes,2,opt,name=discount_id,json=discountId,proto3" json:"discount_id,omitempty"`
 	Type          DiscountType `protobuf:"varint,3,opt,name=type,proto3,enum=cafelogos.pos.DiscountType" json:"type,omitempty"`
 	DiscountPrice uint64       `protobuf:"varint,4,opt,name=discount_price,json=discountPrice,proto3" json:"discount_price,omitempty"`

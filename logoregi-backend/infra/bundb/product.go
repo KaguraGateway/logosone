@@ -82,7 +82,12 @@ func NewProductQueryServiceDb(i *do.Injector) (application.ProductQueryService, 
 }
 
 func toProduct(product *dao.Product) *model.Product {
-	productCategory := model.ReconstructProductCategory(product.Category.ID, product.Category.Name, synchro.In[tz.UTC](product.Category.CreatedAt), synchro.In[tz.UTC](product.Category.UpdatedAt))
+	var productCategory *model.ProductCategory
+	if product.Category != nil {
+		productCategory = model.ReconstructProductCategory(product.Category.ID, product.Category.Name, synchro.In[tz.UTC](product.Category.CreatedAt), synchro.In[tz.UTC](product.Category.UpdatedAt))
+	} else {
+		productCategory = model.ReconstructProductCategory("unknown", "不明なカテゴリ", synchro.In[tz.UTC](product.CreatedAt), synchro.In[tz.UTC](product.UpdatedAt))
+	}
 
 	// Only Coffee
 	var coffeeBean *model.CoffeeBean

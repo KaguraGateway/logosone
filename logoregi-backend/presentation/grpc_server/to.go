@@ -47,6 +47,7 @@ func ToProtoCoffeeBrew(brew *model.ProductCoffeeBrew) *pos.CoffeeBrew {
 		Amount:            brew.Amount,
 		CreatedAt:         ToISO8601(brew.GetCreatedAt()),
 		UpdatedAt:         ToISO8601(brew.GetUpdatedAt()),
+		PreparationTime:   brew.GetPreparationTime(),
 	}
 }
 
@@ -155,6 +156,7 @@ func ToProductParam(product *pos.ProductParam) *application.ProductParam {
 				Name:              brew.Name,
 				BeanQuantityGrams: brew.BeanQuantityGrams,
 				Amount:            brew.Amount,
+				PreparationTime:   brew.PreparationTime,
 			}
 		}),
 		Amount:          product.Amount,

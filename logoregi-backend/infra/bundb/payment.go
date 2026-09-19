@@ -2,9 +2,11 @@ package bundb
 
 import (
 	"context"
+	"time"
 
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/model"
 	"github.com/KaguraGateway/logosone/logoregi-backend/domain/repository"
 	"github.com/KaguraGateway/logosone/logoregi-backend/infra/bundb/dao"
@@ -23,6 +25,11 @@ func NewPaymentDb(i *do.Injector) (repository.PaymentRepository, error) {
 }
 
 func toPayment(daoPayment *dao.Payment) *model.Payment {
+	var canceledAt *synchro.Time[tz.UTC]
+	if daoPayment.CanceledAt != nil {
+		t := synchro.In[tz.UTC](*daoPayment.CanceledAt)
+		canceledAt = &t
+	}
 	return model.ReconstructPayment(
 		daoPayment.ID,
 		lo.Map(daoPayment.OrderPayments, func(item *dao.OrderPayment, index int) string {
@@ -33,6 +40,7 @@ func toPayment(daoPayment *dao.Payment) *model.Payment {
 		daoPayment.PaymentAmount,
 		synchro.In[tz.UTC](daoPayment.PaymentAt),
 		synchro.In[tz.UTC](daoPayment.UpdatedAt),
+		canceledAt,
 	)
 }
 
@@ -51,6 +59,11 @@ func (i *paymentDb) FindById(ctx context.Context, id string) (*model.Payment, er
 }
 
 func toDaoPayment(payment *model.Payment) *dao.Payment {
+	var canceledAt *time.Time
+	if payment.GetCanceledAt() != nil {
+		t := payment.GetCanceledAt().StdTime()
+		canceledAt = &t
+	}
 	return &dao.Payment{
 		ID: payment.GetId(),
 		OrderPayments: lo.Map(payment.GetOrderIds(), func(item string, index int) *dao.OrderPayment {
@@ -66,6 +79,7 @@ func toDaoPayment(payment *model.Payment) *dao.Payment {
 		ChangeAmount:  payment.GetChangeAmount(),
 		PaymentAt:     payment.GetPaymentAt().StdTime(),
 		UpdatedAt:     payment.GetUpdatedAt().StdTime(),
+		CanceledAt:    canceledAt,
 	}
 }
 
@@ -108,6 +122,28 @@ func (i *paymentDb) SaveTx(ctx context.Context, tx interface{}, payment *model.P
 		if _, err := bunTx.NewInsert().Model(daoOrderPayment).Ignore().Exec(ctx); err != nil {
 			return err
 		}
+	}
+	return nil
+}
+
+// Cancel 決済を取消済みとして記録する（レコードは物理削除しない）
+func (i *paymentDb) Cancel(ctx context.Context, payment *model.Payment) error {
+	daoPayment := toDaoPayment(payment)
+	res, err := i.db.NewUpdate().
+		Model(daoPayment).
+		Column("canceled_at", "updated_at").
+		WherePK().
+		Where("canceled_at IS NULL").
+		Exec(ctx)
+	if err != nil {
+		return err
+	}
+	rows, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rows == 0 {
+		return domain.ErrPaymentAlreadyCanceled
 	}
 	return nil
 }

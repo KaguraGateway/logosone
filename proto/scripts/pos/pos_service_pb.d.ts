@@ -231,6 +231,22 @@ export declare type UpdatePaymentRequest = Message<"cafelogos.pos.UpdatePaymentR
 export declare const UpdatePaymentRequestSchema: GenMessage<UpdatePaymentRequest>;
 
 /**
+ * @generated from message cafelogos.pos.CancelPaymentRequest
+ */
+export declare type CancelPaymentRequest = Message<"cafelogos.pos.CancelPaymentRequest"> & {
+  /**
+   * @generated from field: string payment_id = 1;
+   */
+  paymentId: string;
+};
+
+/**
+ * Describes the message cafelogos.pos.CancelPaymentRequest.
+ * Use `create(CancelPaymentRequestSchema)` to create a new message.
+ */
+export declare const CancelPaymentRequestSchema: GenMessage<CancelPaymentRequest>;
+
+/**
  * @generated from message cafelogos.pos.PaymentResponse
  */
 export declare type PaymentResponse = Message<"cafelogos.pos.PaymentResponse"> & {
@@ -1446,6 +1462,13 @@ export declare type Payment = Message<"cafelogos.pos.Payment"> & {
    * @generated from field: string updated_at = 7;
    */
   updatedAt: string;
+
+  /**
+   * * 取消済みの場合のみ入る。未取消は空文字 
+   *
+   * @generated from field: string canceled_at = 8;
+   */
+  canceledAt: string;
 };
 
 /**
@@ -1813,6 +1836,14 @@ export declare const PosService: GenService<{
     methodKind: "unary";
     input: typeof UpdatePaymentRequestSchema;
     output: typeof PaymentResponseSchema;
+  },
+  /**
+   * @generated from rpc cafelogos.pos.PosService.CancelPayment
+   */
+  cancelPayment: {
+    methodKind: "unary";
+    input: typeof CancelPaymentRequestSchema;
+    output: typeof EmptySchema;
   },
   /**
    * @generated from rpc cafelogos.pos.PosService.GetExternalPayment

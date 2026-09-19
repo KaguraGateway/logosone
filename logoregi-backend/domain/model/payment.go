@@ -3,6 +3,7 @@ package model
 import (
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
+	"github.com/KaguraGateway/logosone/logoregi-backend/domain"
 	"github.com/oklog/ulid/v2"
 )
 
@@ -14,6 +15,7 @@ type Payment struct {
 	PaymentAmount uint64
 	paymentAt     synchro.Time[tz.UTC]
 	updatedAt     synchro.Time[tz.UTC]
+	canceledAt    *synchro.Time[tz.UTC]
 }
 
 func NewPayment(orderIds []string, paymentType PaymentType, receiveAmount uint64, paymentAmount uint64) *Payment {
@@ -28,7 +30,7 @@ func NewPayment(orderIds []string, paymentType PaymentType, receiveAmount uint64
 	}
 }
 
-func ReconstructPayment(id string, orderIds []string, paymentType PaymentType, receiveAmount uint64, paymentAmount uint64, paymentAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC]) *Payment {
+func ReconstructPayment(id string, orderIds []string, paymentType PaymentType, receiveAmount uint64, paymentAmount uint64, paymentAt synchro.Time[tz.UTC], updatedAt synchro.Time[tz.UTC], canceledAt *synchro.Time[tz.UTC]) *Payment {
 	return &Payment{
 		id:            id,
 		orderIds:      orderIds,
@@ -37,6 +39,7 @@ func ReconstructPayment(id string, orderIds []string, paymentType PaymentType, r
 		PaymentAmount: paymentAmount,
 		paymentAt:     paymentAt,
 		updatedAt:     updatedAt,
+		canceledAt:    canceledAt,
 	}
 }
 
@@ -77,4 +80,23 @@ func (payment *Payment) GetPaymentAt() synchro.Time[tz.UTC] {
 
 func (payment *Payment) GetUpdatedAt() synchro.Time[tz.UTC] {
 	return payment.updatedAt
+}
+
+func (payment *Payment) GetCanceledAt() *synchro.Time[tz.UTC] {
+	return payment.canceledAt
+}
+
+func (payment *Payment) IsCanceled() bool {
+	return payment.canceledAt != nil
+}
+
+// Cancel 決済を取消済みにする。すでに取消済みの場合はエラーを返す
+func (payment *Payment) Cancel() error {
+	if payment.IsCanceled() {
+		return domain.ErrPaymentAlreadyCanceled
+	}
+	now := synchro.Now[tz.UTC]()
+	payment.canceledAt = &now
+	payment.updatedAt = now
+	return nil
 }

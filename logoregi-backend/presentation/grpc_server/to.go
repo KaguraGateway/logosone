@@ -108,6 +108,11 @@ func ToProtoPayment(payment *model.Payment) *pos.Payment {
 	if payment == nil {
 		return nil
 	}
+	// 未取消の場合は空文字
+	canceledAt := ""
+	if payment.GetCanceledAt() != nil {
+		canceledAt = ToISO8601(*payment.GetCanceledAt())
+	}
 	return &pos.Payment{
 		Id:            payment.GetId(),
 		Type:          int32(payment.GetPaymentType()),
@@ -116,6 +121,7 @@ func ToProtoPayment(payment *model.Payment) *pos.Payment {
 		ChangeAmount:  payment.GetChangeAmount(),
 		PaymentAt:     ToISO8601(payment.GetPaymentAt()),
 		UpdatedAt:     ToISO8601(payment.GetUpdatedAt()),
+		CanceledAt:    canceledAt,
 	}
 }
 

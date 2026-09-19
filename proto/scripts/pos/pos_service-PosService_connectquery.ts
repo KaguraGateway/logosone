@@ -35,6 +35,11 @@ export const postPayment = PosService.method.postPayment;
 export const updatePayment = PosService.method.updatePayment;
 
 /**
+ * @generated from rpc cafelogos.pos.PosService.CancelPayment
+ */
+export const cancelPayment = PosService.method.cancelPayment;
+
+/**
  * @generated from rpc cafelogos.pos.PosService.GetExternalPayment
  */
 export const getExternalPayment = PosService.method.getExternalPayment;

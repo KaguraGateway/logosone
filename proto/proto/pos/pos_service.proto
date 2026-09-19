@@ -15,6 +15,7 @@ service PosService {
 
     rpc PostPayment(PostPaymentRequest) returns (PaymentResponse) {}
     rpc UpdatePayment(UpdatePaymentRequest) returns (PaymentResponse) {}
+    rpc CancelPayment(CancelPaymentRequest) returns (common.Empty) {}
     rpc GetExternalPayment(GetExternalPaymentRequest) returns (GetExternalPaymentResponse) {}
 
     rpc GetProducts(common.Empty) returns (GetProductsResponse) {}
@@ -101,6 +102,9 @@ message PostPaymentRequestOption {
 }
 message UpdatePaymentRequest {
     PaymentParam payment = 1;
+}
+message CancelPaymentRequest {
+    string payment_id = 1;
 }
 message PaymentResponse {
     int32 status = 1;
@@ -377,6 +381,7 @@ message Payment {
     uint64 change_amount = 5;
     string payment_at = 6;
     string updated_at = 7;
+    string canceled_at = 8; /** 取消済みの場合のみ入る。未取消は空文字 */
 }
 message PaymentParam {
     string id = 1;

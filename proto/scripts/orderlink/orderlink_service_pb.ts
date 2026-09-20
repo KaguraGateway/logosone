@@ -12,7 +12,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file orderlink/orderlink_service.proto.
  */
 export const file_orderlink_orderlink_service: GenFile = /*@__PURE__*/
-  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsiQAoSTGlzdE9yZGVyc1Jlc3BvbnNlEioKBm9yZGVycxgBIAMoCzIaLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIi7AIKBU9yZGVyEhAKCG9yZGVyX2lkGAEgASgJEhAKCG9yZGVyX2F0GAIgASgJEjIKBHR5cGUYAyABKA4yJC5jYWZlbG9nb3Mub3JkZXJsaW5rLk9yZGVyLk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBCABKAkSEwoLdGlja2V0X2FkZHIYBSABKAkSEQoJc2VhdF9uYW1lGAYgASgJEjYKBnN0YXR1cxgHIAEoDjImLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIuT3JkZXJTdGF0dXMSFgoJc2VydmVkX2F0GAggASgJSACIAQEiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEiSwoLT3JkZXJTdGF0dXMSCgoGTm90WWV0EAASCwoHQ29va2luZxABEgoKBkNvb2tlZBACEgsKB0NhbGxpbmcQAxIKCgZTZXJ2ZWQQBEIMCgpfc2VydmVkX2F0IoQBChJQb3N0T3JkZXJJdGVtSW5wdXQSEgoKcHJvZHVjdF9pZBgBIAEoCRIWCg5jb2ZmZWVfYnJld19pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoDRIZChFpc19tYW5hZ2luZ19vcmRlchgUIAEoCBIVCg1pc19vbF9raXRjaGVuGBUgASgIIosCCg5Qb3N0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI2CgVpdGVtcxgDIAMoCzInLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySXRlbUlucHV0EjsKBHR5cGUYBCABKA4yLS5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0Lk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBSABKAkSEwoLdGlja2V0X2FkZHIYBiABKAkSEQoJc2VhdF9uYW1lGAcgASgJIiUKCU9yZGVyVHlwZRIKCgZFQVRfSU4QABIMCghUQUtFX09VVBABMrEBChBPcmRlckxpbmtTZXJ2aWNlEksKCVBvc3RPcmRlchIjLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQaFy5jYWZlbG9nb3MuY29tbW9uLkVtcHR5IgASUAoKTGlzdE9yZGVycxIXLmNhZmVsb2dvcy5jb21tb24uRW1wdHkaJy5jYWZlbG9nb3Mub3JkZXJsaW5rLkxpc3RPcmRlcnNSZXNwb25zZSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9sb2dvc29uZS9wcm90by9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
+  fileDesc("CiFvcmRlcmxpbmsvb3JkZXJsaW5rX3NlcnZpY2UucHJvdG8SE2NhZmVsb2dvcy5vcmRlcmxpbmsiQAoSTGlzdE9yZGVyc1Jlc3BvbnNlEioKBm9yZGVycxgBIAMoCzIaLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIi/QQKBU9yZGVyEhAKCG9yZGVyX2lkGAEgASgJEhAKCG9yZGVyX2F0GAIgASgJEjIKBHR5cGUYAyABKA4yJC5jYWZlbG9nb3Mub3JkZXJsaW5rLk9yZGVyLk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBCABKAkSEwoLdGlja2V0X2FkZHIYBSABKAkSEQoJc2VhdF9uYW1lGAYgASgJEjYKBnN0YXR1cxgHIAEoDjImLmNhZmVsb2dvcy5vcmRlcmxpbmsuT3JkZXIuT3JkZXJTdGF0dXMSFgoJc2VydmVkX2F0GAggASgJSACIAQESMwoFaXRlbXMYCSADKAsyJC5jYWZlbG9nb3Mub3JkZXJsaW5rLk9yZGVyLk9yZGVySXRlbRrZAQoJT3JkZXJJdGVtEgoKAmlkGAEgASgJEhIKCnByb2R1Y3RfaWQYAiABKAkSGwoOY29mZmVlX2JyZXdfaWQYAyABKAlIAIgBARJECgZzdGF0dXMYBCABKA4yNC5jYWZlbG9nb3Mub3JkZXJsaW5rLk9yZGVyLk9yZGVySXRlbS5PcmRlckl0ZW1TdGF0dXMiNgoPT3JkZXJJdGVtU3RhdHVzEgoKBk5vdFlldBAAEgsKB0Nvb2tpbmcQARIKCgZDb29rZWQQAkIRCg9fY29mZmVlX2JyZXdfaWQiJQoJT3JkZXJUeXBlEgoKBkVBVF9JThAAEgwKCFRBS0VfT1VUEAEiSwoLT3JkZXJTdGF0dXMSCgoGTm90WWV0EAASCwoHQ29va2luZxABEgoKBkNvb2tlZBACEgsKB0NhbGxpbmcQAxIKCgZTZXJ2ZWQQBEIMCgpfc2VydmVkX2F0IoQBChJQb3N0T3JkZXJJdGVtSW5wdXQSEgoKcHJvZHVjdF9pZBgBIAEoCRIWCg5jb2ZmZWVfYnJld19pZBgCIAEoCRIQCghxdWFudGl0eRgDIAEoDRIZChFpc19tYW5hZ2luZ19vcmRlchgUIAEoCBIVCg1pc19vbF9raXRjaGVuGBUgASgIIosCCg5Qb3N0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgBIAEoCRIQCghvcmRlcl9hdBgCIAEoCRI2CgVpdGVtcxgDIAMoCzInLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySXRlbUlucHV0EjsKBHR5cGUYBCABKA4yLS5jYWZlbG9nb3Mub3JkZXJsaW5rLlBvc3RPcmRlcklucHV0Lk9yZGVyVHlwZRIRCgl0aWNrZXRfaWQYBSABKAkSEwoLdGlja2V0X2FkZHIYBiABKAkSEQoJc2VhdF9uYW1lGAcgASgJIiUKCU9yZGVyVHlwZRIKCgZFQVRfSU4QABIMCghUQUtFX09VVBABMrEBChBPcmRlckxpbmtTZXJ2aWNlEksKCVBvc3RPcmRlchIjLmNhZmVsb2dvcy5vcmRlcmxpbmsuUG9zdE9yZGVySW5wdXQaFy5jYWZlbG9nb3MuY29tbW9uLkVtcHR5IgASUAoKTGlzdE9yZGVycxIXLmNhZmVsb2dvcy5jb21tb24uRW1wdHkaJy5jYWZlbG9nb3Mub3JkZXJsaW5rLkxpc3RPcmRlcnNSZXNwb25zZSIAQkFaP2dpdGh1Yi5jb20vS2FndXJhR2F0ZXdheS9sb2dvc29uZS9wcm90by9wa2cvb3JkZXJsaW5rO29yZGVybGlua2IGcHJvdG8z", [file_common_common]);
 
 /**
  * 提供済みオーダーの一覧を返すのレスポンス
@@ -76,6 +76,11 @@ export type Order = Message<"cafelogos.orderlink.Order"> & {
    * @generated from field: optional string served_at = 8;
    */
   servedAt?: string;
+
+  /**
+   * @generated from field: repeated cafelogos.orderlink.Order.OrderItem items = 9;
+   */
+  items: Order_OrderItem[];
 };
 
 /**
@@ -84,6 +89,64 @@ export type Order = Message<"cafelogos.orderlink.Order"> & {
  */
 export const OrderSchema: GenMessage<Order> = /*@__PURE__*/
   messageDesc(file_orderlink_orderlink_service, 1);
+
+/**
+ * @generated from message cafelogos.orderlink.Order.OrderItem
+ */
+export type Order_OrderItem = Message<"cafelogos.orderlink.Order.OrderItem"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string product_id = 2;
+   */
+  productId: string;
+
+  /**
+   * @generated from field: optional string coffee_brew_id = 3;
+   */
+  coffeeBrewId?: string;
+
+  /**
+   * @generated from field: cafelogos.orderlink.Order.OrderItem.OrderItemStatus status = 4;
+   */
+  status: Order_OrderItem_OrderItemStatus;
+};
+
+/**
+ * Describes the message cafelogos.orderlink.Order.OrderItem.
+ * Use `create(Order_OrderItemSchema)` to create a new message.
+ */
+export const Order_OrderItemSchema: GenMessage<Order_OrderItem> = /*@__PURE__*/
+  messageDesc(file_orderlink_orderlink_service, 1, 0);
+
+/**
+ * @generated from enum cafelogos.orderlink.Order.OrderItem.OrderItemStatus
+ */
+export enum Order_OrderItem_OrderItemStatus {
+  /**
+   * @generated from enum value: NotYet = 0;
+   */
+  NotYet = 0,
+
+  /**
+   * @generated from enum value: Cooking = 1;
+   */
+  Cooking = 1,
+
+  /**
+   * @generated from enum value: Cooked = 2;
+   */
+  Cooked = 2,
+}
+
+/**
+ * Describes the enum cafelogos.orderlink.Order.OrderItem.OrderItemStatus.
+ */
+export const Order_OrderItem_OrderItemStatusSchema: GenEnum<Order_OrderItem_OrderItemStatus> = /*@__PURE__*/
+  enumDesc(file_orderlink_orderlink_service, 1, 0, 0);
 
 /**
  * @generated from enum cafelogos.orderlink.Order.OrderType

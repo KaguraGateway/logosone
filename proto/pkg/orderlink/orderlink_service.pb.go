@@ -123,6 +123,55 @@ func (Order_OrderStatus) EnumDescriptor() ([]byte, []int) {
 	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{1, 1}
 }
 
+type Order_OrderItem_OrderItemStatus int32
+
+const (
+	Order_OrderItem_NotYet  Order_OrderItem_OrderItemStatus = 0
+	Order_OrderItem_Cooking Order_OrderItem_OrderItemStatus = 1
+	Order_OrderItem_Cooked  Order_OrderItem_OrderItemStatus = 2
+)
+
+// Enum value maps for Order_OrderItem_OrderItemStatus.
+var (
+	Order_OrderItem_OrderItemStatus_name = map[int32]string{
+		0: "NotYet",
+		1: "Cooking",
+		2: "Cooked",
+	}
+	Order_OrderItem_OrderItemStatus_value = map[string]int32{
+		"NotYet":  0,
+		"Cooking": 1,
+		"Cooked":  2,
+	}
+)
+
+func (x Order_OrderItem_OrderItemStatus) Enum() *Order_OrderItem_OrderItemStatus {
+	p := new(Order_OrderItem_OrderItemStatus)
+	*p = x
+	return p
+}
+
+func (x Order_OrderItem_OrderItemStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Order_OrderItem_OrderItemStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_orderlink_orderlink_service_proto_enumTypes[2].Descriptor()
+}
+
+func (Order_OrderItem_OrderItemStatus) Type() protoreflect.EnumType {
+	return &file_orderlink_orderlink_service_proto_enumTypes[2]
+}
+
+func (x Order_OrderItem_OrderItemStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Order_OrderItem_OrderItemStatus.Descriptor instead.
+func (Order_OrderItem_OrderItemStatus) EnumDescriptor() ([]byte, []int) {
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{1, 0, 0}
+}
+
 type PostOrderInput_OrderType int32
 
 const (
@@ -153,11 +202,11 @@ func (x PostOrderInput_OrderType) String() string {
 }
 
 func (PostOrderInput_OrderType) Descriptor() protoreflect.EnumDescriptor {
-	return file_orderlink_orderlink_service_proto_enumTypes[2].Descriptor()
+	return file_orderlink_orderlink_service_proto_enumTypes[3].Descriptor()
 }
 
 func (PostOrderInput_OrderType) Type() protoreflect.EnumType {
-	return &file_orderlink_orderlink_service_proto_enumTypes[2]
+	return &file_orderlink_orderlink_service_proto_enumTypes[3]
 }
 
 func (x PostOrderInput_OrderType) Number() protoreflect.EnumNumber {
@@ -224,6 +273,7 @@ type Order struct {
 	SeatName      string                 `protobuf:"bytes,6,opt,name=seat_name,json=seatName,proto3" json:"seat_name,omitempty"`
 	Status        Order_OrderStatus      `protobuf:"varint,7,opt,name=status,proto3,enum=cafelogos.orderlink.Order_OrderStatus" json:"status,omitempty"`
 	ServedAt      *string                `protobuf:"bytes,8,opt,name=served_at,json=servedAt,proto3,oneof" json:"served_at,omitempty"`
+	Items         []*Order_OrderItem     `protobuf:"bytes,9,rep,name=items,proto3" json:"items,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -312,6 +362,13 @@ func (x *Order) GetServedAt() string {
 		return *x.ServedAt
 	}
 	return ""
+}
+
+func (x *Order) GetItems() []*Order_OrderItem {
+	if x != nil {
+		return x.Items
+	}
+	return nil
 }
 
 type PostOrderItemInput struct {
@@ -482,13 +539,81 @@ func (x *PostOrderInput) GetSeatName() string {
 	return ""
 }
 
+type Order_OrderItem struct {
+	state         protoimpl.MessageState          `protogen:"open.v1"`
+	Id            string                          `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ProductId     string                          `protobuf:"bytes,2,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	CoffeeBrewId  *string                         `protobuf:"bytes,3,opt,name=coffee_brew_id,json=coffeeBrewId,proto3,oneof" json:"coffee_brew_id,omitempty"`
+	Status        Order_OrderItem_OrderItemStatus `protobuf:"varint,4,opt,name=status,proto3,enum=cafelogos.orderlink.Order_OrderItem_OrderItemStatus" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Order_OrderItem) Reset() {
+	*x = Order_OrderItem{}
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Order_OrderItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Order_OrderItem) ProtoMessage() {}
+
+func (x *Order_OrderItem) ProtoReflect() protoreflect.Message {
+	mi := &file_orderlink_orderlink_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Order_OrderItem.ProtoReflect.Descriptor instead.
+func (*Order_OrderItem) Descriptor() ([]byte, []int) {
+	return file_orderlink_orderlink_service_proto_rawDescGZIP(), []int{1, 0}
+}
+
+func (x *Order_OrderItem) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Order_OrderItem) GetProductId() string {
+	if x != nil {
+		return x.ProductId
+	}
+	return ""
+}
+
+func (x *Order_OrderItem) GetCoffeeBrewId() string {
+	if x != nil && x.CoffeeBrewId != nil {
+		return *x.CoffeeBrewId
+	}
+	return ""
+}
+
+func (x *Order_OrderItem) GetStatus() Order_OrderItem_OrderItemStatus {
+	if x != nil {
+		return x.Status
+	}
+	return Order_OrderItem_NotYet
+}
+
 var File_orderlink_orderlink_service_proto protoreflect.FileDescriptor
 
 const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"\n" +
 	"!orderlink/orderlink_service.proto\x12\x13cafelogos.orderlink\x1a\x13common/common.proto\"H\n" +
 	"\x12ListOrdersResponse\x122\n" +
-	"\x06orders\x18\x01 \x03(\v2\x1a.cafelogos.orderlink.OrderR\x06orders\"\xb6\x03\n" +
+	"\x06orders\x18\x01 \x03(\v2\x1a.cafelogos.orderlink.OrderR\x06orders\"\xf3\x05\n" +
 	"\x05Order\x12\x19\n" +
 	"\border_id\x18\x01 \x01(\tR\aorderId\x12\x19\n" +
 	"\border_at\x18\x02 \x01(\tR\aorderAt\x128\n" +
@@ -498,7 +623,21 @@ const file_orderlink_orderlink_service_proto_rawDesc = "" +
 	"ticketAddr\x12\x1b\n" +
 	"\tseat_name\x18\x06 \x01(\tR\bseatName\x12>\n" +
 	"\x06status\x18\a \x01(\x0e2&.cafelogos.orderlink.Order.OrderStatusR\x06status\x12 \n" +
-	"\tserved_at\x18\b \x01(\tH\x00R\bservedAt\x88\x01\x01\"%\n" +
+	"\tserved_at\x18\b \x01(\tH\x00R\bservedAt\x88\x01\x01\x12:\n" +
+	"\x05items\x18\t \x03(\v2$.cafelogos.orderlink.Order.OrderItemR\x05items\x1a\xfe\x01\n" +
+	"\tOrderItem\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"product_id\x18\x02 \x01(\tR\tproductId\x12)\n" +
+	"\x0ecoffee_brew_id\x18\x03 \x01(\tH\x00R\fcoffeeBrewId\x88\x01\x01\x12L\n" +
+	"\x06status\x18\x04 \x01(\x0e24.cafelogos.orderlink.Order.OrderItem.OrderItemStatusR\x06status\"6\n" +
+	"\x0fOrderItemStatus\x12\n" +
+	"\n" +
+	"\x06NotYet\x10\x00\x12\v\n" +
+	"\aCooking\x10\x01\x12\n" +
+	"\n" +
+	"\x06Cooked\x10\x02B\x11\n" +
+	"\x0f_coffee_brew_id\"%\n" +
 	"\tOrderType\x12\n" +
 	"\n" +
 	"\x06EAT_IN\x10\x00\x12\f\n" +
@@ -551,33 +690,37 @@ func file_orderlink_orderlink_service_proto_rawDescGZIP() []byte {
 	return file_orderlink_orderlink_service_proto_rawDescData
 }
 
-var file_orderlink_orderlink_service_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_orderlink_orderlink_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_orderlink_orderlink_service_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_orderlink_orderlink_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_orderlink_orderlink_service_proto_goTypes = []any{
-	(Order_OrderType)(0),          // 0: cafelogos.orderlink.Order.OrderType
-	(Order_OrderStatus)(0),        // 1: cafelogos.orderlink.Order.OrderStatus
-	(PostOrderInput_OrderType)(0), // 2: cafelogos.orderlink.PostOrderInput.OrderType
-	(*ListOrdersResponse)(nil),    // 3: cafelogos.orderlink.ListOrdersResponse
-	(*Order)(nil),                 // 4: cafelogos.orderlink.Order
-	(*PostOrderItemInput)(nil),    // 5: cafelogos.orderlink.PostOrderItemInput
-	(*PostOrderInput)(nil),        // 6: cafelogos.orderlink.PostOrderInput
-	(*common.Empty)(nil),          // 7: cafelogos.common.Empty
+	(Order_OrderType)(0),                 // 0: cafelogos.orderlink.Order.OrderType
+	(Order_OrderStatus)(0),               // 1: cafelogos.orderlink.Order.OrderStatus
+	(Order_OrderItem_OrderItemStatus)(0), // 2: cafelogos.orderlink.Order.OrderItem.OrderItemStatus
+	(PostOrderInput_OrderType)(0),        // 3: cafelogos.orderlink.PostOrderInput.OrderType
+	(*ListOrdersResponse)(nil),           // 4: cafelogos.orderlink.ListOrdersResponse
+	(*Order)(nil),                        // 5: cafelogos.orderlink.Order
+	(*PostOrderItemInput)(nil),           // 6: cafelogos.orderlink.PostOrderItemInput
+	(*PostOrderInput)(nil),               // 7: cafelogos.orderlink.PostOrderInput
+	(*Order_OrderItem)(nil),              // 8: cafelogos.orderlink.Order.OrderItem
+	(*common.Empty)(nil),                 // 9: cafelogos.common.Empty
 }
 var file_orderlink_orderlink_service_proto_depIdxs = []int32{
-	4, // 0: cafelogos.orderlink.ListOrdersResponse.orders:type_name -> cafelogos.orderlink.Order
+	5, // 0: cafelogos.orderlink.ListOrdersResponse.orders:type_name -> cafelogos.orderlink.Order
 	0, // 1: cafelogos.orderlink.Order.type:type_name -> cafelogos.orderlink.Order.OrderType
 	1, // 2: cafelogos.orderlink.Order.status:type_name -> cafelogos.orderlink.Order.OrderStatus
-	5, // 3: cafelogos.orderlink.PostOrderInput.items:type_name -> cafelogos.orderlink.PostOrderItemInput
-	2, // 4: cafelogos.orderlink.PostOrderInput.type:type_name -> cafelogos.orderlink.PostOrderInput.OrderType
-	6, // 5: cafelogos.orderlink.OrderLinkService.PostOrder:input_type -> cafelogos.orderlink.PostOrderInput
-	7, // 6: cafelogos.orderlink.OrderLinkService.ListOrders:input_type -> cafelogos.common.Empty
-	7, // 7: cafelogos.orderlink.OrderLinkService.PostOrder:output_type -> cafelogos.common.Empty
-	3, // 8: cafelogos.orderlink.OrderLinkService.ListOrders:output_type -> cafelogos.orderlink.ListOrdersResponse
-	7, // [7:9] is the sub-list for method output_type
-	5, // [5:7] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	8, // 3: cafelogos.orderlink.Order.items:type_name -> cafelogos.orderlink.Order.OrderItem
+	6, // 4: cafelogos.orderlink.PostOrderInput.items:type_name -> cafelogos.orderlink.PostOrderItemInput
+	3, // 5: cafelogos.orderlink.PostOrderInput.type:type_name -> cafelogos.orderlink.PostOrderInput.OrderType
+	2, // 6: cafelogos.orderlink.Order.OrderItem.status:type_name -> cafelogos.orderlink.Order.OrderItem.OrderItemStatus
+	7, // 7: cafelogos.orderlink.OrderLinkService.PostOrder:input_type -> cafelogos.orderlink.PostOrderInput
+	9, // 8: cafelogos.orderlink.OrderLinkService.ListOrders:input_type -> cafelogos.common.Empty
+	9, // 9: cafelogos.orderlink.OrderLinkService.PostOrder:output_type -> cafelogos.common.Empty
+	4, // 10: cafelogos.orderlink.OrderLinkService.ListOrders:output_type -> cafelogos.orderlink.ListOrdersResponse
+	9, // [9:11] is the sub-list for method output_type
+	7, // [7:9] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_orderlink_orderlink_service_proto_init() }
@@ -586,13 +729,14 @@ func file_orderlink_orderlink_service_proto_init() {
 		return
 	}
 	file_orderlink_orderlink_service_proto_msgTypes[1].OneofWrappers = []any{}
+	file_orderlink_orderlink_service_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_orderlink_orderlink_service_proto_rawDesc), len(file_orderlink_orderlink_service_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   4,
+			NumEnums:      4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -167,7 +167,7 @@ export default function StaffPage() {
               })}
             />
           ))}
-          {staffFilter.isProvided && providedOrders.map((order) => (
+         {staffFilter.isProvided && providedOrders.map((order) => (
             <ItemCard
               key={order.id}
               callNumber={order.ticketAddr}
@@ -179,9 +179,21 @@ export default function StaffPage() {
               onCall={() => onCall(order.id)}
               onCancelCall={() => onCancelCall(order.id)}
               onProvided={() => onProvided(order.id)}
-              items={[]}
+              items={order.orderItems.map((item) => {
+                const product = getProductByProductId(item.productId);
+                return {
+                  productId: `${item.productId}${item.coffeeBrewId}`,
+                  productName: `${product?.productName}${
+                    item.coffeeBrewId ? `(${getCoffeeBrew(item.coffeeBrewId)?.name})` : ''
+                  }`,
+                  productColor: product?.productColor ?? 'blue.500',
+                  itemId: item.id,
+                  status: fromItemStatus(item.status),
+                };
+              })}
             />
           ))}
+
         </Flex>
       </MainBox>
       <FilterModal

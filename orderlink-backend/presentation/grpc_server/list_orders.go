@@ -5,6 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/KaguraGateway/logosone/orderlink-backend/application"
+	orderitem "github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
 	"github.com/KaguraGateway/logosone/proto/pkg/common"
 	"github.com/KaguraGateway/logosone/proto/pkg/orderlink"
 	"github.com/samber/do"
@@ -31,8 +32,16 @@ func (r *GrpcServer) ListOrders(ctx context.Context, req *connect.Request[common
 			TicketId:   or.TicketId,
 			TicketAddr: or.TicketAddr,
 			SeatName:   lo.FromPtr(or.SeatName),
-			Status:     orderlink.Order_OrderStatus(or.Status),
-			ServedAt:   &servedAt,
+			Items: lo.Map(or.OrderItems, func(item orderitem.OrderItem, _ int) *orderlink.Order_OrderItem {
+				return &orderlink.Order_OrderItem{
+					Id:           item.Id(),
+					ProductId:    item.ProductId(),
+					CoffeeBrewId: item.CoffeeBrewId(),
+					Status:       orderlink.Order_OrderItem_OrderItemStatus(item.Status()),
+				}
+			}),
+			Status:   orderlink.Order_OrderStatus(or.Status),
+			ServedAt: &servedAt,
 		}
 	})
 

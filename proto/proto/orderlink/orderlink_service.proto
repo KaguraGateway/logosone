@@ -26,6 +26,7 @@ message Order {
     string seat_name = 6;
     OrderStatus status = 7;
     optional string served_at = 8;
+    repeated OrderItem items = 9;
 
     enum OrderType {
         EAT_IN = 0;
@@ -38,6 +39,19 @@ message Order {
         Cooked = 2;
         Calling = 3;
         Served = 4; // Provided
+    }
+
+    message OrderItem {
+        string id = 1;
+        string product_id = 2;
+        optional string coffee_brew_id = 3;
+        OrderItemStatus status = 4;
+
+        enum OrderItemStatus{
+            NotYet = 0;
+            Cooking = 1;
+            Cooked = 2;
+        }
     }
 }
 

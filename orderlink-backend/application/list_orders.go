@@ -7,6 +7,7 @@ import (
 	"github.com/Code-Hex/synchro/tz"
 	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order"
 	"github.com/KaguraGateway/logosone/orderlink-backend/domain/repository"
+	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order_item"
 	"github.com/samber/do"
 	"github.com/samber/lo"
 )
@@ -54,6 +55,7 @@ func (u *listOrdersUseCase) Execute(ctx context.Context) ([]*ListOrdersOutput, e
 			TicketId:   or.TicketId(),
 			TicketAddr: or.TicketAddr(),
 			SeatName:   or.SeatName(),
+			OrderItems: or.OrderItems(),
 			Status:     or.Status(),
 			ServedAt:   servedAt,
 		}
@@ -67,6 +69,7 @@ type ListOrdersOutput struct {
 	TicketId   string
 	TicketAddr string
 	SeatName   *string
+	OrderItems []orderitem.OrderItem
 	Status     order.OrderStatus
 	ServedAt   synchro.Time[tz.UTC]
 }

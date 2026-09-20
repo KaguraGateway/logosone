@@ -72,6 +72,11 @@ export declare type Order = Message<"cafelogos.orderlink.Order"> & {
    * @generated from field: optional string served_at = 8;
    */
   servedAt?: string;
+
+  /**
+   * @generated from field: repeated cafelogos.orderlink.Order.OrderItem items = 9;
+   */
+  items: Order_OrderItem[];
 };
 
 /**
@@ -79,6 +84,62 @@ export declare type Order = Message<"cafelogos.orderlink.Order"> & {
  * Use `create(OrderSchema)` to create a new message.
  */
 export declare const OrderSchema: GenMessage<Order>;
+
+/**
+ * @generated from message cafelogos.orderlink.Order.OrderItem
+ */
+export declare type Order_OrderItem = Message<"cafelogos.orderlink.Order.OrderItem"> & {
+  /**
+   * @generated from field: string id = 1;
+   */
+  id: string;
+
+  /**
+   * @generated from field: string product_id = 2;
+   */
+  productId: string;
+
+  /**
+   * @generated from field: optional string coffee_brew_id = 3;
+   */
+  coffeeBrewId?: string;
+
+  /**
+   * @generated from field: cafelogos.orderlink.Order.OrderItem.OrderItemStatus status = 4;
+   */
+  status: Order_OrderItem_OrderItemStatus;
+};
+
+/**
+ * Describes the message cafelogos.orderlink.Order.OrderItem.
+ * Use `create(Order_OrderItemSchema)` to create a new message.
+ */
+export declare const Order_OrderItemSchema: GenMessage<Order_OrderItem>;
+
+/**
+ * @generated from enum cafelogos.orderlink.Order.OrderItem.OrderItemStatus
+ */
+export enum Order_OrderItem_OrderItemStatus {
+  /**
+   * @generated from enum value: NotYet = 0;
+   */
+  NotYet = 0,
+
+  /**
+   * @generated from enum value: Cooking = 1;
+   */
+  Cooking = 1,
+
+  /**
+   * @generated from enum value: Cooked = 2;
+   */
+  Cooked = 2,
+}
+
+/**
+ * Describes the enum cafelogos.orderlink.Order.OrderItem.OrderItemStatus.
+ */
+export declare const Order_OrderItem_OrderItemStatusSchema: GenEnum<Order_OrderItem_OrderItemStatus>;
 
 /**
  * @generated from enum cafelogos.orderlink.Order.OrderType

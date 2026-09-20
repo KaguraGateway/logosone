@@ -6,10 +6,10 @@ import (
 	"connectrpc.com/connect"
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/common"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink"
 	"github.com/KaguraGateway/logosone/orderlink-backend/application"
 	"github.com/KaguraGateway/logosone/orderlink-backend/domain/model/order"
+	"github.com/KaguraGateway/logosone/proto/pkg/common"
+	"github.com/KaguraGateway/logosone/proto/pkg/orderlink"
 	"github.com/samber/do"
 	"github.com/samber/lo"
 )

@@ -11,6 +11,7 @@ type Order struct {
 	Status    uint      `bun:",notnull"`
 	SeatName  *string
 
-	OrderItems []*OrderItem `bun:"rel:has-many,join:id=order_id"`
-	Ticket     *OrderTicket `bun:"rel:has-one,join:id=order_id"`
+	OrderItems           []*OrderItem          `bun:"rel:has-many,join:id=order_id"`
+	OrderStatusHistories []*OrderStatusHistory `bun:"rel:has-many,join:id=order_id"`
+	Ticket               *OrderTicket          `bun:"rel:has-one,join:id=order_id"`
 }

@@ -126,10 +126,11 @@ func (i *paymentDb) SaveTx(ctx context.Context, tx interface{}, payment *model.P
 	return nil
 }
 
-// Cancel 決済を取消済みとして記録する（レコードは物理削除しない）
-func (i *paymentDb) Cancel(ctx context.Context, payment *model.Payment) error {
+// CancelTx 決済を取消済みとして記録する（レコードは物理削除しない）
+func (i *paymentDb) CancelTx(ctx context.Context, tx interface{}, payment *model.Payment) error {
+	bunTx := tx.(bun.Tx)
 	daoPayment := toDaoPayment(payment)
-	res, err := i.db.NewUpdate().
+	res, err := bunTx.NewUpdate().
 		Model(daoPayment).
 		Column("canceled_at", "updated_at").
 		WherePK().

@@ -49,7 +49,10 @@ export default function Orders() {
           {orders.map((order) => (
             <TCollectionItem key={order.id}>
               <Tr>
-                <Td>{order.callNumber || '-'}</Td>
+                <Td>
+                  {order.callNumber || '-'}
+                  {order.isCanceled && ' (キャンセル済み)'}
+                </Td>
                 <Td>{order.id}</Td>
                 <Td>{format(toZonedTime(parseISO(order.orderAt), 'Asia/Tokyo'), 'yyyy年MM月dd日 HH時mm分ss秒')}</Td>
                 <Td>{order.orderType === 'EatIn' ? 'イートイン' : 'テイクアウト'}</Td>

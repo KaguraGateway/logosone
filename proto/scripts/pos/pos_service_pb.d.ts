@@ -1273,6 +1273,13 @@ export declare type Order = Message<"cafelogos.pos.Order"> & {
    * @generated from field: string seat_name = 8;
    */
   seatName: string;
+
+  /**
+   * * 取消済みの場合のみ入る。未取消は空文字 
+   *
+   * @generated from field: string canceled_at = 9;
+   */
+  canceledAt: string;
 };
 
 /**

@@ -16,6 +16,8 @@ type Order struct {
 	seatId     string
 	// 呼び出し番号。order_ticketsに保存されているため、必要な場合のみ後から設定する
 	callNumber string
+	// 決済の取消日時。paymentsに保存されているため、必要な場合のみ後から設定する
+	canceledAt *synchro.Time[tz.UTC]
 }
 
 func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType, clientId string, seatId string) *Order {
@@ -99,4 +101,16 @@ func (order *Order) GetCallNumber() string {
 
 func (order *Order) SetCallNumber(callNumber string) {
 	order.callNumber = callNumber
+}
+
+func (order *Order) GetCanceledAt() *synchro.Time[tz.UTC] {
+	return order.canceledAt
+}
+
+func (order *Order) SetCanceledAt(canceledAt *synchro.Time[tz.UTC]) {
+	order.canceledAt = canceledAt
+}
+
+func (order *Order) IsCanceled() bool {
+	return order.canceledAt != nil
 }

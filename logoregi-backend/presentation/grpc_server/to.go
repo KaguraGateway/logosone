@@ -125,6 +125,14 @@ func ToProtoPayment(payment *model.Payment) *pos.Payment {
 	}
 }
 
+// orderCanceledAt 未取消の場合は空文字
+func orderCanceledAt(order *model.Order) string {
+	if order.GetCanceledAt() == nil {
+		return ""
+	}
+	return ToISO8601(*order.GetCanceledAt())
+}
+
 func ToProtoOrder(order *model.Order) *pos.Order {
 	if order == nil {
 		return nil
@@ -140,6 +148,7 @@ func ToProtoOrder(order *model.Order) *pos.Order {
 		OrderType:  pos.OrderType(order.GetOrderType()),
 		OrderAt:    ToISO8601(order.GetOrderAt()),
 		CallNumber: order.GetCallNumber(),
+		CanceledAt: orderCanceledAt(order),
 		SeatName:   "", // TODO: implement
 		ClientId:   order.GetClientId(),
 	}

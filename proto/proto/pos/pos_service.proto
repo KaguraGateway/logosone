@@ -335,6 +335,7 @@ message Order {
     string call_number = 6;
     string client_id = 7;
     string seat_name = 8;
+    string canceled_at = 9; /** 取消済みの場合のみ入る。未取消は空文字 */
 }
 message OrderParam {
     string id = 1; /** 代入した場合は代入したIDが使用され、しなかったら生成される */

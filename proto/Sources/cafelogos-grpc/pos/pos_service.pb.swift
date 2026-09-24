@@ -1100,6 +1100,9 @@ public struct Cafelogos_Pos_Order: Sendable {
 
   public var seatName: String = String()
 
+  ///* 取消済みの場合のみ入る。未取消は空文字 
+  public var canceledAt: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -3522,6 +3525,7 @@ extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     6: .standard(proto: "call_number"),
     7: .standard(proto: "client_id"),
     8: .standard(proto: "seat_name"),
+    9: .standard(proto: "canceled_at"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -3538,6 +3542,7 @@ extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       case 6: try { try decoder.decodeSingularStringField(value: &self.callNumber) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.clientID) }()
       case 8: try { try decoder.decodeSingularStringField(value: &self.seatName) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.canceledAt) }()
       default: break
       }
     }
@@ -3568,6 +3573,9 @@ extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if !self.seatName.isEmpty {
       try visitor.visitSingularStringField(value: self.seatName, fieldNumber: 8)
     }
+    if !self.canceledAt.isEmpty {
+      try visitor.visitSingularStringField(value: self.canceledAt, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -3580,6 +3588,7 @@ extension Cafelogos_Pos_Order: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if lhs.callNumber != rhs.callNumber {return false}
     if lhs.clientID != rhs.clientID {return false}
     if lhs.seatName != rhs.seatName {return false}
+    if lhs.canceledAt != rhs.canceledAt {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

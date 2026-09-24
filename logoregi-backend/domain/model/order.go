@@ -14,6 +14,8 @@ type Order struct {
 	orderAt    synchro.Time[tz.UTC]
 	clientId   string
 	seatId     string
+	// 呼び出し番号。order_ticketsに保存されているため、必要な場合のみ後から設定する
+	callNumber string
 }
 
 func NewOrder(orderItems []OrderItem, discounts []Discount, orderType OrderType, clientId string, seatId string) *Order {
@@ -89,4 +91,12 @@ func (order *Order) GetSeatId() string {
 
 func (order *Order) GetOrderType() OrderType {
 	return order.orderType
+}
+
+func (order *Order) GetCallNumber() string {
+	return order.callNumber
+}
+
+func (order *Order) SetCallNumber(callNumber string) {
+	order.callNumber = callNumber
 }

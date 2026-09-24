@@ -139,7 +139,7 @@ func ToProtoOrder(order *model.Order) *pos.Order {
 		}),
 		OrderType:  pos.OrderType(order.GetOrderType()),
 		OrderAt:    ToISO8601(order.GetOrderAt()),
-		CallNumber: "", // TODO: implement
+		CallNumber: order.GetCallNumber(),
 		SeatName:   "", // TODO: implement
 		ClientId:   order.GetClientId(),
 	}

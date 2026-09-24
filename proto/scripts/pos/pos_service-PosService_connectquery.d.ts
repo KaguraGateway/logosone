@@ -29,6 +29,10 @@ export const postPayment: typeof PosService["method"]["postPayment"];
  */
 export const updatePayment: typeof PosService["method"]["updatePayment"];
 /**
+ * @generated from rpc cafelogos.pos.PosService.CancelPayment
+ */
+export const cancelPayment: typeof PosService["method"]["cancelPayment"];
+/**
  * @generated from rpc cafelogos.pos.PosService.GetExternalPayment
  */
 export const getExternalPayment: typeof PosService["method"]["getExternalPayment"];

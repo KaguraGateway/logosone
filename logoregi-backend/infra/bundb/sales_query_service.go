@@ -40,6 +40,7 @@ func (i *salesQueryServiceDb) FindDailySales(ctx context.Context, startDate, end
 			order_payments op ON p.id = op.payment_id
 		WHERE 
 			DATE(p.payment_at) BETWEEN ? AND ?
+			AND p.canceled_at IS NULL
 		GROUP BY 
 			DATE(p.payment_at)
 		ORDER BY 
@@ -95,6 +96,7 @@ func (i *salesQueryServiceDb) FindProductSales(ctx context.Context, startDate, e
 			payments pay ON op.payment_id = pay.id
 		WHERE 
 			DATE(pay.payment_at) BETWEEN ? AND ?
+			AND pay.canceled_at IS NULL
 		GROUP BY 
 			p.id, p.name, pcb.id, pcb.name
 		ORDER BY 
@@ -150,6 +152,7 @@ func (i *salesQueryServiceDb) FindSalesByTimeSlot(ctx context.Context, date time
 			order_payments op ON p.id = op.payment_id
 		WHERE 
 			DATE(p.payment_at) = ?
+			AND p.canceled_at IS NULL
 		GROUP BY 
 			hour, minute
 		ORDER BY 
@@ -195,6 +198,7 @@ func (i *salesQueryServiceDb) FindSalesByPaymentType(ctx context.Context, startD
 			order_payments op ON p.id = op.payment_id
 		WHERE 
 			DATE(p.payment_at) BETWEEN ? AND ?
+			AND p.canceled_at IS NULL
 		GROUP BY 
 			p.payment_type
 		ORDER BY 

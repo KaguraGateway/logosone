@@ -16,7 +16,9 @@ services:
       - redis-data:/data
   logoregi-backend:
     build:
-      context: ./logoregi-backend
+      # go.modで ../proto をreplace参照しているため、コンテキストはリポジトリルート
+      context: .
+      dockerfile: ./logoregi-backend/Dockerfile
     ports:
       - '8080:8080'
     environment:

@@ -75,7 +75,7 @@ func toOrderDiscount(discount dao.OrderDiscount) *model.Discount {
 }
 
 func toOrder(daoOrder *dao.Order) *model.Order {
-	return model.ReconstructOrder(
+	order := model.ReconstructOrder(
 		daoOrder.ID,
 		lo.Map(daoOrder.OrderItems, func(daoOrderItem *dao.OrderItem, _ int) model.OrderItem {
 			return *toOrderItem(daoOrderItem)
@@ -88,6 +88,12 @@ func toOrder(daoOrder *dao.Order) *model.Order {
 		daoOrder.ClientID,
 		daoOrder.SeatID,
 	)
+	// 決済が取消済みなら、その日時を持たせる
+	if daoOrder.OrderPayment != nil && daoOrder.OrderPayment.Payment != nil && daoOrder.OrderPayment.Payment.CanceledAt != nil {
+		canceledAt := synchro.In[tz.UTC](*daoOrder.OrderPayment.Payment.CanceledAt)
+		order.SetCanceledAt(&canceledAt)
+	}
+	return order
 }
 
 func orderRelationQuery(q *bun.SelectQuery) *bun.SelectQuery {

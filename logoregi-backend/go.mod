@@ -58,3 +58,6 @@ require (
 	golang.org/x/text v0.19.0 // indirect
 	mellium.im/sasl v0.3.2 // indirect
 )
+
+// protoはこのリポジトリ内で管理しているため、公開モジュールではなく ../proto を参照する
+replace github.com/KaguraGateway/cafelogos-grpc => ../proto

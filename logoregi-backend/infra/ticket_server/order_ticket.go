@@ -53,3 +53,18 @@ func (i *orderTicketServer) FindByOrderId(ctx context.Context, orderId string) (
 	}
 	return model.ReconstructOrderTicket(orderId, daoTicket.TicketId, daoTicket.TicketAddr), nil
 }
+
+func (i *orderTicketServer) FindAllByOrderIds(ctx context.Context, orderIds []string) ([]*model.OrderTicket, error) {
+	if len(orderIds) == 0 {
+		return []*model.OrderTicket{}, nil
+	}
+	var daoTickets []dao.OrderTicket
+	if err := i.db.NewSelect().Model(&daoTickets).Where("order_id IN (?)", bun.In(orderIds)).Scan(ctx); err != nil {
+		return nil, err
+	}
+	tickets := make([]*model.OrderTicket, 0, len(daoTickets))
+	for _, daoTicket := range daoTickets {
+		tickets = append(tickets, model.ReconstructOrderTicket(daoTicket.OrderId, daoTicket.TicketId, daoTicket.TicketAddr))
+	}
+	return tickets, nil
+}

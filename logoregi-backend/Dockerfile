@@ -3,20 +3,23 @@
 FROM golang:1.24
 
 # Set destination for COPY
+# NOTE: go.modで ../proto をreplace参照しているため、ビルドコンテキストはリポジトリルート
 WORKDIR /app
 
 # Download Go modules
-COPY go.mod go.sum ./
+COPY logoregi-backend/go.mod logoregi-backend/go.sum ./logoregi-backend/
+COPY proto/ ./proto/
+WORKDIR /app/logoregi-backend
 RUN go mod download
 
 # Copy the source code. Note the slash at the end, as explained in
 # https://docs.docker.com/engine/reference/builder/#copy
-COPY . ./
+COPY logoregi-backend/ ./
 
 # Build
 RUN CGO_ENABLED=0 GOOS=linux go build -o /cafelogos-pos-backend
 
-COPY entrypoint.sh /usr/bin/entrypoint.sh
+COPY logoregi-backend/entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 

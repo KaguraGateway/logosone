@@ -3,6 +3,9 @@ import { Product } from './Product';
 
 export type Order = {
   id: string;
+  callNumber: string;
+  canceledAt: string;
+  isCanceled: boolean;
   orderAt: string;
   orderType: 'EatIn' | 'TakeOut';
   items: OrderItem[];
@@ -43,6 +46,9 @@ export function toOrderFromProto(order: ProtoOrder, products: Product[]): Order 
 
   return {
     id: order.id,
+    callNumber: order.callNumber,
+    canceledAt: order.canceledAt,
+    isCanceled: order.canceledAt !== '',
     orderAt: order.orderAt,
     orderType: order.orderType === OrderType.EatIn ? 'EatIn' : 'TakeOut',
     items: items,

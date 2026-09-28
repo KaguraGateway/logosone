@@ -7,9 +7,8 @@ FROM golang:1.24
 WORKDIR /app
 
 # Download Go modules
-COPY logoregi-backend/go.mod logoregi-backend/go.sum ./logoregi-backend/
-COPY proto/ ./proto/
-WORKDIR /app/logoregi-backend
+COPY logoregi-backend/go.mod logoregi-backend/go.sum ./
+COPY proto/ /proto/
 RUN go mod download
 
 # Copy the source code. Note the slash at the end, as explained in

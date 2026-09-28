@@ -41,13 +41,18 @@ export default function CustomerPage() {
           </Heading>
         </Flex>
       </Flex>
-      <Flex mt="6">
-        <SimpleGrid w="45%" columns={2} spacing={4}>
+      <Flex mt="6" px="4" gap={4}>
+        <SimpleGrid w="45%" columns={2} spacing={4} alignContent={"flex-start"}>
           {cookingOrders.map((order) => (
             <CookingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />
           ))}
         </SimpleGrid>
-        <Flex flex="1" flexWrap="wrap">
+          <Flex
+              flex="1"
+              flexDirection="column"
+              alignItems="center"
+              gap={4}
+          >
           {callingOrders.map((order) => (
             <CallingOrderCard key={order.OrderId} callNumber={order.TicketAddr} />
           ))}

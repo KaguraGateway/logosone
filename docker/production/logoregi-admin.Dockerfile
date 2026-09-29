@@ -18,16 +18,14 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN adduser --system --uid 1001 nextjs
-
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:bun /app/logoregi-admin/.next/standalone ./
-COPY --from=builder --chown=nextjs:bun /app/logoregi-admin/.next/static ./logoregi-admin/.next/static
+COPY --from=builder --chown=bun:bun /app/logoregi-admin/.next/standalone ./
+COPY --from=builder --chown=bun:bun /app/logoregi-admin/.next/static ./logoregi-admin/.next/static
 
 COPY --from=builder /app/logoregi-admin/public ./logoregi-admin/public
 
-USER nextjs
+USER bun
 EXPOSE 3000
 
 # server.js is created by next build from the standalone output

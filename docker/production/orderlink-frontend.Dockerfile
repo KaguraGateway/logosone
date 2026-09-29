@@ -20,16 +20,14 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-RUN adduser --system --uid 1001 nextjs
-
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:bun /app/orderlink-frontend/.next/standalone ./
-COPY --from=builder --chown=nextjs:bun /app/orderlink-frontend/.next/static ./orderlink-frontend/.next/static
+COPY --from=builder --chown=bun:bun /app/orderlink-frontend/.next/standalone ./
+COPY --from=builder --chown=bun:bun /app/orderlink-frontend/.next/static ./orderlink-frontend/.next/static
 
 COPY --from=builder /app/orderlink-frontend/public ./orderlink-frontend/public
 
-USER nextjs
+USER bun
 EXPOSE 3000
 
 # server.js is created by next build from the standalone output

@@ -34,22 +34,22 @@ tasks:
     cmd: bun dev
     env:
       PORT: 3001
-      NEXT_PUBLIC_WEBSOCKET_API: ws://localhost:8082/
-      NEXT_PUBLIC_GRPC_HOST: http://localhost:8080
+      NEXT_PUBLIC_WEBSOCKET_API: wss://turbo-garbanzo-76vgqgpwx5p2wrjw-8082.app.github.dev/
+      NEXT_PUBLIC_GRPC_HOST: https://turbo-garbanzo-76vgqgpwx5p2wrjw-8080.app.github.dev/
 
   dev:logoregi-handy:
     dir: ./logoregi-handy
     cmd: bun dev
     env:
       PORT: 3002
-      NEXT_PUBLIC_POS_GRPC: http://localhost:8080
+      NEXT_PUBLIC_POS_GRPC: https://turbo-garbanzo-76vgqgpwx5p2wrjw-8080.app.github.dev/
 
   dev:logoregi-admin:
     dir: ./logoregi-admin
     cmd: bun dev
     env:
       PORT: 3000
-      NEXT_PUBLIC_GRPC_HOST: http://localhost:8080
+      NEXT_PUBLIC_GRPC_HOST: https://turbo-garbanzo-76vgqgpwx5p2wrjw-8080.app.github.dev/
 
   init:
     deps:
@@ -60,13 +60,13 @@ tasks:
     dir: ./logoregi-backend
     cmd: aqua exec go run ./cmd/bin/main.go db init
     env:
-      DATABASE_URL: postgres://postgres:password@localhost/pos?sslmode=disable
+      DATABASE_URL: postgres://postgres:password@db/pos?sslmode=disable
 
   init:orderlink:
     dir: ./orderlink-backend
     cmd: aqua exec go run ./cmd/bin/main.go db init
     env:
-      DATABASE_URL: postgres://postgres:password@localhost/orderlink?sslmode=disable
+      DATABASE_URL: postgres://postgres:password@db/orderlink?sslmode=disable
 
   migrate:
     deps:
@@ -77,13 +77,13 @@ tasks:
     dir: ./logoregi-backend
     cmd: aqua exec go run ./cmd/bin/main.go db migrate
     env:
-      DATABASE_URL: postgres://postgres:password@localhost/pos?sslmode=disable
+      DATABASE_URL: postgres://postgres:password@db/pos?sslmode=disable
 
   migrate:orderlink:
     dir: ./orderlink-backend
     cmd: aqua exec go run ./cmd/bin/main.go db migrate
     env:
-      DATABASE_URL: postgres://postgres:password@localhost/orderlink?sslmode=disable
+      DATABASE_URL: postgres://postgres:password@db/orderlink?sslmode=disable
 
   psql:
     cmd: docker compose run --rm db psql -U postgres -h db

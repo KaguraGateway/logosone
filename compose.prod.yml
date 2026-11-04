@@ -32,7 +32,9 @@ services:
       - ticket-backend
   logoregi-admin:
     build:
-      context: ./logoregi-admin
+      # bunのworkspaceを使うため、コンテキストはリポジトリルート
+      context: .
+      dockerfile: ./docker/production/logoregi-admin.Dockerfile
       args:
         - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080
     ports:
@@ -87,7 +89,9 @@ services:
       - redis
   orderlink-frontend:
     build:
-      context: ./orderlink-frontend
+      # bunのworkspaceを使うため、コンテキストはリポジトリルート
+      context: .
+      dockerfile: ./docker/production/orderlink-frontend.Dockerfile
       args:
         - NEXT_PUBLIC_WEBSOCKET_API=ws://localhost:8082/
         - NEXT_PUBLIC_GRPC_HOST=http://localhost:8080

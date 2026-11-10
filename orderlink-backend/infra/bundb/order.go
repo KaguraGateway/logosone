@@ -34,7 +34,7 @@ func toDomainOrder(daoOrder *dao.Order) *order.Order {
 	})
 
 	var ticketId, ticketAddr string
-	if daoOrder.Ticket != nil{
+	if daoOrder.Ticket != nil {
 		ticketId = daoOrder.Ticket.TicketId
 		ticketAddr = daoOrder.Ticket.TicketAddr
 	}
@@ -103,7 +103,7 @@ func (r *orderRepositoryDb) SaveTx(ctx context.Context, tx interface{}, order *o
 
 	daoOrderStatusHistories := toDaoOrderStatusHistories(order)
 	if len(daoOrderStatusHistories) > 0 {
-		if _, err := r.db.NewInsert().Model(&daoOrderStatusHistories).Exec(ctx); err != nil {
+		if _, err := bunTx.NewInsert().Model(&daoOrderStatusHistories).Exec(ctx); err != nil {
 			return err
 		}
 	}

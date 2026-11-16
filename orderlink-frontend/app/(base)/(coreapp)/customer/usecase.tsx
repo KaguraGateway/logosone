@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 ///@ts-ignore
 import useSound from 'use-sound';
 import { useOrderLink } from '@/jotai/orderlink';
-import { compareByTicketAdder } from '@/utils/sortOrders';
+import { compareByTicketAddr } from '@/utils/sortOrders';
 import { OrderStatusEnum } from '@/zod/orders';
 
 export function useCustomer() {

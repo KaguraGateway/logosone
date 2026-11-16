@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import { useOrderLink } from '@/jotai/orderlink';
 import { useProduct } from '@/jotai/product';
 import { FilterItem } from '@/usecase/Filter';
+import { compareByTicketAddr } from '@/utils/sortOrders';
 import { OrderStatusEnum, OrderTypeEnum } from '@/zod/orders';
 
 export type StaffFilter = {
@@ -99,7 +100,7 @@ export function useStaff() {
           );
         });
       });
-    });
+    }).sort(compareByTicketAddr);
   }, [getProductByProductId, orders, staffFilter.isEatIn, staffFilter.isProvided, staffFilter.isTakeout, staffFilter.items]);
   const cookedOrdersLen = useMemo(
     () =>

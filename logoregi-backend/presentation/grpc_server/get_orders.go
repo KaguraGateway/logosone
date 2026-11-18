@@ -9,7 +9,7 @@ import (
 	"github.com/samber/lo"
 
 	"connectrpc.com/connect"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
+	"github.com/KaguraGateway/logosone/proto/pkg/pos"
 )
 
 func (s *GrpcServer) GetOrders(ctx context.Context, req *connect.Request[pos.GetOrdersRequest]) (*connect.Response[pos.GetOrdersResponse], error) {

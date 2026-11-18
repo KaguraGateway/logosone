@@ -22,15 +22,13 @@ jobs:
     steps:
       - name: PR Agent action step
         id: pragent
-        uses: Codium-ai/pr-agent@main
+        uses: docker://pragent/pr-agent:0.50.0-github_action
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTION_CONFIG.AUTO_DESCRIBE: true
           GITHUB_ACTION_CONFIG.AUTO_REVIEW: true
           GITHUB_ACTION_CONFIG.AUTO_IMPROVE: true
-          PR_DESCRIPTION.USE_DESCRIPTION_MARKERS: true
           PR_REVIEWER.EXTRA_INSTRUCTIONS: ${{ env.COMMON_INSTRUCTIONS }}
           PR_CODE_SUGGESTION.EXTRA_INSTRUCTIONS: ${{ env.COMMON_INSTRUCTIONS }}
           PR_DESCRIPTION.EXTRA_INSTRUCTIONS: ${{ env.COMMON_INSTRUCTIONS }}
-          CONFIG.MODEL: o1-mini

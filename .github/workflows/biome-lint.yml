@@ -20,13 +20,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Run Biome lint (non-blocking)
-        run: npm run lint || echo "Linting issues found, but continuing with the workflow"
+        run: bun run lint || echo "Linting issues found, but continuing with the workflow"

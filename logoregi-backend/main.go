@@ -19,13 +19,13 @@ import (
 	"os"
 
 	"connectrpc.com/connect"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/orderlink/orderlinkconnect"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/ticket/ticketconnect"
+	"github.com/KaguraGateway/logosone/proto/pkg/orderlink/orderlinkconnect"
+	"github.com/KaguraGateway/logosone/proto/pkg/ticket/ticketconnect"
 	"github.com/KaguraGateway/logosone/logoregi-backend/infra/orderlink_server"
 	"github.com/KaguraGateway/logosone/logoregi-backend/infra/ticket_server"
 	"golang.org/x/net/http2"
 
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos/posconnect"
+	"github.com/KaguraGateway/logosone/proto/pkg/pos/posconnect"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
 	"github.com/KaguraGateway/logosone/logoregi-backend/infra/bundb"
 	"github.com/KaguraGateway/logosone/logoregi-backend/presentation/grpc_server"
@@ -238,6 +238,7 @@ func buildInjector(db *bun.DB, ticketClient ticketconnect.TicketServiceClient, o
 	do.Provide(i, application.NewPostOrderUseCase)
 	do.Provide(i, application.NewDeleteOrderUseCase)
 	do.Provide(i, application.NewSavePaymentUseCase)
+	do.Provide(i, application.NewCancelPaymentUseCase)
 	do.Provide(i, application.NewGetDiscountsUseCase)
 	do.Provide(i, application.NewPostDiscountUseCase)
 	do.Provide(i, application.NewPostClientUseCase)

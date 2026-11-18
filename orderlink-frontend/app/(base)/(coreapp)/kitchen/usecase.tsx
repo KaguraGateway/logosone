@@ -6,6 +6,7 @@ import { useProduct } from '@/jotai/product';
 import { FilterItem } from '@/usecase/Filter';
 import { OrderItemStatusEnum, OrderItemStatusSchema } from '@/zod/order_items';
 import { OrderStatusEnum } from '@/zod/orders';
+import { compareByTicketAddr } from '@/utils/sortOrders';
 
 export type KitchenFilter = {
   items: FilterItem[];
@@ -65,7 +66,8 @@ export function useKitchen() {
             });
           }),
         }))
-        .filter((order) => order.Status !== OrderStatusEnum.Provided),
+        .filter((order) => order.Status !== OrderStatusEnum.Provided)
+        .sort(compareByTicketAddr),
     [getCoffeeBrew, getProductByProductId, isMyTask, isOnlyMyTasks, kitchenFilter.items, orders]
   );
   const filteredOrderItems = useMemo(() => filteredOrders.flatMap((order) => order.OrderItems), [filteredOrders]);

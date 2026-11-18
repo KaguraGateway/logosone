@@ -692,6 +692,50 @@ func (x *UpdatePaymentRequest) GetPayment() *PaymentParam {
 	return nil
 }
 
+type CancelPaymentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PaymentId     string                 `protobuf:"bytes,1,opt,name=payment_id,json=paymentId,proto3" json:"payment_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CancelPaymentRequest) Reset() {
+	*x = CancelPaymentRequest{}
+	mi := &file_pos_pos_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CancelPaymentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CancelPaymentRequest) ProtoMessage() {}
+
+func (x *CancelPaymentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pos_pos_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CancelPaymentRequest.ProtoReflect.Descriptor instead.
+func (*CancelPaymentRequest) Descriptor() ([]byte, []int) {
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CancelPaymentRequest) GetPaymentId() string {
+	if x != nil {
+		return x.PaymentId
+	}
+	return ""
+}
+
 type PaymentResponse struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	Status         int32                  `protobuf:"varint,1,opt,name=status,proto3" json:"status,omitempty"`
@@ -703,7 +747,7 @@ type PaymentResponse struct {
 
 func (x *PaymentResponse) Reset() {
 	*x = PaymentResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[10]
+	mi := &file_pos_pos_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -715,7 +759,7 @@ func (x *PaymentResponse) String() string {
 func (*PaymentResponse) ProtoMessage() {}
 
 func (x *PaymentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[10]
+	mi := &file_pos_pos_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -728,7 +772,7 @@ func (x *PaymentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentResponse.ProtoReflect.Descriptor instead.
 func (*PaymentResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{10}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *PaymentResponse) GetStatus() int32 {
@@ -761,7 +805,7 @@ type GetExternalPaymentRequest struct {
 
 func (x *GetExternalPaymentRequest) Reset() {
 	*x = GetExternalPaymentRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[11]
+	mi := &file_pos_pos_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -773,7 +817,7 @@ func (x *GetExternalPaymentRequest) String() string {
 func (*GetExternalPaymentRequest) ProtoMessage() {}
 
 func (x *GetExternalPaymentRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[11]
+	mi := &file_pos_pos_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -786,7 +830,7 @@ func (x *GetExternalPaymentRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetExternalPaymentRequest.ProtoReflect.Descriptor instead.
 func (*GetExternalPaymentRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{11}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *GetExternalPaymentRequest) GetPaymentId() string {
@@ -805,7 +849,7 @@ type GetExternalPaymentResponse struct {
 
 func (x *GetExternalPaymentResponse) Reset() {
 	*x = GetExternalPaymentResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[12]
+	mi := &file_pos_pos_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -817,7 +861,7 @@ func (x *GetExternalPaymentResponse) String() string {
 func (*GetExternalPaymentResponse) ProtoMessage() {}
 
 func (x *GetExternalPaymentResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[12]
+	mi := &file_pos_pos_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -830,7 +874,7 @@ func (x *GetExternalPaymentResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetExternalPaymentResponse.ProtoReflect.Descriptor instead.
 func (*GetExternalPaymentResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{12}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *GetExternalPaymentResponse) GetExternalPayment() *PaymentExternal {
@@ -849,7 +893,7 @@ type DeleteOrderRequest struct {
 
 func (x *DeleteOrderRequest) Reset() {
 	*x = DeleteOrderRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[13]
+	mi := &file_pos_pos_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -861,7 +905,7 @@ func (x *DeleteOrderRequest) String() string {
 func (*DeleteOrderRequest) ProtoMessage() {}
 
 func (x *DeleteOrderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[13]
+	mi := &file_pos_pos_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -874,7 +918,7 @@ func (x *DeleteOrderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteOrderRequest.ProtoReflect.Descriptor instead.
 func (*DeleteOrderRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{13}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *DeleteOrderRequest) GetOrderId() string {
@@ -893,7 +937,7 @@ type GetProductsResponse struct {
 
 func (x *GetProductsResponse) Reset() {
 	*x = GetProductsResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[14]
+	mi := &file_pos_pos_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -905,7 +949,7 @@ func (x *GetProductsResponse) String() string {
 func (*GetProductsResponse) ProtoMessage() {}
 
 func (x *GetProductsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[14]
+	mi := &file_pos_pos_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -918,7 +962,7 @@ func (x *GetProductsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductsResponse.ProtoReflect.Descriptor instead.
 func (*GetProductsResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{14}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *GetProductsResponse) GetProducts() []*Product {
@@ -937,7 +981,7 @@ type GetProductCategoriesResponse struct {
 
 func (x *GetProductCategoriesResponse) Reset() {
 	*x = GetProductCategoriesResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[15]
+	mi := &file_pos_pos_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -949,7 +993,7 @@ func (x *GetProductCategoriesResponse) String() string {
 func (*GetProductCategoriesResponse) ProtoMessage() {}
 
 func (x *GetProductCategoriesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[15]
+	mi := &file_pos_pos_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -962,7 +1006,7 @@ func (x *GetProductCategoriesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductCategoriesResponse.ProtoReflect.Descriptor instead.
 func (*GetProductCategoriesResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{15}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetProductCategoriesResponse) GetProductCategories() []*ProductCategory {
@@ -981,7 +1025,7 @@ type PostProductCategoryRequest struct {
 
 func (x *PostProductCategoryRequest) Reset() {
 	*x = PostProductCategoryRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[16]
+	mi := &file_pos_pos_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -993,7 +1037,7 @@ func (x *PostProductCategoryRequest) String() string {
 func (*PostProductCategoryRequest) ProtoMessage() {}
 
 func (x *PostProductCategoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[16]
+	mi := &file_pos_pos_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1006,7 +1050,7 @@ func (x *PostProductCategoryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostProductCategoryRequest.ProtoReflect.Descriptor instead.
 func (*PostProductCategoryRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{16}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *PostProductCategoryRequest) GetName() string {
@@ -1025,7 +1069,7 @@ type PostProductRequest struct {
 
 func (x *PostProductRequest) Reset() {
 	*x = PostProductRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[17]
+	mi := &file_pos_pos_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1037,7 +1081,7 @@ func (x *PostProductRequest) String() string {
 func (*PostProductRequest) ProtoMessage() {}
 
 func (x *PostProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[17]
+	mi := &file_pos_pos_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1050,7 +1094,7 @@ func (x *PostProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostProductRequest.ProtoReflect.Descriptor instead.
 func (*PostProductRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{17}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *PostProductRequest) GetProduct() *ProductParam {
@@ -1070,7 +1114,7 @@ type UpdateProductRequest struct {
 
 func (x *UpdateProductRequest) Reset() {
 	*x = UpdateProductRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[18]
+	mi := &file_pos_pos_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1082,7 +1126,7 @@ func (x *UpdateProductRequest) String() string {
 func (*UpdateProductRequest) ProtoMessage() {}
 
 func (x *UpdateProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[18]
+	mi := &file_pos_pos_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1095,7 +1139,7 @@ func (x *UpdateProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateProductRequest.ProtoReflect.Descriptor instead.
 func (*UpdateProductRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{18}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *UpdateProductRequest) GetProductId() string {
@@ -1121,7 +1165,7 @@ type DeleteProductRequest struct {
 
 func (x *DeleteProductRequest) Reset() {
 	*x = DeleteProductRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[19]
+	mi := &file_pos_pos_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1133,7 +1177,7 @@ func (x *DeleteProductRequest) String() string {
 func (*DeleteProductRequest) ProtoMessage() {}
 
 func (x *DeleteProductRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[19]
+	mi := &file_pos_pos_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1146,7 +1190,7 @@ func (x *DeleteProductRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteProductRequest.ProtoReflect.Descriptor instead.
 func (*DeleteProductRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{19}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *DeleteProductRequest) GetProductId() string {
@@ -1166,7 +1210,7 @@ type PostStockRequest struct {
 
 func (x *PostStockRequest) Reset() {
 	*x = PostStockRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[20]
+	mi := &file_pos_pos_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1178,7 +1222,7 @@ func (x *PostStockRequest) String() string {
 func (*PostStockRequest) ProtoMessage() {}
 
 func (x *PostStockRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[20]
+	mi := &file_pos_pos_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1191,7 +1235,7 @@ func (x *PostStockRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostStockRequest.ProtoReflect.Descriptor instead.
 func (*PostStockRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{20}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *PostStockRequest) GetName() string {
@@ -1217,7 +1261,7 @@ type GetStocksResponse struct {
 
 func (x *GetStocksResponse) Reset() {
 	*x = GetStocksResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[21]
+	mi := &file_pos_pos_service_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1229,7 +1273,7 @@ func (x *GetStocksResponse) String() string {
 func (*GetStocksResponse) ProtoMessage() {}
 
 func (x *GetStocksResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[21]
+	mi := &file_pos_pos_service_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1242,7 +1286,7 @@ func (x *GetStocksResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetStocksResponse.ProtoReflect.Descriptor instead.
 func (*GetStocksResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{21}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *GetStocksResponse) GetStocks() []*Stock {
@@ -1263,7 +1307,7 @@ type UpdateStockRequest struct {
 
 func (x *UpdateStockRequest) Reset() {
 	*x = UpdateStockRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[22]
+	mi := &file_pos_pos_service_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1275,7 +1319,7 @@ func (x *UpdateStockRequest) String() string {
 func (*UpdateStockRequest) ProtoMessage() {}
 
 func (x *UpdateStockRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[22]
+	mi := &file_pos_pos_service_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1288,7 +1332,7 @@ func (x *UpdateStockRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStockRequest.ProtoReflect.Descriptor instead.
 func (*UpdateStockRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{22}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *UpdateStockRequest) GetId() string {
@@ -1322,7 +1366,7 @@ type PostCoffeeBeanRequest struct {
 
 func (x *PostCoffeeBeanRequest) Reset() {
 	*x = PostCoffeeBeanRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[23]
+	mi := &file_pos_pos_service_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1334,7 +1378,7 @@ func (x *PostCoffeeBeanRequest) String() string {
 func (*PostCoffeeBeanRequest) ProtoMessage() {}
 
 func (x *PostCoffeeBeanRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[23]
+	mi := &file_pos_pos_service_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1347,7 +1391,7 @@ func (x *PostCoffeeBeanRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostCoffeeBeanRequest.ProtoReflect.Descriptor instead.
 func (*PostCoffeeBeanRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{23}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *PostCoffeeBeanRequest) GetName() string {
@@ -1373,7 +1417,7 @@ type GetCoffeeBeansResponse struct {
 
 func (x *GetCoffeeBeansResponse) Reset() {
 	*x = GetCoffeeBeansResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[24]
+	mi := &file_pos_pos_service_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1385,7 +1429,7 @@ func (x *GetCoffeeBeansResponse) String() string {
 func (*GetCoffeeBeansResponse) ProtoMessage() {}
 
 func (x *GetCoffeeBeansResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[24]
+	mi := &file_pos_pos_service_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1398,7 +1442,7 @@ func (x *GetCoffeeBeansResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCoffeeBeansResponse.ProtoReflect.Descriptor instead.
 func (*GetCoffeeBeansResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{24}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *GetCoffeeBeansResponse) GetCoffeeBeans() []*CoffeeBean {
@@ -1417,7 +1461,7 @@ type PostSeatRequest struct {
 
 func (x *PostSeatRequest) Reset() {
 	*x = PostSeatRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[25]
+	mi := &file_pos_pos_service_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1429,7 +1473,7 @@ func (x *PostSeatRequest) String() string {
 func (*PostSeatRequest) ProtoMessage() {}
 
 func (x *PostSeatRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[25]
+	mi := &file_pos_pos_service_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1442,7 +1486,7 @@ func (x *PostSeatRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostSeatRequest.ProtoReflect.Descriptor instead.
 func (*PostSeatRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{25}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *PostSeatRequest) GetName() string {
@@ -1461,7 +1505,7 @@ type UpdateSeatRequest struct {
 
 func (x *UpdateSeatRequest) Reset() {
 	*x = UpdateSeatRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[26]
+	mi := &file_pos_pos_service_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1473,7 +1517,7 @@ func (x *UpdateSeatRequest) String() string {
 func (*UpdateSeatRequest) ProtoMessage() {}
 
 func (x *UpdateSeatRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[26]
+	mi := &file_pos_pos_service_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1486,7 +1530,7 @@ func (x *UpdateSeatRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateSeatRequest.ProtoReflect.Descriptor instead.
 func (*UpdateSeatRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{26}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *UpdateSeatRequest) GetSeat() *Seat {
@@ -1505,7 +1549,7 @@ type DeleteSeatRequest struct {
 
 func (x *DeleteSeatRequest) Reset() {
 	*x = DeleteSeatRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[27]
+	mi := &file_pos_pos_service_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1517,7 +1561,7 @@ func (x *DeleteSeatRequest) String() string {
 func (*DeleteSeatRequest) ProtoMessage() {}
 
 func (x *DeleteSeatRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[27]
+	mi := &file_pos_pos_service_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1530,7 +1574,7 @@ func (x *DeleteSeatRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteSeatRequest.ProtoReflect.Descriptor instead.
 func (*DeleteSeatRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{27}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *DeleteSeatRequest) GetSeatId() string {
@@ -1549,7 +1593,7 @@ type GetSeatsResponse struct {
 
 func (x *GetSeatsResponse) Reset() {
 	*x = GetSeatsResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[28]
+	mi := &file_pos_pos_service_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1561,7 +1605,7 @@ func (x *GetSeatsResponse) String() string {
 func (*GetSeatsResponse) ProtoMessage() {}
 
 func (x *GetSeatsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[28]
+	mi := &file_pos_pos_service_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1574,7 +1618,7 @@ func (x *GetSeatsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSeatsResponse.ProtoReflect.Descriptor instead.
 func (*GetSeatsResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{28}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *GetSeatsResponse) GetSeats() []*Seat {
@@ -1593,7 +1637,7 @@ type PostNewClientRequest struct {
 
 func (x *PostNewClientRequest) Reset() {
 	*x = PostNewClientRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[29]
+	mi := &file_pos_pos_service_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1605,7 +1649,7 @@ func (x *PostNewClientRequest) String() string {
 func (*PostNewClientRequest) ProtoMessage() {}
 
 func (x *PostNewClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[29]
+	mi := &file_pos_pos_service_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1618,7 +1662,7 @@ func (x *PostNewClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostNewClientRequest.ProtoReflect.Descriptor instead.
 func (*PostNewClientRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{29}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *PostNewClientRequest) GetName() string {
@@ -1638,7 +1682,7 @@ type PostNewClientResponse struct {
 
 func (x *PostNewClientResponse) Reset() {
 	*x = PostNewClientResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[30]
+	mi := &file_pos_pos_service_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1650,7 +1694,7 @@ func (x *PostNewClientResponse) String() string {
 func (*PostNewClientResponse) ProtoMessage() {}
 
 func (x *PostNewClientResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[30]
+	mi := &file_pos_pos_service_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1663,7 +1707,7 @@ func (x *PostNewClientResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostNewClientResponse.ProtoReflect.Descriptor instead.
 func (*PostNewClientResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{30}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *PostNewClientResponse) GetId() string {
@@ -1690,7 +1734,7 @@ type UpdateClientRequest struct {
 
 func (x *UpdateClientRequest) Reset() {
 	*x = UpdateClientRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[31]
+	mi := &file_pos_pos_service_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1702,7 +1746,7 @@ func (x *UpdateClientRequest) String() string {
 func (*UpdateClientRequest) ProtoMessage() {}
 
 func (x *UpdateClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[31]
+	mi := &file_pos_pos_service_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1715,7 +1759,7 @@ func (x *UpdateClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateClientRequest.ProtoReflect.Descriptor instead.
 func (*UpdateClientRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{31}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *UpdateClientRequest) GetId() string {
@@ -1741,7 +1785,7 @@ type GetDiscountsResponse struct {
 
 func (x *GetDiscountsResponse) Reset() {
 	*x = GetDiscountsResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[32]
+	mi := &file_pos_pos_service_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1753,7 +1797,7 @@ func (x *GetDiscountsResponse) String() string {
 func (*GetDiscountsResponse) ProtoMessage() {}
 
 func (x *GetDiscountsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[32]
+	mi := &file_pos_pos_service_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1766,7 +1810,7 @@ func (x *GetDiscountsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDiscountsResponse.ProtoReflect.Descriptor instead.
 func (*GetDiscountsResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{32}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *GetDiscountsResponse) GetDiscounts() []*Discount {
@@ -1787,7 +1831,7 @@ type PostDiscountRequest struct {
 
 func (x *PostDiscountRequest) Reset() {
 	*x = PostDiscountRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[33]
+	mi := &file_pos_pos_service_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1799,7 +1843,7 @@ func (x *PostDiscountRequest) String() string {
 func (*PostDiscountRequest) ProtoMessage() {}
 
 func (x *PostDiscountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[33]
+	mi := &file_pos_pos_service_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1812,7 +1856,7 @@ func (x *PostDiscountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PostDiscountRequest.ProtoReflect.Descriptor instead.
 func (*PostDiscountRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{33}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *PostDiscountRequest) GetName() string {
@@ -1846,7 +1890,7 @@ type GetDailySalesRequest struct {
 
 func (x *GetDailySalesRequest) Reset() {
 	*x = GetDailySalesRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[34]
+	mi := &file_pos_pos_service_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1858,7 +1902,7 @@ func (x *GetDailySalesRequest) String() string {
 func (*GetDailySalesRequest) ProtoMessage() {}
 
 func (x *GetDailySalesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[34]
+	mi := &file_pos_pos_service_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1871,7 +1915,7 @@ func (x *GetDailySalesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDailySalesRequest.ProtoReflect.Descriptor instead.
 func (*GetDailySalesRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{34}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *GetDailySalesRequest) GetStartDate() string {
@@ -1897,7 +1941,7 @@ type GetDailySalesResponse struct {
 
 func (x *GetDailySalesResponse) Reset() {
 	*x = GetDailySalesResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[35]
+	mi := &file_pos_pos_service_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1909,7 +1953,7 @@ func (x *GetDailySalesResponse) String() string {
 func (*GetDailySalesResponse) ProtoMessage() {}
 
 func (x *GetDailySalesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[35]
+	mi := &file_pos_pos_service_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1922,7 +1966,7 @@ func (x *GetDailySalesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetDailySalesResponse.ProtoReflect.Descriptor instead.
 func (*GetDailySalesResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{35}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *GetDailySalesResponse) GetDailySales() []*DailySale {
@@ -1942,7 +1986,7 @@ type GetProductSalesRequest struct {
 
 func (x *GetProductSalesRequest) Reset() {
 	*x = GetProductSalesRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[36]
+	mi := &file_pos_pos_service_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1954,7 +1998,7 @@ func (x *GetProductSalesRequest) String() string {
 func (*GetProductSalesRequest) ProtoMessage() {}
 
 func (x *GetProductSalesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[36]
+	mi := &file_pos_pos_service_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1967,7 +2011,7 @@ func (x *GetProductSalesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductSalesRequest.ProtoReflect.Descriptor instead.
 func (*GetProductSalesRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{36}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *GetProductSalesRequest) GetStartDate() string {
@@ -1994,7 +2038,7 @@ type GetSalesByTimeSlotRequest struct {
 
 func (x *GetSalesByTimeSlotRequest) Reset() {
 	*x = GetSalesByTimeSlotRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[37]
+	mi := &file_pos_pos_service_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2006,7 +2050,7 @@ func (x *GetSalesByTimeSlotRequest) String() string {
 func (*GetSalesByTimeSlotRequest) ProtoMessage() {}
 
 func (x *GetSalesByTimeSlotRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[37]
+	mi := &file_pos_pos_service_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2019,7 +2063,7 @@ func (x *GetSalesByTimeSlotRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSalesByTimeSlotRequest.ProtoReflect.Descriptor instead.
 func (*GetSalesByTimeSlotRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{37}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *GetSalesByTimeSlotRequest) GetDate() string {
@@ -2038,7 +2082,7 @@ type GetSalesByTimeSlotResponse struct {
 
 func (x *GetSalesByTimeSlotResponse) Reset() {
 	*x = GetSalesByTimeSlotResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[38]
+	mi := &file_pos_pos_service_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2050,7 +2094,7 @@ func (x *GetSalesByTimeSlotResponse) String() string {
 func (*GetSalesByTimeSlotResponse) ProtoMessage() {}
 
 func (x *GetSalesByTimeSlotResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[38]
+	mi := &file_pos_pos_service_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2063,7 +2107,7 @@ func (x *GetSalesByTimeSlotResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSalesByTimeSlotResponse.ProtoReflect.Descriptor instead.
 func (*GetSalesByTimeSlotResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{38}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *GetSalesByTimeSlotResponse) GetTimeSlotSales() []*TimeSlotSale {
@@ -2085,7 +2129,7 @@ type TimeSlotSale struct {
 
 func (x *TimeSlotSale) Reset() {
 	*x = TimeSlotSale{}
-	mi := &file_pos_pos_service_proto_msgTypes[39]
+	mi := &file_pos_pos_service_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2097,7 +2141,7 @@ func (x *TimeSlotSale) String() string {
 func (*TimeSlotSale) ProtoMessage() {}
 
 func (x *TimeSlotSale) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[39]
+	mi := &file_pos_pos_service_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2110,7 +2154,7 @@ func (x *TimeSlotSale) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TimeSlotSale.ProtoReflect.Descriptor instead.
 func (*TimeSlotSale) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{39}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *TimeSlotSale) GetStartDate() string {
@@ -2152,7 +2196,7 @@ type GetSalesByPaymentTypeRequest struct {
 
 func (x *GetSalesByPaymentTypeRequest) Reset() {
 	*x = GetSalesByPaymentTypeRequest{}
-	mi := &file_pos_pos_service_proto_msgTypes[40]
+	mi := &file_pos_pos_service_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2164,7 +2208,7 @@ func (x *GetSalesByPaymentTypeRequest) String() string {
 func (*GetSalesByPaymentTypeRequest) ProtoMessage() {}
 
 func (x *GetSalesByPaymentTypeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[40]
+	mi := &file_pos_pos_service_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2177,7 +2221,7 @@ func (x *GetSalesByPaymentTypeRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSalesByPaymentTypeRequest.ProtoReflect.Descriptor instead.
 func (*GetSalesByPaymentTypeRequest) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{40}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *GetSalesByPaymentTypeRequest) GetStartDate() string {
@@ -2203,7 +2247,7 @@ type GetSalesByPaymentTypeResponse struct {
 
 func (x *GetSalesByPaymentTypeResponse) Reset() {
 	*x = GetSalesByPaymentTypeResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[41]
+	mi := &file_pos_pos_service_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2215,7 +2259,7 @@ func (x *GetSalesByPaymentTypeResponse) String() string {
 func (*GetSalesByPaymentTypeResponse) ProtoMessage() {}
 
 func (x *GetSalesByPaymentTypeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[41]
+	mi := &file_pos_pos_service_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2228,7 +2272,7 @@ func (x *GetSalesByPaymentTypeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSalesByPaymentTypeResponse.ProtoReflect.Descriptor instead.
 func (*GetSalesByPaymentTypeResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{41}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *GetSalesByPaymentTypeResponse) GetPaymentTypeSales() []*PaymentTypeSale {
@@ -2249,7 +2293,7 @@ type PaymentTypeSale struct {
 
 func (x *PaymentTypeSale) Reset() {
 	*x = PaymentTypeSale{}
-	mi := &file_pos_pos_service_proto_msgTypes[42]
+	mi := &file_pos_pos_service_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2261,7 +2305,7 @@ func (x *PaymentTypeSale) String() string {
 func (*PaymentTypeSale) ProtoMessage() {}
 
 func (x *PaymentTypeSale) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[42]
+	mi := &file_pos_pos_service_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2274,7 +2318,7 @@ func (x *PaymentTypeSale) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentTypeSale.ProtoReflect.Descriptor instead.
 func (*PaymentTypeSale) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{42}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *PaymentTypeSale) GetPaymentType() int32 {
@@ -2307,7 +2351,7 @@ type GetProductSalesResponse struct {
 
 func (x *GetProductSalesResponse) Reset() {
 	*x = GetProductSalesResponse{}
-	mi := &file_pos_pos_service_proto_msgTypes[43]
+	mi := &file_pos_pos_service_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2319,7 +2363,7 @@ func (x *GetProductSalesResponse) String() string {
 func (*GetProductSalesResponse) ProtoMessage() {}
 
 func (x *GetProductSalesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[43]
+	mi := &file_pos_pos_service_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2332,7 +2376,7 @@ func (x *GetProductSalesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProductSalesResponse.ProtoReflect.Descriptor instead.
 func (*GetProductSalesResponse) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{43}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *GetProductSalesResponse) GetProductSales() []*ProductSale {
@@ -2368,7 +2412,7 @@ type Product struct {
 
 func (x *Product) Reset() {
 	*x = Product{}
-	mi := &file_pos_pos_service_proto_msgTypes[44]
+	mi := &file_pos_pos_service_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2380,7 +2424,7 @@ func (x *Product) String() string {
 func (*Product) ProtoMessage() {}
 
 func (x *Product) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[44]
+	mi := &file_pos_pos_service_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2393,7 +2437,7 @@ func (x *Product) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Product.ProtoReflect.Descriptor instead.
 func (*Product) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{44}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *Product) GetProductId() string {
@@ -2516,7 +2560,7 @@ type ProductParam struct {
 
 func (x *ProductParam) Reset() {
 	*x = ProductParam{}
-	mi := &file_pos_pos_service_proto_msgTypes[45]
+	mi := &file_pos_pos_service_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2528,7 +2572,7 @@ func (x *ProductParam) String() string {
 func (*ProductParam) ProtoMessage() {}
 
 func (x *ProductParam) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[45]
+	mi := &file_pos_pos_service_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2541,7 +2585,7 @@ func (x *ProductParam) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductParam.ProtoReflect.Descriptor instead.
 func (*ProductParam) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{45}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *ProductParam) GetProductName() string {
@@ -2633,7 +2677,7 @@ type ProductCategory struct {
 
 func (x *ProductCategory) Reset() {
 	*x = ProductCategory{}
-	mi := &file_pos_pos_service_proto_msgTypes[46]
+	mi := &file_pos_pos_service_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2645,7 +2689,7 @@ func (x *ProductCategory) String() string {
 func (*ProductCategory) ProtoMessage() {}
 
 func (x *ProductCategory) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[46]
+	mi := &file_pos_pos_service_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2658,7 +2702,7 @@ func (x *ProductCategory) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductCategory.ProtoReflect.Descriptor instead.
 func (*ProductCategory) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{46}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *ProductCategory) GetId() string {
@@ -2702,7 +2746,7 @@ type CoffeeBean struct {
 
 func (x *CoffeeBean) Reset() {
 	*x = CoffeeBean{}
-	mi := &file_pos_pos_service_proto_msgTypes[47]
+	mi := &file_pos_pos_service_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2714,7 +2758,7 @@ func (x *CoffeeBean) String() string {
 func (*CoffeeBean) ProtoMessage() {}
 
 func (x *CoffeeBean) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[47]
+	mi := &file_pos_pos_service_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2727,7 +2771,7 @@ func (x *CoffeeBean) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CoffeeBean.ProtoReflect.Descriptor instead.
 func (*CoffeeBean) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{47}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *CoffeeBean) GetId() string {
@@ -2779,7 +2823,7 @@ type CoffeeBrew struct {
 
 func (x *CoffeeBrew) Reset() {
 	*x = CoffeeBrew{}
-	mi := &file_pos_pos_service_proto_msgTypes[48]
+	mi := &file_pos_pos_service_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2791,7 +2835,7 @@ func (x *CoffeeBrew) String() string {
 func (*CoffeeBrew) ProtoMessage() {}
 
 func (x *CoffeeBrew) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[48]
+	mi := &file_pos_pos_service_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2804,7 +2848,7 @@ func (x *CoffeeBrew) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CoffeeBrew.ProtoReflect.Descriptor instead.
 func (*CoffeeBrew) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{48}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *CoffeeBrew) GetId() string {
@@ -2862,7 +2906,7 @@ type Stock struct {
 
 func (x *Stock) Reset() {
 	*x = Stock{}
-	mi := &file_pos_pos_service_proto_msgTypes[49]
+	mi := &file_pos_pos_service_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2874,7 +2918,7 @@ func (x *Stock) String() string {
 func (*Stock) ProtoMessage() {}
 
 func (x *Stock) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[49]
+	mi := &file_pos_pos_service_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2887,7 +2931,7 @@ func (x *Stock) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Stock.ProtoReflect.Descriptor instead.
 func (*Stock) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{49}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *Stock) GetId() string {
@@ -2935,13 +2979,14 @@ type Order struct {
 	CallNumber    string                 `protobuf:"bytes,6,opt,name=call_number,json=callNumber,proto3" json:"call_number,omitempty"`
 	ClientId      string                 `protobuf:"bytes,7,opt,name=client_id,json=clientId,proto3" json:"client_id,omitempty"`
 	SeatName      string                 `protobuf:"bytes,8,opt,name=seat_name,json=seatName,proto3" json:"seat_name,omitempty"`
+	CanceledAt    string                 `protobuf:"bytes,9,opt,name=canceled_at,json=canceledAt,proto3" json:"canceled_at,omitempty"` //* 取消済みの場合のみ入る。未取消は空文字
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Order) Reset() {
 	*x = Order{}
-	mi := &file_pos_pos_service_proto_msgTypes[50]
+	mi := &file_pos_pos_service_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2953,7 +2998,7 @@ func (x *Order) String() string {
 func (*Order) ProtoMessage() {}
 
 func (x *Order) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[50]
+	mi := &file_pos_pos_service_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2966,7 +3011,7 @@ func (x *Order) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Order.ProtoReflect.Descriptor instead.
 func (*Order) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{50}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *Order) GetId() string {
@@ -3025,6 +3070,13 @@ func (x *Order) GetSeatName() string {
 	return ""
 }
 
+func (x *Order) GetCanceledAt() string {
+	if x != nil {
+		return x.CanceledAt
+	}
+	return ""
+}
+
 type OrderParam struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"` //* 代入した場合は代入したIDが使用され、しなかったら生成される
@@ -3040,7 +3092,7 @@ type OrderParam struct {
 
 func (x *OrderParam) Reset() {
 	*x = OrderParam{}
-	mi := &file_pos_pos_service_proto_msgTypes[51]
+	mi := &file_pos_pos_service_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3052,7 +3104,7 @@ func (x *OrderParam) String() string {
 func (*OrderParam) ProtoMessage() {}
 
 func (x *OrderParam) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[51]
+	mi := &file_pos_pos_service_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3065,7 +3117,7 @@ func (x *OrderParam) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderParam.ProtoReflect.Descriptor instead.
 func (*OrderParam) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{51}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *OrderParam) GetId() string {
@@ -3129,7 +3181,7 @@ type OrderItem struct {
 
 func (x *OrderItem) Reset() {
 	*x = OrderItem{}
-	mi := &file_pos_pos_service_proto_msgTypes[52]
+	mi := &file_pos_pos_service_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3141,7 +3193,7 @@ func (x *OrderItem) String() string {
 func (*OrderItem) ProtoMessage() {}
 
 func (x *OrderItem) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[52]
+	mi := &file_pos_pos_service_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3154,7 +3206,7 @@ func (x *OrderItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderItem.ProtoReflect.Descriptor instead.
 func (*OrderItem) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{52}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *OrderItem) GetProductId() string {
@@ -3197,7 +3249,7 @@ type OrderDiscount struct {
 
 func (x *OrderDiscount) Reset() {
 	*x = OrderDiscount{}
-	mi := &file_pos_pos_service_proto_msgTypes[53]
+	mi := &file_pos_pos_service_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3209,7 +3261,7 @@ func (x *OrderDiscount) String() string {
 func (*OrderDiscount) ProtoMessage() {}
 
 func (x *OrderDiscount) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[53]
+	mi := &file_pos_pos_service_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3222,7 +3274,7 @@ func (x *OrderDiscount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderDiscount.ProtoReflect.Descriptor instead.
 func (*OrderDiscount) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{53}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *OrderDiscount) GetId() string {
@@ -3265,7 +3317,7 @@ type Discount struct {
 
 func (x *Discount) Reset() {
 	*x = Discount{}
-	mi := &file_pos_pos_service_proto_msgTypes[54]
+	mi := &file_pos_pos_service_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3277,7 +3329,7 @@ func (x *Discount) String() string {
 func (*Discount) ProtoMessage() {}
 
 func (x *Discount) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[54]
+	mi := &file_pos_pos_service_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3290,7 +3342,7 @@ func (x *Discount) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Discount.ProtoReflect.Descriptor instead.
 func (*Discount) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{54}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *Discount) GetId() string {
@@ -3330,13 +3382,14 @@ type Payment struct {
 	ChangeAmount  uint64                 `protobuf:"varint,5,opt,name=change_amount,json=changeAmount,proto3" json:"change_amount,omitempty"`
 	PaymentAt     string                 `protobuf:"bytes,6,opt,name=payment_at,json=paymentAt,proto3" json:"payment_at,omitempty"`
 	UpdatedAt     string                 `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	CanceledAt    string                 `protobuf:"bytes,8,opt,name=canceled_at,json=canceledAt,proto3" json:"canceled_at,omitempty"` //* 取消済みの場合のみ入る。未取消は空文字
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Payment) Reset() {
 	*x = Payment{}
-	mi := &file_pos_pos_service_proto_msgTypes[55]
+	mi := &file_pos_pos_service_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3348,7 +3401,7 @@ func (x *Payment) String() string {
 func (*Payment) ProtoMessage() {}
 
 func (x *Payment) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[55]
+	mi := &file_pos_pos_service_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3361,7 +3414,7 @@ func (x *Payment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Payment.ProtoReflect.Descriptor instead.
 func (*Payment) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{55}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *Payment) GetId() string {
@@ -3413,6 +3466,13 @@ func (x *Payment) GetUpdatedAt() string {
 	return ""
 }
 
+func (x *Payment) GetCanceledAt() string {
+	if x != nil {
+		return x.CanceledAt
+	}
+	return ""
+}
+
 type PaymentParam struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -3433,7 +3493,7 @@ type PaymentParam struct {
 
 func (x *PaymentParam) Reset() {
 	*x = PaymentParam{}
-	mi := &file_pos_pos_service_proto_msgTypes[56]
+	mi := &file_pos_pos_service_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3445,7 +3505,7 @@ func (x *PaymentParam) String() string {
 func (*PaymentParam) ProtoMessage() {}
 
 func (x *PaymentParam) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[56]
+	mi := &file_pos_pos_service_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3458,7 +3518,7 @@ func (x *PaymentParam) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentParam.ProtoReflect.Descriptor instead.
 func (*PaymentParam) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{56}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *PaymentParam) GetId() string {
@@ -3559,7 +3619,7 @@ type PaymentCashParam struct {
 
 func (x *PaymentCashParam) Reset() {
 	*x = PaymentCashParam{}
-	mi := &file_pos_pos_service_proto_msgTypes[57]
+	mi := &file_pos_pos_service_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3571,7 +3631,7 @@ func (x *PaymentCashParam) String() string {
 func (*PaymentCashParam) ProtoMessage() {}
 
 func (x *PaymentCashParam) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[57]
+	mi := &file_pos_pos_service_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3584,7 +3644,7 @@ func (x *PaymentCashParam) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentCashParam.ProtoReflect.Descriptor instead.
 func (*PaymentCashParam) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{57}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{58}
 }
 
 type PaymentExternalParam struct {
@@ -3597,7 +3657,7 @@ type PaymentExternalParam struct {
 
 func (x *PaymentExternalParam) Reset() {
 	*x = PaymentExternalParam{}
-	mi := &file_pos_pos_service_proto_msgTypes[58]
+	mi := &file_pos_pos_service_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3609,7 +3669,7 @@ func (x *PaymentExternalParam) String() string {
 func (*PaymentExternalParam) ProtoMessage() {}
 
 func (x *PaymentExternalParam) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[58]
+	mi := &file_pos_pos_service_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3622,7 +3682,7 @@ func (x *PaymentExternalParam) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentExternalParam.ProtoReflect.Descriptor instead.
 func (*PaymentExternalParam) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{58}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *PaymentExternalParam) GetPaymentType() string {
@@ -3655,7 +3715,7 @@ type PaymentExternal struct {
 
 func (x *PaymentExternal) Reset() {
 	*x = PaymentExternal{}
-	mi := &file_pos_pos_service_proto_msgTypes[59]
+	mi := &file_pos_pos_service_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3667,7 +3727,7 @@ func (x *PaymentExternal) String() string {
 func (*PaymentExternal) ProtoMessage() {}
 
 func (x *PaymentExternal) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[59]
+	mi := &file_pos_pos_service_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3680,7 +3740,7 @@ func (x *PaymentExternal) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PaymentExternal.ProtoReflect.Descriptor instead.
 func (*PaymentExternal) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{59}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *PaymentExternal) GetId() string {
@@ -3749,7 +3809,7 @@ type Seat struct {
 
 func (x *Seat) Reset() {
 	*x = Seat{}
-	mi := &file_pos_pos_service_proto_msgTypes[60]
+	mi := &file_pos_pos_service_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3761,7 +3821,7 @@ func (x *Seat) String() string {
 func (*Seat) ProtoMessage() {}
 
 func (x *Seat) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[60]
+	mi := &file_pos_pos_service_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3774,7 +3834,7 @@ func (x *Seat) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Seat.ProtoReflect.Descriptor instead.
 func (*Seat) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{60}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *Seat) GetId() string {
@@ -3802,7 +3862,7 @@ type DailySale struct {
 
 func (x *DailySale) Reset() {
 	*x = DailySale{}
-	mi := &file_pos_pos_service_proto_msgTypes[61]
+	mi := &file_pos_pos_service_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3814,7 +3874,7 @@ func (x *DailySale) String() string {
 func (*DailySale) ProtoMessage() {}
 
 func (x *DailySale) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[61]
+	mi := &file_pos_pos_service_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3827,7 +3887,7 @@ func (x *DailySale) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DailySale.ProtoReflect.Descriptor instead.
 func (*DailySale) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{61}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *DailySale) GetDate() string {
@@ -3866,7 +3926,7 @@ type ProductSale struct {
 
 func (x *ProductSale) Reset() {
 	*x = ProductSale{}
-	mi := &file_pos_pos_service_proto_msgTypes[62]
+	mi := &file_pos_pos_service_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3878,7 +3938,7 @@ func (x *ProductSale) String() string {
 func (*ProductSale) ProtoMessage() {}
 
 func (x *ProductSale) ProtoReflect() protoreflect.Message {
-	mi := &file_pos_pos_service_proto_msgTypes[62]
+	mi := &file_pos_pos_service_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3891,7 +3951,7 @@ func (x *ProductSale) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProductSale.ProtoReflect.Descriptor instead.
 func (*ProductSale) Descriptor() ([]byte, []int) {
-	return file_pos_pos_service_proto_rawDescGZIP(), []int{62}
+	return file_pos_pos_service_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *ProductSale) GetProductId() string {
@@ -3972,7 +4032,10 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\x18PostPaymentRequestOption\x12*\n" +
 	"\x11is_post_orderlink\x18\x01 \x01(\bR\x0fisPostOrderlink\"M\n" +
 	"\x14UpdatePaymentRequest\x125\n" +
-	"\apayment\x18\x01 \x01(\v2\x1b.cafelogos.pos.PaymentParamR\apayment\"\xa6\x01\n" +
+	"\apayment\x18\x01 \x01(\v2\x1b.cafelogos.pos.PaymentParamR\apayment\"5\n" +
+	"\x14CancelPaymentRequest\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x01 \x01(\tR\tpaymentId\"\xa6\x01\n" +
 	"\x0fPaymentResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\x05R\x06status\x120\n" +
 	"\apayment\x18\x02 \x01(\v2\x16.cafelogos.pos.PaymentR\apayment\x12I\n" +
@@ -4137,7 +4200,7 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x04 \x01(\tR\tcreatedAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\x05 \x01(\tR\tupdatedAt\"\xb2\x02\n" +
+	"updated_at\x18\x05 \x01(\tR\tupdatedAt\"\xd3\x02\n" +
 	"\x05Order\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
 	"\x05items\x18\x02 \x03(\v2\x18.cafelogos.pos.OrderItemR\x05items\x12:\n" +
@@ -4148,7 +4211,9 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\vcall_number\x18\x06 \x01(\tR\n" +
 	"callNumber\x12\x1b\n" +
 	"\tclient_id\x18\a \x01(\tR\bclientId\x12\x1b\n" +
-	"\tseat_name\x18\b \x01(\tR\bseatName\"\x92\x02\n" +
+	"\tseat_name\x18\b \x01(\tR\bseatName\x12\x1f\n" +
+	"\vcanceled_at\x18\t \x01(\tR\n" +
+	"canceledAt\"\x92\x02\n" +
 	"\n" +
 	"OrderParam\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
@@ -4175,7 +4240,7 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12/\n" +
 	"\x04type\x18\x03 \x01(\x0e2\x1b.cafelogos.pos.DiscountTypeR\x04type\x12%\n" +
-	"\x0ediscount_price\x18\x04 \x01(\x04R\rdiscountPrice\"\xde\x01\n" +
+	"\x0ediscount_price\x18\x04 \x01(\x04R\rdiscountPrice\"\xff\x01\n" +
 	"\aPayment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\x05R\x04type\x12%\n" +
@@ -4185,7 +4250,9 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\n" +
 	"payment_at\x18\x06 \x01(\tR\tpaymentAt\x12\x1d\n" +
 	"\n" +
-	"updated_at\x18\a \x01(\tR\tupdatedAt\"\xe7\x02\n" +
+	"updated_at\x18\a \x01(\tR\tupdatedAt\x12\x1f\n" +
+	"\vcanceled_at\x18\b \x01(\tR\n" +
+	"canceledAt\"\xe7\x02\n" +
 	"\fPaymentParam\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04type\x18\x02 \x01(\x05R\x04type\x12%\n" +
@@ -4240,7 +4307,7 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\x05EatIn\x10\x00\x12\v\n" +
 	"\aTakeOut\x10\x01*\x19\n" +
 	"\fDiscountType\x12\t\n" +
-	"\x05PRICE\x10\x002\xe2\x14\n" +
+	"\x05PRICE\x10\x002\xb3\x15\n" +
 	"\n" +
 	"PosService\x12P\n" +
 	"\tGetOrders\x12\x1f.cafelogos.pos.GetOrdersRequest\x1a .cafelogos.pos.GetOrdersResponse\"\x00\x12l\n" +
@@ -4248,7 +4315,8 @@ const file_pos_pos_service_proto_rawDesc = "" +
 	"\tPostOrder\x12\x1f.cafelogos.pos.PostOrderRequest\x1a .cafelogos.pos.PostOrderResponse\"\x00\x12K\n" +
 	"\vDeleteOrder\x12!.cafelogos.pos.DeleteOrderRequest\x1a\x17.cafelogos.common.Empty\"\x00\x12R\n" +
 	"\vPostPayment\x12!.cafelogos.pos.PostPaymentRequest\x1a\x1e.cafelogos.pos.PaymentResponse\"\x00\x12V\n" +
-	"\rUpdatePayment\x12#.cafelogos.pos.UpdatePaymentRequest\x1a\x1e.cafelogos.pos.PaymentResponse\"\x00\x12k\n" +
+	"\rUpdatePayment\x12#.cafelogos.pos.UpdatePaymentRequest\x1a\x1e.cafelogos.pos.PaymentResponse\"\x00\x12O\n" +
+	"\rCancelPayment\x12#.cafelogos.pos.CancelPaymentRequest\x1a\x17.cafelogos.common.Empty\"\x00\x12k\n" +
 	"\x12GetExternalPayment\x12(.cafelogos.pos.GetExternalPaymentRequest\x1a).cafelogos.pos.GetExternalPaymentResponse\"\x00\x12L\n" +
 	"\vGetProducts\x12\x17.cafelogos.common.Empty\x1a\".cafelogos.pos.GetProductsResponse\"\x00\x12\\\n" +
 	"\rPostNewClient\x12#.cafelogos.pos.PostNewClientRequest\x1a$.cafelogos.pos.PostNewClientResponse\"\x00\x12M\n" +
@@ -4290,7 +4358,7 @@ func file_pos_pos_service_proto_rawDescGZIP() []byte {
 }
 
 var file_pos_pos_service_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_pos_pos_service_proto_msgTypes = make([]protoimpl.MessageInfo, 63)
+var file_pos_pos_service_proto_msgTypes = make([]protoimpl.MessageInfo, 64)
 var file_pos_pos_service_proto_goTypes = []any{
 	(ProductType)(0),                       // 0: cafelogos.pos.ProductType
 	(OrderType)(0),                         // 1: cafelogos.pos.OrderType
@@ -4306,169 +4374,172 @@ var file_pos_pos_service_proto_goTypes = []any{
 	(*PostPaymentRequest)(nil),             // 11: cafelogos.pos.PostPaymentRequest
 	(*PostPaymentRequestOption)(nil),       // 12: cafelogos.pos.PostPaymentRequestOption
 	(*UpdatePaymentRequest)(nil),           // 13: cafelogos.pos.UpdatePaymentRequest
-	(*PaymentResponse)(nil),                // 14: cafelogos.pos.PaymentResponse
-	(*GetExternalPaymentRequest)(nil),      // 15: cafelogos.pos.GetExternalPaymentRequest
-	(*GetExternalPaymentResponse)(nil),     // 16: cafelogos.pos.GetExternalPaymentResponse
-	(*DeleteOrderRequest)(nil),             // 17: cafelogos.pos.DeleteOrderRequest
-	(*GetProductsResponse)(nil),            // 18: cafelogos.pos.GetProductsResponse
-	(*GetProductCategoriesResponse)(nil),   // 19: cafelogos.pos.GetProductCategoriesResponse
-	(*PostProductCategoryRequest)(nil),     // 20: cafelogos.pos.PostProductCategoryRequest
-	(*PostProductRequest)(nil),             // 21: cafelogos.pos.PostProductRequest
-	(*UpdateProductRequest)(nil),           // 22: cafelogos.pos.UpdateProductRequest
-	(*DeleteProductRequest)(nil),           // 23: cafelogos.pos.DeleteProductRequest
-	(*PostStockRequest)(nil),               // 24: cafelogos.pos.PostStockRequest
-	(*GetStocksResponse)(nil),              // 25: cafelogos.pos.GetStocksResponse
-	(*UpdateStockRequest)(nil),             // 26: cafelogos.pos.UpdateStockRequest
-	(*PostCoffeeBeanRequest)(nil),          // 27: cafelogos.pos.PostCoffeeBeanRequest
-	(*GetCoffeeBeansResponse)(nil),         // 28: cafelogos.pos.GetCoffeeBeansResponse
-	(*PostSeatRequest)(nil),                // 29: cafelogos.pos.PostSeatRequest
-	(*UpdateSeatRequest)(nil),              // 30: cafelogos.pos.UpdateSeatRequest
-	(*DeleteSeatRequest)(nil),              // 31: cafelogos.pos.DeleteSeatRequest
-	(*GetSeatsResponse)(nil),               // 32: cafelogos.pos.GetSeatsResponse
-	(*PostNewClientRequest)(nil),           // 33: cafelogos.pos.PostNewClientRequest
-	(*PostNewClientResponse)(nil),          // 34: cafelogos.pos.PostNewClientResponse
-	(*UpdateClientRequest)(nil),            // 35: cafelogos.pos.UpdateClientRequest
-	(*GetDiscountsResponse)(nil),           // 36: cafelogos.pos.GetDiscountsResponse
-	(*PostDiscountRequest)(nil),            // 37: cafelogos.pos.PostDiscountRequest
-	(*GetDailySalesRequest)(nil),           // 38: cafelogos.pos.GetDailySalesRequest
-	(*GetDailySalesResponse)(nil),          // 39: cafelogos.pos.GetDailySalesResponse
-	(*GetProductSalesRequest)(nil),         // 40: cafelogos.pos.GetProductSalesRequest
-	(*GetSalesByTimeSlotRequest)(nil),      // 41: cafelogos.pos.GetSalesByTimeSlotRequest
-	(*GetSalesByTimeSlotResponse)(nil),     // 42: cafelogos.pos.GetSalesByTimeSlotResponse
-	(*TimeSlotSale)(nil),                   // 43: cafelogos.pos.TimeSlotSale
-	(*GetSalesByPaymentTypeRequest)(nil),   // 44: cafelogos.pos.GetSalesByPaymentTypeRequest
-	(*GetSalesByPaymentTypeResponse)(nil),  // 45: cafelogos.pos.GetSalesByPaymentTypeResponse
-	(*PaymentTypeSale)(nil),                // 46: cafelogos.pos.PaymentTypeSale
-	(*GetProductSalesResponse)(nil),        // 47: cafelogos.pos.GetProductSalesResponse
-	(*Product)(nil),                        // 48: cafelogos.pos.Product
-	(*ProductParam)(nil),                   // 49: cafelogos.pos.ProductParam
-	(*ProductCategory)(nil),                // 50: cafelogos.pos.ProductCategory
-	(*CoffeeBean)(nil),                     // 51: cafelogos.pos.CoffeeBean
-	(*CoffeeBrew)(nil),                     // 52: cafelogos.pos.CoffeeBrew
-	(*Stock)(nil),                          // 53: cafelogos.pos.Stock
-	(*Order)(nil),                          // 54: cafelogos.pos.Order
-	(*OrderParam)(nil),                     // 55: cafelogos.pos.OrderParam
-	(*OrderItem)(nil),                      // 56: cafelogos.pos.OrderItem
-	(*OrderDiscount)(nil),                  // 57: cafelogos.pos.OrderDiscount
-	(*Discount)(nil),                       // 58: cafelogos.pos.Discount
-	(*Payment)(nil),                        // 59: cafelogos.pos.Payment
-	(*PaymentParam)(nil),                   // 60: cafelogos.pos.PaymentParam
-	(*PaymentCashParam)(nil),               // 61: cafelogos.pos.PaymentCashParam
-	(*PaymentExternalParam)(nil),           // 62: cafelogos.pos.PaymentExternalParam
-	(*PaymentExternal)(nil),                // 63: cafelogos.pos.PaymentExternal
-	(*Seat)(nil),                           // 64: cafelogos.pos.Seat
-	(*DailySale)(nil),                      // 65: cafelogos.pos.DailySale
-	(*ProductSale)(nil),                    // 66: cafelogos.pos.ProductSale
-	(*common.Empty)(nil),                   // 67: cafelogos.common.Empty
+	(*CancelPaymentRequest)(nil),           // 14: cafelogos.pos.CancelPaymentRequest
+	(*PaymentResponse)(nil),                // 15: cafelogos.pos.PaymentResponse
+	(*GetExternalPaymentRequest)(nil),      // 16: cafelogos.pos.GetExternalPaymentRequest
+	(*GetExternalPaymentResponse)(nil),     // 17: cafelogos.pos.GetExternalPaymentResponse
+	(*DeleteOrderRequest)(nil),             // 18: cafelogos.pos.DeleteOrderRequest
+	(*GetProductsResponse)(nil),            // 19: cafelogos.pos.GetProductsResponse
+	(*GetProductCategoriesResponse)(nil),   // 20: cafelogos.pos.GetProductCategoriesResponse
+	(*PostProductCategoryRequest)(nil),     // 21: cafelogos.pos.PostProductCategoryRequest
+	(*PostProductRequest)(nil),             // 22: cafelogos.pos.PostProductRequest
+	(*UpdateProductRequest)(nil),           // 23: cafelogos.pos.UpdateProductRequest
+	(*DeleteProductRequest)(nil),           // 24: cafelogos.pos.DeleteProductRequest
+	(*PostStockRequest)(nil),               // 25: cafelogos.pos.PostStockRequest
+	(*GetStocksResponse)(nil),              // 26: cafelogos.pos.GetStocksResponse
+	(*UpdateStockRequest)(nil),             // 27: cafelogos.pos.UpdateStockRequest
+	(*PostCoffeeBeanRequest)(nil),          // 28: cafelogos.pos.PostCoffeeBeanRequest
+	(*GetCoffeeBeansResponse)(nil),         // 29: cafelogos.pos.GetCoffeeBeansResponse
+	(*PostSeatRequest)(nil),                // 30: cafelogos.pos.PostSeatRequest
+	(*UpdateSeatRequest)(nil),              // 31: cafelogos.pos.UpdateSeatRequest
+	(*DeleteSeatRequest)(nil),              // 32: cafelogos.pos.DeleteSeatRequest
+	(*GetSeatsResponse)(nil),               // 33: cafelogos.pos.GetSeatsResponse
+	(*PostNewClientRequest)(nil),           // 34: cafelogos.pos.PostNewClientRequest
+	(*PostNewClientResponse)(nil),          // 35: cafelogos.pos.PostNewClientResponse
+	(*UpdateClientRequest)(nil),            // 36: cafelogos.pos.UpdateClientRequest
+	(*GetDiscountsResponse)(nil),           // 37: cafelogos.pos.GetDiscountsResponse
+	(*PostDiscountRequest)(nil),            // 38: cafelogos.pos.PostDiscountRequest
+	(*GetDailySalesRequest)(nil),           // 39: cafelogos.pos.GetDailySalesRequest
+	(*GetDailySalesResponse)(nil),          // 40: cafelogos.pos.GetDailySalesResponse
+	(*GetProductSalesRequest)(nil),         // 41: cafelogos.pos.GetProductSalesRequest
+	(*GetSalesByTimeSlotRequest)(nil),      // 42: cafelogos.pos.GetSalesByTimeSlotRequest
+	(*GetSalesByTimeSlotResponse)(nil),     // 43: cafelogos.pos.GetSalesByTimeSlotResponse
+	(*TimeSlotSale)(nil),                   // 44: cafelogos.pos.TimeSlotSale
+	(*GetSalesByPaymentTypeRequest)(nil),   // 45: cafelogos.pos.GetSalesByPaymentTypeRequest
+	(*GetSalesByPaymentTypeResponse)(nil),  // 46: cafelogos.pos.GetSalesByPaymentTypeResponse
+	(*PaymentTypeSale)(nil),                // 47: cafelogos.pos.PaymentTypeSale
+	(*GetProductSalesResponse)(nil),        // 48: cafelogos.pos.GetProductSalesResponse
+	(*Product)(nil),                        // 49: cafelogos.pos.Product
+	(*ProductParam)(nil),                   // 50: cafelogos.pos.ProductParam
+	(*ProductCategory)(nil),                // 51: cafelogos.pos.ProductCategory
+	(*CoffeeBean)(nil),                     // 52: cafelogos.pos.CoffeeBean
+	(*CoffeeBrew)(nil),                     // 53: cafelogos.pos.CoffeeBrew
+	(*Stock)(nil),                          // 54: cafelogos.pos.Stock
+	(*Order)(nil),                          // 55: cafelogos.pos.Order
+	(*OrderParam)(nil),                     // 56: cafelogos.pos.OrderParam
+	(*OrderItem)(nil),                      // 57: cafelogos.pos.OrderItem
+	(*OrderDiscount)(nil),                  // 58: cafelogos.pos.OrderDiscount
+	(*Discount)(nil),                       // 59: cafelogos.pos.Discount
+	(*Payment)(nil),                        // 60: cafelogos.pos.Payment
+	(*PaymentParam)(nil),                   // 61: cafelogos.pos.PaymentParam
+	(*PaymentCashParam)(nil),               // 62: cafelogos.pos.PaymentCashParam
+	(*PaymentExternalParam)(nil),           // 63: cafelogos.pos.PaymentExternalParam
+	(*PaymentExternal)(nil),                // 64: cafelogos.pos.PaymentExternal
+	(*Seat)(nil),                           // 65: cafelogos.pos.Seat
+	(*DailySale)(nil),                      // 66: cafelogos.pos.DailySale
+	(*ProductSale)(nil),                    // 67: cafelogos.pos.ProductSale
+	(*common.Empty)(nil),                   // 68: cafelogos.common.Empty
 }
 var file_pos_pos_service_proto_depIdxs = []int32{
-	54, // 0: cafelogos.pos.GetOrdersResponse.orders:type_name -> cafelogos.pos.Order
-	54, // 1: cafelogos.pos.GetOrderResponse.order:type_name -> cafelogos.pos.Order
-	55, // 2: cafelogos.pos.PostOrderRequest.order:type_name -> cafelogos.pos.OrderParam
+	55, // 0: cafelogos.pos.GetOrdersResponse.orders:type_name -> cafelogos.pos.Order
+	55, // 1: cafelogos.pos.GetOrderResponse.order:type_name -> cafelogos.pos.Order
+	56, // 2: cafelogos.pos.PostOrderRequest.order:type_name -> cafelogos.pos.OrderParam
 	9,  // 3: cafelogos.pos.PostOrderRequest.option:type_name -> cafelogos.pos.PostOrderOption
 	3,  // 4: cafelogos.pos.PostOrderResponse.code:type_name -> cafelogos.pos.PostOrderResponse.Code
-	60, // 5: cafelogos.pos.PostPaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
-	55, // 6: cafelogos.pos.PostPaymentRequest.post_orders:type_name -> cafelogos.pos.OrderParam
+	61, // 5: cafelogos.pos.PostPaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
+	56, // 6: cafelogos.pos.PostPaymentRequest.post_orders:type_name -> cafelogos.pos.OrderParam
 	12, // 7: cafelogos.pos.PostPaymentRequest.option:type_name -> cafelogos.pos.PostPaymentRequestOption
-	60, // 8: cafelogos.pos.UpdatePaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
-	59, // 9: cafelogos.pos.PaymentResponse.payment:type_name -> cafelogos.pos.Payment
+	61, // 8: cafelogos.pos.UpdatePaymentRequest.payment:type_name -> cafelogos.pos.PaymentParam
+	60, // 9: cafelogos.pos.PaymentResponse.payment:type_name -> cafelogos.pos.Payment
 	10, // 10: cafelogos.pos.PaymentResponse.order_responses:type_name -> cafelogos.pos.PostOrderResponse
-	63, // 11: cafelogos.pos.GetExternalPaymentResponse.external_payment:type_name -> cafelogos.pos.PaymentExternal
-	48, // 12: cafelogos.pos.GetProductsResponse.products:type_name -> cafelogos.pos.Product
-	50, // 13: cafelogos.pos.GetProductCategoriesResponse.product_categories:type_name -> cafelogos.pos.ProductCategory
-	49, // 14: cafelogos.pos.PostProductRequest.product:type_name -> cafelogos.pos.ProductParam
-	49, // 15: cafelogos.pos.UpdateProductRequest.product:type_name -> cafelogos.pos.ProductParam
-	53, // 16: cafelogos.pos.GetStocksResponse.stocks:type_name -> cafelogos.pos.Stock
-	51, // 17: cafelogos.pos.GetCoffeeBeansResponse.coffee_beans:type_name -> cafelogos.pos.CoffeeBean
-	64, // 18: cafelogos.pos.UpdateSeatRequest.seat:type_name -> cafelogos.pos.Seat
-	64, // 19: cafelogos.pos.GetSeatsResponse.seats:type_name -> cafelogos.pos.Seat
-	58, // 20: cafelogos.pos.GetDiscountsResponse.discounts:type_name -> cafelogos.pos.Discount
+	64, // 11: cafelogos.pos.GetExternalPaymentResponse.external_payment:type_name -> cafelogos.pos.PaymentExternal
+	49, // 12: cafelogos.pos.GetProductsResponse.products:type_name -> cafelogos.pos.Product
+	51, // 13: cafelogos.pos.GetProductCategoriesResponse.product_categories:type_name -> cafelogos.pos.ProductCategory
+	50, // 14: cafelogos.pos.PostProductRequest.product:type_name -> cafelogos.pos.ProductParam
+	50, // 15: cafelogos.pos.UpdateProductRequest.product:type_name -> cafelogos.pos.ProductParam
+	54, // 16: cafelogos.pos.GetStocksResponse.stocks:type_name -> cafelogos.pos.Stock
+	52, // 17: cafelogos.pos.GetCoffeeBeansResponse.coffee_beans:type_name -> cafelogos.pos.CoffeeBean
+	65, // 18: cafelogos.pos.UpdateSeatRequest.seat:type_name -> cafelogos.pos.Seat
+	65, // 19: cafelogos.pos.GetSeatsResponse.seats:type_name -> cafelogos.pos.Seat
+	59, // 20: cafelogos.pos.GetDiscountsResponse.discounts:type_name -> cafelogos.pos.Discount
 	2,  // 21: cafelogos.pos.PostDiscountRequest.type:type_name -> cafelogos.pos.DiscountType
-	65, // 22: cafelogos.pos.GetDailySalesResponse.daily_sales:type_name -> cafelogos.pos.DailySale
-	43, // 23: cafelogos.pos.GetSalesByTimeSlotResponse.time_slot_sales:type_name -> cafelogos.pos.TimeSlotSale
-	46, // 24: cafelogos.pos.GetSalesByPaymentTypeResponse.payment_type_sales:type_name -> cafelogos.pos.PaymentTypeSale
-	66, // 25: cafelogos.pos.GetProductSalesResponse.product_sales:type_name -> cafelogos.pos.ProductSale
-	50, // 26: cafelogos.pos.Product.product_category:type_name -> cafelogos.pos.ProductCategory
+	66, // 22: cafelogos.pos.GetDailySalesResponse.daily_sales:type_name -> cafelogos.pos.DailySale
+	44, // 23: cafelogos.pos.GetSalesByTimeSlotResponse.time_slot_sales:type_name -> cafelogos.pos.TimeSlotSale
+	47, // 24: cafelogos.pos.GetSalesByPaymentTypeResponse.payment_type_sales:type_name -> cafelogos.pos.PaymentTypeSale
+	67, // 25: cafelogos.pos.GetProductSalesResponse.product_sales:type_name -> cafelogos.pos.ProductSale
+	51, // 26: cafelogos.pos.Product.product_category:type_name -> cafelogos.pos.ProductCategory
 	0,  // 27: cafelogos.pos.Product.product_type:type_name -> cafelogos.pos.ProductType
-	51, // 28: cafelogos.pos.Product.coffee_bean:type_name -> cafelogos.pos.CoffeeBean
-	52, // 29: cafelogos.pos.Product.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
-	53, // 30: cafelogos.pos.Product.stock:type_name -> cafelogos.pos.Stock
+	52, // 28: cafelogos.pos.Product.coffee_bean:type_name -> cafelogos.pos.CoffeeBean
+	53, // 29: cafelogos.pos.Product.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
+	54, // 30: cafelogos.pos.Product.stock:type_name -> cafelogos.pos.Stock
 	0,  // 31: cafelogos.pos.ProductParam.product_type:type_name -> cafelogos.pos.ProductType
-	52, // 32: cafelogos.pos.ProductParam.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
-	56, // 33: cafelogos.pos.Order.items:type_name -> cafelogos.pos.OrderItem
-	57, // 34: cafelogos.pos.Order.discounts:type_name -> cafelogos.pos.OrderDiscount
+	53, // 32: cafelogos.pos.ProductParam.coffee_brews:type_name -> cafelogos.pos.CoffeeBrew
+	57, // 33: cafelogos.pos.Order.items:type_name -> cafelogos.pos.OrderItem
+	58, // 34: cafelogos.pos.Order.discounts:type_name -> cafelogos.pos.OrderDiscount
 	1,  // 35: cafelogos.pos.Order.order_type:type_name -> cafelogos.pos.OrderType
-	56, // 36: cafelogos.pos.OrderParam.items:type_name -> cafelogos.pos.OrderItem
-	57, // 37: cafelogos.pos.OrderParam.discounts:type_name -> cafelogos.pos.OrderDiscount
+	57, // 36: cafelogos.pos.OrderParam.items:type_name -> cafelogos.pos.OrderItem
+	58, // 37: cafelogos.pos.OrderParam.discounts:type_name -> cafelogos.pos.OrderDiscount
 	1,  // 38: cafelogos.pos.OrderParam.order_type:type_name -> cafelogos.pos.OrderType
 	2,  // 39: cafelogos.pos.OrderDiscount.type:type_name -> cafelogos.pos.DiscountType
 	2,  // 40: cafelogos.pos.Discount.type:type_name -> cafelogos.pos.DiscountType
-	61, // 41: cafelogos.pos.PaymentParam.cash:type_name -> cafelogos.pos.PaymentCashParam
-	62, // 42: cafelogos.pos.PaymentParam.external:type_name -> cafelogos.pos.PaymentExternalParam
+	62, // 41: cafelogos.pos.PaymentParam.cash:type_name -> cafelogos.pos.PaymentCashParam
+	63, // 42: cafelogos.pos.PaymentParam.external:type_name -> cafelogos.pos.PaymentExternalParam
 	4,  // 43: cafelogos.pos.PosService.GetOrders:input_type -> cafelogos.pos.GetOrdersRequest
 	7,  // 44: cafelogos.pos.PosService.GetUnpaidOrdersBySeatId:input_type -> cafelogos.pos.GetUnpaidOrdersBySeatIdRequest
 	8,  // 45: cafelogos.pos.PosService.PostOrder:input_type -> cafelogos.pos.PostOrderRequest
-	17, // 46: cafelogos.pos.PosService.DeleteOrder:input_type -> cafelogos.pos.DeleteOrderRequest
+	18, // 46: cafelogos.pos.PosService.DeleteOrder:input_type -> cafelogos.pos.DeleteOrderRequest
 	11, // 47: cafelogos.pos.PosService.PostPayment:input_type -> cafelogos.pos.PostPaymentRequest
 	13, // 48: cafelogos.pos.PosService.UpdatePayment:input_type -> cafelogos.pos.UpdatePaymentRequest
-	15, // 49: cafelogos.pos.PosService.GetExternalPayment:input_type -> cafelogos.pos.GetExternalPaymentRequest
-	67, // 50: cafelogos.pos.PosService.GetProducts:input_type -> cafelogos.common.Empty
-	33, // 51: cafelogos.pos.PosService.PostNewClient:input_type -> cafelogos.pos.PostNewClientRequest
-	35, // 52: cafelogos.pos.PosService.UpdateClient:input_type -> cafelogos.pos.UpdateClientRequest
-	67, // 53: cafelogos.pos.PosService.GetProductCategories:input_type -> cafelogos.common.Empty
-	20, // 54: cafelogos.pos.PosService.PostProductCategory:input_type -> cafelogos.pos.PostProductCategoryRequest
-	21, // 55: cafelogos.pos.PosService.PostProduct:input_type -> cafelogos.pos.PostProductRequest
-	22, // 56: cafelogos.pos.PosService.UpdateProduct:input_type -> cafelogos.pos.UpdateProductRequest
-	23, // 57: cafelogos.pos.PosService.DeleteProduct:input_type -> cafelogos.pos.DeleteProductRequest
-	24, // 58: cafelogos.pos.PosService.PostStock:input_type -> cafelogos.pos.PostStockRequest
-	67, // 59: cafelogos.pos.PosService.GetStocks:input_type -> cafelogos.common.Empty
-	26, // 60: cafelogos.pos.PosService.UpdateStock:input_type -> cafelogos.pos.UpdateStockRequest
-	27, // 61: cafelogos.pos.PosService.PostCoffeeBean:input_type -> cafelogos.pos.PostCoffeeBeanRequest
-	67, // 62: cafelogos.pos.PosService.GetCoffeeBeans:input_type -> cafelogos.common.Empty
-	67, // 63: cafelogos.pos.PosService.DeleteAllOrders:input_type -> cafelogos.common.Empty
-	29, // 64: cafelogos.pos.PosService.PostSeat:input_type -> cafelogos.pos.PostSeatRequest
-	30, // 65: cafelogos.pos.PosService.UpdateSeat:input_type -> cafelogos.pos.UpdateSeatRequest
-	31, // 66: cafelogos.pos.PosService.DeleteSeat:input_type -> cafelogos.pos.DeleteSeatRequest
-	67, // 67: cafelogos.pos.PosService.GetSeats:input_type -> cafelogos.common.Empty
-	67, // 68: cafelogos.pos.PosService.GetDiscounts:input_type -> cafelogos.common.Empty
-	37, // 69: cafelogos.pos.PosService.PostDiscount:input_type -> cafelogos.pos.PostDiscountRequest
-	38, // 70: cafelogos.pos.PosService.GetDailySales:input_type -> cafelogos.pos.GetDailySalesRequest
-	40, // 71: cafelogos.pos.PosService.GetProductSales:input_type -> cafelogos.pos.GetProductSalesRequest
-	41, // 72: cafelogos.pos.PosService.GetSalesByTimeSlot:input_type -> cafelogos.pos.GetSalesByTimeSlotRequest
-	44, // 73: cafelogos.pos.PosService.GetSalesByPaymentType:input_type -> cafelogos.pos.GetSalesByPaymentTypeRequest
-	5,  // 74: cafelogos.pos.PosService.GetOrders:output_type -> cafelogos.pos.GetOrdersResponse
-	5,  // 75: cafelogos.pos.PosService.GetUnpaidOrdersBySeatId:output_type -> cafelogos.pos.GetOrdersResponse
-	10, // 76: cafelogos.pos.PosService.PostOrder:output_type -> cafelogos.pos.PostOrderResponse
-	67, // 77: cafelogos.pos.PosService.DeleteOrder:output_type -> cafelogos.common.Empty
-	14, // 78: cafelogos.pos.PosService.PostPayment:output_type -> cafelogos.pos.PaymentResponse
-	14, // 79: cafelogos.pos.PosService.UpdatePayment:output_type -> cafelogos.pos.PaymentResponse
-	16, // 80: cafelogos.pos.PosService.GetExternalPayment:output_type -> cafelogos.pos.GetExternalPaymentResponse
-	18, // 81: cafelogos.pos.PosService.GetProducts:output_type -> cafelogos.pos.GetProductsResponse
-	34, // 82: cafelogos.pos.PosService.PostNewClient:output_type -> cafelogos.pos.PostNewClientResponse
-	67, // 83: cafelogos.pos.PosService.UpdateClient:output_type -> cafelogos.common.Empty
-	19, // 84: cafelogos.pos.PosService.GetProductCategories:output_type -> cafelogos.pos.GetProductCategoriesResponse
-	67, // 85: cafelogos.pos.PosService.PostProductCategory:output_type -> cafelogos.common.Empty
-	67, // 86: cafelogos.pos.PosService.PostProduct:output_type -> cafelogos.common.Empty
-	67, // 87: cafelogos.pos.PosService.UpdateProduct:output_type -> cafelogos.common.Empty
-	67, // 88: cafelogos.pos.PosService.DeleteProduct:output_type -> cafelogos.common.Empty
-	67, // 89: cafelogos.pos.PosService.PostStock:output_type -> cafelogos.common.Empty
-	25, // 90: cafelogos.pos.PosService.GetStocks:output_type -> cafelogos.pos.GetStocksResponse
-	67, // 91: cafelogos.pos.PosService.UpdateStock:output_type -> cafelogos.common.Empty
-	67, // 92: cafelogos.pos.PosService.PostCoffeeBean:output_type -> cafelogos.common.Empty
-	28, // 93: cafelogos.pos.PosService.GetCoffeeBeans:output_type -> cafelogos.pos.GetCoffeeBeansResponse
-	67, // 94: cafelogos.pos.PosService.DeleteAllOrders:output_type -> cafelogos.common.Empty
-	67, // 95: cafelogos.pos.PosService.PostSeat:output_type -> cafelogos.common.Empty
-	67, // 96: cafelogos.pos.PosService.UpdateSeat:output_type -> cafelogos.common.Empty
-	67, // 97: cafelogos.pos.PosService.DeleteSeat:output_type -> cafelogos.common.Empty
-	32, // 98: cafelogos.pos.PosService.GetSeats:output_type -> cafelogos.pos.GetSeatsResponse
-	36, // 99: cafelogos.pos.PosService.GetDiscounts:output_type -> cafelogos.pos.GetDiscountsResponse
-	67, // 100: cafelogos.pos.PosService.PostDiscount:output_type -> cafelogos.common.Empty
-	39, // 101: cafelogos.pos.PosService.GetDailySales:output_type -> cafelogos.pos.GetDailySalesResponse
-	47, // 102: cafelogos.pos.PosService.GetProductSales:output_type -> cafelogos.pos.GetProductSalesResponse
-	42, // 103: cafelogos.pos.PosService.GetSalesByTimeSlot:output_type -> cafelogos.pos.GetSalesByTimeSlotResponse
-	45, // 104: cafelogos.pos.PosService.GetSalesByPaymentType:output_type -> cafelogos.pos.GetSalesByPaymentTypeResponse
-	74, // [74:105] is the sub-list for method output_type
-	43, // [43:74] is the sub-list for method input_type
+	14, // 49: cafelogos.pos.PosService.CancelPayment:input_type -> cafelogos.pos.CancelPaymentRequest
+	16, // 50: cafelogos.pos.PosService.GetExternalPayment:input_type -> cafelogos.pos.GetExternalPaymentRequest
+	68, // 51: cafelogos.pos.PosService.GetProducts:input_type -> cafelogos.common.Empty
+	34, // 52: cafelogos.pos.PosService.PostNewClient:input_type -> cafelogos.pos.PostNewClientRequest
+	36, // 53: cafelogos.pos.PosService.UpdateClient:input_type -> cafelogos.pos.UpdateClientRequest
+	68, // 54: cafelogos.pos.PosService.GetProductCategories:input_type -> cafelogos.common.Empty
+	21, // 55: cafelogos.pos.PosService.PostProductCategory:input_type -> cafelogos.pos.PostProductCategoryRequest
+	22, // 56: cafelogos.pos.PosService.PostProduct:input_type -> cafelogos.pos.PostProductRequest
+	23, // 57: cafelogos.pos.PosService.UpdateProduct:input_type -> cafelogos.pos.UpdateProductRequest
+	24, // 58: cafelogos.pos.PosService.DeleteProduct:input_type -> cafelogos.pos.DeleteProductRequest
+	25, // 59: cafelogos.pos.PosService.PostStock:input_type -> cafelogos.pos.PostStockRequest
+	68, // 60: cafelogos.pos.PosService.GetStocks:input_type -> cafelogos.common.Empty
+	27, // 61: cafelogos.pos.PosService.UpdateStock:input_type -> cafelogos.pos.UpdateStockRequest
+	28, // 62: cafelogos.pos.PosService.PostCoffeeBean:input_type -> cafelogos.pos.PostCoffeeBeanRequest
+	68, // 63: cafelogos.pos.PosService.GetCoffeeBeans:input_type -> cafelogos.common.Empty
+	68, // 64: cafelogos.pos.PosService.DeleteAllOrders:input_type -> cafelogos.common.Empty
+	30, // 65: cafelogos.pos.PosService.PostSeat:input_type -> cafelogos.pos.PostSeatRequest
+	31, // 66: cafelogos.pos.PosService.UpdateSeat:input_type -> cafelogos.pos.UpdateSeatRequest
+	32, // 67: cafelogos.pos.PosService.DeleteSeat:input_type -> cafelogos.pos.DeleteSeatRequest
+	68, // 68: cafelogos.pos.PosService.GetSeats:input_type -> cafelogos.common.Empty
+	68, // 69: cafelogos.pos.PosService.GetDiscounts:input_type -> cafelogos.common.Empty
+	38, // 70: cafelogos.pos.PosService.PostDiscount:input_type -> cafelogos.pos.PostDiscountRequest
+	39, // 71: cafelogos.pos.PosService.GetDailySales:input_type -> cafelogos.pos.GetDailySalesRequest
+	41, // 72: cafelogos.pos.PosService.GetProductSales:input_type -> cafelogos.pos.GetProductSalesRequest
+	42, // 73: cafelogos.pos.PosService.GetSalesByTimeSlot:input_type -> cafelogos.pos.GetSalesByTimeSlotRequest
+	45, // 74: cafelogos.pos.PosService.GetSalesByPaymentType:input_type -> cafelogos.pos.GetSalesByPaymentTypeRequest
+	5,  // 75: cafelogos.pos.PosService.GetOrders:output_type -> cafelogos.pos.GetOrdersResponse
+	5,  // 76: cafelogos.pos.PosService.GetUnpaidOrdersBySeatId:output_type -> cafelogos.pos.GetOrdersResponse
+	10, // 77: cafelogos.pos.PosService.PostOrder:output_type -> cafelogos.pos.PostOrderResponse
+	68, // 78: cafelogos.pos.PosService.DeleteOrder:output_type -> cafelogos.common.Empty
+	15, // 79: cafelogos.pos.PosService.PostPayment:output_type -> cafelogos.pos.PaymentResponse
+	15, // 80: cafelogos.pos.PosService.UpdatePayment:output_type -> cafelogos.pos.PaymentResponse
+	68, // 81: cafelogos.pos.PosService.CancelPayment:output_type -> cafelogos.common.Empty
+	17, // 82: cafelogos.pos.PosService.GetExternalPayment:output_type -> cafelogos.pos.GetExternalPaymentResponse
+	19, // 83: cafelogos.pos.PosService.GetProducts:output_type -> cafelogos.pos.GetProductsResponse
+	35, // 84: cafelogos.pos.PosService.PostNewClient:output_type -> cafelogos.pos.PostNewClientResponse
+	68, // 85: cafelogos.pos.PosService.UpdateClient:output_type -> cafelogos.common.Empty
+	20, // 86: cafelogos.pos.PosService.GetProductCategories:output_type -> cafelogos.pos.GetProductCategoriesResponse
+	68, // 87: cafelogos.pos.PosService.PostProductCategory:output_type -> cafelogos.common.Empty
+	68, // 88: cafelogos.pos.PosService.PostProduct:output_type -> cafelogos.common.Empty
+	68, // 89: cafelogos.pos.PosService.UpdateProduct:output_type -> cafelogos.common.Empty
+	68, // 90: cafelogos.pos.PosService.DeleteProduct:output_type -> cafelogos.common.Empty
+	68, // 91: cafelogos.pos.PosService.PostStock:output_type -> cafelogos.common.Empty
+	26, // 92: cafelogos.pos.PosService.GetStocks:output_type -> cafelogos.pos.GetStocksResponse
+	68, // 93: cafelogos.pos.PosService.UpdateStock:output_type -> cafelogos.common.Empty
+	68, // 94: cafelogos.pos.PosService.PostCoffeeBean:output_type -> cafelogos.common.Empty
+	29, // 95: cafelogos.pos.PosService.GetCoffeeBeans:output_type -> cafelogos.pos.GetCoffeeBeansResponse
+	68, // 96: cafelogos.pos.PosService.DeleteAllOrders:output_type -> cafelogos.common.Empty
+	68, // 97: cafelogos.pos.PosService.PostSeat:output_type -> cafelogos.common.Empty
+	68, // 98: cafelogos.pos.PosService.UpdateSeat:output_type -> cafelogos.common.Empty
+	68, // 99: cafelogos.pos.PosService.DeleteSeat:output_type -> cafelogos.common.Empty
+	33, // 100: cafelogos.pos.PosService.GetSeats:output_type -> cafelogos.pos.GetSeatsResponse
+	37, // 101: cafelogos.pos.PosService.GetDiscounts:output_type -> cafelogos.pos.GetDiscountsResponse
+	68, // 102: cafelogos.pos.PosService.PostDiscount:output_type -> cafelogos.common.Empty
+	40, // 103: cafelogos.pos.PosService.GetDailySales:output_type -> cafelogos.pos.GetDailySalesResponse
+	48, // 104: cafelogos.pos.PosService.GetProductSales:output_type -> cafelogos.pos.GetProductSalesResponse
+	43, // 105: cafelogos.pos.PosService.GetSalesByTimeSlot:output_type -> cafelogos.pos.GetSalesByTimeSlotResponse
+	46, // 106: cafelogos.pos.PosService.GetSalesByPaymentType:output_type -> cafelogos.pos.GetSalesByPaymentTypeResponse
+	75, // [75:107] is the sub-list for method output_type
+	43, // [43:75] is the sub-list for method input_type
 	43, // [43:43] is the sub-list for extension type_name
 	43, // [43:43] is the sub-list for extension extendee
 	0,  // [0:43] is the sub-list for field type_name
@@ -4479,7 +4550,7 @@ func file_pos_pos_service_proto_init() {
 	if File_pos_pos_service_proto != nil {
 		return
 	}
-	file_pos_pos_service_proto_msgTypes[56].OneofWrappers = []any{
+	file_pos_pos_service_proto_msgTypes[57].OneofWrappers = []any{
 		(*PaymentParam_Cash)(nil),
 		(*PaymentParam_External)(nil),
 	}
@@ -4489,7 +4560,7 @@ func file_pos_pos_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pos_pos_service_proto_rawDesc), len(file_pos_pos_service_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   63,
+			NumMessages:   64,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

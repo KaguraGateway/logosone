@@ -1,6 +1,6 @@
 
 # FROM: https://github.com/docker/docker-gs-ping/blob/main/Dockerfile
-FROM golang:1.24
+FROM golang:1.27
 
 # Set destination for COPY
 # NOTE: go.modで ../proto をreplace参照しているため、ビルドコンテキストはリポジトリルート

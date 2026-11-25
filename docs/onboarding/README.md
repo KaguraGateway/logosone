@@ -276,8 +276,11 @@ NotYet → Cooking → Cooked → Calling → Served
 ## CI/CD
 
 - **GitHub Actions**:
-  - `biome-lint.yml`: orderlink-frontend の Lint チェック
-  - `pr-agent-review.yaml`: AI による自動 PR レビュー
+  - `biome-lint.yml`: orderlink-frontend の Lint チェック（bun で実行。Lint エラーがあっても CI は落ちない）
+  - `claude-review.yml`: Claude による自動 PR レビュー
+  - PR を開いたとき・reopen・ready for review にしたときに実行（Draft では動かない）
+  - 指摘はコメントで、変更の要約と Walkthrough は PR 本文の `claude-summary` の目印の間に書き込まれる
+  - `CLAUDE_CODE_OAUTH_TOKEN`（増田の Claude アカウント）の利用枠を使う
 - **本番デプロイ**: Docker イメージを Cloud Run にデプロイ
   - Next.js は `output: "standalone"` でビルド
   - orderlink-backend は本番で Cloud Pub/Sub に切り替え（環境変数で制御）

@@ -18,11 +18,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
 
+      # ロックファイルはリポジトリルートの bun.lockb（旧バイナリ形式）のみで、
+      # bun 1.2 以降はテキスト形式の bun.lock へ移行される仕様のため、CI では
+      # 毎回依存が再解決される（ログに "Saved lockfile" が出る）。
+      # --frozen-lockfile を付ける場合は、先に bun.lock へ移行してコミットすること。
       - name: Install dependencies
         run: bun install
 

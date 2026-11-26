@@ -1,0 +1,44 @@
+name: Claude Review
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review]
+
+jobs:
+  review:
+    if: ${{ github.event.sender.type != 'Bot' && !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Claude Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            このPRをレビューしてください。
+            - 日本語で回答してください
+            - 利用技術: Frontend は Next.js、Backend は Go と Rust
+            - バグ・セキュリティ・挙動が変わる変更を優先して指摘してください
+            - 具体的な指摘はインラインコメントで、全体の所感はPRコメントで書いてください
+
+            レビューに加えて、PR本文の `<!-- claude-summary:start -->` と
+            `<!-- claude-summary:end -->` の間だけを次の内容で書き換えてください。
+            - 「## 🤖 変更の要約」：変更点を3〜6個の箇条書き
+            - 「## Walkthrough」：| ファイル | 変更内容 | の表（生成コードとロックファイルは1行にまとめる）
+            ルール:
+            - 目印の外側は一字一句変えない。目印が無いPRでは本文を編集しない
+            - `gh pr view --json body` で本文を取得し、書き換えた全文をファイルに保存して `gh pr edit --body-file` で反映する
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr edit:*),Write"

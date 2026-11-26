@@ -1,8 +1,9 @@
 # 概要
+<!-- 何を・なぜ変更したか（背景や注意点は人が書く） -->
 
-<!-- DO NOT EDIT -->
-pr_agent:summary
+# レビュー手順
+<!-- レビュアーが動作を確認する方法 -->
 
-# Walkthrough
-<!-- DO NOT EDIT -->
-pr_agent:walkthrough
+<!-- ここから下は Claude が自動で書きます。編集しないでください -->
+<!-- claude-summary:start -->
+<!-- claude-summary:end -->

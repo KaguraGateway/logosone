@@ -18,15 +18,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
+      # ロックファイルはリポジトリルートの bun.lockb（旧バイナリ形式）のみで、
+      # bun 1.2 以降はテキスト形式の bun.lock へ移行される仕様のため、CI では
+      # 毎回依存が再解決される（ログに "Saved lockfile" が出る）。
+      # --frozen-lockfile を付ける場合は、先に bun.lock へ移行してコミットすること。
       - name: Install dependencies
-        run: npm install
+        run: bun install
 
       - name: Run Biome lint (non-blocking)
-        run: npm run lint || echo "Linting issues found, but continuing with the workflow"
+        continue-on-error: true
+        run: bun run lint --reporter=github

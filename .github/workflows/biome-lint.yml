@@ -27,4 +27,5 @@ jobs:
         run: bun install
 
       - name: Run Biome lint (non-blocking)
-        run: bun run lint || echo "Linting issues found, but continuing with the workflow"
+        continue-on-error: true
+        run: bun run lint --reporter=github

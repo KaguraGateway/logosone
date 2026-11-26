@@ -276,7 +276,7 @@ NotYet → Cooking → Cooked → Calling → Served
 ## CI/CD
 
 - **GitHub Actions**:
-  - `biome-lint.yml`: orderlink-frontend の Lint チェック（bun で実行。Lint エラーがあっても CI は落ちない）
+  - `biome-lint.yml`: orderlink-frontend の Lint チェック（bun で実行。`continue-on-error` なので Lint エラーでジョブは落ちないが、ステップは失敗表示になり差分に注釈が付く）
   - `claude-review.yml`: Claude による自動 PR レビュー
     - PR を開いたとき・reopen・ready for review にしたときに実行（Draft では動かない）
     - 指摘はコメントで、変更の要約と Walkthrough は PR 本文の `claude-summary` の目印の間に書き込まれる

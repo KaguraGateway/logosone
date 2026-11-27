@@ -190,7 +190,7 @@ func (uc *postOrderUseCase) Execute(ctx context.Context, param PostOrderParam) (
 		return nil
 	})
 	if err != nil {
-		log.Printf(err.Error())
+		log.Print(err.Error())
 		return nil, nil, err
 	}
 

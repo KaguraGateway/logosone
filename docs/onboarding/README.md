@@ -50,11 +50,11 @@ Monorepo 構成で、2 つの主要サブシステム（**LogoREGI** / **OrderLi
 
 ### バックエンド
 
-| サービス | 言語 | 主要ライブラリ |
-|----------|------|----------------|
-| logoregi-backend | Go 1.24 | connect-go, uptrace/bun, samber/do, Square SDK |
-| orderlink-backend | Go 1.24 | connect-go, uptrace/bun, gorilla/websocket, go-redis |
-| ticket-backend | Rust | tonic (gRPC), SeaORM, shaku (DI), tokio |
+| サービス | 言語      | 主要ライブラリ |
+|----------|---------|----------------|
+| logoregi-backend | Go 1.27 | connect-go, uptrace/bun, samber/do, Square SDK |
+| orderlink-backend | Go 1.27 | connect-go, uptrace/bun, gorilla/websocket, go-redis |
+| ticket-backend | Rust    | tonic (gRPC), SeaORM, shaku (DI), tokio |
 
 ### フロントエンド
 

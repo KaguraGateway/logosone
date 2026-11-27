@@ -106,7 +106,7 @@ func (u *postOrderFromPosUseCase) Execute(ctx context.Context, input *PostOrderI
 			return nil
 		}
 
-		order, err := orderPkg.NewOrder(input.OrderId, orderItems, input.OrderAt, input.OrderType, input.SeatName)
+		order, err := orderPkg.NewOrder(input.OrderId, orderItems, input.OrderAt, input.OrderType, input.SeatName, input.TicketId, input.TicketAddr)
 		if err != nil {
 			return errors.Join(err, ErrInvalidParam)
 		}

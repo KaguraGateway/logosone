@@ -8,7 +8,7 @@ require (
 	connectrpc.com/connect v1.17.0
 	connectrpc.com/cors v0.1.0
 	github.com/Code-Hex/synchro v0.5.2
-	github.com/KaguraGateway/cafelogos-grpc v1.7.1-0.20250313145654-4d201498c15d
+	github.com/KaguraGateway/logosone/proto v0.0.0-20260205051115-7653785c0d82
 	github.com/cockroachdb/errors v1.11.3
 	github.com/joho/godotenv v1.5.1
 	github.com/oklog/ulid/v2 v2.1.0
@@ -52,5 +52,4 @@ require (
 	mellium.im/sasl v0.3.2 // indirect
 )
 
-// protoはこのリポジトリ内で管理しているため、公開モジュールではなく ../proto を参照する
-replace github.com/KaguraGateway/cafelogos-grpc => ../proto
+replace github.com/KaguraGateway/logosone/proto => ../proto

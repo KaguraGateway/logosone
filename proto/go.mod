@@ -1,4 +1,4 @@
-module github.com/KaguraGateway/cafelogos-grpc
+module github.com/KaguraGateway/logosone/proto
 
 go 1.23
 

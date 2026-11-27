@@ -11,4 +11,5 @@ type OrderRepository interface {
 	FindById(ctx context.Context, id string) (*order.Order, error)
 	Save(ctx context.Context, order *order.Order) error
 	SaveTx(ctx context.Context, tx interface{}, order *order.Order) error
+	ListOrders(ctx context.Context) ([]*order.Order, error)
 }

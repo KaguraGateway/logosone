@@ -6,7 +6,7 @@ import (
 	"connectrpc.com/connect"
 	"github.com/Code-Hex/synchro"
 	"github.com/Code-Hex/synchro/tz"
-	"github.com/KaguraGateway/cafelogos-grpc/pkg/pos"
+	"github.com/KaguraGateway/logosone/proto/pkg/pos"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application"
 	"github.com/KaguraGateway/logosone/logoregi-backend/application/dto"
 	"github.com/samber/do"

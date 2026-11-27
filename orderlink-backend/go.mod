@@ -1,8 +1,8 @@
 module github.com/KaguraGateway/logosone/orderlink-backend
 
-go 1.24
+go 1.27
 
-toolchain go1.24.0
+toolchain go1.27.4
 
 require (
 	cloud.google.com/go/pubsub v1.44.0
